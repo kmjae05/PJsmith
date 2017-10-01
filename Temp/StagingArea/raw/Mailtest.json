@@ -1,0 +1,52 @@
+{
+	"Post": [
+		{
+			"no": 0,
+			"title": "첫번째 편지",
+			"comments": "1번입니다.",
+			"mail_reward_type": 0,
+			"mail_reward_quantity": 0,
+			"date": "2017/02/28 13:00:24"
+		},
+		{
+			"no": 1,
+			"title": "두번째 편지",
+			"comments": "2번입니다.",
+			"mail_reward_type": "gold",
+			"mail_reward_quantity": 500,
+			"date": "2017/02/28 14:00:24"
+		},
+		{
+			"no": 2,
+			"title": "세번째 편지",
+			"comments": "3번입니다.",
+			"mail_reward_type": "cash",
+			"mail_reward_quantity": 10,
+			"date": "2017/02/28 15:00:24"
+		},
+		{
+			"no": 3,
+			"title": "네번째 편지",
+			"comments": "4번입니다.",
+			"mail_reward_type": "gold",
+			"mail_reward_quantity": 10000,
+			"date": "2017/02/28 16:00:24"
+		},
+		{
+			"no": 4,
+			"title": "다섯번째 편지",
+			"comments": "5번입니다.",
+			"mail_reward_type": 0,
+			"mail_reward_quantity": 0,
+			"date": "2017/02/28 18:00:24"
+		},
+		{
+			"no": 5,
+			"title": "여섯번째 편지",
+			"comments": "6번입니다.",
+			"mail_reward_type": "gold",
+			"mail_reward_quantity": 50000,
+			"date": "2017/02/28 19:00:24"
+		}
+	]
+}

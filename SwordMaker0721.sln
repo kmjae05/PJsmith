@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwordMaker0721", "Assembly-CSharp-firstpass.csproj", "{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwordMaker0721", "Assembly-CSharp.csproj", "{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwordMaker0721", "Assembly-CSharp-Editor.csproj", "{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

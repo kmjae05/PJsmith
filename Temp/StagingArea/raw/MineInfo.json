@@ -1,0 +1,50 @@
+{
+    "Mine": [
+        {
+            "type" : "돌",
+            "buildLevel" : 1,
+            "buildTime" : 1,
+            "material" : "원석 1"
+              
+        },
+        {
+            "type" : "동",
+            "buildLevel" : 1,
+            "buildTime" : 2,
+            "material" : "원석 1"
+              
+        },
+        {
+            "type" : "철",
+            "buildLevel" : 5,
+            "buildTime" : 10,
+            "material" : "원석 1"
+              
+        },
+        {
+            "type" : "은",
+            "buildLevel" : 10,
+            "buildTime" : 30,
+            "material" : "원석 1"
+              
+        },
+        {
+            "type" : "금",
+            "buildLevel" : 20,
+            "buildTime" : 60,
+            "material" : "원석 1"
+              
+        },
+        {
+            "type" : "보석",
+            "buildLevel" : 30,
+            "buildTime" : 180,
+            "material" : "원석 1"
+              
+        }
+        
+           
+        
+        
+    ]
+}

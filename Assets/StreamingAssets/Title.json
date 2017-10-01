@@ -1,0 +1,68 @@
+{
+	"Title": [
+		{
+			"no": 0,
+			"name": "(칭호없음)",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		},
+		{
+			"no": 1,
+			"name": "부자",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+			
+		},
+		{
+			"no": 2,
+			"name": "미스릴마스터",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		},
+		{
+			"no": 3,
+			"name": "삼번칭호",
+			"stat_type": "attack",
+			"stat_amount": 10,
+			"comment": "공격력 10 증가"
+		},
+		{
+			"no": 4,
+			"name": "사번칭호",
+			"stat_type": "attack",
+			"stat_amount": 10,
+			"comment": "공격력 10 증가"
+		},
+		{
+			"no": 5,
+			"name": "오번칭호",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		},
+		{
+			"no": 6,
+			"name": "육번칭호",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		},
+		{
+			"no": 7,
+			"name": "칠번칭호",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		},
+		{
+			"no": 8,
+			"name": "팔번칭호",
+			"stat_type": 0,
+			"stat_amount": 0,
+			"comment": ""
+		}
+	]
+}

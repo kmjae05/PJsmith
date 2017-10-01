@@ -1,0 +1,64 @@
+{
+	"Hammer": [
+		{
+			"id": 0,
+			"name": "0 번 망치",
+			"power": 10,
+			"critical": 5,
+			"rarity": 1,
+			"type": 0,
+			"HmNum": "Hm_001",
+			"meshName": "Iron",
+			"price": 1000,
+			"slug": "000"
+		},
+		{
+			"id": 1,
+			"name": "1번 망치",
+			"power": 20,
+			"critical": 5,
+			"rarity": 1,
+			"type": 0,
+			"HmNum": "Hm_002",
+			"meshName": "Iron",
+			"price": 1000,
+			"slug": "001"
+		},
+		{
+			"id": 2,
+			"name": "2번 망치",
+			"power": 30,
+			"critical": 5,
+			"rarity": 1,
+			"type": 0,
+			"HmNum": "Hm_003",
+			"meshName": "Iron",
+			"price": 1000,
+			"slug": "002"
+		},
+		{
+			"id": 3,
+			"name": "3번 망치",
+			"power": 9999,
+			"critical": 5,
+			"rarity": 1,
+			"type": 0,
+			"HmNum": "Hm_004",
+			"meshName": "Iron",
+			"price": 1000,
+			"slug": "003"
+		},
+		{
+			"id": 4,
+			"name": "3번 망치",
+			"power": 9999,
+			"critical": 5,
+			"rarity": 1,
+			"type": 0,
+			"HmNum": "Hm_004",
+			"meshName": "Iron",
+			"price": 1000,
+			"slug": "004"
+		}
+	]
+}
