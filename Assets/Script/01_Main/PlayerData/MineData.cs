@@ -9,7 +9,7 @@ using System;
 public class MineData : MonoBehaviour {
 
     public static MineData instance = null;
-
+    //
     //Json Data
     public WWW reader;
     static public JsonData MineInfoData;
