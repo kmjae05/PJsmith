@@ -31,6 +31,7 @@ public class TerritoryManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             mineObj.Add(uiPanel.transform.Find("Mine/Spot" + (i + 1).ToString()).gameObject);
+            Debug.Log(mineObj[i]);
         }
         for (int i = 0; i < 6; i++)
         {
@@ -84,7 +85,53 @@ public class TerritoryManager : MonoBehaviour
     //건설 버튼
     public void BuildButton()
     {
+        MineInfo info = mineInfo.Find(x => x.type == curType);
         //재료 체크
+        for(int i = 0; i < info.necessaryMaterials.Length; i++)
+        {
+            //재료랑 갖고 있는 아이템 체크
+            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[i]);
+            if (thing != null)
+            {
+                Debug.Log(thing.possession);
+                Debug.Log(info.necessaryMaterialsNum[i]);
+                if (thing.possession >= info.necessaryMaterialsNum[i])
+                {
+                    //건설 조건 만족
+                    Debug.Log("y");
+                }
+                else
+                {
+                    //재료 수량 부족
+                    Debug.Log("no");
+                    return;
+                }
+            }
+            //아이템 못 찾음
+            else
+            {
+                Debug.Log("null");
+                return;
+            }
+            
+        }
+        //재료 체크 완료//
+
+        buildInfoPopup.SetActive(false);
+        //약간 어둡게. 월드맵 클릭 못하게.
+        //어두운 이미지 밑에 엑스 버튼 넣어서 취소하게 만들기.
+        //빈 스팟 띄우기
+        for (int j = 0; j < MineData.instance.getMineList().Count; j++)
+        {
+            if (MineData.instance.getMineList()[j].buildState == "nothing")
+            {
+                Debug.Log(mineObj[j].transform.Find("Image").gameObject);
+                mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                mineObj[j].transform.Find("Text").gameObject.SetActive(false);
+                mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
+                mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
+            }
+        }
 
 
         //미건설 스팟 띄우기

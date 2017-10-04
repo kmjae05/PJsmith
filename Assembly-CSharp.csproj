@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}</ProjectGuid>
+    <ProjectGuid>{AB4DBD7C-8853-99CD-B122-BB68684CD58F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,7 +46,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BagIdea\GUIScript.cs" />
+     <Compile Include="Assets\Dice\Plugins\Dice.cs" />
+     <Compile Include="Assets\Dice\Plugins\Die.cs" />
+     <Compile Include="Assets\Dice\Scripts\Dice\Die_d10.cs" />
+     <Compile Include="Assets\Dice\Scripts\Dice\Die_d6.cs" />
+     <Compile Include="Assets\Dice\scenes\Demo\AppDemo.cs" />
      <Compile Include="Assets\FX Quest\Demo\Scripts\FXQ_2D_Demo.cs" />
      <Compile Include="Assets\FX Quest\Demo\Scripts\FXQ_3D_Demo.cs" />
      <Compile Include="Assets\FX Quest\Demo\Scripts\Utilities\Particle_Controller\FXQ_MoveParticle.cs" />
@@ -268,14 +272,26 @@
      <Compile Include="Assets\OneSignal\src\OneSignalIOS.cs" />
      <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
      <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
+     <Compile Include="Assets\ProgressBar\Script\ProgressBarBehaviour.cs" />
+     <Compile Include="Assets\ProgressBar\Script\ProgressRadialBehaviour.cs" />
+     <Compile Include="Assets\ProgressBar\Script\Utils.cs" />
+     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
+     <Compile Include="Assets\Script\01_Main\ChrFaceScript.cs" />
+     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
+     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
+     <Compile Include="Assets\Script\01_Main\Dice\DiceManager.cs" />
+     <Compile Include="Assets\Script\01_Main\Dice\DiceRewardEffManager.cs" />
      <Compile Include="Assets\Script\01_Main\DimensionScript.cs" />
      <Compile Include="Assets\Script\01_Main\ExitScript.cs" />
      <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
+     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemDatabase.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
+     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
+     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\Achievementhandle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\EmblemHandle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\KanaiTest\KanaiHandle.cs" />
@@ -283,17 +299,28 @@
      <Compile Include="Assets\Script\01_Main\PlayerData\KanaiTest\RandumBoxHandle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\KanaiTest\RandumBoxItem.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\MailHandle.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\MercenaryData.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\MineData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\OreSelect.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\Player.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SceneData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\StageData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\TitleHandler.cs" />
      <Compile Include="Assets\Script\01_Main\ProfileChrDrag.cs" />
+     <Compile Include="Assets\Script\01_Main\ProfilePopupManager.cs" />
+     <Compile Include="Assets\Script\01_Main\SetSlotData.cs" />
      <Compile Include="Assets\Script\01_Main\SetUp\AndroidManager.cs" />
+     <Compile Include="Assets\Script\01_Main\SetUp\GPGSScript.cs" />
      <Compile Include="Assets\Script\01_Main\SetUp\SoundScript.cs" />
      <Compile Include="Assets\Script\01_Main\SetUp\ToggleSetupScript.cs" />
+     <Compile Include="Assets\Script\01_Main\StageItem.cs" />
+     <Compile Include="Assets\Script\01_Main\StageManager.cs" />
      <Compile Include="Assets\Script\01_Main\Store\Store.cs" />
+     <Compile Include="Assets\Script\01_Main\Store\StoreManager.cs" />
+     <Compile Include="Assets\Script\01_Main\TerritoryManager.cs" />
+     <Compile Include="Assets\Script\01_Main\WorldMapManager.cs" />
      <Compile Include="Assets\Script\02_Loading\InGameLoad.cs" />
      <Compile Include="Assets\Script\02_Loading\LoadData.cs" />
      <Compile Include="Assets\Script\02_Loading\Loading.cs" />
@@ -303,9 +330,13 @@
      <Compile Include="Assets\Script\03_InGame\CameraEffect.cs" />
      <Compile Include="Assets\Script\03_InGame\Clicker.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\BossMonsterMove.cs" />
+     <Compile Include="Assets\Script\03_InGame\Combat\CoinScript.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\Combat.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\CombatBackground.cs" />
+     <Compile Include="Assets\Script\03_InGame\Combat\CombatManager.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\CombatSkill3Collision.cs" />
+     <Compile Include="Assets\Script\03_InGame\Combat\ComboImageDestroy.cs" />
+     <Compile Include="Assets\Script\03_InGame\Combat\ComboImageScript.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\CompleteCombat.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\DamageImageScript.cs" />
      <Compile Include="Assets\Script\03_InGame\Combat\DontDestroyScript.cs" />
@@ -352,6 +383,7 @@
      <Compile Include="Assets\Simple Sprite Packer\Scripts\SPInstance.cs" />
      <Compile Include="Assets\Simple Sprite Packer\Scripts\SPSpriteInfo.cs" />
      <Compile Include="Assets\Simple Sprite Packer\Scripts\UITexturePacker.cs" />
+     <Compile Include="Assets\Tazo_fx\Script\BillBoard.cs" />
      <Compile Include="Assets\[6]Golem\Scripts\buttons.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
@@ -361,6 +393,7 @@
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\layout-v11\status_bar_ongoing_event_progress_bar.xml" />
      <None Include="Assets\Resources\Shader\RadialBlur2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+     <None Include="Assets\Dice\-Read-Me-.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
@@ -372,6 +405,7 @@
      <None Include="Assets\Standard Assets\Effects\Projectors\Guidelines.txt" />
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\values\strings.xml" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlur.shader" />
+     <None Include="Assets\3DModel\Materials\Etc\ColorMask.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\values-v9\styles.xml" />
      <None Include="Assets\GooglePlayGames\Editor\template-GameInfo.txt" />
@@ -459,7 +493,7 @@
      <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
  <Reference Include="Facebook.Unity.Settings">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -483,27 +517,27 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="GETween">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
  </Reference>
  <Reference Include="GUIAnimatorFREE">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
  </Reference>
  <Reference Include="OneSignalSDK_WP_WNS">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
  </Reference>
  <Reference Include="I18N.CJK">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/I18N.CJK.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.CJK.dll</HintPath>
  </Reference>
  <Reference Include="I18N">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/I18N.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/LitJson.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/LitJson.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{3B5832DA-4F75-9BDA-5FE5-18416062FA2E}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

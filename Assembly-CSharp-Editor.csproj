@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CFDDFF10-7A29-A03E-38A5-6E6E4B835052}</ProjectGuid>
+    <ProjectGuid>{BEB4EE4E-FDF1-EA56-2A01-483E97D8661C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -96,6 +96,7 @@
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\layout-v11\status_bar_ongoing_event_progress_bar.xml" />
      <None Include="Assets\Resources\Shader\RadialBlur2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+     <None Include="Assets\Dice\-Read-Me-.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
@@ -107,6 +108,7 @@
      <None Include="Assets\Standard Assets\Effects\Projectors\Guidelines.txt" />
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\values\strings.xml" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlur.shader" />
+     <None Include="Assets\3DModel\Materials\Etc\ColorMask.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
      <None Include="Assets\Plugins\Android\UnityOBBDownloader\res\values-v9\styles.xml" />
      <None Include="Assets\GooglePlayGames\Editor\template-GameInfo.txt" />
@@ -194,10 +196,10 @@
      <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
  <Reference Include="Assembly-UnityScript">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity.Settings">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -257,41 +259,41 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="FX Quest">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/FX Quest/Editor/FX Quest.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/FX Quest/Editor/FX Quest.dll</HintPath>
  </Reference>
  <Reference Include="GETween">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
  </Reference>
  <Reference Include="GUIAnimatorFREE">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
  </Reference>
  <Reference Include="OneSignalSDK_WP_WNS">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
  </Reference>
  <Reference Include="Google.IOSResolver">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/PlayServicesResolver/Editor/Google.IOSResolver.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/PlayServicesResolver/Editor/Google.IOSResolver.dll</HintPath>
  </Reference>
  <Reference Include="Google.JarResolver">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/PlayServicesResolver/Editor/Google.JarResolver.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/PlayServicesResolver/Editor/Google.JarResolver.dll</HintPath>
  </Reference>
  <Reference Include="Google.VersionHandler">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
  </Reference>
  <Reference Include="I18N.CJK">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/I18N.CJK.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.CJK.dll</HintPath>
  </Reference>
  <Reference Include="I18N">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/I18N.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
- <HintPath>D:/1/4-1/인턴/SwordMaker0721/Assets/Plugins/LitJson.dll</HintPath>
+ <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/LitJson.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B6E06E9C-7C29-4B58-C8D6-ABF622699A9C}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{3B5832DA-4F75-9BDA-5FE5-18416062FA2E}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{100FFFC1-4E1E-7BC8-8A9E-DEED8C869169}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{AB4DBD7C-8853-99CD-B122-BB68684CD58F}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
