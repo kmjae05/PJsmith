@@ -8,6 +8,8 @@ public class TerritoryManager : MonoBehaviour
 
     private GameObject uiPanel;
     private GameObject buildInfoPopup;
+    private GameObject BlackBack;
+    private Button CancleButton;
 
 
     private List<GameObject> mineObj;           //광산 스팟
@@ -23,7 +25,8 @@ public class TerritoryManager : MonoBehaviour
     {
         uiPanel = GameObject.Find("Menu").transform.Find("TerritoryPopup/UIPanel").gameObject;
         buildInfoPopup = GameObject.Find("System").transform.Find("BuildInfoPopup").gameObject;
-
+        BlackBack = uiPanel.transform.Find("BlackBack").gameObject;
+        CancleButton = BlackBack.transform.Find("CancleButton").gameObject.GetComponent<Button>();
 
         mineObj = new List<GameObject>();
         bottonButtonList = new List<GameObject>();
@@ -31,7 +34,6 @@ public class TerritoryManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             mineObj.Add(uiPanel.transform.Find("Mine/Spot" + (i + 1).ToString()).gameObject);
-            Debug.Log(mineObj[i]);
         }
         for (int i = 0; i < 6; i++)
         {
@@ -93,8 +95,6 @@ public class TerritoryManager : MonoBehaviour
             Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[i]);
             if (thing != null)
             {
-                Debug.Log(thing.possession);
-                Debug.Log(info.necessaryMaterialsNum[i]);
                 if (thing.possession >= info.necessaryMaterialsNum[i])
                 {
                     //건설 조건 만족
@@ -118,14 +118,26 @@ public class TerritoryManager : MonoBehaviour
         //재료 체크 완료//
 
         buildInfoPopup.SetActive(false);
-        //약간 어둡게. 월드맵 클릭 못하게.
-        //어두운 이미지 밑에 엑스 버튼 넣어서 취소하게 만들기.
+        BlackBack.SetActive(true);
+        //건설 취소 버튼
+        CancleButton.onClick.AddListener(() => { BlackBack.SetActive(false);
+            for (int j = 0; j < MineData.instance.getMineList().Count; j++)
+            {
+                if (MineData.instance.getMineList()[j].buildState == "nothing")
+                {
+                    mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                    mineObj[j].transform.Find("Text").gameObject.SetActive(false);
+                    mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
+                    mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
+                }
+            }
+        });
+
         //빈 스팟 띄우기
         for (int j = 0; j < MineData.instance.getMineList().Count; j++)
         {
             if (MineData.instance.getMineList()[j].buildState == "nothing")
             {
-                Debug.Log(mineObj[j].transform.Find("Image").gameObject);
                 mineObj[j].transform.Find("Image").gameObject.SetActive(false);
                 mineObj[j].transform.Find("Text").gameObject.SetActive(false);
                 mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
@@ -138,7 +150,7 @@ public class TerritoryManager : MonoBehaviour
 
     }
 
-    //스팟 선택
+    //건설 스팟 선택
 
 
 
