@@ -63,17 +63,17 @@ public class MineData : MonoBehaviour {
         for (int i = 0; i < 10; i++)
         {
             //건설 진행 중
-            if(mineList[i].buildState == "beunder")
-            {
-                mineList[i].buildTime += Time.deltaTime;
-                if(mineList[i].buildTime > mineInfoList.Find(x=>x.type == mineList[i].type).buildTime)
-                {
-                    mineList[i].buildTime = 0f;
-                    mineList[i].buildState = "complete";
-                    //완료 되면 바로 채굴
-                    mineList[i].miningState = true;
-                }
-            }
+            //if(mineList[i].buildState == "beunder")
+            //{
+            //    mineList[i].buildTime += Time.deltaTime;
+            //    if(mineList[i].buildTime > mineInfoList.Find(x=>x.type == mineList[i].type).buildTime)
+            //    {
+            //        mineList[i].buildTime = 0f;
+            //        mineList[i].buildState = "complete";
+            //        //완료 되면 바로 채굴
+            //        mineList[i].miningState = true;
+            //    }
+            //}
             //채굴 진행 중
             if (mineList[i].miningState)
             {
