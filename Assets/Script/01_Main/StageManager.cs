@@ -160,7 +160,7 @@ public class StageManager : MonoBehaviour
 
 
         // 스테이지 선택 창
-        if (GameObject.Find("Menu").transform.Find("WorldMapPopup/ContinentStage"+worldmapManager.getContNum().ToString()).gameObject.activeInHierarchy)
+        if (GameObject.Find("Menu").transform.Find("WorldMapPopup/ContinentStage" + worldmapManager.getContNum().ToString()).gameObject.activeInHierarchy)
         {
             stageInfoListtmp.Clear();
             

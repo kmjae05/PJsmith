@@ -63,30 +63,35 @@ public class MineData : MonoBehaviour {
         for (int i = 0; i < 10; i++)
         {
             //건설 진행 중
-            //if(mineList[i].buildState == "beunder")
-            //{
-            //    mineList[i].buildTime += Time.deltaTime;
-            //    if(mineList[i].buildTime > mineInfoList.Find(x=>x.type == mineList[i].type).buildTime)
-            //    {
-            //        mineList[i].buildTime = 0f;
-            //        mineList[i].buildState = "complete";
-            //        //완료 되면 바로 채굴
-            //        mineList[i].miningState = true;
-            //    }
-            //}
+            if (mineList[i].buildState == "beunder")
+            {
+                mineList[i].buildTime -= Time.deltaTime;
+                if (mineList[i].buildTime < 0)
+                {
+                    mineList[i].buildTime = 0f;
+                    mineList[i].buildState = "complete";
+                    //완료 되면 바로 채굴
+                    mineList[i].miningState = true;
+                }
+            }
             //채굴 진행 중
             if (mineList[i].miningState)
             {
+                //획득 주기에 따라 획득
                 mineList[i].curTime += Time.deltaTime;
                 if(mineList[i].curTime > mineList[i].miningTime)
                 {
                     mineList[i].curTime = 0f;
-                    mineList[i].getAmount = mineList[i].getOnceAmount;
+                    mineList[i].getAmount += mineList[i].getOnceAmount;
                     //획득 가능한 양에 도달
-                    if (mineList[i].getAmount > mineList[i].deposit)
+                    if (mineList[i].getAmount >= mineList[i].deposit)
                     {
                         mineList[i].getAmount = mineList[i].deposit;
                         mineList[i].miningState = false;    //채굴 완료
+
+
+
+
                     }
                 }
             }
@@ -117,6 +122,7 @@ public class Mine
     public int level;       //레벨
     public string buildState;   // 건설 상태 - nothing, beunder, complete
     public float buildTime;     //건설 중 시간
+    public string getThingName; //획득 가능 아이템 이름
     public int getAmount;       //획득한 양
     public int getOnceAmount;   //한 주기에 획득 가능한 양
     public int deposit;    //매장량
@@ -149,6 +155,7 @@ public class MineInfo
     public string type;         //종류
     public int buildLevel;      //건설 가능 레벨
     public float buildTime;     //걸리는 시간
+    public string getThingName; //획득 가능 아이템 이름
     private string material;             //json으로 데이터 불러옴
 
     public string[] necessaryMaterials; //필요 재료
@@ -160,6 +167,7 @@ public class MineInfo
         this.type = MineInfoData["Mine"][index]["type"].ToString();
         this.buildLevel = (int)MineInfoData["Mine"][index]["buildLevel"];
         this.buildTime = (int)MineInfoData["Mine"][index]["buildTime"];
+        this.getThingName = MineInfoData["Mine"][index]["getThingName"].ToString();
         this.material = MineInfoData["Mine"][index]["material"].ToString();
         char[] del = { ' ' };
         string[] words = material.Split(del, StringSplitOptions.RemoveEmptyEntries);
