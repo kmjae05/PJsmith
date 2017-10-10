@@ -15,9 +15,12 @@ public class TerritoryManager : MonoBehaviour
     private GameObject BlackBack;
     private Button CancleButton;
     private GameObject BottomMenuLock;
+    private GameObject StartLock;
 
     private GameObject SystemPopup;
     private Button sys_yesButton;
+    private Button sys_NoButton;
+    private Button sys_OkButton;
 
 
     private List<GameObject> mineObj;           //광산 스팟
@@ -39,8 +42,11 @@ public class TerritoryManager : MonoBehaviour
         BlackBack = uiPanel.transform.Find("BlackBack").gameObject;
         CancleButton = BlackBack.transform.Find("CancleButton").gameObject.GetComponent<Button>();
         BottomMenuLock = uiPanel.transform.Find("BottomMenu/BottomMenuLock").gameObject;
+        StartLock = GameObject.Find("MenuButton (1)").transform.Find("LockImage").gameObject;
         SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
         sys_yesButton = SystemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
+        sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
 
 
         mineObj = new List<GameObject>();
@@ -79,6 +85,7 @@ public class TerritoryManager : MonoBehaviour
                     //mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
 
                     BottomMenuLock.SetActive(false);
+                    StartLock.SetActive(false);
                     if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
                 }
                 //시간 빼기
@@ -154,8 +161,21 @@ public class TerritoryManager : MonoBehaviour
         buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + level.ToString();
         buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + mineInfo[index].buildTime + "초";
         buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : 100";
-        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : "
-            + mineInfo[index].necessaryMaterials[0] + " " + mineInfo[index].necessaryMaterialsNum[0];
+        string mtr = null;
+        for(int i=0; i < mineInfo[index].necessaryMaterials.Length; i++)
+        {
+            if(mineInfo[index].necessaryMaterials.Length == 1)
+            {
+                mtr = mineInfo[index].necessaryMaterials[0] + " " + mineInfo[index].necessaryMaterialsNum[0];
+                break;
+            }
+            else
+            {
+                if (i == 0) { mtr = mineInfo[index].necessaryMaterials[0] + " " + mineInfo[index].necessaryMaterialsNum[0]; }
+                else { mtr += ", " + mineInfo[index].necessaryMaterials[i] + " " + mineInfo[index].necessaryMaterialsNum[i]; }
+            }
+        }
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + mtr;
         curType = mineInfo[index].type;
     }
 
@@ -247,7 +267,6 @@ public class TerritoryManager : MonoBehaviour
         {
             Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[i]);
             thing.possession -= info.necessaryMaterialsNum[i];
-            Debug.Log(thing.possession);
         }
 
         obj.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -277,6 +296,8 @@ public class TerritoryManager : MonoBehaviour
         BlackBack.SetActive(false);
         //하단메뉴 잠금
         BottomMenuLock.SetActive(true);
+        //대장장이 행동 제한
+        StartLock.SetActive(true);
 
     }
 
@@ -297,6 +318,10 @@ public class TerritoryManager : MonoBehaviour
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
             SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 20개를 사용하여 즉시 완료하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
+
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 SystemPopup.SetActive(false);
@@ -307,7 +332,7 @@ public class TerritoryManager : MonoBehaviour
                     SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 구매 페이지로 이동하시겠습니까?";
                     sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
                     sys_yesButton.GetComponent<Button>().onClick.AddListener(() => GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true));
-                    SystemPopup.SetActive(true);
+                    BeUnderPopup.SetActive(false);
                     return;
                 }
 
@@ -325,6 +350,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[num].transform.Find("pickax").gameObject.SetActive(true);
 
                 BottomMenuLock.SetActive(false);
+                StartLock.SetActive(false);
                 if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
                 mineObj[num].GetComponent<Button>().onClick.RemoveAllListeners();
             });
@@ -339,6 +365,9 @@ public class TerritoryManager : MonoBehaviour
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "건설 취소";
             SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설을 취소하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 SystemPopup.SetActive(false);
@@ -348,6 +377,7 @@ public class TerritoryManager : MonoBehaviour
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("TypeName").gameObject.SetActive(false);
                 BottomMenuLock.SetActive(false);
+                StartLock.SetActive(false);
                 if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
             });
 
@@ -370,6 +400,9 @@ public class TerritoryManager : MonoBehaviour
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
             SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 5개를 사용하여 즉시 완료하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 SystemPopup.SetActive(false);
@@ -379,7 +412,7 @@ public class TerritoryManager : MonoBehaviour
                     SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 구매 페이지로 이동하시겠습니까?";
                     sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
                     sys_yesButton.GetComponent<Button>().onClick.AddListener(() => GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true));
-                    SystemPopup.SetActive(true);
+                    MiningPopup.SetActive(false);
                     return;
                 }
 
@@ -393,6 +426,32 @@ public class TerritoryManager : MonoBehaviour
         });
 
         //부스트
+        MiningPopup.transform.Find("UIPanel/BoostButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        MiningPopup.transform.Find("UIPanel/BoostButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+            SystemPopup.SetActive(true);
+
+            SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "";
+            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
+            sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+                SystemPopup.SetActive(false);
+                MiningPopup.SetActive(false);
+
+                MineData.instance.getMineList()[num].buildTime = 0f;
+                MineData.instance.getMineList()[num].buildState = "nothing";
+                MineData.instance.getMineList()[num].miningState = false;
+                obj.transform.Find("Image").gameObject.SetActive(false);
+                obj.transform.Find("Text").gameObject.SetActive(false);
+                obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("TypeName").gameObject.SetActive(false);
+            });
+
+        });
+
+
 
 
 
@@ -404,6 +463,9 @@ public class TerritoryManager : MonoBehaviour
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "광산 폐광";
             SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "채굴을 중지하고 폐광하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 SystemPopup.SetActive(false);

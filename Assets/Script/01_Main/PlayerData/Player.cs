@@ -56,7 +56,7 @@ public class Player : MonoBehaviour {
             this.Name = "대장장이 스미스";
             this.level = 1;
             this.exp = 0;
-            this.max_exp = this.level * 55;
+            this.max_exp = this.level * 10;
             this.gold = 500;
             this.cash = 100;
             this.achvScore = 0;

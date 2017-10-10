@@ -151,6 +151,13 @@
             "name" : "티켓",
             "explanation" : "",
             "icon" : "Reward/reward1"
+        },
+        {
+            "item_no": 24,
+            "type" : "Others",
+            "name" : "부스트",
+            "explanation" : "채굴 주기 감소",
+            "icon" : ""
         }
         
         
