@@ -149,15 +149,15 @@
             "item_no": 23,
             "type" : "Others",
             "name" : "티켓",
-            "explanation" : "",
+            "explanation" : "주사위 미니게임을 할 수 있는 아이템",
             "icon" : "Reward/reward1"
         },
         {
             "item_no": 24,
             "type" : "Others",
             "name" : "부스트",
-            "explanation" : "채굴 주기 감소",
-            "icon" : ""
+            "explanation" : "채굴 주기를 감소시키는 아이템",
+            "icon" : "Things/Boost"
         }
         
         

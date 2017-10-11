@@ -49,7 +49,9 @@ public class ThingsData : MonoBehaviour
         {
             thingsList.Add(new Things(thingsData, i));
         }
+        thingsList.Find(x => x.name == "원석").possession = 3;
         thingsList.Find(x => x.name == "티켓").possession = 3;
+        thingsList.Find(x => x.name == "부스트").possession = 3;
 
     }
 

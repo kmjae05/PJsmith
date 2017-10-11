@@ -129,6 +129,7 @@ public class Mine
     public float miningTime;    //획득 주기
     public float curTime;       //현재 채굴 시간
     public bool miningState;    //채굴 상태     t채굴 중, f채굴 완료
+    public bool boostState;     //부스트 아이템 사용 상태
 
     public Mine(int mineNum)
     {
@@ -143,6 +144,7 @@ public class Mine
         miningTime = 0f;
         curTime = 0f;
         miningState = false;
+        boostState = false;
     }
 
 
