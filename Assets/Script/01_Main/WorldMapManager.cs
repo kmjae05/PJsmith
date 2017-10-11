@@ -53,6 +53,7 @@ public class WorldMapManager : MonoBehaviour {
         if (ContNum == 2) { Contname = "플루오네"; info = "천계 전쟁으로 사라져 버린 신들의 강력한 무기들이 숨겨져 있다."; }
         if (ContNum == 3) { Contname = "일사바드"; info = "죽은 자들의 원한이 활개치는 곳."; }
         if (ContNum == 4) { Contname = "원무제국"; info = "약탈을 일삼는 소수민족이 살고 있다."; }
+        if (ContNum == 5) { Contname = "드래곤로드"; info = "드래곤로드"; }
 
         nameText.text = Contname;
         infoText.text = info;
@@ -83,7 +84,7 @@ public class WorldMapManager : MonoBehaviour {
         {
             appearance = monster.transform.Find("Skeleton").gameObject;
         }
-        else if(ContNum == 1 || ContNum == 4)
+        else if(ContNum == 1 || ContNum == 4 || ContNum == 5)
         {
             appearance = monster.transform.Find("Golem").gameObject;
         }

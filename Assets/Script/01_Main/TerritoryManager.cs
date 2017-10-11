@@ -69,11 +69,16 @@ public class TerritoryManager : MonoBehaviour
         {
             int index = i;
             bottonButtonList[i].transform.Find("OreImage").gameObject.GetComponent<Button>().onClick.AddListener(() => BottomButtonSetting(index));
+            if (i>=2 && Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
+                bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
+        for (int i = 2; i < 6; i++)
+            if (Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
+                bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
         for (int i = 0; i < MineData.instance.getMineList().Count; i++)
         {
             //건설 중
@@ -317,7 +322,7 @@ public class TerritoryManager : MonoBehaviour
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
-            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 20개를 사용하여 즉시 완료하시겠습니까?";
+            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 5개를 사용하여 즉시 완료하시겠습니까?";
             sys_yesButton.gameObject.SetActive(true);
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
@@ -340,7 +345,7 @@ public class TerritoryManager : MonoBehaviour
                     return;
                 }
 
-                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 20);
+                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 5);
 
                 MineData.instance.getMineList()[num].buildTime = 0f;
                 MineData.instance.getMineList()[num].buildState = "complete";
@@ -403,7 +408,7 @@ public class TerritoryManager : MonoBehaviour
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
-            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 5개를 사용하여 즉시 완료하시겠습니까?";
+            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 1개를 사용하여 즉시 완료하시겠습니까?";
             sys_yesButton.gameObject.SetActive(true);
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
@@ -424,7 +429,7 @@ public class TerritoryManager : MonoBehaviour
                     return;
                 }
                 MiningPopup.SetActive(false);
-                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 5);
+                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 1);
 
                 MineData.instance.getMineList()[num].miningState = false;
                 obj.transform.Find("Text").gameObject.GetComponent<Text>().text = MineData.instance.getMineList()[num].deposit.ToString() + "개 채굴 완료";
@@ -512,6 +517,9 @@ public class TerritoryManager : MonoBehaviour
     public void getOre(GameObject obj, int num)
     {
         Debug.Log("완료");
+
+        GameObject.Find("PlayerData").GetComponent<Player>().getExp(10);
+
         MineData.instance.getMineList()[num].buildState = "nothing";
         MineData.instance.getMineList()[num].getAmount = 0;
         MineData.instance.getMineList()[num].curTime = 0f;
@@ -587,6 +595,7 @@ public class TerritoryManager : MonoBehaviour
                 //부스트 상태
                 if (MineData.instance.getMineList()[i].boostState)
                     mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(true);
+                else mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }
         }
     }

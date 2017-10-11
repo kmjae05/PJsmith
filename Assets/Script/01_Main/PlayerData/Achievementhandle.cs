@@ -460,6 +460,7 @@ public class Achievementhandle : MonoBehaviour {
 
         yield return new WaitForSeconds(1.5f);
         iTween.MoveTo(AcvBox, iTween.Hash("y", 75, "time", 0.5f, "isLocal", true, "oncomplete", "CloseAcvBox"));
+        AcvBox.SetActive(false);
     }
     void CloseAcvBox()
     {
@@ -470,6 +471,9 @@ public class Achievementhandle : MonoBehaviour {
     
     public void ReceiveAchv(int r_index) //업적 보상 받기 함수
     {
+        RewardButton[r_index].onClick.RemoveAllListeners();
+        NewIcon.SetActive(false); //new 아이콘 비활성화
+
         string type = AchvList[r_index].achv_reward_type;
         int quantity = AchvList[r_index].achv_reward_quantity;
         GetComponent<Player>().GetMoney("gold", quantity);
@@ -480,7 +484,7 @@ public class Achievementhandle : MonoBehaviour {
         AchvList[r_index].score *= 2;   //스코어 갱신
         StartCoroutine(GetAchievement(r_index, AchvList[r_index].type, AchvList[r_index].amount));   //갱신된 업적 완료대기
         #endregion
-
+        RewardPanel[r_index].SetActive(false);
         if (SpecialReward[r_index].enabled)     //획득할 칭호가 있다면
         {
             for (int i = 0; i < AchvList[r_index].special_reward.Length; i++){
@@ -493,14 +497,14 @@ public class Achievementhandle : MonoBehaviour {
                     //New_Title_Icon.SetActive(true);    //ProfilePopup 안 new 아이콘 활성화(칭호)
                     //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Image>()[3].enabled = true;
                     //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Text>()[1].enabled = true;
-                    RewardPanel[r_index].SetActive(false);
+                    //RewardPanel[r_index].SetActive(false);
                     GetComponent<TitleHandler>().ArrangeTitle();
                     G_AchvList[r_index].transform.SetSiblingIndex(ArrangeAchv(r_index));
                 }
             }
         }
         Check_Special_Reward(r_index);
-        //Achievement_AlertIcon.SetActive(false); //new 아이콘 비활성화
+        
     }
     public int ArrangeAchv(int index)
     {

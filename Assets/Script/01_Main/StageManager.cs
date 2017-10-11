@@ -97,9 +97,10 @@ public class StageManager : MonoBehaviour
                     spotButton.name = sList[i].stageName + "Button"; //오브젝트 이름 변경
                     spotButton.GetComponent<Image>().sprite = sList[i].sprite;
                     if (sList[i].state) {
-                        if (sList[i].getStageNum() <= 15)
-                            spotButton.transform.Find("State/Progress/pickax").gameObject.SetActive(true);
-                        else spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
+                        //if (sList[i].getStageNum() <= 15)
+                        //    spotButton.transform.Find("State/Progress/pickax").gameObject.SetActive(true);
+                        //else
+                            spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
                         spotButton.transform.Find("MercImage").gameObject.SetActive(true);
                         spotButton.transform.Find("MercImage").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + sList[i].mercenaryName);
                     }
@@ -352,9 +353,10 @@ public class StageManager : MonoBehaviour
             float time = stageInfoList.Find(x => x.getStageNum() == curStageSelect && x.getContName() == curContSelect).time;
             timeText.text = "남은 시간 : " + ((int)(time / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
 
-            if(result.getStageNum() <= 15)
-                GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(true);
-            else GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(true);
+            //if(result.getStageNum() <= 15)
+            //    GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(true);
+            //else 
+            GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(true);
 
             GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
             GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
@@ -484,6 +486,7 @@ public class StageManager : MonoBehaviour
         {
             Vector3 getItemListObj = GameObject.Find(result.stageName + "Button").transform.position; // 시작 위치
             GameObject stageItem = GameObject.Find("StageItemImagePos").transform.Find("StageItemImage").gameObject;
+            GameObject.Find("PlayerData").GetComponent<Player>().getExp(30);
             StartCoroutine(createGetItem(result, stageItem, "StageItemImagePos", getItemListObj));
         }
         //로비에서 완료한 경우
@@ -491,6 +494,7 @@ public class StageManager : MonoBehaviour
         {
             Vector3 getItemListObj = GameObject.Find("Mercenary"+result.mercenaryName+"Button").transform.position; // 시작 위치
             GameObject stageItem = GameObject.Find("StageItemImagePos").transform.Find("StageItemImage").gameObject;
+            GameObject.Find("PlayerData").GetComponent<Player>().getExp(30);
             StartCoroutine(createGetItem(result, stageItem, "StageItemImagePos", getItemListObj));
         }
 
@@ -618,45 +622,7 @@ public class StageManager : MonoBehaviour
     //스테이지 정보창 획득 가능한 아이템 정리
     public void setGetItemInfo(StageInfo result)
     {
-        if (result.getStageNum() <= 15)
-        {
-            if (result.type == "동광")
-            {
-                stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/copper");
-                stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "구리";
-                stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/gemstone");
-                stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "원석";
-                stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/ironDust");
-                stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "철 가루";
-                stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/iron");
-                stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "철";
-            }
-            if (result.type == "철광")
-            {
-                stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/iron");
-                stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "철";
-                stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/copper");
-                stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "구리";
-                stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/gemstone");
-                stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "원석";
-                stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/silver");
-                stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "은";
-            }
-            if (result.type == "은광")
-            {
-                stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/silver");
-                stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "은";
-                stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/iron");
-                stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "철";
-                stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/copper");
-                stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "구리";
-                stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/gold");
-                stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "금";
-            }
-        }
-        //사냥
-        else
-        {
+        ////사냥
             stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword");
             stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "하이그라스 단검";
             stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword2");
@@ -665,7 +631,6 @@ public class StageManager : MonoBehaviour
             stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "팔라딘 소드";
             stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword");
             stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "고급 하이그라스 단검";
-        }
     }
 
     //이미지 변경

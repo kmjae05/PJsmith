@@ -1,0 +1,21 @@
+{
+    "Plunder": [
+        {
+            "user_id" : "AI001",
+            "Name" : "AI001",
+            "level" : 1,
+            "mercenary" : "M001",
+            "dps" : 20,
+            "strPower" : 60,
+            "attackSpeed" : 2,
+            "focus" : 0,
+            "critical" : 0,
+            "defPower" : 0,
+            "evaRate" : 0    
+        }
+        
+        
+        
+        
+    ]
+}

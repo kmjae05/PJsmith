@@ -341,7 +341,6 @@
     <Compile Include="Assets\ProgressBar\Script\ProgressRadialBehaviour.cs" />
     <Compile Include="Assets\ProgressBar\Script\Utils.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
-    <Compile Include="Assets\Script\01_Main\ChrFaceScript.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceManager.cs" />

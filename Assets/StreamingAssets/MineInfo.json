@@ -3,7 +3,7 @@
         {
             "type" : "돌",
             "buildLevel" : 1,
-            "buildTime" : 10,
+            "buildTime" : 60,
             "getThingName" : "원석",
             "material" : "원석 1"
               

@@ -187,13 +187,7 @@ public class StageData : MonoBehaviour {
     //스테이지 이미지 변경.
     public void stageImageChange(StageInfo stin)
     {
-        if (stin.type == "동광")
-            stin.sprite = Resources.Load<Sprite>("Gather/copper"+ stin.typeNum.ToString());
-        else if (stin.type == "철광")
-            stin.sprite = Resources.Load<Sprite>("Gather/iron" + stin.typeNum.ToString());
-        else if (stin.type == "은광")
-            stin.sprite = Resources.Load<Sprite>("Gather/silver" + stin.typeNum.ToString());
-        else if (stin.type == "던전")
+        if (stin.type == "던전")
             stin.sprite = Resources.Load<Sprite>("Gather/minimonster" + stin.typeNum.ToString());
     }
 
@@ -201,33 +195,7 @@ public class StageData : MonoBehaviour {
     public void getItem(StageInfo stin)
     {
         int rand = 0;
-        if (stin.type == "동광")
-        {   //구리30, 원석30, 철 가루30, 철10
-            rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "구리"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 60) { stin.getItem[1] = "원석"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "철 가루"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
-            else { stin.getItem[3] = "철"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
-        }
-        else if (stin.type == "철광")
-        {
-            //철30, 구리30, 원석30, 은10
-            rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "철"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 60) { stin.getItem[1] = "구리"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "원석"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
-            else { stin.getItem[3] = "은"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
-        }
-        else if (stin.type == "은광")
-        {
-            //은30, 철30, 구리30, 금10
-            rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "은"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 60) { stin.getItem[1] = "철"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "구리"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
-            else { stin.getItem[3] = "금"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
-        }
-        else if (stin.type == "던전")
+        if (stin.type == "던전")
         {
             //하이그라스 단검30, 엘더 소드30, 팔라딘 소드30, 고급 하이그라스 단검10
             rand = Random.Range(0, 100);
@@ -260,15 +228,8 @@ public class StageData : MonoBehaviour {
     //type int -> string
     public string typeNumToString(int stageNum, int i)
     {
-        //채집
-        if (stageNum <= 15) {
-            if (i == 1) return "동광"; else if (i == 2) return "철광"; else if (i == 3) return "은광"; else return null;
-        }
-        //사냥
-        else   {
-            if (i == 1) return "던전"; else if (i == 2) return "던전"; else if (i == 3) return "던전"; else return null;
-        }
-        
+        ////사냥
+            if (i == 1) return "던전"; else if (i == 2) return "던전"; else if (i == 3) return "던전"; else return null;        
     }
 
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
@@ -281,17 +242,18 @@ public class StageData : MonoBehaviour {
 
 
 //나중에 DB로.
+//사냥 스팟
 public class StageInfo
 {
     //바뀌지 않는 data
     private string ContName;         //대륙 이름
-    private int stageNum;           //스테이지 번호
+    private int stageNum;           //본인 번호
 
     //바뀌는 data
-    public string spotName;        //스팟 이름
-    public string type;            //채집or몬스터 종류
+    public string spotName;        //위치한 스팟 이름
+    public string type;            //몬스터 종류
     public int typeNum;            //1-소, 2-중, 3-대
-    public string stageName;       //스테이지 이름
+    public string stageName;       //오브젝트 이름
     public Sprite sprite;          //스프라이트
 
     public bool state;             //진행 상태
@@ -310,9 +272,6 @@ public class StageInfo
     public int getRecentItemNum;    //최근 획득한 아이템 수
     public bool getRecentItemFlag;  //아이템 획득 타이밍
         
-
-
-
     //생성자
     public StageInfo() { wait = true; spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
     public StageInfo(string ContName, int stageNum)
@@ -326,37 +285,80 @@ public class StageInfo
     public string getContName() { return ContName; }
     public int getStageNum() { return stageNum; }
 
-    //public void setSpotName(string n) { spotName = n; }
-    //public string getSpotName() { return spotName; }
-
-    //public string[] getGetItem() { return getItem; }
-
-    //public string getStageName() { return stageName; }
-    //public void setStageName(string n) { stageName = n; }
-    //public void setState(bool b) { state = b; }
-    //public bool getState() { return state; }
-    //public void setMercenaryName(string n) { mercenaryName = n; }
-    //public string getMercenaryName() { return mercenaryName; }
-    //public void setTime(float t) { time = t; }
-    //public float getTime() { return time; }
-    //public void setComplete(bool b) { complete = b; }
-    //public bool getComplete() { return complete; }
 }
 
-
-public class Spot{
-
+//스팟 고정 위치
+public class Spot
+{
     private string ContName;        //대륙 이름
     private string spotName;
 
     public Transform position;        //위치 localposition 사용
-    public int stageNum;
+    public int stageNum;            //사냥 스팟 이름
+    public int plunderNum;          //약탈 스팟 이름
     public bool active;     // 활성화/비활성화
 
-    public Spot()    { active = false; }
+    public Spot() { active = false; }
     public Spot(string cont, string spotN, Transform pos) { this.ContName = cont; this.spotName = spotN; this.position = pos; active = false; }
 
     public string getContName() { return ContName; }
     public string getSpotName() { return spotName; }
     public Transform getPosition() { return position; }
+}
+
+
+//약탈 스팟
+public class PlunderSpot
+{
+    //바뀌지 않는 data
+    private string ContName;        //대륙 이름
+    private int PlunderNum;         //고유 번호
+
+    //바뀌는 data
+    public string spotName;        //위치한 스팟 이름
+    public string PlunderName;     //오브젝트 이름
+    public string opponentName;     //상대 이름
+    public Sprite sprite;          //스프라이트 (집
+
+    public bool state;             //진행 상태
+    public bool regen;              //리젠 중
+
+    public string[] getItem;        //전체 획득한 아이템
+    public int[] getItemNum;        //전체 획득한 아이템 수량
+    public float getItemTime;       //아이템 획득 가능한 시간
+    public bool getItemTimeFlag;    //아이템 획득 시간 기록
+    public string getRecentItem;    //최근 획득한 아이템
+    public int getRecentItemNum;    //최근 획득한 아이템 수
+    public bool getRecentItemFlag;  //아이템 획득 타이밍
+
+    //생성자
+    public PlunderSpot() {spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
+    public PlunderSpot(string ContName, int PlunderNum)
+    {
+        this.ContName = ContName; this.PlunderNum = PlunderNum; spotName = null; sprite = new Sprite();
+        getItem = new string[4]; getItemNum = new int[4];
+    }
+
+    public string getContName() { return ContName; }
+    public int getPlunderNum() { return PlunderNum; }
+
+}
+
+
+//AI 상대 200명
+public class Plunder
+{
+    public string user_id;
+    public string Name;
+    public int level;
+    public string mercenary;     //대표 캐릭터
+
+    //능력치
+    public float dps;
+    public float strPower;
+    public float attackSpeed;
+    public float focus;
+    public float critical;
+    public float defPower;
+    public float evaRate;
 }

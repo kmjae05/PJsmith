@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
             this.achvScore = 0;
             this.title = "구리 마스터";
 
-            this.dps = 61;
+            
             this.strPower = 50;
             this.attackSpeed = 1.0f;
             this.focus = 50;
@@ -72,6 +72,8 @@ public class Player : MonoBehaviour {
             this.attribute = "no";
             this.collectSpeed = 1.0f;
             this.collectAmount = 1;
+            this.dps = this.strPower + this.defPower * 0.2f;
+
             this.equipHelmet = new string[2];
             equipHelmet[0] = "helmet5"; this.equipHelmet[1] = "helmet6";
             this.equipArmor = new string[2];
@@ -136,6 +138,11 @@ public class Player : MonoBehaviour {
             StartCoroutine(GetExp(exp));
         //StartCoroutine(GetGold(gold));
     }
+    public void getExp(int exp)
+    {
+        if (Play.level <= 30)
+            StartCoroutine(GetExp(exp));
+    }
     public IEnumerator GetExp(int exp)                  //경험치 획득 함수
     {
         float i = Play.exp;         //경험치를 얻기 전 경험치 값을 핸들에 대입
@@ -156,9 +163,11 @@ public class Player : MonoBehaviour {
                 i -= PlayerExpBarSlider.maxValue;           //경험치가 넘치면 핸들 값을 0으로 만들고
                 Play.exp -= Play.max_exp;                   //경험치도 0으로 초기화
                 Play.level += 1;                            //레벨 업
-                Play.max_exp = Play.level * 55;             //경험치 총량 재 조정
+                Play.max_exp = Play.level * 20;             //경험치 총량 재 조정
                 PlayerExpBarSlider.maxValue = Play.max_exp; //슬라이더 총량 재 조정
+
                 Play.strPower += Play.strPower * 0.1f;
+                Play.dps = Play.strPower + Play.defPower * 0.2f;
                 MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
             }
             yield return null;
