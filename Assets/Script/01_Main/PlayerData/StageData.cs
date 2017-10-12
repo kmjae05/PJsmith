@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using LitJson;
+using System.IO;
 
 public class StageData : MonoBehaviour
 {
@@ -10,11 +12,19 @@ public class StageData : MonoBehaviour
     private int dist = 600; //스팟 거리 제한
 
     public static StageData instance = null;
+    //Json Data
+    public WWW reader;
+    static public JsonData PlunderData;
+
+    static private List<Plunder> plunderList;
 
     //스테이지 데이터
     private static List<StageInfo> stageInfoList;
     private StageInfo stageInfoCreate;
     private List<StageInfo> stageInfoListtmp;   //임시 스테이지 정보 저장공간
+    //약탈 스팟 데이터
+    private static List<PlunderInfo> plunderInfoList;
+
 
     //스팟 데이터
     public static List<Spot> spotList;
@@ -36,9 +46,28 @@ public class StageData : MonoBehaviour
 
     private void Start()
     {
+        if(Application.platform == RuntimePlatform.Android)
+        {
+            string mypath = Path.Combine(Application.streamingAssetsPath, "Plunder.json");
+            reader = new WWW(mypath);
+            while (!reader.isDone) { }
+            PlunderData = JsonMapper.ToObject(reader.text);
+        }
+        else
+        {
+            string tmp = File.ReadAllText(Application.dataPath + "/StreamingAssets/Plunder.json");
+            PlunderData = JsonMapper.ToObject(tmp);
+        }
+        for(int i = 0; i < PlunderData["Plunder"].Count; i++)
+        {
+            plunderList.Add(new Plunder(PlunderData, i));
+        }
+
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
+        plunderInfoList = new List<PlunderInfo>();
+
         SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         spotList = new List<Spot>();
 
@@ -47,16 +76,17 @@ public class StageData : MonoBehaviour
         {
             stageInfoCreate = new StageInfo(i);
             stageInfoList.Add(stageInfoCreate);
+            plunderInfoList.Add(new PlunderInfo(i));
         }
         //스팟 생성
-        GameObject spottmp = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
+        GameObject spottmp = SpotObj;
         int count = spottmp.transform.childCount;
         for (int i = 0; i < count; i++)
         {
             Spot create = new Spot(spottmp.transform.GetChild(i).name, spottmp.transform.GetChild(i));
             spotList.Add(create);
         }
-        //스테이지 생성
+        //스테이지 위치
         for (int i = 0; i < 20; i++)
         {
             //랜덤 위치에 스테이지 버튼 생성
@@ -73,16 +103,16 @@ public class StageData : MonoBehaviour
                     bool distanceBool = false;
                     for (int k = 0; k < stif.Count; k++)
                     {
-                        GameObject spottemp = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot/" + stif[k].spotName).gameObject;
+                        GameObject spottemp = SpotObj.transform.Find(stif[k].spotName).gameObject;
                         float disCul = Vector2.Distance(spotList[index].getPosition().transform.localPosition, spottemp.transform.localPosition);
                         if (disCul < dist) distanceBool = true;
                     }
                     if (distanceBool) continue;
                 }
 
-                if (!spotList[index].active) break;
+                if (!spotList[index].stageActive) break;
             }
-            spotList[index].active = true;
+            spotList[index].stageActive = true;
 
             //스팟이랑 스테이지 정보 공유
             StageInfo stin = stageInfoList.Find(x => x.spotName == null);
@@ -101,8 +131,42 @@ public class StageData : MonoBehaviour
             //스테이지 아이콘 변경
             stageImageChange(stin);
 
+
+            //랜덤 위치에 약탈 버튼 생성
+            while (true)
+            {
+                random = Random.Range(1, 100 + 1);
+                index = spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
+                //이미 위치한 스테이지 범위에 없게 배치
+                List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.spotName != null);
+                if (plif != null)
+                {
+                    bool distanceBool = false;
+                    for (int k = 0; k < plif.Count; k++)
+                    {
+                        GameObject spottemp = SpotObj.transform.Find(plif[k].spotName).gameObject;
+                        float disCul = Vector2.Distance(spotList[index].getPosition().transform.localPosition, spottemp.transform.localPosition);
+                        if (disCul < dist) distanceBool = true;
+                    }
+                    if (distanceBool) continue;
+                }
+
+                if (!spotList[index].plunderActive) break;
+            }
+            spotList[index].plunderActive = true;
+
+            //스팟이랑 스테이지 정보 공유
+            PlunderInfo plin = plunderInfoList.Find(x => x.spotName == null);
+
+            spotList[index].plunderNum = plin.getPlunderNum();    //스테이지 번호 저장
+            plin.spotName = spotList[index].getPosition().name;
+
+            plin.PlunderName = "plunder" + plin.getPlunderNum().ToString();   // ex) plunder1
+
         }
+
         stageManager.setStageInfoList(stageInfoList);
+        
     }
 
     private void Update()
@@ -202,24 +266,24 @@ public class StageData : MonoBehaviour
 
 
 
-    //대륙 번호->string
-    public string contNumToString(int i)
-    {
-        if (i == 1) return "아케도니아";
-        else if (i == 2) return "플루오네";
-        else if (i == 3) return "일사바드";
-        else if (i == 4) return "원무제국";
-        else if (i == 5) return "드래곤로드"; else return null;
-    }
-    //대륙 string->번호
-    public int contStringToInt(string i)
-    {
-        if (i == "아케도니아") return 1;
-        else if (i == "플루오네") return 2;
-        else if (i == "일사바드") return 3;
-        else if (i == "원무제국") return 4;
-        else if (i == "드래곤로드") return 5; else return 0;
-    }
+    ////대륙 번호->string
+    //public string contNumToString(int i)
+    //{
+    //    if (i == 1) return "아케도니아";
+    //    else if (i == 2) return "플루오네";
+    //    else if (i == 3) return "일사바드";
+    //    else if (i == 4) return "원무제국";
+    //    else if (i == 5) return "드래곤로드"; else return null;
+    //}
+    ////대륙 string->번호
+    //public int contStringToInt(string i)
+    //{
+    //    if (i == "아케도니아") return 1;
+    //    else if (i == "플루오네") return 2;
+    //    else if (i == "일사바드") return 3;
+    //    else if (i == "원무제국") return 4;
+    //    else if (i == "드래곤로드") return 5; else return 0;
+    //}
 
     //type int -> string
     public string typeNumToString(int stageNum, int i)
@@ -230,6 +294,9 @@ public class StageData : MonoBehaviour
 
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
     public void setStageInfoList(List<StageInfo> list) { stageInfoList = list; }
+    public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }
+    public void setPlunderInfoList(List<PlunderInfo> list) { plunderInfoList = list; }
+
 
     public int getDist() { return dist; }
 
@@ -287,10 +354,11 @@ public class Spot
     public Transform position;        //위치 localposition 사용
     public int stageNum;            //사냥 스팟 이름
     public int plunderNum;          //약탈 스팟 이름
-    public bool active;     // 활성화/비활성화
+    public bool stageActive;        // 활성화/비활성화
+    public bool plunderActive;        // 활성화/비활성화
 
-    public Spot() { active = false; }
-    public Spot(string spotN, Transform pos) { this.spotName = spotN; this.position = pos; active = false; }
+    public Spot() { stageActive = false; plunderActive = false; }
+    public Spot(string spotN, Transform pos) { this.spotName = spotN; this.position = pos; stageActive = false; plunderActive = false; }
 
     public string getSpotName() { return spotName; }
     public Transform getPosition() { return position; }
@@ -298,7 +366,7 @@ public class Spot
 
 
 //약탈 스팟
-public class PlunderSpot
+public class PlunderInfo
 {
     //바뀌지 않는 data
     //private string ContName;        //대륙 이름
@@ -322,10 +390,11 @@ public class PlunderSpot
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public PlunderSpot() { spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
-    public PlunderSpot(int PlunderNum)
+    public PlunderInfo() { spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
+    public PlunderInfo(int PlunderNum)
     {
-        this.PlunderNum = PlunderNum; spotName = null; sprite = new Sprite();
+        this.PlunderNum = PlunderNum; spotName = null; opponentName = "opponentName";
+        sprite = new Sprite();
         getItem = new string[4]; getItemNum = new int[4];
     }
 
@@ -334,7 +403,7 @@ public class PlunderSpot
 }
 
 
-//AI 상대 200명
+//AI 상대 40명
 public class Plunder
 {
     public string user_id;
@@ -350,4 +419,22 @@ public class Plunder
     public float critical;
     public float defPower;
     public float evaRate;
+
+    public Plunder(JsonData data, int index)
+    {
+        this.user_id = data["Plunder"][index]["user_id"].ToString();
+        this.Name = data["Plunder"][index]["Name"].ToString();
+        this.level = (int)data["Plunder"][index]["level"];
+        this.mercenary = data["Plunder"][index]["mercenary"].ToString();
+        this.dps = (int)data["Plunder"][index]["dps"];
+        this.strPower = (int)data["Plunder"][index]["strPower"];
+        this.attackSpeed = (int)data["Plunder"][index]["attackSpeed"];
+        this.focus = (int)data["Plunder"][index]["focus"];
+        this.critical = (int)data["Plunder"][index]["critical"];
+        this.defPower = (int)data["Plunder"][index]["defPower"];
+        this.evaRate = (int)data["Plunder"][index]["evaRate"];
+    }
+
+
+
 }

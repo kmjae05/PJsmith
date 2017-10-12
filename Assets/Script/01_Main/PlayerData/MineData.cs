@@ -88,10 +88,6 @@ public class MineData : MonoBehaviour {
                     {
                         mineList[i].getAmount = mineList[i].deposit;
                         mineList[i].miningState = false;    //채굴 완료
-
-
-
-
                     }
                 }
             }

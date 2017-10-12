@@ -45,6 +45,9 @@ public class CompleteGame : MonoBehaviour {
     }
     public void Complete_Lose()
     {
+        //
+
+
 
     }
 

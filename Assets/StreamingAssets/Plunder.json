@@ -12,6 +12,18 @@
             "critical" : 0,
             "defPower" : 0,
             "evaRate" : 0    
+        },{
+            "user_id" : "AI002",
+            "Name" : "AI002",
+            "level" : 1,
+            "mercenary" : "M003",
+            "dps" : 20,
+            "strPower" : 60,
+            "attackSpeed" : 2,
+            "focus" : 0,
+            "critical" : 0,
+            "defPower" : 0,
+            "evaRate" : 0    
         }
         
         

@@ -17,20 +17,22 @@ public class RewardHandle : MonoBehaviour
     }
 
 
-    //void Reward_Gold()
-    //{
-    //    iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.gold, "onUpdate", "GoldCount", "time", 1));
-    //}
-    //void Reward_Exp()
-    //{
-    //    iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.exp, "onUpdate", "ExpCount", "time", 1));
-    //}
-    //void GoldCount(int num)
-    //{
-    //    GoldText.text = num.ToString();
-    //}
-    //void ExpCount(int num)
-    //{
-    //    ExpText.text = num.ToString();
-    //}
+    void Reward_Gold()
+    {
+        iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.gold, "onUpdate", "GoldCount", "time", 1));
+        GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", OreSelect.SelectOre.gold);
+    }
+    void Reward_Exp()
+    {
+        iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.exp, "onUpdate", "ExpCount", "time", 1));
+        GameObject.Find("PlayerData").GetComponent<Player>().getExp(OreSelect.SelectOre.exp);
+    }
+    void GoldCount(int num)
+    {
+        GoldText.text = num.ToString();
+    }
+    void ExpCount(int num)
+    {
+        ExpText.text = num.ToString();
+    }
 }

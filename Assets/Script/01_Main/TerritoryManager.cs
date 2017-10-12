@@ -525,11 +525,12 @@ public class TerritoryManager : MonoBehaviour
         MineData.instance.getMineList()[num].curTime = 0f;
         MineData.instance.getMineList()[num].boostState = false;
 
-        obj.transform.Find("Image").gameObject.SetActive(false);
-        obj.transform.Find("Text").gameObject.SetActive(false);
-        obj.transform.Find("DottedCircle").gameObject.SetActive(false);
+        obj.transform.Find("Text").gameObject.GetComponent<Text>().text = "고갈";
+        //obj.transform.Find("Image").gameObject.SetActive(false);
+        //obj.transform.Find("Text").gameObject.SetActive(false);
+        //obj.transform.Find("DottedCircle").gameObject.SetActive(false);
         obj.transform.Find("pickax").gameObject.SetActive(false);
-        obj.transform.Find("TypeName").gameObject.SetActive(false);
+        //obj.transform.Find("TypeName").gameObject.SetActive(false);
         obj.transform.Find("BoostIcon").gameObject.SetActive(false);
 
         ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName).possession
@@ -543,7 +544,7 @@ public class TerritoryManager : MonoBehaviour
             MineData.instance.getMineList()[num].deposit + "개 획득";
         ItemLogInst.SetActive(true);
 
-
+        obj.GetComponent<Button>().onClick.RemoveAllListeners();
 
     }
 
@@ -599,6 +600,14 @@ public class TerritoryManager : MonoBehaviour
             }
         }
     }
+
+
+    //월드맵 위치 조정
+    public void wolrdMapPosition()
+    {
+        GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
 
     public void MineClick(int i) { curMineNum = i; }
 

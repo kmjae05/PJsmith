@@ -150,7 +150,7 @@ public class InGameHandle : MonoBehaviour {
                 //UIAnimation_03_();
                 break;
             }
-
+            //타임오버
             if (leftTime <= 0)
             {
                 leftTime = 0;
@@ -225,7 +225,7 @@ public class InGameHandle : MonoBehaviour {
     IEnumerator FadeOut()
     {
         FadeImage.gameObject.SetActive(true);
-        for (float fade = 0.0f; fade < 1.0f; fade += 0.02f)
+        for (float fade = 0.0f; fade < 0.5f; fade += 0.02f)
         {
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;

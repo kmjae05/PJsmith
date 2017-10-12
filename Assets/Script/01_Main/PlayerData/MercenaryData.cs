@@ -128,6 +128,7 @@ public class Mercenary
     public bool state = false;         //용병 상태
     public int stageNum;            //위치한 스테이지
 
+    //대표 캐릭터
 
     //생성자
     public Mercenary() {
