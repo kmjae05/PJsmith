@@ -67,7 +67,7 @@ public class WorldMapManager : MonoBehaviour {
         string str = "아케도니아";
         if (n == 1) str = "아케도니아"; if (n == 2) str = "플루오네"; if (n == 3) str = "일사바드";
         if (n == 4) str = "원무제국"; if (n == 5) str = "드래곤로드";
-        stageManager.SetCurContSelect(str);
+        //stageManager.SetCurContSelect(str);
     }
 
     //팝업창 켜고 끌 때

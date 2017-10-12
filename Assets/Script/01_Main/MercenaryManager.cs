@@ -134,8 +134,7 @@ public class MercenaryManager : MonoBehaviour {
 
             StageInfo stageInfo = stageManager.getStageInfoList().Find(x => x.mercenaryName == merTemp.getName());
             stageManager.SetCurStageSelect(stageInfo.getStageNum());
-            stageManager.SetCurContSelect(stageInfo.getContName());
-            GameObject.Find("StageStateText").GetComponent<Text>().text = merTemp.getContName() + " " + stageInfo.type + " " + stageInfo.typeNum.ToString();
+            GameObject.Find("StageStateText").GetComponent<Text>().text = stageInfo.type + " " + stageInfo.typeNum.ToString();
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + nameText.text).gameObject.SetActive(true);
 
 

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StageData : MonoBehaviour {
+public class StageData : MonoBehaviour
+{
 
     private int dist = 600; //스팟 거리 제한
 
@@ -20,6 +21,8 @@ public class StageData : MonoBehaviour {
 
     //스테이지 정보
     private StageManager stageManager;
+    private GameObject SpotObj;
+
 
     void Awake()
     {
@@ -36,78 +39,68 @@ public class StageData : MonoBehaviour {
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
-
+        SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         spotList = new List<Spot>();
 
-        //각 대륙
-        for (int j = 1; j < 6; j++)
+        //스테이지 생성
+        for (int i = 1; i <= 20; i++)
         {
-            //스테이지 생성
-            for (int i = 1; i <= 20; i++)
-            {
-                stageInfoCreate = new StageInfo(contNumToString(j), i);
-                stageInfoList.Add(stageInfoCreate);
-            }
+            stageInfoCreate = new StageInfo(i);
+            stageInfoList.Add(stageInfoCreate);
         }
         //스팟 생성
-        for (int j = 1; j < 6; j++)
+        GameObject spottmp = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
+        int count = spottmp.transform.childCount;
+        for (int i = 0; i < count; i++)
         {
-            GameObject spottmp = GameObject.Find("Menu").transform.Find("WorldMapPopup/ContinentStage"+ (j).ToString() +"/CONUIPanel/Back/Spot").gameObject;
-            int count = spottmp.transform.childCount;
-            for (int i = 0; i < count; i++)
-            {
-                Spot create = new Spot(contNumToString(j), spottmp.transform.GetChild(i).name, spottmp.transform.GetChild(i));
-                spotList.Add(create);
-            }
+            Spot create = new Spot(spottmp.transform.GetChild(i).name, spottmp.transform.GetChild(i));
+            spotList.Add(create);
         }
         //스테이지 생성
-        for (int j = 1; j < 6; j++)
+        for (int i = 0; i < 20; i++)
         {
-            List<Spot> sList = spotList.FindAll(x => x.getContName() == contNumToString(j));
-            for (int i = 0; i < 20; i++)
+            //랜덤 위치에 스테이지 버튼 생성
+            int random = 0;
+            int index = 0;
+            while (true)
             {
-                //랜덤 위치에 스테이지 버튼 생성
-                int random = 0;
-                int index = 0;
-                while (true)
+                random = Random.Range(1, 100 + 1);
+                index = spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
+                //이미 위치한 스테이지 범위에 없게 배치
+                List<StageInfo> stif = stageInfoList.FindAll(x => x.spotName != null);
+                if (stif != null)
                 {
-                    random = Random.Range(1, sList.Count + 1);
-                    index = spotList.FindIndex(x => x.getContName() == contNumToString(j) && x.getPosition().name == "spot" + random.ToString());
-                    //이미 위치한 스테이지 범위에 없게 배치
-                    List<StageInfo> stif = stageInfoList.FindAll(x => x.getContName() == spotList[index].getContName() && x.spotName != null);
-                    if(stif != null) {
-                        bool distanceBool = false;
-                        for(int k=0; k < stif.Count; k++)
-                        {
-                            GameObject spottmp = GameObject.Find("Menu").transform.Find("WorldMapPopup/ContinentStage" + j.ToString() + "/CONUIPanel/Back/Spot/"+ stif[k].spotName).gameObject;
-                            float disCul = Vector2.Distance(spotList[index].getPosition().transform.localPosition, spottmp.transform.localPosition);
-                            if (disCul < dist) distanceBool = true;
-                        }
-                        if (distanceBool) continue;
+                    bool distanceBool = false;
+                    for (int k = 0; k < stif.Count; k++)
+                    {
+                        GameObject spottemp = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot/" + stif[k].spotName).gameObject;
+                        float disCul = Vector2.Distance(spotList[index].getPosition().transform.localPosition, spottemp.transform.localPosition);
+                        if (disCul < dist) distanceBool = true;
                     }
-
-                    if (!spotList[index].active) break;
+                    if (distanceBool) continue;
                 }
-                spotList[index].active = true;
 
-                //스팟이랑 스테이지 정보 공유
-                StageInfo stin = stageInfoList.Find(x => x.getContName() == contNumToString(j) && x.spotName == null);
-
-                spotList[index].stageNum = stin.getStageNum();    //스테이지 번호 저장
-                stin.spotName = spotList[index].getPosition().name;
-
-                random = Random.Range(1, 3 + 1);
-                stin.type = typeNumToString(stin.getStageNum(), random);
-                random = Random.Range(0, 100);
-                if (random < 50) stin.typeNum = 1;
-                else if (random > 49 && random < 90) stin.typeNum = 2;
-                else if (random > 89) stin.typeNum = 3;
-                stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
-
-                //스테이지 아이콘 변경
-                stageImageChange(stin);
-
+                if (!spotList[index].active) break;
             }
+            spotList[index].active = true;
+
+            //스팟이랑 스테이지 정보 공유
+            StageInfo stin = stageInfoList.Find(x => x.spotName == null);
+
+            spotList[index].stageNum = stin.getStageNum();    //스테이지 번호 저장
+            stin.spotName = spotList[index].getPosition().name;
+
+            random = Random.Range(1, 3 + 1);
+            stin.type = typeNumToString(stin.getStageNum(), random);
+            random = Random.Range(0, 100);
+            if (random < 50) stin.typeNum = 1;
+            else if (random > 49 && random < 90) stin.typeNum = 2;
+            else if (random > 89) stin.typeNum = 3;
+            stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
+
+            //스테이지 아이콘 변경
+            stageImageChange(stin);
+
         }
         stageManager.setStageInfoList(stageInfoList);
     }
@@ -174,7 +167,7 @@ public class StageData : MonoBehaviour {
         //리스트에 다시 저장. 스테이지 검색.
         for (int i = 0; i < stageInfoListtmp.Count; i++)
         {
-            stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == stageInfoListtmp[i].getStageNum() && x.getContName() == stageInfoListtmp[i].getContName())] = stageInfoListtmp[i];
+            stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == stageInfoListtmp[i].getStageNum())] = stageInfoListtmp[i];
         }
 
 
@@ -199,9 +192,9 @@ public class StageData : MonoBehaviour {
         {
             //하이그라스 단검30, 엘더 소드30, 팔라딘 소드30, 고급 하이그라스 단검10
             rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "하이그라스 단검"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum =1; return; }
+            if (rand < 30) { stin.getItem[0] = "하이그라스 단검"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
             else if (rand < 60) { stin.getItem[1] = "엘더 소드"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "팔라딘 소드"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum =1; return; }
+            else if (rand < 90) { stin.getItem[2] = "팔라딘 소드"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
             else { stin.getItem[3] = "고급 하이그라스 단검"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
         }
 
@@ -210,9 +203,12 @@ public class StageData : MonoBehaviour {
 
 
     //대륙 번호->string
-    public string contNumToString(int i) {
-        if (i == 1) return "아케도니아";        else if (i == 2) return "플루오네";
-        else if (i == 3) return "일사바드";        else if (i == 4) return "원무제국";
+    public string contNumToString(int i)
+    {
+        if (i == 1) return "아케도니아";
+        else if (i == 2) return "플루오네";
+        else if (i == 3) return "일사바드";
+        else if (i == 4) return "원무제국";
         else if (i == 5) return "드래곤로드"; else return null;
     }
     //대륙 string->번호
@@ -229,7 +225,7 @@ public class StageData : MonoBehaviour {
     public string typeNumToString(int stageNum, int i)
     {
         ////사냥
-            if (i == 1) return "던전"; else if (i == 2) return "던전"; else if (i == 3) return "던전"; else return null;        
+        if (i == 1) return "던전"; else if (i == 2) return "던전"; else if (i == 3) return "던전"; else return null;
     }
 
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
@@ -246,7 +242,6 @@ public class StageData : MonoBehaviour {
 public class StageInfo
 {
     //바뀌지 않는 data
-    private string ContName;         //대륙 이름
     private int stageNum;           //본인 번호
 
     //바뀌는 data
@@ -271,18 +266,15 @@ public class StageInfo
     public string getRecentItem;   //최근 획득한 아이템
     public int getRecentItemNum;    //최근 획득한 아이템 수
     public bool getRecentItemFlag;  //아이템 획득 타이밍
-        
+
     //생성자
     public StageInfo() { wait = true; spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
-    public StageInfo(string ContName, int stageNum)
+    public StageInfo(int stageNum)
     {
-        this.ContName = ContName; this.stageNum = stageNum; this.wait = true; spotName = null; sprite = new Sprite();
+        this.stageNum = stageNum; this.wait = true; spotName = null; sprite = new Sprite();
         getItem = new string[4]; getItemNum = new int[4];
     }
 
-
-
-    public string getContName() { return ContName; }
     public int getStageNum() { return stageNum; }
 
 }
@@ -290,7 +282,6 @@ public class StageInfo
 //스팟 고정 위치
 public class Spot
 {
-    private string ContName;        //대륙 이름
     private string spotName;
 
     public Transform position;        //위치 localposition 사용
@@ -299,9 +290,8 @@ public class Spot
     public bool active;     // 활성화/비활성화
 
     public Spot() { active = false; }
-    public Spot(string cont, string spotN, Transform pos) { this.ContName = cont; this.spotName = spotN; this.position = pos; active = false; }
+    public Spot(string spotN, Transform pos) { this.spotName = spotN; this.position = pos; active = false; }
 
-    public string getContName() { return ContName; }
     public string getSpotName() { return spotName; }
     public Transform getPosition() { return position; }
 }
@@ -311,7 +301,7 @@ public class Spot
 public class PlunderSpot
 {
     //바뀌지 않는 data
-    private string ContName;        //대륙 이름
+    //private string ContName;        //대륙 이름
     private int PlunderNum;         //고유 번호
 
     //바뀌는 data
@@ -332,14 +322,13 @@ public class PlunderSpot
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public PlunderSpot() {spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
-    public PlunderSpot(string ContName, int PlunderNum)
+    public PlunderSpot() { spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
+    public PlunderSpot(int PlunderNum)
     {
-        this.ContName = ContName; this.PlunderNum = PlunderNum; spotName = null; sprite = new Sprite();
+        this.PlunderNum = PlunderNum; spotName = null; sprite = new Sprite();
         getItem = new string[4]; getItemNum = new int[4];
     }
 
-    public string getContName() { return ContName; }
     public int getPlunderNum() { return PlunderNum; }
 
 }

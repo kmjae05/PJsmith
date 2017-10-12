@@ -126,7 +126,6 @@ public class Mercenary
     public string[] equipBoots;
 
     public bool state = false;         //용병 상태
-    public string contName;            //위치한 대륙
     public int stageNum;            //위치한 스테이지
 
 
@@ -152,7 +151,6 @@ public class Mercenary
         this.equipWeapon = new string[2];
         this.equipBoots = new string[2];
         this.state = false;
-        this.contName = null;
         this.stageNum = 0;
     }
     //public Mercenary(string merName)
@@ -165,8 +163,6 @@ public class Mercenary
 
     public void setState(bool s) { state = s; }
     public bool getState() { return state; }
-    public void setContName(string cont) { contName = cont; }
-    public string getContName() { return contName; }
     public void setStageNum(int stage) { stageNum = stage; }
     public int getStageNum() { return stageNum; }
 }
