@@ -1,0 +1,8 @@
+---How to check monster animation---
+1.Open the SampleScene
+2.Click on the play button in the game view
+3.You can see the 5 animation buttons(stand,run,attack,damage,death)
+on the top of the left side.
+4.Check the rest of monsters by hiding, unhiding.
+
+

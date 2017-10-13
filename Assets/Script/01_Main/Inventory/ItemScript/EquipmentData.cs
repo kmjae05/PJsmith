@@ -50,17 +50,10 @@ public class Equipment
 
     private string material;             //json으로 데이터 불러옴
     public int time;
-    public string skill;    
+    public string skill;
 
-    public float strPower;
-    public float attackSpeed;
-    public float focus;
-    public float critical;
-    public float defPower;
-    public float evaRate;
+    public Stat stat;
     public string attribute;
-    public float collectSpeed;
-    public float collectAmount;
 
 
     public string[] necessaryMaterials; //필요 재료
@@ -84,15 +77,17 @@ public class Equipment
         }
         this.time = (int)EquipData["Equipment"][index]["time"];
         this.skill = EquipData["Equipment"][index]["skill"].ToString();
-        this.strPower = (int)EquipData["Equipment"][index]["strPower"];
-        this.attackSpeed = (int)EquipData["Equipment"][index]["attackSpeed"];
-        this.focus = (int)EquipData["Equipment"][index]["focus"];
-        this.critical = (int)EquipData["Equipment"][index]["critical"];
-        this.defPower = (int)EquipData["Equipment"][index]["defPower"];
-        this.evaRate = (int)EquipData["Equipment"][index]["evaRate"];
+
+        stat = new Stat();
+        this.stat.strPower = (int)EquipData["Equipment"][index]["strPower"];
+        this.stat.attackSpeed = (int)EquipData["Equipment"][index]["attackSpeed"];
+        this.stat.focus = (int)EquipData["Equipment"][index]["focus"];
+        this.stat.critical = (int)EquipData["Equipment"][index]["critical"];
+        this.stat.defPower = (int)EquipData["Equipment"][index]["defPower"];
+        this.stat.evaRate = (int)EquipData["Equipment"][index]["evaRate"];
+        this.stat.collectSpeed = (int)EquipData["Equipment"][index]["collectSpeed"];
+        this.stat.collectAmount = (int)EquipData["Equipment"][index]["collectAmount"];
         this.attribute = EquipData["Equipment"][index]["attribute"].ToString();
-        this.collectSpeed = (int)EquipData["Equipment"][index]["collectSpeed"];
-        this.collectAmount = (int)EquipData["Equipment"][index]["collectAmount"];
 
     }
 }

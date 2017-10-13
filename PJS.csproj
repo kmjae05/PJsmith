@@ -371,6 +371,7 @@
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\StageData.cs" />
+    <Compile Include="Assets\Script\01_Main\PlayerData\StatData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\TitleHandler.cs" />
     <Compile Include="Assets\Script\01_Main\ProfileChrDrag.cs" />
     <Compile Include="Assets\Script\01_Main\ProfilePopupManager.cs" />
@@ -462,6 +463,7 @@
     <None Include="Assets\GooglePlayGames\Editor\template-AndroidManifest.txt" />
     <None Include="Assets\GooglePlayGames\Editor\template-Constants.txt" />
     <None Include="Assets\GooglePlayGames\Editor\template-GameInfo.txt" />
+    <None Include="Assets\Mid Level Monsters 02\Read me.txt" />
     <None Include="Assets\PlayServicesResolver\Editor\play-services-resolver.txt" />
     <None Include="Assets\PlayServicesResolver\proguard-messaging-workaround.txt" />
     <None Include="Assets\PlayServicesResolver\proguard-unity.txt" />

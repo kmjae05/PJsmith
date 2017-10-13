@@ -257,7 +257,7 @@ public class EmblemHandle : MonoBehaviour{
         switch (statType)
         {
             case "attack":
-                Player.Play.strPower += statAmount;
+                Player.Play.stat.strPower += statAmount;
                 break;
             case "attack_Speed":
                 break;
@@ -278,7 +278,7 @@ public class EmblemHandle : MonoBehaviour{
             switch (statType)
             {
                 case "attack":
-                    Player.Play.strPower -= statAmount;
+                    Player.Play.stat.strPower -= statAmount;
                     break;
                 case "attack_Speed":
                     break;

@@ -116,12 +116,12 @@ public class Mine
     private int mineNum;    //고유 번호
     public string type;     //종류
     public int level;       //레벨
-    public string buildState;   // 건설 상태 - nothing, beunder, complete
+    public string buildState;   // 건설 상태 - nothing, beunder, complete, exhaustion
     public float buildTime;     //건설 중 시간
     public string getThingName; //획득 가능 아이템 이름
     public int getAmount;       //획득한 양
     public int getOnceAmount;   //한 주기에 획득 가능한 양
-    public int deposit;    //매장량
+    public int deposit;         //매장량
     public float miningTime;    //획득 주기
     public float curTime;       //현재 채굴 시간
     public bool miningState;    //채굴 상태     t채굴 중, f채굴 완료

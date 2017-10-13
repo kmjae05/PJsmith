@@ -70,7 +70,7 @@ public class Combat : MonoBehaviour {
         skill3collision = GameObject.Find("skill3Effect").GetComponent<CombatSkill3Collision>();
         monControl = GameObject.Find("Monsters").GetComponent<MonsterControl>();
 
-        chrPower = (int)Player.Play.strPower + Player.equipHm.power + 20;
+        chrPower = (int)Player.Play.stat.strPower + Player.equipHm.power + 20;
 
         chr = GameObject.Find("Chr");
         effPos = GameObject.Find("EffectPosition");

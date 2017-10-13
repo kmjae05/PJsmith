@@ -98,16 +98,16 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("LevelText").GetComponent<Text>().text = Player.Play.level.ToString();
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.Play.Name;
             statusCal(curSetNum);
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = playerTemp.dps.ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = playerTemp.strPower.ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = playerTemp.attackSpeed.ToString();
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = playerTemp.focus.ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = playerTemp.critical.ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = playerTemp.defPower.ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = playerTemp.evaRate.ToString();
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = playerTemp.stat.dps.ToString();
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = playerTemp.stat.strPower.ToString(); //equi[setnum].strPower
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = playerTemp.stat.attackSpeed.ToString();
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = playerTemp.stat.focus.ToString();
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = playerTemp.stat.critical.ToString();
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = playerTemp.stat.defPower.ToString();
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = playerTemp.stat.evaRate.ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = playerTemp.attribute;
-            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = playerTemp.collectSpeed.ToString();
-            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = playerTemp.collectAmount.ToString();
+            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = playerTemp.stat.collectSpeed.ToString();
+            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = playerTemp.stat.collectAmount.ToString();
 
 
             GameObject.Find("ChrTitleText").GetComponent<Text>().text = Player.Play.title;
@@ -125,29 +125,29 @@ public class ProfilePopupManager : MonoBehaviour {
     {
         if (setNum == 1)
         {
-            playerTemp.dps = Player.Play.dps * 2;
-            playerTemp.strPower = Player.Play.strPower * 1.5f;
-            playerTemp.attackSpeed = Player.Play.attackSpeed + 0.3f;
-            playerTemp.focus = Player.Play.focus + 20;
-            playerTemp.critical = Player.Play.critical * 1.4f;
-            playerTemp.defPower = Player.Play.defPower * 1.3f;
-            playerTemp.evaRate = Player.Play.evaRate * 1.1f;
+            playerTemp.stat.dps = Player.Play.stat.dps * 2;
+            playerTemp.stat.strPower = Player.Play.stat.strPower * 1.5f;
+            playerTemp.stat.attackSpeed = Player.Play.stat.attackSpeed + 0.3f;
+            playerTemp.stat.focus = Player.Play.stat.focus + 20;
+            playerTemp.stat.critical = Player.Play.stat.critical * 1.4f;
+            playerTemp.stat.defPower = Player.Play.stat.defPower * 1.3f;
+            playerTemp.stat.evaRate = Player.Play.stat.evaRate * 1.1f;
             playerTemp.attribute = "no";
-            playerTemp.collectSpeed = Player.Play.collectSpeed * 0.7f;
-            playerTemp.collectAmount = Player.Play.collectAmount * 0.8f;
+            playerTemp.stat.collectSpeed = Player.Play.stat.collectSpeed * 0.7f;
+            playerTemp.stat.collectAmount = Player.Play.stat.collectAmount * 0.8f;
         }
         else
         {
-            playerTemp.dps = Player.Play.dps * 1;
-            playerTemp.strPower = Player.Play.strPower * 1.1f;
-            playerTemp.attackSpeed = Player.Play.attackSpeed + 0.1f;
-            playerTemp.focus = Player.Play.focus + 10;
-            playerTemp.critical = Player.Play.critical * 1.0f;
-            playerTemp.defPower = Player.Play.defPower * 1.1f;
-            playerTemp.evaRate = Player.Play.evaRate * 1.2f;
+            playerTemp.stat.dps = Player.Play.stat.dps * 1;
+            playerTemp.stat.strPower = Player.Play.stat.strPower * 1.1f;
+            playerTemp.stat.attackSpeed = Player.Play.stat.attackSpeed + 0.1f;
+            playerTemp.stat.focus = Player.Play.stat.focus + 10;
+            playerTemp.stat.critical = Player.Play.stat.critical * 1.0f;
+            playerTemp.stat.defPower = Player.Play.stat.defPower * 1.1f;
+            playerTemp.stat.evaRate = Player.Play.stat.evaRate * 1.2f;
             playerTemp.attribute = "no";
-            playerTemp.collectSpeed = Player.Play.collectSpeed * 1.6f;
-            playerTemp.collectAmount = Player.Play.collectAmount * 1.5f;
+            playerTemp.stat.collectSpeed = Player.Play.stat.collectSpeed * 1.6f;
+            playerTemp.stat.collectAmount = Player.Play.stat.collectAmount * 1.5f;
         }
 
     }

@@ -31,18 +31,11 @@ public class Player : MonoBehaviour {
         public int achvScore;
         public string title;
 
-        //능력치
-        public float dps;
-        public float strPower;
-        public float attackSpeed;
-        public float focus;
-        public float critical;
-        public float defPower;
-        public float evaRate;
+        //기본 능력치
+        public Stat stat;
         public string attribute;
-        public float collectSpeed;
-        public float collectAmount;
-        //장비
+
+        //장비 Equipment로
         public string[] equipHelmet;
         public string[] equipArmor;
         public string[] equipWeapon;
@@ -62,17 +55,17 @@ public class Player : MonoBehaviour {
             this.achvScore = 0;
             this.title = "구리 마스터";
 
-            
-            this.strPower = 50;
-            this.attackSpeed = 1.0f;
-            this.focus = 50;
-            this.critical = 20;
-            this.defPower = 5;
-            this.evaRate = 3;
+            stat = new Stat();
+            this.stat.strPower = 50;
+            this.stat.attackSpeed = 1.0f;
+            this.stat.focus = 50;
+            this.stat.critical = 20;
+            this.stat.defPower = 5;
+            this.stat.evaRate = 3;
             this.attribute = "no";
-            this.collectSpeed = 1.0f;
-            this.collectAmount = 1;
-            this.dps = this.strPower + this.defPower * 0.2f;
+            this.stat.collectSpeed = 1.0f;
+            this.stat.collectAmount = 1;
+            this.stat.dps = this.stat.strPower + this.stat.defPower * 0.2f;
 
             this.equipHelmet = new string[2];
             equipHelmet[0] = "helmet5"; this.equipHelmet[1] = "helmet6";
@@ -123,7 +116,7 @@ public class Player : MonoBehaviour {
             || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_long0")
             || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_logout"))
         {
-            chrAni.speed = Play.attackSpeed;
+            chrAni.speed = 1.0f; // Play.stat.attackSpeed;
         }
         else
         {
@@ -166,8 +159,8 @@ public class Player : MonoBehaviour {
                 Play.max_exp = Play.level * 20;             //경험치 총량 재 조정
                 PlayerExpBarSlider.maxValue = Play.max_exp; //슬라이더 총량 재 조정
 
-                Play.strPower += Play.strPower * 0.1f;
-                Play.dps = Play.strPower + Play.defPower * 0.2f;
+                Play.stat.strPower += Play.stat.strPower * 0.1f;
+                Play.stat.dps = Play.stat.strPower + Play.stat.defPower * 0.2f;
                 MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
             }
             yield return null;

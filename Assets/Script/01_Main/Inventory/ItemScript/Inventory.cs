@@ -973,14 +973,14 @@ public class Inventory : MonoBehaviour
         EquipItemInfoPopup.transform.Find("UIPanel/ItemBox/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(things.icon);
 
         string abstr = "";
-        if (equip.strPower > 0) abstr += "공격력 " + equip.strPower + "\n";
-        if (equip.attackSpeed > 0) abstr += "공격속도 " + equip.attackSpeed + "\n";
-        if (equip.focus > 0) abstr += "명중률 " + equip.focus + "\n";
-        if (equip.critical > 0) abstr += "크리티컬 " + equip.critical + "\n";
-        if (equip.defPower > 0) abstr += "방어력 " + equip.defPower + "\n";
-        if (equip.evaRate > 0) abstr += "회피율 " + equip.evaRate + "\n";
-        if (equip.collectSpeed > 0) abstr += "채집속도 " + equip.collectSpeed + "\n";
-        if (equip.collectAmount > 0) abstr += "채집량 " + equip.collectAmount;
+        if (equip.stat.strPower > 0) abstr += "공격력 " + equip.stat.strPower + "\n";
+        if (equip.stat.attackSpeed > 0) abstr += "공격속도 " + equip.stat.attackSpeed + "\n";
+        if (equip.stat.focus > 0) abstr += "명중률 " + equip.stat.focus + "\n";
+        if (equip.stat.critical > 0) abstr += "크리티컬 " + equip.stat.critical + "\n";
+        if (equip.stat.defPower > 0) abstr += "방어력 " + equip.stat.defPower + "\n";
+        if (equip.stat.evaRate > 0) abstr += "회피율 " + equip.stat.evaRate + "\n";
+        if (equip.stat.collectSpeed > 0) abstr += "채집속도 " + equip.stat.collectSpeed + "\n";
+        if (equip.stat.collectAmount > 0) abstr += "채집량 " + equip.stat.collectAmount;
         //되도록이면 최대 5개까지만..
         EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/AbilityText").gameObject.GetComponent<Text>().text = abstr;
 

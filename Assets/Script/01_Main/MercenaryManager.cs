@@ -66,16 +66,16 @@ public class MercenaryManager : MonoBehaviour {
 
         statusCal(profilePopupManager.getCurSetNum(), merTemp);
 
-        GameObject.Find("DPS/Text").GetComponent<Text>().text = mercenarytmp.dps.ToString();
-        GameObject.Find("StrPower/Text").GetComponent<Text>().text = mercenarytmp.strPower.ToString();
-        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = mercenarytmp.attackSpeed.ToString();
-        GameObject.Find("Focus/Text").GetComponent<Text>().text = mercenarytmp.focus.ToString();
-        GameObject.Find("Critical/Text").GetComponent<Text>().text = mercenarytmp.critical.ToString();
-        GameObject.Find("DefPower/Text").GetComponent<Text>().text = mercenarytmp.defPower.ToString();
-        GameObject.Find("EvaRate/Text").GetComponent<Text>().text = mercenarytmp.evaRate.ToString();
+        GameObject.Find("DPS/Text").GetComponent<Text>().text = mercenarytmp.stat.dps.ToString();
+        GameObject.Find("StrPower/Text").GetComponent<Text>().text = mercenarytmp.stat.strPower.ToString();
+        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = mercenarytmp.stat.attackSpeed.ToString();
+        GameObject.Find("Focus/Text").GetComponent<Text>().text = mercenarytmp.stat.focus.ToString();
+        GameObject.Find("Critical/Text").GetComponent<Text>().text = mercenarytmp.stat.critical.ToString();
+        GameObject.Find("DefPower/Text").GetComponent<Text>().text = mercenarytmp.stat.defPower.ToString();
+        GameObject.Find("EvaRate/Text").GetComponent<Text>().text = mercenarytmp.stat.evaRate.ToString();
         GameObject.Find("Attribute/Text").GetComponent<Text>().text = mercenarytmp.attribute;
-        GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = mercenarytmp.collectSpeed.ToString();
-        GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = mercenarytmp.collectAmount.ToString();
+        GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = mercenarytmp.stat.collectSpeed.ToString();
+        GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = mercenarytmp.stat.collectAmount.ToString();
 
         
 
@@ -172,16 +172,16 @@ public class MercenaryManager : MonoBehaviour {
         statusCal(profilePopupManager.getSetNum(), merTemp);
         merInfoPopup.transform.Find("UIPanel/ChrBox/Text").GetComponent<Text>().text = merTemp.getName();
 
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/DPS/Text").GetComponent<Text>().text = mercenarytmp.dps.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/StrPower/Text").GetComponent<Text>().text = mercenarytmp.strPower.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/AttackSpeed/Text").GetComponent<Text>().text = mercenarytmp.attackSpeed.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/Focus/Text").GetComponent<Text>().text = mercenarytmp.focus.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/Critical/Text").GetComponent<Text>().text = mercenarytmp.critical.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/DefPower/Text").GetComponent<Text>().text = mercenarytmp.defPower.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/EvaRate/Text").GetComponent<Text>().text = mercenarytmp.evaRate.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/DPS/Text").GetComponent<Text>().text = mercenarytmp.stat.dps.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/StrPower/Text").GetComponent<Text>().text = mercenarytmp.stat.strPower.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/AttackSpeed/Text").GetComponent<Text>().text = mercenarytmp.stat.attackSpeed.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/Focus/Text").GetComponent<Text>().text = mercenarytmp.stat.focus.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/Critical/Text").GetComponent<Text>().text = mercenarytmp.stat.critical.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/DefPower/Text").GetComponent<Text>().text = mercenarytmp.stat.defPower.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/EvaRate/Text").GetComponent<Text>().text = mercenarytmp.stat.evaRate.ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/Attribute/Text").GetComponent<Text>().text = mercenarytmp.attribute;
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectSpeed/Text").GetComponent<Text>().text = mercenarytmp.collectSpeed.ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectAmount/Text").GetComponent<Text>().text = mercenarytmp.collectAmount.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectSpeed/Text").GetComponent<Text>().text = mercenarytmp.stat.collectSpeed.ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectAmount/Text").GetComponent<Text>().text = mercenarytmp.stat.collectAmount.ToString();
 
         merInfoPopup.SetActive(true);
     }
@@ -193,29 +193,29 @@ public class MercenaryManager : MonoBehaviour {
     {
         if (setNum == 1)
         {
-            mercenarytmp.dps = mer.dps*2;
-            mercenarytmp.strPower = mer.strPower * 1.5f;
-            mercenarytmp.attackSpeed = mer.attackSpeed + 0.3f;
-            mercenarytmp.focus = mer.focus + 20;
-            mercenarytmp.critical = mer.critical * 1.4f;
-            mercenarytmp.defPower = mer.defPower * 1.3f;
-            mercenarytmp.evaRate = mer.evaRate * 1.1f;
+            mercenarytmp.stat.dps = mer.stat.dps*2;
+            mercenarytmp.stat.strPower = mer.stat.strPower * 1.5f;
+            mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.3f;
+            mercenarytmp.stat.focus = mer.stat.focus + 20;
+            mercenarytmp.stat.critical = mer.stat.critical * 1.4f;
+            mercenarytmp.stat.defPower = mer.stat.defPower * 1.3f;
+            mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.1f;
             mercenarytmp.attribute = "no";
-            mercenarytmp.collectSpeed = mer.collectSpeed* 0.7f;
-            mercenarytmp.collectAmount = mer.collectAmount * 0.8f;
+            mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed* 0.7f;
+            mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 0.8f;
         }
         else
         {
-            mercenarytmp.dps = mer.dps * 1;
-            mercenarytmp.strPower = mer.strPower * 1.1f;
-            mercenarytmp.attackSpeed = mer.attackSpeed + 0.1f;
-            mercenarytmp.focus = mer.focus + 10;
-            mercenarytmp.critical = mer.critical * 1.0f;
-            mercenarytmp.defPower = mer.defPower * 1.1f;
-            mercenarytmp.evaRate = mer.evaRate * 1.2f;
+            mercenarytmp.stat.dps = mer.stat.dps * 1;
+            mercenarytmp.stat.strPower = mer.stat.strPower * 1.1f;
+            mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.1f;
+            mercenarytmp.stat.focus = mer.stat.focus + 10;
+            mercenarytmp.stat.critical = mer.stat.critical * 1.0f;
+            mercenarytmp.stat.defPower = mer.stat.defPower * 1.1f;
+            mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.2f;
             mercenarytmp.attribute = "no";
-            mercenarytmp.collectSpeed = mer.collectSpeed * 1.6f;
-            mercenarytmp.collectAmount = mer.collectAmount * 1.5f;
+            mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed * 1.6f;
+            mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 1.5f;
         }
 
     }

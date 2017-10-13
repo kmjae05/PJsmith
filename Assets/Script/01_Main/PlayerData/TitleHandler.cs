@@ -245,10 +245,10 @@ public class TitleHandler : MonoBehaviour {
         switch (statType)
         {
             case "attack":
-                Player.Play.strPower += statAmount;
+                Player.Play.stat.strPower += statAmount;
                 break;
             case "attack_Speed":
-                Player.Play.strPower += statAmount;
+                Player.Play.stat.strPower += statAmount;
                 break;
             case "critical_rate":
                 break;
@@ -267,7 +267,7 @@ public class TitleHandler : MonoBehaviour {
             switch (statType)
             {
                 case "attack":
-                    Player.Play.strPower -= statAmount;
+                    Player.Play.stat.strPower -= statAmount;
                     break;
                 case "attack_Speed":
                     break;

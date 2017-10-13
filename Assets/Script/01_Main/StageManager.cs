@@ -21,7 +21,8 @@ public class StageManager : MonoBehaviour
     private List<PlunderInfo> plunderInfoList;
 
     //private string curContSelect;              //현재 선택된 대륙
-    private int curStageSelect;              //현재 선택된 스테이지
+    private int curStageSelect;               //현재 선택된 스테이지
+    private string curPlunderSelect;          //현재 선택된 상대 플레이어
     private float stageTime = 1800f;
 
     //스테이지 정보 팝업창
@@ -29,8 +30,11 @@ public class StageManager : MonoBehaviour
     private Text nameText;
     private GameObject stageGetItemBox;
 
-    //스테이지 현황 팝업창
-    private GameObject stageStatePopup;
+    private GameObject stageStatePopup;     //스테이지 현황 팝업창
+    private GameObject plunderPopup;        //약탈 팝업
+    private GameObject plunderPlayerBox;
+    private GameObject plunderEnemyBox;
+    private GameObject plunderItemBox;
 
     private GameObject selectFrame;     //용병 선택 표시
     private bool selectMerFlag = false;         //용병 선택
@@ -67,6 +71,10 @@ public class StageManager : MonoBehaviour
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;
         PlunderButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/PlunderButton").gameObject;
         WorldMapBackObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject;
+        plunderPopup = GameObject.Find("System").transform.Find("PlunderPopup").gameObject;
+        plunderPlayerBox = plunderPopup.transform.Find("UIPanel/PlayerBox").gameObject;
+        plunderEnemyBox = plunderPopup.transform.Find("UIPanel/EnemyBox").gameObject;
+        plunderItemBox = plunderPopup.transform.Find("UIPanel/ItemBox").gameObject;
 
         stageInfoList = stageData.getStageInfoList();
         plunderInfoList = stageData.getPlunderInfoList();
@@ -140,7 +148,7 @@ public class StageManager : MonoBehaviour
                 plunderButton.transform.SetParent(PlunderObj.gameObject.transform);
                 plunderButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
                 plunderButton.SetActive(true);
-                plunderButton.transform.Find("StageText").GetComponent<Text>().text = pList[i].getPlunderNum().ToString();
+                plunderButton.transform.Find("StageText").GetComponent<Text>().text = pList[i].opponentName;
                 plunderButton.name = pList[i].PlunderName + "Button";
                 //sprite
                 plunderButton.transform.Find("State/NameText").gameObject.GetComponent<Text>().text = pList[i].opponentName;
@@ -151,7 +159,7 @@ public class StageManager : MonoBehaviour
                 else plunderButton.GetComponent<Image>().color = new Color(plunderButton.GetComponent<Image>().color.r, plunderButton.GetComponent<Image>().color.g, plunderButton.GetComponent<Image>().color.b, 1.0f);
             }
         }
-
+        
     }
 
 
@@ -159,7 +167,10 @@ public class StageManager : MonoBehaviour
     private void Update()
     {
         stageInfoList = stageData.getStageInfoList();
+        plunderInfoList = stageData.getPlunderInfoList();
         stageInfoListtmp.Clear();
+
+        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.Play.level.ToString();
 
         //탐험 완료 시 버튼 변경.
         for (int i = 0; i < stageInfoList.Count; i++)
@@ -263,6 +274,7 @@ public class StageManager : MonoBehaviour
         }
 
         stageData.setStageInfoList(stageInfoList);
+        //
 
     }
 
@@ -684,9 +696,10 @@ public class StageManager : MonoBehaviour
     //약탈 버튼 클릭
     public void initPlunderButton(GameObject obj)
     {
-        curStageSelect = System.Convert.ToInt32(obj.transform.Find("StageText").GetComponent<Text>().text);
+        curPlunderSelect = obj.transform.Find("StageText").GetComponent<Text>().text;
 
-        PlunderInfo result = plunderInfoList.Find(x => x.getPlunderNum() == curStageSelect);
+        PlunderInfo result = plunderInfoList.Find(x => x.opponentName == curPlunderSelect);
+        Plunder plunder = StageData.instance.getPlundeList().Find(x => x.getName() == curPlunderSelect);
         //리젠 상태
         if (result.regen)
         {
@@ -696,8 +709,31 @@ public class StageManager : MonoBehaviour
         else
         {
             //플레이어 정보 갱신
+            plunderPlayerBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = Player.Play.Name;
+            plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + Player.Play.level.ToString();
+            //Stat equipStat = StatData.instance.SumEquip(Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()], Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()],
+            //    Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()], Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()]   );
+            //Stat stat = StatData.instance.SumChrEquipMer(Player.Play, );
+            plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = "전투력 : " + Player.Play.stat.dps.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = "공격력 : " + Player.Play.stat.strPower.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = "공격속도 : " + Player.Play.stat.attackSpeed.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = "명중률 : " + Player.Play.stat.focus.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = "크리티컬 : " + Player.Play.stat.critical.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = "방어력 : " + Player.Play.stat.defPower.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = "회피율 : " + Player.Play.stat.evaRate.ToString();
+
             //상대방 데이터 가져와서 갱신
-            //팝업 띄우기.
+            plunderEnemyBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = plunder.getName();
+            plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + plunder.level.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = "전투력 : " + plunder.stat.dps.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = "공격력 : " + plunder.stat.strPower.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = "공격속도 : " + plunder.stat.attackSpeed.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = "명중률 : " + plunder.stat.focus.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = "크리티컬 : " + plunder.stat.critical.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = "방어력 : " + plunder.stat.defPower.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = "회피율 : " + plunder.stat.evaRate.ToString();
+
+            plunderPopup.SetActive(true);
 
         }
     }

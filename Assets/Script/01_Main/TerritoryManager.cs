@@ -76,6 +76,7 @@ public class TerritoryManager : MonoBehaviour
 
     private void Update()
     {
+        uiPanel.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.Play.level.ToString();
         for (int i = 2; i < 6; i++)
             if (Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
@@ -520,12 +521,13 @@ public class TerritoryManager : MonoBehaviour
 
         GameObject.Find("PlayerData").GetComponent<Player>().getExp(10);
 
-        MineData.instance.getMineList()[num].buildState = "nothing";
+        MineData.instance.getMineList()[num].buildState = "exhaustion";
         MineData.instance.getMineList()[num].getAmount = 0;
         MineData.instance.getMineList()[num].curTime = 0f;
         MineData.instance.getMineList()[num].boostState = false;
 
         obj.transform.Find("Text").gameObject.GetComponent<Text>().text = "고갈";
+        obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
         //obj.transform.Find("Image").gameObject.SetActive(false);
         //obj.transform.Find("Text").gameObject.SetActive(false);
         //obj.transform.Find("DottedCircle").gameObject.SetActive(false);

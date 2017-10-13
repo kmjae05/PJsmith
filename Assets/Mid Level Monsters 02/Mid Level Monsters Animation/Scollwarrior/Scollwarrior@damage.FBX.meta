@@ -1,0 +1,348 @@
+fileFormatVersion: 2
+guid: fc3e3696c788ecb428f9da687523ad38
+timeCreated: 1493223054
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bd
+    100002: Bone03
+    100004: Bone05
+    100006: Bone06
+    100008: Head_bone01
+    100010: Head_bone02
+    100012: Head_bone03
+    100014: IK Chain01
+    100016: IK Chain02
+    100018: IK Chain03
+    100020: IK Chain04
+    100022: IK Chain05
+    100024: IK Chain06
+    100026: L_arm_bone01
+    100028: L_arm_bone02
+    100030: L_arm_bone03
+    100032: L_arm_bone04
+    100034: L_arm_bone05
+    100036: L_arm_bone06
+    100038: L_F_Leg_bone01
+    100040: L_F_Leg_bone02
+    100042: L_F_Leg_bone03
+    100044: L_F_Leg_bone04
+    100046: L_L_Leg_bone01
+    100048: L_L_Leg_bone02
+    100050: L_L_Leg_bone03
+    100052: L_L_Leg_bone04
+    100054: L_M_Leg_bone01
+    100056: L_M_Leg_bone02
+    100058: L_M_Leg_bone03
+    100060: L_M_Leg_bone04
+    100062: Main_bone01
+    100064: Main_bone02
+    100066: Neck_Bone01
+    100068: Neck_Bone02
+    100070: Neck_Bone03
+    100072: Neck_Bone04
+    100074: R_arm_bone01
+    100076: R_arm_bone02
+    100078: R_arm_bone03
+    100080: R_arm_bone04
+    100082: R_arm_bone05
+    100084: R_arm_bone06
+    100086: R_F_Leg_bone01
+    100088: R_F_Leg_bone02
+    100090: R_F_Leg_bone03
+    100092: R_F_Leg_bone04
+    100094: R_L_Leg_bone01
+    100096: R_L_Leg_bone02
+    100098: R_L_Leg_bone03
+    100100: R_L_Leg_bone04
+    100102: R_M_Leg_bone01
+    100104: R_M_Leg_bone02
+    100106: R_M_Leg_bone03
+    100108: R_M_Leg_bone04
+    100110: //RootNode
+    100112: Spine_bone01
+    100114: Tail_bone01
+    100116: Tail_bone02
+    100118: Tail_bone03
+    100120: Tail_bone04
+    400000: bd
+    400002: Bone03
+    400004: Bone05
+    400006: Bone06
+    400008: Head_bone01
+    400010: Head_bone02
+    400012: Head_bone03
+    400014: IK Chain01
+    400016: IK Chain02
+    400018: IK Chain03
+    400020: IK Chain04
+    400022: IK Chain05
+    400024: IK Chain06
+    400026: L_arm_bone01
+    400028: L_arm_bone02
+    400030: L_arm_bone03
+    400032: L_arm_bone04
+    400034: L_arm_bone05
+    400036: L_arm_bone06
+    400038: L_F_Leg_bone01
+    400040: L_F_Leg_bone02
+    400042: L_F_Leg_bone03
+    400044: L_F_Leg_bone04
+    400046: L_L_Leg_bone01
+    400048: L_L_Leg_bone02
+    400050: L_L_Leg_bone03
+    400052: L_L_Leg_bone04
+    400054: L_M_Leg_bone01
+    400056: L_M_Leg_bone02
+    400058: L_M_Leg_bone03
+    400060: L_M_Leg_bone04
+    400062: Main_bone01
+    400064: Main_bone02
+    400066: Neck_Bone01
+    400068: Neck_Bone02
+    400070: Neck_Bone03
+    400072: Neck_Bone04
+    400074: R_arm_bone01
+    400076: R_arm_bone02
+    400078: R_arm_bone03
+    400080: R_arm_bone04
+    400082: R_arm_bone05
+    400084: R_arm_bone06
+    400086: R_F_Leg_bone01
+    400088: R_F_Leg_bone02
+    400090: R_F_Leg_bone03
+    400092: R_F_Leg_bone04
+    400094: R_L_Leg_bone01
+    400096: R_L_Leg_bone02
+    400098: R_L_Leg_bone03
+    400100: R_L_Leg_bone04
+    400102: R_M_Leg_bone01
+    400104: R_M_Leg_bone02
+    400106: R_M_Leg_bone03
+    400108: R_M_Leg_bone04
+    400110: //RootNode
+    400112: Spine_bone01
+    400114: Tail_bone01
+    400116: Tail_bone02
+    400118: Tail_bone03
+    400120: Tail_bone04
+    4300000: bd
+    7400000: damage
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: bd
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: damage
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 15
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bd
+        weight: 1
+      - path: IK Chain01
+        weight: 1
+      - path: IK Chain02
+        weight: 1
+      - path: IK Chain03
+        weight: 1
+      - path: IK Chain04
+        weight: 1
+      - path: IK Chain05
+        weight: 1
+      - path: IK Chain06
+        weight: 1
+      - path: Main_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/L_L_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/L_L_Leg_bone01/L_L_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/L_L_Leg_bone01/L_L_Leg_bone02/L_L_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/L_L_Leg_bone01/L_L_Leg_bone02/L_L_Leg_bone03/L_L_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_F_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_F_Leg_bone01/L_F_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_F_Leg_bone01/L_F_Leg_bone02/L_F_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_F_Leg_bone01/L_F_Leg_bone02/L_F_Leg_bone03/L_F_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_M_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_M_Leg_bone01/L_M_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_M_Leg_bone01/L_M_Leg_bone02/L_M_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/L_M_Leg_bone01/L_M_Leg_bone02/L_M_Leg_bone03/L_M_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/Head_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02/L_arm_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02/L_arm_bone03/L_arm_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02/L_arm_bone03/L_arm_bone04/Bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02/L_arm_bone03/L_arm_bone05
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/L_arm_bone01/L_arm_bone02/L_arm_bone03/L_arm_bone05/L_arm_bone06
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02/R_arm_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02/R_arm_bone03/R_arm_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02/R_arm_bone03/R_arm_bone04/Bone05
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02/R_arm_bone03/R_arm_bone05
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/Neck_Bone02/Neck_Bone03/Neck_Bone04/Head_bone01/Head_bone02/R_arm_bone01/R_arm_bone02/R_arm_bone03/R_arm_bone05/R_arm_bone06
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_F_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_F_Leg_bone01/R_F_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_F_Leg_bone01/R_F_Leg_bone02/R_F_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_F_Leg_bone01/R_F_Leg_bone02/R_F_Leg_bone03/R_F_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_M_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_M_Leg_bone01/R_M_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_M_Leg_bone01/R_M_Leg_bone02/R_M_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Neck_Bone01/R_M_Leg_bone01/R_M_Leg_bone02/R_M_Leg_bone03/R_M_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/R_L_Leg_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/R_L_Leg_bone01/R_L_Leg_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/R_L_Leg_bone01/R_L_Leg_bone02/R_L_Leg_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/R_L_Leg_bone01/R_L_Leg_bone02/R_L_Leg_bone03/R_L_Leg_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01/Tail_bone01
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01/Tail_bone01/Tail_bone02
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01/Tail_bone01/Tail_bone02/Tail_bone03
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01/Tail_bone01/Tail_bone02/Tail_bone03/Tail_bone04
+        weight: 1
+      - path: Main_bone01/Main_bone02/Spine_bone01/Tail_bone01/Tail_bone02/Tail_bone03/Tail_bone04/Bone06
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

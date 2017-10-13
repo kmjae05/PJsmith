@@ -16,7 +16,7 @@ public class StageData : MonoBehaviour
     public WWW reader;
     static public JsonData PlunderData;
 
-    static private List<Plunder> plunderList;
+    static private List<Plunder> plunderList = new List<Plunder>();
 
     //스테이지 데이터
     private static List<StageInfo> stageInfoList;
@@ -163,6 +163,31 @@ public class StageData : MonoBehaviour
 
             plin.PlunderName = "plunder" + plin.getPlunderNum().ToString();   // ex) plunder1
 
+            //랜덤으로 리스트에 ai 정보 넣기
+            while (true)
+            {
+                random = Random.Range(0, 40);
+                //중복 방지
+                List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.opponentName != null);  //이미 할당 된
+                if (plif != null)
+                {
+                    bool flag = false;
+                    for (int k = 0; k < plif.Count; k++)
+                    {
+                        if (plif[k].opponentName == plunderList[random].getName())
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (flag) continue; else break;
+                }
+                else break;
+            }
+            plunderInfoList[i].opponentName = plunderList[random].getName();
+            plunderList[random].assignment = true;
+
+
+
         }
 
         stageManager.setStageInfoList(stageInfoList);
@@ -199,7 +224,7 @@ public class StageData : MonoBehaviour
                 stageInfoListtmp[i].getRecentItemFlag = false;
                 //아이템 획득 시간 정하기
                 stageInfoListtmp[i].getItemTimeFlag = true;
-                float time = Random.Range(30f, 60f);
+                float time = Random.Range(50f, 60f);
                 stageInfoListtmp[i].getItemTime = stageInfoListtmp[i].time - time;
             }
 
@@ -296,7 +321,7 @@ public class StageData : MonoBehaviour
     public void setStageInfoList(List<StageInfo> list) { stageInfoList = list; }
     public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }
     public void setPlunderInfoList(List<PlunderInfo> list) { plunderInfoList = list; }
-
+    public List<Plunder> getPlundeList() { return plunderList; }
 
     public int getDist() { return dist; }
 
@@ -393,7 +418,7 @@ public class PlunderInfo
     public PlunderInfo() { spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
     public PlunderInfo(int PlunderNum)
     {
-        this.PlunderNum = PlunderNum; spotName = null; opponentName = "opponentName";
+        this.PlunderNum = PlunderNum; spotName = null; opponentName = null;
         sprite = new Sprite();
         getItem = new string[4]; getItemNum = new int[4];
     }
@@ -406,19 +431,20 @@ public class PlunderInfo
 //AI 상대 40명
 public class Plunder
 {
-    public string user_id;
-    public string Name;
+    private string user_id;
+    private string Name;
     public int level;
     public string mercenary;     //대표 캐릭터
 
     //능력치
-    public float dps;
-    public float strPower;
-    public float attackSpeed;
-    public float focus;
-    public float critical;
-    public float defPower;
-    public float evaRate;
+    public Stat stat;
+
+    public string[] getItem;       //전체 획득한 아이템
+    public int[] getItemNum;       //전체 획득한 아이템 수량
+    public string getRecentItem;   //최근 획득한 아이템
+    public int getRecentItemNum;    //최근 획득한 아이템 수
+
+    public bool assignment;         //스팟에 할당 여부
 
     public Plunder(JsonData data, int index)
     {
@@ -426,15 +452,18 @@ public class Plunder
         this.Name = data["Plunder"][index]["Name"].ToString();
         this.level = (int)data["Plunder"][index]["level"];
         this.mercenary = data["Plunder"][index]["mercenary"].ToString();
-        this.dps = (int)data["Plunder"][index]["dps"];
-        this.strPower = (int)data["Plunder"][index]["strPower"];
-        this.attackSpeed = (int)data["Plunder"][index]["attackSpeed"];
-        this.focus = (int)data["Plunder"][index]["focus"];
-        this.critical = (int)data["Plunder"][index]["critical"];
-        this.defPower = (int)data["Plunder"][index]["defPower"];
-        this.evaRate = (int)data["Plunder"][index]["evaRate"];
+        stat = new Stat();
+        this.stat.dps = (int)data["Plunder"][index]["dps"];
+        this.stat.strPower = (int)data["Plunder"][index]["strPower"];
+        this.stat.attackSpeed = (int)data["Plunder"][index]["attackSpeed"];
+        this.stat.focus = (int)data["Plunder"][index]["focus"];
+        this.stat.critical = (int)data["Plunder"][index]["critical"];
+        this.stat.defPower = (int)data["Plunder"][index]["defPower"];
+        this.stat.evaRate = (int)data["Plunder"][index]["evaRate"];
+        this.assignment = false;
     }
 
-
+    public string getUser_id() { return user_id; }
+    public string getName() { return Name; }
 
 }
