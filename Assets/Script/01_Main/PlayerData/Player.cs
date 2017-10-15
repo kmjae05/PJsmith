@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 
     static public User Play = new User();          //플레이어
     static public Hammer equipHm = new Hammer();   //장착 망치
+    EquipmentData equipmentData;
 
     private Animator chrAni;
 
@@ -36,10 +37,10 @@ public class Player : MonoBehaviour {
         public string attribute;
 
         //장비 Equipment로
-        public string[] equipHelmet;
-        public string[] equipArmor;
-        public string[] equipWeapon;
-        public string[] equipBoots;
+        public Equipment[] equipHelmet;
+        public Equipment[] equipArmor;
+        public Equipment[] equipWeapon;
+        public Equipment[] equipBoots;
 
         public string logoutTime;
         
@@ -67,14 +68,10 @@ public class Player : MonoBehaviour {
             this.stat.collectAmount = 1;
             this.stat.dps = this.stat.strPower + this.stat.defPower * 0.2f;
 
-            this.equipHelmet = new string[2];
-            equipHelmet[0] = "helmet5"; this.equipHelmet[1] = "helmet6";
-            this.equipArmor = new string[2];
-            this.equipArmor[0] = "armor5"; this.equipArmor[1] = "armor6";
-            this.equipWeapon = new string[2];
-            this.equipWeapon[0] = "weapon6"; this.equipWeapon[1] = "weapon5";
-            this.equipBoots = new string[2];
-            this.equipBoots[0] = "boots1"; this.equipBoots[1] = "boots2";
+            this.equipHelmet = new Equipment[2];
+            this.equipArmor = new Equipment[2];
+            this.equipWeapon = new Equipment[2];
+            this.equipBoots = new Equipment[2];
 
             this.logoutTime = "0";
         }
@@ -100,6 +97,17 @@ public class Player : MonoBehaviour {
         t_PlayerCash.text = Play.cash.ToString();
         PlayerExpBarSlider.maxValue = Play.max_exp;
         PlayerExpBarSlider.value = Play.exp;
+        equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
+
+        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "고급 하이그라스 단검");
+        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+
     }
 
     void Update()

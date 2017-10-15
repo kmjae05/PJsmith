@@ -276,7 +276,6 @@
      <Compile Include="Assets\ProgressBar\Script\ProgressRadialBehaviour.cs" />
      <Compile Include="Assets\ProgressBar\Script\Utils.cs" />
      <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
-     <Compile Include="Assets\Script\01_Main\ChrFaceScript.cs" />
      <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
      <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
      <Compile Include="Assets\Script\01_Main\Dice\DiceManager.cs" />
@@ -307,6 +306,7 @@
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\StageData.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\StatData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\TitleHandler.cs" />
      <Compile Include="Assets\Script\01_Main\ProfileChrDrag.cs" />
      <Compile Include="Assets\Script\01_Main\ProfilePopupManager.cs" />
@@ -397,6 +397,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
+     <None Include="Assets\Mid Level Monsters 02\Read me.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
@@ -450,6 +451,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+     <None Include="Assets\FantasyIconsMegaPack\ReadMe.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />

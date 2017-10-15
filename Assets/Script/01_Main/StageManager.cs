@@ -10,8 +10,8 @@ public class StageManager : MonoBehaviour
     private int goldPrice = 50; //즉시완료에 필요한 골드
     private int cashPrice = 5;  //즉시완료에 필요한 보석
 
-    //private WorldMapManager worldmapManager;    //worldmap info
     private MercenaryManager mercenaryManager;  //mercenary info
+    private StatData statData;
 
     //스테이지 정보
     private StageData stageData;
@@ -57,6 +57,7 @@ public class StageManager : MonoBehaviour
     {
         //worldmapManager = GameObject.Find("Menu").transform.Find("WorldMap").gameObject.GetComponent<WorldMapManager>();
         mercenaryManager = GameObject.Find("StageManager").GetComponent<MercenaryManager>();
+        statData = GameObject.Find("PlayerData").GetComponent<StatData>();
         stageData = GameObject.Find("StageData").GetComponent<StageData>();
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
@@ -711,16 +712,14 @@ public class StageManager : MonoBehaviour
             //플레이어 정보 갱신
             plunderPlayerBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = Player.Play.Name;
             plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + Player.Play.level.ToString();
-            //Stat equipStat = StatData.instance.SumEquip(Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()], Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()],
-            //    Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()], Player.Play.equipHelmet[SetSlotData.instance.getRepreSet()]   );
-            //Stat stat = StatData.instance.SumChrEquipMer(Player.Play, );
-            plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = "전투력 : " + Player.Play.stat.dps.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = "공격력 : " + Player.Play.stat.strPower.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = "공격속도 : " + Player.Play.stat.attackSpeed.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = "명중률 : " + Player.Play.stat.focus.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = "크리티컬 : " + Player.Play.stat.critical.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = "방어력 : " + Player.Play.stat.defPower.ToString();
-            plunderPlayerBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = "회피율 : " + Player.Play.stat.evaRate.ToString();
+
+            plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = "전투력 : " + statData.getRepreSetStat().dps.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = "공격력 : " + statData.getRepreSetStat().strPower.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = "공격속도 : " + statData.getRepreSetStat().attackSpeed.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = "명중률 : " + statData.getRepreSetStat().focus.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = "크리티컬 : " + statData.getRepreSetStat().critical.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = "방어력 : " + statData.getRepreSetStat().defPower.ToString();
+            plunderPlayerBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = "회피율 : " + statData.getRepreSetStat().evaRate.ToString();
 
             //상대방 데이터 가져와서 갱신
             plunderEnemyBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = plunder.getName();

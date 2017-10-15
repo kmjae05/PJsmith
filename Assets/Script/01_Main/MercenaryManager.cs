@@ -38,7 +38,7 @@ public class MercenaryManager : MonoBehaviour {
         for (int i = 0; i < mercenary.Count; i++)
             mercenary[i].level = Player.Play.level;
         LobbyMerActive();
-        mercenaryData.setMercenary(mercenary);
+        //mercenaryData.setMercenary(mercenary);
     }
 
 
@@ -46,16 +46,15 @@ public class MercenaryManager : MonoBehaviour {
     public void setMerInfo(GameObject obj)
     {
         Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
-
         //장비 이미지, 텍스트 변경
-        GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Helmet/" + merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1]);
-        GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1];
-        GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Armor/" + merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1]);
-        GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1];
-        GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Weapon/" + merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1]);
-        GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1];
-        GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Boots/" + merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1]);
-        GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1];
+        GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name;
+        GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name;
+        GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name;
+        GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name;
 
         //*****캐릭터 3D모델 변경
         GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(false);
@@ -64,7 +63,7 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("LevelText").GetComponent<Text>().text = merTemp.level.ToString();
         GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
 
-        statusCal(profilePopupManager.getCurSetNum(), merTemp);
+        //statusCal(profilePopupManager.getCurSetNum(), merTemp);
 
         GameObject.Find("DPS/Text").GetComponent<Text>().text = mercenarytmp.stat.dps.ToString();
         GameObject.Find("StrPower/Text").GetComponent<Text>().text = mercenarytmp.stat.strPower.ToString();
@@ -169,7 +168,7 @@ public class MercenaryManager : MonoBehaviour {
 
         //*****캐릭터 이미지 변경
 
-        statusCal(profilePopupManager.getSetNum(), merTemp);
+        //statusCal(profilePopupManager.getSetNum(), merTemp);
         merInfoPopup.transform.Find("UIPanel/ChrBox/Text").GetComponent<Text>().text = merTemp.getName();
 
         merInfoPopup.transform.Find("UIPanel/InfoPanel/DPS/Text").GetComponent<Text>().text = mercenarytmp.stat.dps.ToString();
@@ -189,36 +188,36 @@ public class MercenaryManager : MonoBehaviour {
 
 
     //스탯 계산
-    public void statusCal(int setNum, Mercenary mer)
-    {
-        if (setNum == 1)
-        {
-            mercenarytmp.stat.dps = mer.stat.dps*2;
-            mercenarytmp.stat.strPower = mer.stat.strPower * 1.5f;
-            mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.3f;
-            mercenarytmp.stat.focus = mer.stat.focus + 20;
-            mercenarytmp.stat.critical = mer.stat.critical * 1.4f;
-            mercenarytmp.stat.defPower = mer.stat.defPower * 1.3f;
-            mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.1f;
-            mercenarytmp.attribute = "no";
-            mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed* 0.7f;
-            mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 0.8f;
-        }
-        else
-        {
-            mercenarytmp.stat.dps = mer.stat.dps * 1;
-            mercenarytmp.stat.strPower = mer.stat.strPower * 1.1f;
-            mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.1f;
-            mercenarytmp.stat.focus = mer.stat.focus + 10;
-            mercenarytmp.stat.critical = mer.stat.critical * 1.0f;
-            mercenarytmp.stat.defPower = mer.stat.defPower * 1.1f;
-            mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.2f;
-            mercenarytmp.attribute = "no";
-            mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed * 1.6f;
-            mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 1.5f;
-        }
+    //public void statusCal(int setNum, Mercenary mer)
+    //{
+    //    if (setNum == 1)
+    //    {
+    //        mercenarytmp.stat.dps = mer.stat.dps*2;
+    //        mercenarytmp.stat.strPower = mer.stat.strPower * 1.5f;
+    //        mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.3f;
+    //        mercenarytmp.stat.focus = mer.stat.focus + 20;
+    //        mercenarytmp.stat.critical = mer.stat.critical * 1.4f;
+    //        mercenarytmp.stat.defPower = mer.stat.defPower * 1.3f;
+    //        mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.1f;
+    //        mercenarytmp.attribute = "no";
+    //        mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed* 0.7f;
+    //        mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 0.8f;
+    //    }
+    //    else
+    //    {
+    //        mercenarytmp.stat.dps = mer.stat.dps * 1;
+    //        mercenarytmp.stat.strPower = mer.stat.strPower * 1.1f;
+    //        mercenarytmp.stat.attackSpeed = mer.stat.attackSpeed + 0.1f;
+    //        mercenarytmp.stat.focus = mer.stat.focus + 10;
+    //        mercenarytmp.stat.critical = mer.stat.critical * 1.0f;
+    //        mercenarytmp.stat.defPower = mer.stat.defPower * 1.1f;
+    //        mercenarytmp.stat.evaRate = mer.stat.evaRate * 1.2f;
+    //        mercenarytmp.attribute = "no";
+    //        mercenarytmp.stat.collectSpeed = mer.stat.collectSpeed * 1.6f;
+    //        mercenarytmp.stat.collectAmount = mer.stat.collectAmount * 1.5f;
+    //    }
 
-    }
+    //}
 
 
 

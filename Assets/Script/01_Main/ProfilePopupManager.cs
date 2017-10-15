@@ -10,18 +10,20 @@ public class ProfilePopupManager : MonoBehaviour {
 
     private GameObject curSelectChr; //현재 선택된 캐릭터 이름
 
-    Player.User playerTemp;
+    Player.User player;
 
     private MercenaryManager mercenaryManager;
+    private StatData statData;
 
     private void Start()
     {
         setNum = SetSlotData.instance.getRepreSet();
         curSetNum = 1;
 
-        playerTemp = new Player.User();
+        player = new Player.User();
 
         mercenaryManager = GameObject.Find("StageManager").GetComponent<MercenaryManager>();
+        statData = GameObject.Find("PlayerData").GetComponent<StatData>();
 
         if (setNum == 1)
         {
@@ -71,6 +73,7 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("SetSlot").transform.Find("Set2Button").gameObject.GetComponent<Image>().color = new Color(1f, 0.7f, 0.7f);
             GameObject.Find("SetSlot").transform.Find("Set2Button (1)").gameObject.GetComponent<Image>().color = new Color(1f, 0.7f, 0.7f);
         }
+        statData.repreSetStatCal();
     }
 
     //
@@ -81,14 +84,14 @@ public class ProfilePopupManager : MonoBehaviour {
         if (obj.name == "SmithSelect")
         {
             //장비 이미지, 텍스트 변경
-            GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Helmet/" + Player.Play.equipHelmet[curSetNum - 1]);
-            GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = Player.Play.equipHelmet[curSetNum - 1];
-            GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Armor/" + Player.Play.equipArmor[curSetNum - 1]);
-            GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = Player.Play.equipArmor[curSetNum - 1];
-            GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Weapon/" + Player.Play.equipWeapon[curSetNum - 1]);
-            GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = Player.Play.equipWeapon[curSetNum - 1];
-            GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("Equipment/Boots/" + Player.Play.equipBoots[curSetNum - 1]);
-            GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = Player.Play.equipBoots[curSetNum - 1];
+            GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x=>x.name ==  Player.Play.equipHelmet[curSetNum - 1].name).icon);
+            GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = Player.Play.equipHelmet[curSetNum - 1].name;
+            GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipArmor[curSetNum - 1].name).icon);
+            GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = Player.Play.equipArmor[curSetNum - 1].name;
+            GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipWeapon[curSetNum - 1].name).icon);
+            GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = Player.Play.equipWeapon[curSetNum - 1].name;
+            GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipBoots[curSetNum - 1].name).icon);
+            GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = Player.Play.equipBoots[curSetNum - 1].name;
 
 
             //*****캐릭터 3D모델 변경
@@ -97,17 +100,18 @@ public class ProfilePopupManager : MonoBehaviour {
 
             GameObject.Find("LevelText").GetComponent<Text>().text = Player.Play.level.ToString();
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.Play.Name;
-            statusCal(curSetNum);
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = playerTemp.stat.dps.ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = playerTemp.stat.strPower.ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = playerTemp.stat.attackSpeed.ToString();
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = playerTemp.stat.focus.ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = playerTemp.stat.critical.ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = playerTemp.stat.defPower.ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = playerTemp.stat.evaRate.ToString();
-            GameObject.Find("Attribute/Text").GetComponent<Text>().text = playerTemp.attribute;
-            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = playerTemp.stat.collectSpeed.ToString();
-            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = playerTemp.stat.collectAmount.ToString();
+
+            Stat stat = GameObject.Find("PlayerData").GetComponent<StatData>().getPlayerStat()[curSetNum - 1];
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString(); //equi[setnum].strPower
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString();
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
+            GameObject.Find("Attribute/Text").GetComponent<Text>().text = player.attribute;
+            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = stat.collectSpeed.ToString();
+            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = stat.collectAmount.ToString();
 
 
             GameObject.Find("ChrTitleText").GetComponent<Text>().text = Player.Play.title;
@@ -118,39 +122,7 @@ public class ProfilePopupManager : MonoBehaviour {
         }
     }
 
-    //
 
-    //스탯 계산
-    public void statusCal(int setNum)
-    {
-        if (setNum == 1)
-        {
-            playerTemp.stat.dps = Player.Play.stat.dps * 2;
-            playerTemp.stat.strPower = Player.Play.stat.strPower * 1.5f;
-            playerTemp.stat.attackSpeed = Player.Play.stat.attackSpeed + 0.3f;
-            playerTemp.stat.focus = Player.Play.stat.focus + 20;
-            playerTemp.stat.critical = Player.Play.stat.critical * 1.4f;
-            playerTemp.stat.defPower = Player.Play.stat.defPower * 1.3f;
-            playerTemp.stat.evaRate = Player.Play.stat.evaRate * 1.1f;
-            playerTemp.attribute = "no";
-            playerTemp.stat.collectSpeed = Player.Play.stat.collectSpeed * 0.7f;
-            playerTemp.stat.collectAmount = Player.Play.stat.collectAmount * 0.8f;
-        }
-        else
-        {
-            playerTemp.stat.dps = Player.Play.stat.dps * 1;
-            playerTemp.stat.strPower = Player.Play.stat.strPower * 1.1f;
-            playerTemp.stat.attackSpeed = Player.Play.stat.attackSpeed + 0.1f;
-            playerTemp.stat.focus = Player.Play.stat.focus + 10;
-            playerTemp.stat.critical = Player.Play.stat.critical * 1.0f;
-            playerTemp.stat.defPower = Player.Play.stat.defPower * 1.1f;
-            playerTemp.stat.evaRate = Player.Play.stat.evaRate * 1.2f;
-            playerTemp.attribute = "no";
-            playerTemp.stat.collectSpeed = Player.Play.stat.collectSpeed * 1.6f;
-            playerTemp.stat.collectAmount = Player.Play.stat.collectAmount * 1.5f;
-        }
-
-    }
 
     //캐릭터 선택 시 아웃라인 위치 변경
     public void setOutLine(GameObject chr)

@@ -11,6 +11,9 @@ public class MercenaryData : MonoBehaviour {
     static private List<Mercenary> mercenary;
     private Mercenary mercenaryCreate;
 
+    EquipmentData equipmentData;
+
+
     void Awake()
     {
         if (instance == null)
@@ -24,9 +27,10 @@ public class MercenaryData : MonoBehaviour {
     private void Start()
     {
         mercenaryManager = GameObject.Find("StageManager").GetComponent<MercenaryManager>();
+        equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
         mercenary = new List<Mercenary>();
-
+        
         //용병 A, B, C 생성.
         for (int i = 1; i < 4; i++)
         {
@@ -45,10 +49,14 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
                 //장비
-                mercenaryCreate.equipHelmet[0] = "helmet8"; mercenaryCreate.equipHelmet[1] = "helmet7";
-                mercenaryCreate.equipArmor[0] = "armor1"; mercenaryCreate.equipArmor[1] = "armor2";
-                mercenaryCreate.equipWeapon[0] = "weapon2"; mercenaryCreate.equipWeapon[1] = "weapon8";
-                mercenaryCreate.equipBoots[0] = "boots3"; mercenaryCreate.equipBoots[1] = "boots6";
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
 
             }
             if (i == 2) {
@@ -64,10 +72,14 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipHelmet[0] = "helmet3"; mercenaryCreate.equipHelmet[1] = "helmet2";
-                mercenaryCreate.equipArmor[0] = "armor3"; mercenaryCreate.equipArmor[1] = "armor8";
-                mercenaryCreate.equipWeapon[0] = "weapon7"; mercenaryCreate.equipWeapon[1] = "weapon4";
-                mercenaryCreate.equipBoots[0] = "boots4"; mercenaryCreate.equipBoots[1] = "boots7";
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
 
             }
             if (i == 3) {
@@ -83,16 +95,22 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipHelmet[0] = "helmet1"; mercenaryCreate.equipHelmet[1] = "helmet4";
-                mercenaryCreate.equipArmor[0] = "armor4"; mercenaryCreate.equipArmor[1] = "armor7";
-                mercenaryCreate.equipWeapon[0] = "weapon1"; mercenaryCreate.equipWeapon[1] = "weapon3";
-                mercenaryCreate.equipBoots[0] = "boots5"; mercenaryCreate.equipBoots[1] = "boots8";
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
 
             }
             mercenary.Add(mercenaryCreate);
         }
+        
         mercenaryManager.setMercenary(mercenary);
     }
+
 
     //용병 data
     public void setMercenary(List<Mercenary> mer) { mercenary = mer; }
@@ -112,10 +130,10 @@ public class Mercenary
     public Stat stat;
     public string attribute;
     //장비
-    public string[] equipHelmet;
-    public string[] equipArmor;
-    public string[] equipWeapon;
-    public string[] equipBoots;
+    public Equipment[] equipHelmet;
+    public Equipment[] equipArmor;
+    public Equipment[] equipWeapon;
+    public Equipment[] equipBoots;
 
     public bool state = false;         //용병 상태
     public int stageNum;            //위치한 스테이지
@@ -129,7 +147,7 @@ public class Mercenary
         this.level = 1;
         this.exp = 0;
         this.max_exp = this.level * 55;
-        stat = new Stat();
+        this.stat = new Stat();
         this.stat.dps = 1;
         this.stat.strPower = 1;
         this.stat.attackSpeed = 1.0f;
@@ -140,10 +158,10 @@ public class Mercenary
         this.attribute = "no";
         this.stat.collectSpeed = 1.0f;
         this.stat.collectAmount = 1;
-        this.equipHelmet = new string[2];
-        this.equipArmor = new string[2];
-        this.equipWeapon = new string[2];
-        this.equipBoots = new string[2];
+        this.equipHelmet = new Equipment[2];
+        this.equipArmor = new Equipment[2];
+        this.equipWeapon = new Equipment[2];
+        this.equipBoots = new Equipment[2];
         this.state = false;
         this.stageNum = 0;
     }

@@ -59,7 +59,7 @@ public class Equipment
     public string[] necessaryMaterials; //필요 재료
     public int[] necessaryMaterialsNum; //수량
 
-
+    public Equipment() { }
     public Equipment(JsonData EquipData, int index)
     {
         this.name = EquipData["Equipment"][index]["name"].ToString();

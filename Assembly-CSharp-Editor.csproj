@@ -100,6 +100,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionCurves.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceAmbientObscurance.shader" />
+     <None Include="Assets\Mid Level Monsters 02\Read me.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\NFAA.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
@@ -153,6 +154,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+     <None Include="Assets\FantasyIconsMegaPack\ReadMe.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
