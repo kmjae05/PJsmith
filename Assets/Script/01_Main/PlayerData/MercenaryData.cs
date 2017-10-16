@@ -55,7 +55,7 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
-                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "엘더 소드"); 
                 mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
 
             }
@@ -99,7 +99,7 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
-                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "전설 팔라딘 소드"); 
                 mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 
                 mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검"); 

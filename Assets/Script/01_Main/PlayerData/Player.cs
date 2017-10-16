@@ -170,6 +170,9 @@ public class Player : MonoBehaviour {
                 Play.stat.strPower += Play.stat.strPower * 0.1f;
                 Play.stat.dps = Play.stat.strPower + Play.stat.defPower * 0.2f;
                 MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
+                GameObject.Find("PlayerData").GetComponent<StatData>().playerStatCal();
+                GameObject.Find("PlayerData").GetComponent<StatData>().mercenaryStatCal();
+                GameObject.Find("PlayerData").GetComponent<StatData>().repreSetStatCal();
             }
             yield return null;
         }

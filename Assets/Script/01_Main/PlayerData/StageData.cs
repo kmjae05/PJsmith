@@ -252,11 +252,25 @@ public class StageData : MonoBehaviour
             }
         }
 
-
         //리스트에 다시 저장. 스테이지 검색.
         for (int i = 0; i < stageInfoListtmp.Count; i++)
         {
             stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == stageInfoListtmp[i].getStageNum())] = stageInfoListtmp[i];
+        }
+
+
+
+
+        //약탈 리젠
+        List<PlunderInfo> plunderInfotmp = plunderInfoList.FindAll(x => x.regen == true);
+        for (int i = 0; i < plunderInfoList.Count; i++)
+        {
+            plunderInfoList[i].time = plunderInfoList[i].time - Time.deltaTime;
+            if (plunderInfoList[i].time <= 0)
+            {
+                plunderInfoList[i].time = 0;
+                plunderInfoList[i].regen = false;
+            }
         }
 
 
@@ -270,7 +284,7 @@ public class StageData : MonoBehaviour
     public void stageImageChange(StageInfo stin)
     {
         if (stin.type == "던전")
-            stin.sprite = Resources.Load<Sprite>("Gather/minimonster" + stin.typeNum.ToString());
+            stin.sprite = Resources.Load<Sprite>("Gather/minimonster");
     }
 
     //아이템 획득
@@ -405,6 +419,7 @@ public class PlunderInfo
 
     public bool state;             //진행 상태
     public bool regen;              //리젠 중
+    public float time;             //남은 시간
 
     public string[] getItem;        //전체 획득한 아이템
     public int[] getItemNum;        //전체 획득한 아이템 수량

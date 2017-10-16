@@ -102,16 +102,16 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.Play.Name;
 
             Stat stat = GameObject.Find("PlayerData").GetComponent<StatData>().getPlayerStat()[curSetNum - 1];
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString();
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = ((int)stat.attackSpeed).ToString();
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = player.attribute;
-            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = stat.collectSpeed.ToString();
-            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = stat.collectAmount.ToString();
+            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
+            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
 
 
             GameObject.Find("ChrTitleText").GetComponent<Text>().text = Player.Play.title;

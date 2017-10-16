@@ -10,7 +10,9 @@ public class StatData : MonoBehaviour {
     private static Stat playerRepreStat = new Stat();       //대장장이 대표 스탯
     private static List<Stat> playerStat;         //대장장이 스탯
     private List<Stat> mercenaryRepreStat; //용병 대표 스탯
-    private List<Stat> mercenaryStat;       //용병 스탯 6개
+    private List<Stat> mercenary1Stat;       //용병1 스탯
+    private List<Stat> mercenary2Stat;       //용병2 스탯
+    private List<Stat> mercenary3Stat;       //용병3 스탯
     private Stat repreSetStat = new Stat();  //대표 세트 스탯
     //private Stat set1Stat = new Stat();      //세트1 스탯
     //private Stat set2Stat = new Stat();      //세트2 스탯
@@ -25,8 +27,13 @@ public class StatData : MonoBehaviour {
         for (int i = 0; i < 2; i++) playerStat.Add(new Stat());
         mercenaryRepreStat = new List<Stat>();
         for (int i = 0; i < 3; i++) mercenaryRepreStat.Add(new Stat());
+        mercenary1Stat = new List<Stat>(); mercenary2Stat = new List<Stat>(); mercenary3Stat = new List<Stat>();
+        for (int i = 0; i < 2; i++) { mercenary1Stat.Add(new Stat()); mercenary2Stat.Add(new Stat()); mercenary3Stat.Add(new Stat()); }
+
         playerStatCal();
+        mercenaryStatCal();
         repreSetStatCal();
+
     }
 
     //대장장이 스탯 대표 세트 계산
@@ -68,7 +75,31 @@ public class StatData : MonoBehaviour {
             playerStat[i] = SumChrEquip(Player.Play, equipStat);
         }
     }
-
+    //용병 스탯 계산
+    public void mercenaryStatCal()
+    {
+        for (int i = 0; i < mercenary1Stat.Count; i++)
+        {
+            Mercenary mer = mercenaryData.getMercenary()[0];
+            Stat merEquipStat = new Stat(); //용병 장비 스탯       
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            mercenary1Stat[i] = SumChrEquip(mer, merEquipStat);
+        }
+        for (int i = 0; i < mercenary2Stat.Count; i++)
+        {
+            Mercenary mer = mercenaryData.getMercenary()[1];
+            Stat merEquipStat = new Stat(); //용병 장비 스탯       
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            mercenary2Stat[i] = SumChrEquip(mer, merEquipStat);
+        }
+        for (int i = 0; i < mercenary3Stat.Count; i++)
+        {
+            Mercenary mer = mercenaryData.getMercenary()[2];
+            Stat merEquipStat = new Stat(); //용병 장비 스탯       
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            mercenary3Stat[i] = SumChrEquip(mer, merEquipStat);
+        }
+    }
 
 
 
@@ -164,7 +195,13 @@ public class StatData : MonoBehaviour {
     public Stat getPlayerRepreStat() { return playerRepreStat; }
     public List<Stat> getPlayerStat() { return playerStat; }
     public Stat getRepreSetStat() { return repreSetStat; }
-    
+    public List<Stat> getMercenaryStat(int i)
+    {
+        if (i==1) return mercenary1Stat;
+        else if (i == 2) return mercenary2Stat;
+        else if (i == 3) return mercenary3Stat;
+        else return null;
+    }
 }
 
 
