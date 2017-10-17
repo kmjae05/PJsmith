@@ -114,8 +114,8 @@ public class StatData : MonoBehaviour {
         stat.critical = helmet.stat.critical + armor.stat.critical + weapon.stat.critical + boots.stat.critical;
         stat.defPower = helmet.stat.defPower + armor.stat.defPower + weapon.stat.defPower + boots.stat.defPower;
         stat.evaRate = helmet.stat.evaRate + armor.stat.evaRate + weapon.stat.evaRate + boots.stat.evaRate;
-        stat.collectSpeed = helmet.stat.collectSpeed + armor.stat.collectSpeed + weapon.stat.collectSpeed + boots.stat.collectSpeed;
-        stat.collectAmount = helmet.stat.collectAmount + armor.stat.collectAmount + weapon.stat.collectAmount + boots.stat.collectAmount;
+        //stat.collectSpeed = helmet.stat.collectSpeed + armor.stat.collectSpeed + weapon.stat.collectSpeed + boots.stat.collectSpeed;
+        //stat.collectAmount = helmet.stat.collectAmount + armor.stat.collectAmount + weapon.stat.collectAmount + boots.stat.collectAmount;
 
         stat.dps = helmet.stat.dps + armor.stat.dps + weapon.stat.dps + boots.stat.dps;
         return stat;
@@ -130,8 +130,8 @@ public class StatData : MonoBehaviour {
         stat.critical = chr.stat.critical + equipStat.critical;
         stat.defPower = chr.stat.defPower + equipStat.defPower;
         stat.evaRate = chr.stat.evaRate + equipStat.evaRate;
-        stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
-        stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
+        //stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
+        //stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
 
         stat.dps = chr.stat.dps + equipStat.dps;
         return stat;
@@ -145,8 +145,8 @@ public class StatData : MonoBehaviour {
         stat.critical = chr.stat.critical + equipStat.critical;
         stat.defPower = chr.stat.defPower + equipStat.defPower;
         stat.evaRate = chr.stat.evaRate + equipStat.evaRate;
-        stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
-        stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
+        //stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
+        //stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
 
         stat.dps = chr.stat.dps + equipStat.dps;
 
@@ -164,8 +164,8 @@ public class StatData : MonoBehaviour {
         stat.critical = player.stat.critical + equipStat.critical + mer.critical;
         stat.defPower = player.stat.defPower + equipStat.defPower + mer.defPower;
         stat.evaRate = player.stat.evaRate + equipStat.evaRate + mer.evaRate;
-        stat.collectSpeed = player.stat.collectSpeed + equipStat.collectSpeed + mer.collectSpeed;
-        stat.collectAmount = player.stat.collectAmount + equipStat.collectAmount + mer.collectAmount;
+        //stat.collectSpeed = player.stat.collectSpeed + equipStat.collectSpeed + mer.collectSpeed;
+        //stat.collectAmount = player.stat.collectAmount + equipStat.collectAmount + mer.collectAmount;
 
         stat.dps = player.stat.dps + equipStat.dps + mer.dps;
 
@@ -182,8 +182,8 @@ public class StatData : MonoBehaviour {
         stat.critical = stat1.critical  + stat2.critical;
         stat.defPower = stat1.defPower + stat2.defPower;
         stat.evaRate = stat1.evaRate + stat2.evaRate;
-        stat.collectSpeed = stat1.collectSpeed+ stat2.collectSpeed;
-        stat.collectAmount = stat1.collectAmount + stat2.collectAmount;
+        //stat.collectSpeed = stat1.collectSpeed+ stat2.collectSpeed;
+        //stat.collectAmount = stat1.collectAmount + stat2.collectAmount;
 
         stat.dps = stat1.dps + stat2.dps;
         return stat;
@@ -217,9 +217,7 @@ public class Stat
     public float collectSpeed;
     public float collectAmount;
 
-    public Stat(){
 
-    }
 
     public void statClear()
     {

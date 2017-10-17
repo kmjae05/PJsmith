@@ -49,7 +49,7 @@ public class ThingsData : MonoBehaviour
         {
             thingsList.Add(new Things(thingsData, i));
         }
-        thingsList.Find(x => x.name == "원석").possession = 3;
+        thingsList.Find(x => x.name == "돌").possession = 3;
         thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
 
@@ -69,6 +69,33 @@ public class ThingsData : MonoBehaviour
         return null;
     }
 
+    public Color ChangeFrameColor(int grade)
+    {
+        Color col = new Color();
+        switch (grade)
+        {
+            case 1:
+                col = new Color(1, 1, 1);
+                break;
+            case 2:
+                col = new Color(0.05f, 0.62f, 0.1f);
+                break;
+            case 3:
+                col = new Color(0.05f, 0.55f, 0.72f);
+                break;
+            case 4:
+                col = new Color(0.6f, 0.1f, 0.67f);
+                break;
+            case 5:
+                col = new Color(1, 0.75f, 0);
+                break;
+        }
+
+        return col;
+    }
+    
+
+
     public List<Things> getThingsList() { return thingsList; }
     public void setThingsList(Things things, int index) { thingsList[index] = things; }
 
@@ -81,6 +108,8 @@ public class Things
     public string type;
     public string name;
     public string explanation;
+    public int grade;
+    public int sell;
     public string icon;
 
     public int possession;
@@ -95,6 +124,8 @@ public class Things
         this.type = thingsData["Things"][index]["type"].ToString();
         this.name = thingsData["Things"][index]["name"].ToString();
         this.explanation = thingsData["Things"][index]["explanation"].ToString();
+        this.grade = (int)thingsData["Things"][index]["grade"];
+        this.sell = (int)thingsData["Things"][index]["sell"];
         this.icon = thingsData["Things"][index]["icon"].ToString();
 
         this.possession = 0;

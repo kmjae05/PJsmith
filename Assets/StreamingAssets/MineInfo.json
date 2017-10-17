@@ -4,48 +4,64 @@
             "type" : "돌",
             "buildLevel" : 1,
             "buildTime" : 60,
-            "getThingName" : "원석",
-            "material" : "원석 1"
+            "getThingName" : "돌 광명석",
+            "material" : "돌 1"
               
         },
         {
-            "type" : "동",
+            "type" : "구리",
             "buildLevel" : 1,
             "buildTime" : 120,
-            "getThingName" : "구리",
-            "material" : "원석 1 구리 1"
-              
-        },
-        {
-            "type" : "철",
-            "buildLevel" : 5,
-            "buildTime" : 600,
-            "getThingName" : "철",
-            "material" : "원석 1"
+            "getThingName" : "구리 석류석 자황수정",
+            "material" : "돌 1 구리 1"
               
         },
         {
             "type" : "은",
-            "buildLevel" : 10,
-            "buildTime" : 180,
-            "getThingName" : "은",
-            "material" : "원석 1"
+            "buildLevel" : 5,
+            "buildTime" : 600,
+            "getThingName" : "은 비취",
+            "material" : "돌 1"
               
         },
         {
             "type" : "금",
-            "buildLevel" : 20,
-            "buildTime" : 3600,
-            "getThingName" : "금",
-            "material" : "원석 1"
+            "buildLevel" : 10,
+            "buildTime" : 180,
+            "getThingName" : "금 에메랄드",
+            "material" : "돌 1"
               
         },
         {
-            "type" : "보석",
+            "type" : "철",
+            "buildLevel" : 20,
+            "buildTime" : 3600,
+            "getThingName" : "철 다이아몬드",
+            "material" : "돌 1"
+              
+        },
+        {
+            "type" : "미스릴",
             "buildLevel" : 30,
             "buildTime" : 10800,
-            "getThingName" : "금강석",
-            "material" : "원석 1"
+            "getThingName" : "미스릴 자수정",
+            "material" : "돌 1"
+              
+        },
+        {
+            "type" : "검은무쇠",
+            "buildLevel" : 30,
+            "buildTime" : 10800,
+            "getThingName" : "검은무쇠 암흑석",
+            "material" : "돌 1"
+              
+        },
+        {
+            "type" : "아케나이트",
+            "buildLevel" : 30,
+            "buildTime" : 10800,
+            "getThingName" : "아케나이트 용암석",
+            "material" : "돌 1"
               
         }
         

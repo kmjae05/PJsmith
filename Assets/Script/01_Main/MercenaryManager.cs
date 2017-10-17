@@ -47,14 +47,35 @@ public class MercenaryManager : MonoBehaviour {
     {
         Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
         //장비 이미지, 텍스트 변경
-        GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).icon);
-        GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name;
-        GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).icon);
-        GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name;
-        GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).icon);
-        GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name;
-        GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).icon);
-        GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name;
+        GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite =
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = 
+            merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name;
+
+        GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = 
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = 
+            merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name;
+
+        GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = 
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = 
+            merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name;
+
+        GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = 
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = 
+            merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name;
+
+        //등급 프레임
+        GameObject.Find("EquipHelmet/GradeFrame").GetComponent<Image>().color = 
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).grade);
+        GameObject.Find("EquipArmor/GradeFrame").GetComponent<Image>().color = 
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).grade);
+        GameObject.Find("EquipWeapon/GradeFrame").GetComponent<Image>().color = 
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).grade);
+        GameObject.Find("EquipBoots/GradeFrame").GetComponent<Image>().color = 
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).grade);
 
         //*****캐릭터 3D모델 변경
         GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(false);
@@ -74,8 +95,8 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
         GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
         GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
-        GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = stat.collectSpeed.ToString();
-        GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = stat.collectAmount.ToString();
+        //GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = stat.collectSpeed.ToString();
+        //GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = stat.collectAmount.ToString();
 
         
 
@@ -181,8 +202,8 @@ public class MercenaryManager : MonoBehaviour {
         merInfoPopup.transform.Find("UIPanel/InfoPanel/DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
+        //merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
+        //merInfoPopup.transform.Find("UIPanel/InfoPanel/CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
 
         merInfoPopup.SetActive(true);
     }

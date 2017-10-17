@@ -118,7 +118,8 @@ public class Mine
     public int level;       //레벨
     public string buildState;   // 건설 상태 - nothing, beunder, complete, exhaustion
     public float buildTime;     //건설 중 시간
-    public string getThingName; //획득 가능 아이템 이름
+    public string[] getThingName; //획득 가능 아이템 이름
+
     public int getAmount;       //획득한 양
     public int getOnceAmount;   //한 주기에 획득 가능한 양
     public int deposit;         //매장량
@@ -134,6 +135,7 @@ public class Mine
         level = 0;
         buildState = "nothing";
         buildTime = 0f;
+        getThingName = new string[3];
         getAmount = 0;
         getOnceAmount = 0;
         deposit = 0;
@@ -153,9 +155,10 @@ public class MineInfo
     public string type;         //종류
     public int buildLevel;      //건설 가능 레벨
     public float buildTime;     //걸리는 시간
-    public string getThingName; //획득 가능 아이템 이름
-    private string material;             //json으로 데이터 불러옴
+    private string getThingNameData; //json으로 불러옴 획득 가능 아이템 이름
+    public string[] getThingName; //획득 가능 아이템 이름
 
+    private string material;             //json으로 데이터 불러옴
     public string[] necessaryMaterials; //필요 재료
     public int[] necessaryMaterialsNum; //수량
     public bool isLock;
@@ -165,17 +168,26 @@ public class MineInfo
         this.type = MineInfoData["Mine"][index]["type"].ToString();
         this.buildLevel = (int)MineInfoData["Mine"][index]["buildLevel"];
         this.buildTime = (int)MineInfoData["Mine"][index]["buildTime"];
-        this.getThingName = MineInfoData["Mine"][index]["getThingName"].ToString();
-        this.material = MineInfoData["Mine"][index]["material"].ToString();
-        char[] del = { ' ' };
-        string[] words = material.Split(del, StringSplitOptions.RemoveEmptyEntries);
-        this.necessaryMaterials = new string[words.Length / 2];
-        this.necessaryMaterialsNum = new int[words.Length / 2];
+        this.getThingNameData = MineInfoData["Mine"][index]["getThingName"].ToString();
+        char[] dele = { ' ' };
+        string[] words = getThingNameData.Split(dele, StringSplitOptions.RemoveEmptyEntries);
+        this.getThingName = new string[3];
         for (int i = 0; i < words.Length; i++)
         {
+            getThingName[i] = words[i];
+        }
+
+        this.material = MineInfoData["Mine"][index]["material"].ToString();
+
+        char[] del = { ' ' };
+        string[] words2 = material.Split(del, StringSplitOptions.RemoveEmptyEntries);
+        this.necessaryMaterials = new string[words2.Length / 2];
+        this.necessaryMaterialsNum = new int[words2.Length / 2];
+        for (int i = 0; i < words2.Length; i++)
+        {
             if (i % 2 == 0)
-                necessaryMaterials[i / 2] = words[i];
-            else necessaryMaterialsNum[i / 2] = Convert.ToInt32(words[i]);
+                necessaryMaterials[i / 2] = words2[i];
+            else necessaryMaterialsNum[i / 2] = Convert.ToInt32(words2[i]);
         }
 
         isLock = true;

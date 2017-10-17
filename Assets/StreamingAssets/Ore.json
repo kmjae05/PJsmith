@@ -2,7 +2,7 @@
 	"Ore": [
 		{
 			"no": 0,
-			"name": "원석",
+			"name": "돌",
 			"hp": 1000,
 			"price": 1,
 			"exp": 10,
@@ -10,8 +10,8 @@
 			"level": 1,
 			"ava_level": 1,
 			"item_no": 3,
-			"comments": "원석입니다.",
-			"Icon": "001",
+			"comments": "돌입니다.",
+			"Icon": "st_b_09",
 			"unlockCost" : 0
 		},
 		{
@@ -25,7 +25,7 @@
 			"ava_level": 1,
 			"item_no": 4,
 			"comments": "구리입니다.",
-			"Icon": "002",
+			"Icon": "ore_n_01_b",
 			"unlockCost" : 10
 		},
 		{
@@ -39,7 +39,7 @@
 			"ava_level": 1,
 			"item_no": 5,
 			"comments": "철입니다.",
-			"Icon": "005",
+			"Icon": "st_b_01",
 			"unlockCost" : 20
 		},
 		{
@@ -53,7 +53,7 @@
 			"ava_level": 1,
 			"item_no": 6,
 			"comments": "은입니다.",
-			"Icon": "004",
+			"Icon": "mtr_b_01",
 			"unlockCost" : 30
 		},
 		{
@@ -67,12 +67,12 @@
 			"ava_level": 7,
 			"item_no": 7,
 			"comments": "금입니다.",
-			"Icon": "003",
+			"Icon": "st_b_06",
 			"unlockCost" : 40
 		},
 		{
 			"no": 5,
-			"name": "강철",
+			"name": "미스릴",
 			"hp": 6000,
 			"price": 50,
 			"exp": 60,
@@ -80,13 +80,13 @@
 			"level": 15,
 			"ava_level": 10,
 			"item_no": 8,
-			"comments": "강철입니다.",
-			"Icon": "006",
+			"comments": "미스릴입니다.",
+			"Icon": "quartz_b_01",
 			"unlockCost" : 50
 		},
 		{
 			"no": 6,
-			"name": "금강석",
+			"name": "검은무쇠",
 			"hp": 7000,
 			"price": 60,
 			"exp": 70,
@@ -94,8 +94,23 @@
 			"level": 20,
 			"ava_level": 15,
 			"item_no": 9,
-			"comments": "금강석입니다.",
-			"Icon": "007",
+			"comments": "검은무쇠입니다.",
+			"Icon": "st_b_08",
+            "unlockCost" : 60
+		}
+        ,
+		{
+			"no": 7,
+			"name": "아케나이트",
+			"hp": 7000,
+			"price": 60,
+			"exp": 70,
+			"gold": 700,
+			"level": 20,
+			"ava_level": 15,
+			"item_no": 9,
+			"comments": "아케나이트입니다.",
+			"Icon": "ore_f_b_03",
             "unlockCost" : 60
 		}
 	]

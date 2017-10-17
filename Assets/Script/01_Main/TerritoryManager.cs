@@ -59,13 +59,13 @@ public class TerritoryManager : MonoBehaviour
         }
         for (int i = 0; i < 6; i++)
         {
-            bottonButtonList.Add(uiPanel.transform.Find("BottomMenu/BottomButton" + (i + 1).ToString()).gameObject);
+            bottonButtonList.Add(uiPanel.transform.Find("BottomMenu/Button/BottomButton" + (i + 1).ToString()).gameObject);
         }
 
         mineInfo = MineData.instance.getMineInfoList();
 
         StateUpdate();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < bottonButtonList.Count; i++)
         {
             int index = i;
             bottonButtonList[i].transform.Find("OreImage").gameObject.GetComponent<Button>().onClick.AddListener(() => BottomButtonSetting(index));
@@ -77,7 +77,7 @@ public class TerritoryManager : MonoBehaviour
     private void Update()
     {
         uiPanel.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.Play.level.ToString();
-        for (int i = 2; i < 6; i++)
+        for (int i = 2; i < bottonButtonList.Count; i++)
             if (Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
         for (int i = 0; i < MineData.instance.getMineList().Count; i++)
@@ -263,7 +263,8 @@ public class TerritoryManager : MonoBehaviour
         MineData.instance.getMineList()[num].level = 1;
         MineData.instance.getMineList()[num].buildState = "beunder";
         MineData.instance.getMineList()[num].buildTime = info.buildTime;
-        MineData.instance.getMineList()[num].getThingName = info.getThingName;
+        for(int i=0;i< info.getThingName.Length;i++)
+            MineData.instance.getMineList()[num].getThingName[i] = info.getThingName[i];
         MineData.instance.getMineList()[num].getOnceAmount = MineData.instance.getMineList()[num].level * 2;
         MineData.instance.getMineList()[num].deposit = MineData.instance.getMineList()[num].level * 30;
         MineData.instance.getMineList()[num].miningTime = 1f;
@@ -535,14 +536,14 @@ public class TerritoryManager : MonoBehaviour
         //obj.transform.Find("TypeName").gameObject.SetActive(false);
         obj.transform.Find("BoostIcon").gameObject.SetActive(false);
 
-        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName).possession
+        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).possession
             += MineData.instance.getMineList()[num].deposit;
-        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName).recent = true;
+        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).recent = true;
 
         //로그
         GameObject ItemLogInst = Instantiate(GameObject.Find("GetItemLog").transform.Find("range/GetItemLogText").gameObject);
         ItemLogInst.transform.SetParent(GameObject.Find("GetItemLog").transform.Find("range").gameObject.transform, false);
-        ItemLogInst.GetComponent<Text>().text = MineData.instance.getMineList()[num].getThingName + " " + 
+        ItemLogInst.GetComponent<Text>().text = MineData.instance.getMineList()[num].getThingName[0] + " " + 
             MineData.instance.getMineList()[num].deposit + "개 획득";
         ItemLogInst.SetActive(true);
 

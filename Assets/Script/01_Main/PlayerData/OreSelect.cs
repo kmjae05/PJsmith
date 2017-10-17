@@ -217,7 +217,7 @@ public class OreSelect : MonoBehaviour
                         break;
                     case "Icon":
                         Icon[i] = objects[j].gameObject.GetComponent<Image>();
-                        Icon[i].sprite = (Resources.Load("Ore/Ore_" + oreList[i].iconNum, typeof(GameObject)) as GameObject).GetComponent<Image>().sprite;
+                        Icon[i].sprite = Resources.Load<Sprite>("Ore/" + oreList[i].iconNum);
                         Icon[i].color = new Color(0.0f, 0.0f, 0.0f);
                         break;
                     case "LockIcon":
@@ -271,7 +271,6 @@ public class OreSelect : MonoBehaviour
         for (int i = 0; i < G_OreList.Count; i++)
         {
             oreList[i].have = ThingsData.instance.getThingsList().Find(x => x.name == oreList[i].name).possession;
-
             HaveText[i].text = oreList[i].have.ToString();  //갯수 최신화
 
             //오브젝트 위치에 따라 크기, 글자색 조정

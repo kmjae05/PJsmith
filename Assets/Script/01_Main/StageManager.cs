@@ -668,29 +668,30 @@ public class StageManager : MonoBehaviour
         for (int i = 0; i < result.getItem.Length; i++)
         {
             if (result.getItem[i] == null) continue;
-            if (GameObject.Find("Menu").transform.Find("WorldMapPopup").gameObject.activeInHierarchy)
-            {
-                GameObject ItemInst = Instantiate(stageItem);
-                ItemInst.transform.SetParent(GameObject.Find(createPos).transform, false);
-                //위치
-                ItemInst.transform.position = vec;
-                //이미지 변경
-                Image itemimage = ItemInst.GetComponent<Image>();
-                ItemImageChange(result.getItem[i], itemimage);
-                ItemInst.SetActive(true);
-            }
-            //로그
-            GameObject ItemLogInst = Instantiate(GameObject.Find("GetItemLog").transform.Find("range/GetItemLogText").gameObject);
-            ItemLogInst.transform.SetParent(GameObject.Find("GetItemLog").transform.Find("range").gameObject.transform, false);
-            ItemLogInst.GetComponent<Text>().text = result.getItem[i] + " " + result.getItemNum[i] + "개 획득";
-            ItemLogInst.SetActive(true);
+            //if (GameObject.Find("Menu").transform.Find("WorldMapPopup").gameObject.activeInHierarchy)
+            //{
+            //    GameObject ItemInst = Instantiate(stageItem);
+            //    ItemInst.transform.SetParent(GameObject.Find(createPos).transform, false);
+            //    //위치
+            //    ItemInst.transform.position = vec;
+            //    //이미지 변경
+            //    Image itemimage = ItemInst.GetComponent<Image>();
+            //    ItemImageChange(result.getItem[i], itemimage);
+            //    ItemInst.SetActive(true);
+            //}
+            ////로그
+            //GameObject ItemLogInst = Instantiate(GameObject.Find("GetItemLog").transform.Find("range/GetItemLogText").gameObject);
+            //ItemLogInst.transform.SetParent(GameObject.Find("GetItemLog").transform.Find("range").gameObject.transform, false);
+            //ItemLogInst.GetComponent<Text>().text = result.getItem[i] + " " + result.getItemNum[i] + "개 획득";
+            //ItemLogInst.SetActive(true);
 
             //획득 아이템 데이터 저장
             ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).possession += result.getItemNum[i];
             ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).recent = true;
 
 
-            yield return new WaitForSeconds(0.3f);
+            //yield return new WaitForSeconds(0.3f);
+            yield return null;
         }
     }
 
@@ -705,7 +706,7 @@ public class StageManager : MonoBehaviour
     //스테이지 정보창 획득 가능한 아이템 정리
     public void setGetItemInfo(StageInfo result)
     {
-        ////사냥
+        //사냥
         stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword");
         stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "하이그라스 단검";
         stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword2");
@@ -930,7 +931,46 @@ public class StageManager : MonoBehaviour
     }
 
 
+    //약탈 새로고침
+    public void refreshButton()
+    {
+        int random = 0;
+        for (int i = 0; i < 20; i++)
+        {
+            if (plunderInfoList[i].regen) continue;
 
+            StageData.instance.getPlundeList().Find(x => x.getName() == plunderInfoList[i].opponentName).assignment = false;
+            plunderInfoList[i].opponentName = null;
+
+            //랜덤으로 리스트에 ai 정보 넣기
+            while (true)
+            {
+                random = Random.Range(0, 40);
+                //중복 방지
+                List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.opponentName != null);
+                if (plif != null)
+                {
+                    bool flag = false;
+                    for (int k = 0; k < plif.Count; k++)
+                    {
+                        if (plif[k].opponentName == StageData.instance.getPlundeList()[random].getName())
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (flag) continue; else break;
+                }
+                else break;
+            }
+            plunderInfoList[i].opponentName = StageData.instance.getPlundeList()[random].getName();
+            StageData.instance.getPlundeList()[random].assignment = true;
+            GameObject obj = GameObject.Find("plunder" + (i + 1).ToString() + "Button");
+            obj.transform.Find("StageText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].getName();
+            obj.transform.Find("State/NameText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].getName();
+            obj.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].level.ToString();
+        }
+
+    }
 
 
 

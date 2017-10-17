@@ -46,7 +46,7 @@ public class ProfilePopupManager : MonoBehaviour {
     {
         curSetNum = 1;
         setChrInfo(GameObject.Find("SmithSelect"));
-        setOutLine(GameObject.Find("SmithSelect"));
+        //setOutLine(GameObject.Find("SmithSelect"));
     }
 
 
@@ -92,10 +92,14 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = Player.Play.equipWeapon[curSetNum - 1].name;
             GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipBoots[curSetNum - 1].name).icon);
             GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = Player.Play.equipBoots[curSetNum - 1].name;
-
+            //등급 프레임
+            GameObject.Find("EquipHelmet/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipHelmet[curSetNum - 1].name).grade);
+            GameObject.Find("EquipArmor/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipArmor[curSetNum - 1].name).grade);
+            GameObject.Find("EquipWeapon/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipWeapon[curSetNum - 1].name).grade);
+            GameObject.Find("EquipBoots/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.Play.equipBoots[curSetNum - 1].name).grade);
 
             //*****캐릭터 3D모델 변경
-            GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(true);
+            //GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(true);
             //*****캐릭터 이미지 변경
 
             GameObject.Find("LevelText").GetComponent<Text>().text = Player.Play.level.ToString();
@@ -110,8 +114,8 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
             GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = player.attribute;
-            GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
-            GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
+            //GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
+            //GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
 
 
             GameObject.Find("ChrTitleText").GetComponent<Text>().text = Player.Play.title;

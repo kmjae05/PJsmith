@@ -3,160 +3,383 @@
         {
             "item_no": 3,
             "type" : "Ore",
-            "name" : "원석",
-            "explanation" : "원석입니다.",
-            "icon" : "Ore/001"           
+            "name" : "돌",
+            "explanation" : "돌입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/st_b_09"           
         },        
         {
             "item_no": 4,
             "type" : "Ore",
             "name" : "구리",
             "explanation" : "구리입니다.",
-            "icon" : "Ore/002"            
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/ore_n_01_b"            
         },
         {
             "item_no": 5,
             "type" : "Ore",
-            "name" : "철",
-            "explanation" : "철입니다.",
-            "icon" : "Ore/005"            
+            "name" : "은",
+            "explanation" : "은입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/mtr_b_01"            
         },
         {
             "item_no": 6,
             "type" : "Ore",
-            "name" : "은",
-            "explanation" : "은입니다.",
-            "icon" : "Ore/004"            
+            "name" : "금",
+            "explanation" : "금입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/st_b_06"            
         },
         {
             "item_no": 7,
             "type" : "Ore",
-            "name" : "금",
-            "explanation" : "금입니다.",
-            "icon" : "Ore/003"            
-        },
-        {
-            "item_no": 8,
-            "type" : "Ore",
-            "name" : "강철",
-            "explanation" : "강철입니다.",
-            "icon" : "Ore/006"            
+            "name" : "철",
+            "explanation" : "철입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/st_b_01"            
         },
         {
             "item_no": 9,
             "type" : "Ore",
-            "name" : "금강석",
-            "explanation" : "금강석입니다.",
-            "icon" : "Ore/007"            
+            "name" : "미스릴",
+            "explanation" : "미스릴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/quartz_b_01"            
         },
-        
-        
         {
             "item_no": 10,
-            "type" : "Weapon",
-            "name" : "하이그라스 단검",
-            "explanation" : "일반 하이그라스 단검",
-            "icon" : "Equipment/Weapon/sword"
+            "type" : "Ore",
+            "name" : "검은무쇠",
+            "explanation" : "검은무쇠입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/st_b_08"            
         },
         {
             "item_no": 11,
-            "type" : "Weapon",
-            "name" : "고급 하이그라스 단검",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword"
+            "type" : "Ore",
+            "name" : "아케나이트",
+            "explanation" : "아케나이트입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Ore/ore_f_b_03"            
         },
         {
             "item_no": 12,
-            "type" : "Weapon",
-            "name" : "희귀 하이그라스 단검",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword"
+            "type" : "Others",
+            "name" : "돌 주괴",
+            "explanation" : "돌 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_06"            
         },
         {
             "item_no": 13,
-            "type" : "Weapon",
-            "name" : "전설 하이그라스 단검",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword"
+            "type" : "Others",
+            "name" : "구리 주괴",
+            "explanation" : "구리 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_04"            
         },
         {
             "item_no": 14,
-            "type" : "Weapon",
-            "name" : "엘더 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword2"
+            "type" : "Others",
+            "name" : "은 주괴",
+            "explanation" : "은 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_02"            
         },
         {
             "item_no": 15,
-            "type" : "Weapon",
-            "name" : "고급 엘더 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword2"
+            "type" : "Others",
+            "name" : "금 주괴",
+            "explanation" : "금 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_01"            
         },
         {
             "item_no": 16,
-            "type" : "Weapon",
-            "name" : "희귀 엘더 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword2"
-        }
-        ,
+            "type" : "Others",
+            "name" : "철 주괴",
+            "explanation" : "철 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/ore_f_b_02"
+        },
         {
             "item_no": 17,
-            "type" : "Weapon",
-            "name" : "전설 엘더 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword2"
-        }
-        ,
+            "type" : "Others",
+            "name" : "미스릴 주괴",
+            "explanation" : "미스릴 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_05"            
+        },
         {
             "item_no": 18,
-            "type" : "Weapon",
-            "name" : "팔라딘 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword3"
+            "type" : "Others",
+            "name" : "검은무쇠 주괴",
+            "explanation" : "검은무쇠 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_08"            
         },
         {
             "item_no": 19,
-            "type" : "Weapon",
-            "name" : "고급 팔라딘 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword3"
+            "type" : "Others",
+            "name" : "아케나이트 주괴",
+            "explanation" : "아케나이트 주괴입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/in_b_07"            
         },
+        
         {
             "item_no": 20,
-            "type" : "Weapon",
-            "name" : "희귀 팔라딘 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword3"
+            "type" : "Others",
+            "name" : "광명석",
+            "explanation" : "광명석입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/Amber_stone"            
         },
         {
             "item_no": 21,
-            "type" : "Weapon",
-            "name" : "전설 팔라딘 소드",
-            "explanation" : "",
-            "icon" : "Equipment/Weapon/sword3"
-        }
-        ,
+            "type" : "Others",
+            "name" : "석류석",
+            "explanation" : "석류석입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/02_medium_gem_b"            
+        },
         {
             "item_no": 22,
             "type" : "Others",
-            "name" : "철 가루",
-            "explanation" : "",
-            "icon" : "Gather/ironDust"
-        },
-        {
+            "name" : "자황수정",
+            "explanation" : "자황수정입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_14"            
+        },{
             "item_no": 23,
+            "type" : "Others",
+            "name" : "암흑석",
+            "explanation" : "암흑석입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_07"            
+        },{
+            "item_no": 24,
+            "type" : "Others",
+            "name" : "용암석",
+            "explanation" : "용암석입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_12"            
+        },{
+            "item_no": 25,
+            "type" : "Others",
+            "name" : "비취",
+            "explanation" : "비취입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_04"            
+        },{
+            "item_no": 26,
+            "type" : "Others",
+            "name" : "에메랄드",
+            "explanation" : "에메랄드입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/sp_gem_b"            
+        },{
+            "item_no": 27,
+            "type" : "Others",
+            "name" : "다이아몬드",
+            "explanation" : "다이아몬드입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_08"            
+        },{
+            "item_no": 28,
+            "type" : "Others",
+            "name" : "자수정",
+            "explanation" : "자수정입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/gm_b_02"            
+        },{
+            "item_no": 29,
+            "type" : "Others",
+            "name" : "사파이어",
+            "explanation" : "사파이어입니다.",
+            "grade" : 1,
+            "sell" : 1,
+            "icon" : "Things/06_royal_gem_b"            
+        },
+        
+        //
+        {
+            "item_no": 30,
+            "type" : "Weapon",
+            "name" : "초보자의 단검",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 440,
+            "icon" : "Equipment/Weapon/t_f_03"
+        },{
+            "item_no": 31,
+            "type" : "Weapon",
+            "name" : "날카로운 단검",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 660,
+            "icon" : "Equipment/Weapon/k_nt_01"
+        },{
+            "item_no": 32,
+            "type" : "Weapon",
+            "name" : "수련자의 단검",
+            "explanation" : "",
+            "grade" : 2,
+            "sell" : 2400,
+            "icon" : "Equipment/Weapon/k_nt_04"
+        },{
+            "item_no": 33,
+            "type" : "Weapon",
+            "name" : "기사의 단검",
+            "explanation" : "",
+            "grade" : 3,
+            "sell" : 9000,
+            "icon" : "Equipment/Weapon/kn_t_05"
+        },{
+            "item_no": 34,
+            "type" : "Weapon",
+            "name" : "영웅의 단검",
+            "explanation" : "",
+            "grade" : 4,
+            "sell" : 75000,
+            "icon" : "Equipment/Weapon/k_nt_03"
+        },{
+            "item_no": 35,
+            "type" : "Weapon",
+            "name" : "오딘의 단검",
+            "explanation" : "",
+            "grade" : 5,
+            "sell" : 660000,
+            "icon" : "Equipment/Weapon/k_nt_06"
+        },{
+            "item_no": 36,
+            "type" : "Weapon",
+            "name" : "여신의 단검",
+            "explanation" : "",
+            "grade" : 5,
+            "sell" : 800000,
+            "icon" : "Equipment/Weapon/kn_t_06"
+        },{
+            "item_no": 37,
+            "type" : "Weapon",
+            "name" : "드래곤의 단검",
+            "explanation" : "",
+            "grade" : 5,
+            "sell" : 990000,
+            "icon" : "Equipment/Weapon/kn_t_11"
+        },
+        
+        
+        
+        //61까지
+        
+        {
+            "item_no": 62,
+            "type" : "Armor",
+            "name" : "초보자의 천갑옷",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 500,
+            "icon" : "Equipment/Armor/armor_12"
+        },
+        
+        //
+        
+        {
+            "item_no": 70,
+            "type" : "Boots",
+            "name" : "초보자의 천부츠",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 500,
+            "icon" : "Equipment/Boots/boots_1"
+        },
+        
+        
+        //
+        
+        {
+            "item_no": 79,
+            "type" : "Gloves",
+            "name" : "초보자의 천장갑",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 500,
+            "icon" : "Equipment/Gloves/gloves_20"
+        },
+        
+        //
+        
+        {
+            "item_no": 87,
+            "type" : "Helmet",
+            "name" : "초보자의 천투구",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 500,
+            "icon" : "Equipment/Helmet/helmets_23"
+        },
+        
+        //
+        
+        {
+            "item_no": 95,
+            "type" : "Pants",
+            "name" : "초보자의 천바지",
+            "explanation" : "",
+            "grade" : 1,
+            "sell" : 500,
+            "icon" : "Equipment/Pants/pants_5"
+        },
+        
+        //
+        
+        
+        
+        
+        {
+            "item_no": 1000,
             "type" : "Others",
             "name" : "티켓",
             "explanation" : "주사위 미니게임을 할 수 있는 아이템",
+            "grade" : 1,
+            "sell" : 0,
             "icon" : "Reward/reward1"
         },
         {
-            "item_no": 24,
+            "item_no": 1001,
             "type" : "Others",
             "name" : "부스트",
             "explanation" : "채굴 주기를 감소시키는 아이템",
+            "grade" : 1,
+            "sell" : 500,
             "icon" : "Things/Boost"
         }
         

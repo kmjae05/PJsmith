@@ -79,6 +79,7 @@ public class Equipment
         this.skill = EquipData["Equipment"][index]["skill"].ToString();
 
         stat = new Stat();
+        this.stat.dps = (int)EquipData["Equipment"][index]["dps"];
         this.stat.strPower = (int)EquipData["Equipment"][index]["strPower"];
         this.stat.attackSpeed = (int)EquipData["Equipment"][index]["attackSpeed"];
         this.stat.focus = (int)EquipData["Equipment"][index]["focus"];

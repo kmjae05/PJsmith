@@ -99,14 +99,14 @@ public class Player : MonoBehaviour {
         PlayerExpBarSlider.value = Play.exp;
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
-        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "고급 하이그라스 단검");
-        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
-        Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "하이그라스 단검");
+        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
+        Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
+        Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+        Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
     }
 
