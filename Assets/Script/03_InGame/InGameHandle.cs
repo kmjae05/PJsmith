@@ -171,7 +171,7 @@ public class InGameHandle : MonoBehaviour {
 
     void NormalMode()
     {
-        CharAni.speed = Player.Play.stat.attackSpeed;
+        CharAni.speed = (float)Player.Play.stat.attackSpeed;
         feverGauge = 0; 
         fever = false;
     }

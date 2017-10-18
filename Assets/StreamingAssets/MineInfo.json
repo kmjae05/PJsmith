@@ -4,7 +4,7 @@
             "type" : "돌",
             "buildLevel" : 1,
             "buildTime" : 60,
-            "getThingName" : "돌 광명석",
+            "getThingName" : "돌 100 광명석 2",
             "material" : "돌 1"
               
         },
@@ -12,56 +12,56 @@
             "type" : "구리",
             "buildLevel" : 1,
             "buildTime" : 120,
-            "getThingName" : "구리 석류석 자황수정",
-            "material" : "돌 1 구리 1"
+            "getThingName" : "구리 100 석류석 2 자황수정 2",
+            "material" : "구리 1"
               
         },
         {
             "type" : "은",
             "buildLevel" : 5,
             "buildTime" : 600,
-            "getThingName" : "은 비취",
-            "material" : "돌 1"
+            "getThingName" : "은 100 비취 2",
+            "material" : "은 1"
               
         },
         {
             "type" : "금",
             "buildLevel" : 10,
             "buildTime" : 180,
-            "getThingName" : "금 에메랄드",
-            "material" : "돌 1"
+            "getThingName" : "금 100 에메랄드 2",
+            "material" : "금 1"
               
         },
         {
             "type" : "철",
             "buildLevel" : 20,
             "buildTime" : 3600,
-            "getThingName" : "철 다이아몬드",
-            "material" : "돌 1"
+            "getThingName" : "철 100 다이아몬드 2",
+            "material" : "철 1"
               
         },
         {
             "type" : "미스릴",
             "buildLevel" : 30,
             "buildTime" : 10800,
-            "getThingName" : "미스릴 자수정",
-            "material" : "돌 1"
+            "getThingName" : "미스릴 100 자수정 2",
+            "material" : "미스릴 1"
               
         },
         {
             "type" : "검은무쇠",
             "buildLevel" : 30,
             "buildTime" : 10800,
-            "getThingName" : "검은무쇠 암흑석",
-            "material" : "돌 1"
+            "getThingName" : "검은무쇠 100 암흑석 2",
+            "material" : "검은무쇠 1"
               
         },
         {
             "type" : "아케나이트",
             "buildLevel" : 30,
             "buildTime" : 10800,
-            "getThingName" : "아케나이트 용암석",
-            "material" : "돌 1"
+            "getThingName" : "아케나이트 100 용암석 1",
+            "material" : "아케나이트 1"
               
         }
         

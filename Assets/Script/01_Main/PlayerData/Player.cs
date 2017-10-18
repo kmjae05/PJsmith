@@ -37,9 +37,11 @@ public class Player : MonoBehaviour {
         public string attribute;
 
         //장비 Equipment로
-        public Equipment[] equipHelmet;
-        public Equipment[] equipArmor;
         public Equipment[] equipWeapon;
+        public Equipment[] equipArmor;
+        public Equipment[] equipPants;
+        public Equipment[] equipHelmet;        
+        public Equipment[] equipGloves;        
         public Equipment[] equipBoots;
 
         public string logoutTime;
@@ -68,9 +70,11 @@ public class Player : MonoBehaviour {
             this.stat.collectAmount = 1;
             this.stat.dps = this.stat.strPower + this.stat.defPower * 0.2f;
 
-            this.equipHelmet = new Equipment[2];
-            this.equipArmor = new Equipment[2];
             this.equipWeapon = new Equipment[2];
+            this.equipArmor = new Equipment[2];
+            this.equipPants = new Equipment[2];
+            this.equipHelmet = new Equipment[2];
+            this.equipGloves = new Equipment[2];
             this.equipBoots = new Equipment[2];
 
             this.logoutTime = "0";
@@ -81,7 +85,7 @@ public class Player : MonoBehaviour {
         t_PlayerGold = GameObject.Find("GoldText").GetComponent<Text>();
         t_PlayerCash = GameObject.Find("CashText").GetComponent<Text>();
         t_PlayerLevel = GameObject.Find("LevelText").GetComponent<Text>();
-        t_ProfileLevel = GameObject.Find("Menu").gameObject.transform.Find("ProfilePopup/UIPanel/ProfilePanel/PlayerInfo/LevelText").gameObject.GetComponent<Text>(); //프로필 팝업 레벨 텍스트
+        t_ProfileLevel = GameObject.Find("Menu").gameObject.transform.Find("ProfilePopup/UIPanel/ProfilePanel/PlayerInfo/InfoPanel/LevelText").gameObject.GetComponent<Text>(); //프로필 팝업 레벨 텍스트
         t_playerExp = GameObject.Find("ExpText").GetComponent<Text>();    //프로필 패널 경험치 텍스트
         PlayerExpBarSlider = GameObject.Find("PlayerExpSlider").GetComponent<Slider>();
         chrAni = GameObject.Find("Chr_001").GetComponent<Animator>();
@@ -99,15 +103,18 @@ public class Player : MonoBehaviour {
         PlayerExpBarSlider.value = Play.exp;
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
-        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
-        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
         Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
         Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
+        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        Play.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+        Play.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        Play.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+        Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
         Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
         Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
-
     }
 
     void Update()

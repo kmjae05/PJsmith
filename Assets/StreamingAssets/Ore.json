@@ -30,20 +30,6 @@
 		},
 		{
 			"no": 2,
-			"name": "철",
-			"hp": 3000,
-			"price": 20,
-			"exp": 30,
-			"gold": 300,
-			"level": 5,
-			"ava_level": 1,
-			"item_no": 5,
-			"comments": "철입니다.",
-			"Icon": "st_b_01",
-			"unlockCost" : 20
-		},
-		{
-			"no": 3,
 			"name": "은",
 			"hp": 4000,
 			"price": 30,
@@ -55,9 +41,10 @@
 			"comments": "은입니다.",
 			"Icon": "mtr_b_01",
 			"unlockCost" : 30
+			
 		},
 		{
-			"no": 4,
+			"no": 3,
 			"name": "금",
 			"hp": 5000,
 			"price": 40,
@@ -69,6 +56,20 @@
 			"comments": "금입니다.",
 			"Icon": "st_b_06",
 			"unlockCost" : 40
+		},
+		{
+			"no": 4,
+			"name": "철",
+			"hp": 3000,
+			"price": 20,
+			"exp": 30,
+			"gold": 300,
+			"level": 5,
+			"ava_level": 1,
+			"item_no": 5,
+			"comments": "철입니다.",
+			"Icon": "st_b_01",
+			"unlockCost" : 20
 		},
 		{
 			"no": 5,

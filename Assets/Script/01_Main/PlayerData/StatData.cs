@@ -41,7 +41,8 @@ public class StatData : MonoBehaviour {
     {
         Stat equipStat = new Stat();
         equipStat = SumEquip(Player.Play.equipHelmet[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipArmor[SetSlotData.instance.getRepreSet() - 1],
-            Player.Play.equipWeapon[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipBoots[SetSlotData.instance.getRepreSet() - 1]);
+            Player.Play.equipWeapon[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipBoots[SetSlotData.instance.getRepreSet() - 1]
+            , Player.Play.equipGloves[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipPants[SetSlotData.instance.getRepreSet() - 1]);
         playerRepreStat = SumChrEquip(Player.Play, equipStat);
     }
     //대표 세트 계산
@@ -54,7 +55,8 @@ public class StatData : MonoBehaviour {
         {
             Mercenary mer = mercenaryData.getMercenary()[i];
             merEquipStat[i] = SumEquip(mer.equipHelmet[SetSlotData.instance.getRepreSet() - 1], mer.equipArmor[SetSlotData.instance.getRepreSet() - 1],
-                mer.equipWeapon[SetSlotData.instance.getRepreSet() - 1], mer.equipBoots[SetSlotData.instance.getRepreSet() - 1]);
+                mer.equipWeapon[SetSlotData.instance.getRepreSet() - 1], mer.equipBoots[SetSlotData.instance.getRepreSet() - 1]
+                , mer.equipGloves[SetSlotData.instance.getRepreSet() - 1], mer.equipPants[SetSlotData.instance.getRepreSet() - 1] );
             //용병 스탯
             mercenaryRepreStat[i] = SumChrEquip(mer, merEquipStat[i]);
         }
@@ -71,7 +73,8 @@ public class StatData : MonoBehaviour {
         {
             Stat equipStat = new Stat();
             equipStat = SumEquip(Player.Play.equipHelmet[i], Player.Play.equipArmor[i],
-                Player.Play.equipWeapon[i], Player.Play.equipBoots[i]);
+                Player.Play.equipWeapon[i], Player.Play.equipBoots[i]
+                , Player.Play.equipGloves[i], Player.Play.equipPants[i]);
             playerStat[i] = SumChrEquip(Player.Play, equipStat);
         }
     }
@@ -82,21 +85,21 @@ public class StatData : MonoBehaviour {
         {
             Mercenary mer = mercenaryData.getMercenary()[0];
             Stat merEquipStat = new Stat(); //용병 장비 스탯       
-            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i], mer.equipGloves[i], mer.equipPants[i]);
             mercenary1Stat[i] = SumChrEquip(mer, merEquipStat);
         }
         for (int i = 0; i < mercenary2Stat.Count; i++)
         {
             Mercenary mer = mercenaryData.getMercenary()[1];
             Stat merEquipStat = new Stat(); //용병 장비 스탯       
-            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i], mer.equipGloves[i], mer.equipPants[i]);
             mercenary2Stat[i] = SumChrEquip(mer, merEquipStat);
         }
         for (int i = 0; i < mercenary3Stat.Count; i++)
         {
             Mercenary mer = mercenaryData.getMercenary()[2];
             Stat merEquipStat = new Stat(); //용병 장비 스탯       
-            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i]);
+            merEquipStat = SumEquip(mer.equipHelmet[i], mer.equipArmor[i], mer.equipWeapon[i], mer.equipBoots[i], mer.equipGloves[i], mer.equipPants[i]);
             mercenary3Stat[i] = SumChrEquip(mer, merEquipStat);
         }
     }
@@ -104,22 +107,23 @@ public class StatData : MonoBehaviour {
 
 
 
-    //장비 4개 합산
-    public Stat SumEquip(Equipment helmet, Equipment armor, Equipment weapon, Equipment boots)
+    //장비 6개 합산
+    public Stat SumEquip(Equipment helmet, Equipment armor, Equipment weapon, Equipment boots, Equipment gloves, Equipment pants)
     {
         Stat stat = new Stat();
-        stat.strPower = helmet.stat.strPower + armor.stat.strPower + weapon.stat.strPower + boots.stat.strPower;
-        stat.attackSpeed = helmet.stat.attackSpeed + armor.stat.attackSpeed + weapon.stat.attackSpeed + boots.stat.attackSpeed;
-        stat.focus = helmet.stat.focus + armor.stat.focus + weapon.stat.focus + boots.stat.focus;
-        stat.critical = helmet.stat.critical + armor.stat.critical + weapon.stat.critical + boots.stat.critical;
-        stat.defPower = helmet.stat.defPower + armor.stat.defPower + weapon.stat.defPower + boots.stat.defPower;
-        stat.evaRate = helmet.stat.evaRate + armor.stat.evaRate + weapon.stat.evaRate + boots.stat.evaRate;
+        stat.strPower = helmet.stat.strPower + armor.stat.strPower + weapon.stat.strPower + boots.stat.strPower + gloves.stat.strPower + pants.stat.strPower;
+        stat.attackSpeed = helmet.stat.attackSpeed + armor.stat.attackSpeed + weapon.stat.attackSpeed + boots.stat.attackSpeed + gloves.stat.attackSpeed + pants.stat.attackSpeed;
+        stat.focus = helmet.stat.focus + armor.stat.focus + weapon.stat.focus + boots.stat.focus + gloves.stat.focus + pants.stat.focus;
+        stat.critical = helmet.stat.critical + armor.stat.critical + weapon.stat.critical + boots.stat.critical + gloves.stat.critical + pants.stat.critical;
+        stat.defPower = helmet.stat.defPower + armor.stat.defPower + weapon.stat.defPower + boots.stat.defPower + gloves.stat.defPower + pants.stat.defPower;
+        stat.evaRate = helmet.stat.evaRate + armor.stat.evaRate + weapon.stat.evaRate + boots.stat.evaRate + gloves.stat.evaRate + pants.stat.evaRate;
         //stat.collectSpeed = helmet.stat.collectSpeed + armor.stat.collectSpeed + weapon.stat.collectSpeed + boots.stat.collectSpeed;
         //stat.collectAmount = helmet.stat.collectAmount + armor.stat.collectAmount + weapon.stat.collectAmount + boots.stat.collectAmount;
 
-        stat.dps = helmet.stat.dps + armor.stat.dps + weapon.stat.dps + boots.stat.dps;
+        stat.dps = helmet.stat.dps + armor.stat.dps + weapon.stat.dps + boots.stat.dps + gloves.stat.dps + pants.stat.dps;
         return stat;
     }
+
     //캐릭터 + 장비 합산
     public Stat SumChrEquip(Player.User chr, Stat equipStat)
     {
@@ -149,7 +153,6 @@ public class StatData : MonoBehaviour {
         //stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
 
         stat.dps = chr.stat.dps + equipStat.dps;
-
         return stat;
     }
 
@@ -209,7 +212,7 @@ public class Stat
 {
     public float dps;
     public float strPower;
-    public float attackSpeed;
+    public double attackSpeed;
     public float focus;
     public float critical;
     public float defPower;

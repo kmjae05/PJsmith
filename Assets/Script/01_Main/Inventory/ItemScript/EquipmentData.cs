@@ -81,7 +81,7 @@ public class Equipment
         stat = new Stat();
         this.stat.dps = (int)EquipData["Equipment"][index]["dps"];
         this.stat.strPower = (int)EquipData["Equipment"][index]["strPower"];
-        this.stat.attackSpeed = (int)EquipData["Equipment"][index]["attackSpeed"];
+        this.stat.attackSpeed =  Convert.ToDouble(EquipData["Equipment"][index]["attackSpeed"].ToString());
         this.stat.focus = (int)EquipData["Equipment"][index]["focus"];
         this.stat.critical = (int)EquipData["Equipment"][index]["critical"];
         this.stat.defPower = (int)EquipData["Equipment"][index]["defPower"];

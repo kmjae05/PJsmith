@@ -319,7 +319,7 @@
             "explanation" : "",
             "grade" : 1,
             "sell" : 500,
-            "icon" : "Equipment/Boots/boots_1"
+            "icon" : "Equipment/Boots/boot_t_01"
         },
         
         
@@ -332,7 +332,7 @@
             "explanation" : "",
             "grade" : 1,
             "sell" : 500,
-            "icon" : "Equipment/Gloves/gloves_20"
+            "icon" : "Equipment/Gloves/gloves_19"
         },
         
         //
@@ -344,7 +344,7 @@
             "explanation" : "",
             "grade" : 1,
             "sell" : 500,
-            "icon" : "Equipment/Helmet/helmets_23"
+            "icon" : "Equipment/Helmet/helmets_17"
         },
         
         //

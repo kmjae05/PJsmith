@@ -254,7 +254,7 @@ public class OreSelect : MonoBehaviour
         }
         //oreList[0].have = 5;        //기본광석 5개로 시작
 
-        Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(222, 0);
         StartCoroutine(PinPanel());
 
     }
@@ -546,7 +546,7 @@ public class OreSelect : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => OreSelectPopup.activeInHierarchy);
-            Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(222, 0);
 
             MainCamera.GetComponent<UnityStandardAssets.ImageEffects.Blur>().enabled = true;
             yield return new WaitUntil(() => !OreSelectPopup.activeInHierarchy);

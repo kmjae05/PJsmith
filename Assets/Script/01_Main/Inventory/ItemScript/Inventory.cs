@@ -973,14 +973,16 @@ public class Inventory : MonoBehaviour
         EquipItemInfoPopup.transform.Find("UIPanel/ItemBox/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(things.icon);
 
         string abstr = "";
+        if (equip.stat.dps > 0) abstr += "전투력 " + equip.stat.dps + "\n";
         if (equip.stat.strPower > 0) abstr += "공격력 " + equip.stat.strPower + "\n";
         if (equip.stat.attackSpeed > 0) abstr += "공격속도 " + equip.stat.attackSpeed + "\n";
         if (equip.stat.focus > 0) abstr += "명중률 " + equip.stat.focus + "\n";
         if (equip.stat.critical > 0) abstr += "크리티컬 " + equip.stat.critical + "\n";
         if (equip.stat.defPower > 0) abstr += "방어력 " + equip.stat.defPower + "\n";
         if (equip.stat.evaRate > 0) abstr += "회피율 " + equip.stat.evaRate + "\n";
-        if (equip.stat.collectSpeed > 0) abstr += "채집속도 " + equip.stat.collectSpeed + "\n";
-        if (equip.stat.collectAmount > 0) abstr += "채집량 " + equip.stat.collectAmount;
+        abstr += "속성 " + equip.attribute;
+        //if (equip.stat.collectSpeed > 0) abstr += "채집속도 " + equip.stat.collectSpeed + "\n";
+        //if (equip.stat.collectAmount > 0) abstr += "채집량 " + equip.stat.collectAmount;
         //되도록이면 최대 5개까지만..
         EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/AbilityText").gameObject.GetComponent<Text>().text = abstr;
 

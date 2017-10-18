@@ -67,6 +67,17 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = 
             merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name;
 
+        GameObject.Find("EquipGloves/Image").GetComponent<Image>().sprite =
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipGloves/Text").GetComponent<Text>().text =
+            merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name;
+
+        GameObject.Find("EquipPants/Image").GetComponent<Image>().sprite =
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name).icon);
+        GameObject.Find("EquipPants/Text").GetComponent<Text>().text =
+            merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name;
+
+
         //등급 프레임
         GameObject.Find("EquipHelmet/GradeFrame").GetComponent<Image>().color = 
             ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).grade);
@@ -76,6 +87,10 @@ public class MercenaryManager : MonoBehaviour {
             ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).grade);
         GameObject.Find("EquipBoots/GradeFrame").GetComponent<Image>().color = 
             ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).grade);
+        GameObject.Find("EquipGloves/GradeFrame").GetComponent<Image>().color =
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name).grade);
+        GameObject.Find("EquipPants/GradeFrame").GetComponent<Image>().color =
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name).grade);
 
         //*****캐릭터 3D모델 변경
         GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(false);
@@ -100,7 +115,7 @@ public class MercenaryManager : MonoBehaviour {
 
         
 
-        GameObject.Find("ChrTitleText").GetComponent<Text>().text = "";
+        //GameObject.Find("ChrTitleText").GetComponent<Text>().text = "";
     }
 
 

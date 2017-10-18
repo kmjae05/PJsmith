@@ -30,7 +30,8 @@ public class TerritoryManager : MonoBehaviour
 
     private string curType = null;          //현재 선택된 광산 종류
     private int curMineNum = 0;             //현재 선택한 광산 번호
-    private int level = 1;              //건설할 때 레벨
+    private int level = 1;                  //건설할 때 레벨
+
 
 
     void Start()
@@ -166,7 +167,9 @@ public class TerritoryManager : MonoBehaviour
         buildInfoPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = mineInfo[index].type + " 광산 건설";
         buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + level.ToString();
         buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + mineInfo[index].buildTime + "초";
-        buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : 100";
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineBuildList().Find(x => x.level == mineInfo[index].level).deposit.ToString();
+        buildInfoPopup.transform.Find("UIPanel/UpgradeButton").gameObject.SetActive(true);
+        buildInfoPopup.transform.Find("UIPanel/UpgradeInitButton").gameObject.SetActive(false);
         string mtr = null;
         for(int i=0; i < mineInfo[index].necessaryMaterials.Length; i++)
         {
@@ -181,8 +184,9 @@ public class TerritoryManager : MonoBehaviour
                 else { mtr += ", " + mineInfo[index].necessaryMaterials[i] + " " + mineInfo[index].necessaryMaterialsNum[i]; }
             }
         }
-        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + mtr;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + mtr + "개";
         curType = mineInfo[index].type;
+
     }
 
     //건설 버튼
@@ -190,13 +194,13 @@ public class TerritoryManager : MonoBehaviour
     {
         MineInfo info = mineInfo.Find(x => x.type == curType);
         //재료 체크
-        for(int i = 0; i < info.necessaryMaterials.Length; i++)
-        {
+        //for(int i = 0; i < info.necessaryMaterials.Length; i++)
+        //{
             //재료랑 갖고 있는 아이템 체크
-            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[i]);
+            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[0]);
             if (thing != null)
             {
-                if (thing.possession >= info.necessaryMaterialsNum[i])
+                if (thing.possession >= info.curMaterial)
                 {
                     //건설 조건 만족
                     Debug.Log("y");
@@ -205,6 +209,14 @@ public class TerritoryManager : MonoBehaviour
                 {
                     //재료 수량 부족
                     Debug.Log("no");
+                    //팝업
+                    SystemPopup.SetActive(true);
+                    SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                    SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                    sys_yesButton.gameObject.SetActive(false);
+                    sys_NoButton.gameObject.SetActive(false);
+                    sys_OkButton.gameObject.SetActive(true);
+
                     return;
                 }
             }
@@ -215,7 +227,7 @@ public class TerritoryManager : MonoBehaviour
                 return;
             }
             
-        }
+        //}
         //재료 체크 완료//
 
         buildInfoPopup.SetActive(false);
@@ -230,6 +242,7 @@ public class TerritoryManager : MonoBehaviour
                     mineObj[j].transform.Find("Text").gameObject.SetActive(false);
                     mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
                     mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
+                    info.upgradeFlag = false;
                 }
             }
         });
@@ -249,9 +262,42 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
             }
         }
-
-
     }
+    //업그레이드 버튼
+    public void UpgradeButton()
+    {
+        MineInfo info = mineInfo.Find(x => x.type == curType);
+        info.upgradeFlag = true;
+        
+        info.afterLevel++;
+        info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time;
+        info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
+        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).material;
+        
+        //텍스트 변경.
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초 -> " + info.afterTime + "초";
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text 
+            = "매장량 : " + MineData.instance.getMineBuildList().Find(x=>x.level== info.level).deposit.ToString() + " -> " + info.afterDeposit;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + curType + " " + info.curMaterial + "개";
+    }
+    //업그레이드 초기화 버튼
+    public void UpgradeInitButton()
+    {
+        MineInfo info = mineInfo.Find(x => x.type == curType);
+        info.upgradeFlag = false;
+        info.afterLevel = info.level;
+
+        //텍스트 변경.
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초";
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit.ToString();
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + curType + " " + info.necessaryMaterialsNum[0].ToString() + "개";
+        info.curMaterial = info.necessaryMaterialsNum[0];
+    }
+
+
+
 
     //건설 스팟을 선택했을 때 동작
     public void BuildSpotClick(GameObject obj, int num)
@@ -261,20 +307,26 @@ public class TerritoryManager : MonoBehaviour
         //광산에 정보 저장
         MineData.instance.getMineList()[num].type = info.type;
         MineData.instance.getMineList()[num].level = 1;
-        MineData.instance.getMineList()[num].buildState = "beunder";
+        if (info.upgradeFlag)
+        {
+            MineData.instance.getMineList()[num].buildState = "upgrade";
+            info.upgradeFlag = false;
+        }
+        else
+            MineData.instance.getMineList()[num].buildState = "beunder";
         MineData.instance.getMineList()[num].buildTime = info.buildTime;
         for(int i=0;i< info.getThingName.Length;i++)
             MineData.instance.getMineList()[num].getThingName[i] = info.getThingName[i];
         MineData.instance.getMineList()[num].getOnceAmount = MineData.instance.getMineList()[num].level * 2;
-        MineData.instance.getMineList()[num].deposit = MineData.instance.getMineList()[num].level * 30;
+        MineData.instance.getMineList()[num].deposit = MineData.instance.getMineList()[num].deposit;
         MineData.instance.getMineList()[num].miningTime = 1f;
 
         //재료 소모
-        for (int i = 0; i < info.necessaryMaterials.Length; i++)
-        {
-            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[i]);
-            thing.possession -= info.necessaryMaterialsNum[i];
-        }
+        //for (int i = 0; i < info.necessaryMaterials.Length; i++)
+        //{
+            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[0]);
+            thing.possession -= info.curMaterial;
+        //}
 
         obj.GetComponent<Button>().onClick.RemoveAllListeners();
         obj.GetComponent<Button>().onClick.AddListener(() => BuildCondition(obj, num));
@@ -312,9 +364,22 @@ public class TerritoryManager : MonoBehaviour
     public void BuildCondition(GameObject obj, int num)
     {
         string type = MineData.instance.getMineList()[num].type;
-        BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 건설 중";
-        BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level.ToString();
-        BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineList()[num].deposit.ToString();
+
+        if (MineData.instance.getMineList()[num].buildState == "upgrade")
+        {
+            BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 업그레이드 중";
+
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + (MineData.instance.getMineList()[num].level+1).ToString();
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
+                = "매장량 : " + MineData.instance.getMineBuildList().Find(x=>x.level ==  MineData.instance.getMineList()[num].level+1).deposit.ToString();
+        }
+        if (MineData.instance.getMineList()[num].buildState == "beunder")
+        {
+            BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 건설 중";
+
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level.ToString();
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineList()[num].deposit.ToString();
+        }
         //팝업 올리기
         BeUnderPopup.SetActive(true);
 

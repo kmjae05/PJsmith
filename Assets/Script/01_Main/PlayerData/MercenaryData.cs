@@ -48,15 +48,19 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                //장비
-                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구"); 
-                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷"); 
-                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷"); 
+                //장비                
                 mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "수련자의 단검"); 
-                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "기사의 단검"); 
-                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠"); 
-                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠"); 
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "기사의 단검");
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+                mercenaryCreate.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
             }
             if (i == 2) {
@@ -72,14 +76,18 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구"); 
-                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구"); 
-                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷"); 
-                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
                 mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "영웅의 단검");
-                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "오딘의 단검"); 
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "오딘의 단검");
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+                mercenaryCreate.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
                 mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
-                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠"); 
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
             }
             if (i == 3) {
@@ -95,14 +103,18 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구"); 
-                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구"); 
-                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷"); 
-                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷"); 
-                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "여신의 단검"); 
-                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "드래곤의 단검"); 
-                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠"); 
-                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠"); 
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "여신의 단검");
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "드래곤의 단검");
+                mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+                mercenaryCreate.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+                mercenaryCreate.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+                mercenaryCreate.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+                mercenaryCreate.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+                mercenaryCreate.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+                mercenaryCreate.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
             }
             mercenary.Add(mercenaryCreate);
@@ -130,9 +142,11 @@ public class Mercenary
     public Stat stat;
     public string attribute;
     //장비
-    public Equipment[] equipHelmet;
-    public Equipment[] equipArmor;
     public Equipment[] equipWeapon;
+    public Equipment[] equipArmor;
+    public Equipment[] equipPants;
+    public Equipment[] equipHelmet;
+    public Equipment[] equipGloves;
     public Equipment[] equipBoots;
 
     public bool state = false;         //용병 상태
@@ -158,9 +172,11 @@ public class Mercenary
         this.attribute = "no";
         this.stat.collectSpeed = 1.0f;
         this.stat.collectAmount = 1;
-        this.equipHelmet = new Equipment[2];
-        this.equipArmor = new Equipment[2];
         this.equipWeapon = new Equipment[2];
+        this.equipArmor = new Equipment[2];
+        this.equipPants = new Equipment[2];
+        this.equipHelmet = new Equipment[2];
+        this.equipGloves = new Equipment[2];
         this.equipBoots = new Equipment[2];
         this.state = false;
         this.stageNum = 0;
