@@ -272,9 +272,6 @@
      <Compile Include="Assets\OneSignal\src\OneSignalIOS.cs" />
      <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
      <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
-     <Compile Include="Assets\ProgressBar\Script\ProgressBarBehaviour.cs" />
-     <Compile Include="Assets\ProgressBar\Script\ProgressRadialBehaviour.cs" />
-     <Compile Include="Assets\ProgressBar\Script\Utils.cs" />
      <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
      <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
      <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
@@ -285,6 +282,7 @@
      <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />
+     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\GetItemManager.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemDatabase.cs" />
@@ -451,7 +449,6 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
-     <None Include="Assets\FantasyIconsMegaPack\ReadMe.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />

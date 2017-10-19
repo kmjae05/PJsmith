@@ -8,27 +8,27 @@ using UnityEngine.EventSystems;
 public class Inventory : MonoBehaviour
 {
     public GameObject InventorySlot;
-    public GameObject InventoryItem;
+    private GameObject InventoryItem;
 
-    public int slotAmount; //슬롯개수 -> 향후 탭별로 갯수에 맞도록 관리
+    //private int slotAmount; //슬롯개수 -> 향후 탭별로 갯수에 맞도록 관리
     //ItemDatabase database;
     ThingsData thingsData;
     EquipmentData equipmentData;
 
-    List<Things> Tap1Items = new List<Things>(); //각 아이템별 리스트
-    List<GameObject> Tap1Slots = new List<GameObject>();
+    private List<Things> Tap1Items = new List<Things>(); //각 아이템별 리스트
+    private List<GameObject> Tap1Slots = new List<GameObject>();
 
-    public List<Things> Tap2Items = new List<Things>();
-    public List<GameObject> Tap2Slots = new List<GameObject>();
+    private List<Things> Tap2Items = new List<Things>();
+    private List<GameObject> Tap2Slots = new List<GameObject>();
 
-    public List<Things> Tap3Items = new List<Things>();
-    public List<GameObject> Tap3Slots = new List<GameObject>();
+    private List<Things> Tap3Items = new List<Things>();
+    private List<GameObject> Tap3Slots = new List<GameObject>();
 
-    public List<Things> Tap4Items = new List<Things>();
-    public List<GameObject> Tap4Slots = new List<GameObject>();
+    private List<Things> Tap4Items = new List<Things>();
+    private List<GameObject> Tap4Slots = new List<GameObject>();
 
-    public List<Things> Tap5Items = new List<Things>();
-    public List<GameObject> Tap5Slots = new List<GameObject>();
+    private List<Things> Tap5Items = new List<Things>();
+    private List<GameObject> Tap5Slots = new List<GameObject>();
 
     //public List<Things> Tap6Items = new List<Things>();
     //public List<GameObject> Tap6Slots = new List<GameObject>();
@@ -71,8 +71,8 @@ public class Inventory : MonoBehaviour
     GameObject EquipItemInfoPopup;
 
 
-    public GameObject ItemImage; //아이템생성완료창 스프라이트
-    public Text ItemText; //아이템 생성완료창 텍스트
+    private GameObject ItemImage; //아이템생성완료창 스프라이트
+    private Text ItemText; //아이템 생성완료창 텍스트
 
     GameObject NewItemIcon; //new아이콘
     int NewItemCount = 0; //새로운 아이템 카운트 new아이콘 활성화

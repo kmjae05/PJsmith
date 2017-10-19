@@ -700,6 +700,8 @@ public class TerritoryManager : MonoBehaviour
 
     }
 
+
+
     //광산 고갈 상태 팝업
     public void ExhaustionCondition(GameObject obj, int num)
     {
@@ -707,6 +709,12 @@ public class TerritoryManager : MonoBehaviour
 
         ExhaustionPopup.SetActive(true);
 
+        info.afterLevel = info.level + 1;
+        info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time;
+        info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
+        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).material;
+
+        ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + "광산 고갈";
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초 -> " + info.afterTime + "초";
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
@@ -725,7 +733,7 @@ public class TerritoryManager : MonoBehaviour
                 else { mtr += ", " + info.getThingName[i]; }
             }
         }
-        buildInfoPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = "획득 아이템 : " + mtr;
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = "획득 아이템 : " + mtr;
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + curType + " " + info.curMaterial + "개";
 
         //레벨업
@@ -766,9 +774,45 @@ public class TerritoryManager : MonoBehaviour
 
             //스팟 선택 없이 바로 그 자리에 건설.
 
+            //광산에 정보 저장
+
+            MineData.instance.getMineList()[num].type = info.type;
+            MineData.instance.getMineList()[num].level = info.afterLevel;
+            MineData.instance.getMineList()[num].buildState = "upgrade";
+            info.upgradeFlag = false;
+            
+            MineData.instance.getMineList()[num].buildTime = info.afterTime;
+            Debug.Log(info.afterTime);
+            for (int i = 0; i < info.getThingName.Length; i++)
+            {
+                MineData.instance.getMineList()[num].getThingName[i] = info.getThingName[i];
+            }
+            MineData.instance.getMineList()[num].getOnceAmount = 1;
+            MineData.instance.getMineList()[num].deposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
+            MineData.instance.getMineList()[num].miningTime = 1f;
+
+            //재료 소모
+            thing.possession -= info.curMaterial;
+
+            obj.GetComponent<Button>().onClick.RemoveAllListeners();
+            obj.GetComponent<Button>().onClick.AddListener(() => BuildCondition(obj, num));
+
+            obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            obj.transform.Find("Image").gameObject.SetActive(true);
+            obj.transform.Find("Text").gameObject.SetActive(true);
+            obj.transform.Find("DottedCircle").gameObject.SetActive(false);
+            obj.transform.Find("pickax").gameObject.SetActive(false);
+            obj.transform.Find("TypeName").gameObject.SetActive(true);
+            obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
 
 
+            BlackBack.SetActive(false);
+            //하단메뉴 잠금
+            BottomMenuLock.SetActive(true);
+            //대장장이 행동 제한
+            StartLock.SetActive(true);
 
+            ExhaustionPopup.SetActive(false);
         });
 
 
