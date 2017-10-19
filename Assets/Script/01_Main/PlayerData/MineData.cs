@@ -98,6 +98,8 @@ public class MineData : MonoBehaviour {
                     {
                         mineList[i].level++;
                         mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
+                        mineInfoList.Find(x => x.type == mineList[i].type).level++;
+                        mineInfoList.Find(x => x.type == mineList[i].type).buildTime = mineBuildList.Find(x=>x.level == mineInfoList.Find(y => y.type == mineList[i].type).level).time;
                     }
 
                     mineList[i].buildState = "complete";
@@ -114,13 +116,33 @@ public class MineData : MonoBehaviour {
                 if(mineList[i].curTime > mineList[i].miningTime)
                 {
                     mineList[i].curTime = 0f;
+
                     mineList[i].getAmount += mineList[i].getOnceAmount;
+                    //확률에 따른 아이템 획득
+                    for(int j = 1; j < mineList[i].getThingName.Length; j++)
+                    {
+                        if (mineList[i].getThingName[j] != null)
+                        {
+                            int random = UnityEngine.Random.Range(1, 100 + 1);      //100확률
+                            //Debug.Log(random);
+                            int prob = mineInfoList.Find(x => x.type == mineList[i].type).getThingProb[j];  //아이템 확률
+                            if (random <= prob)
+                            {
+                                //Debug.Log(mineList[i].getThingName[j] + " 획득1");
+                                mineList[i].getThingNum[j]++;
+                            }
+                        }
+                    }
+
                     //획득 가능한 양에 도달
                     if (mineList[i].getAmount >= mineList[i].deposit)
                     {
                         mineList[i].getAmount = mineList[i].deposit;
                         mineList[i].miningState = false;    //채굴 완료
                     }
+
+
+
                 }
             }
         }
@@ -151,7 +173,8 @@ public class Mine
     public int level;       //레벨
     public string buildState;   // 건설 상태 - nothing, beunder, complete, exhaustion, upgrade
     public float buildTime;     //건설 중 시간
-    public string[] getThingName; //획득 가능 아이템 이름
+    public string[] getThingName; //획득 가능 아이템 이름 json
+    public int[] getThingNum;   //획득한 부가 아이템
 
     public int getAmount;       //획득한 양
     public int getOnceAmount;   //한 주기에 획득 가능한 양
@@ -169,6 +192,7 @@ public class Mine
         buildState = "nothing";
         buildTime = 0f;
         getThingName = new string[3];
+        getThingNum = new int[3];
         getAmount = 0;
         getOnceAmount = 0;
         deposit = 0;

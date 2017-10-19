@@ -30,8 +30,8 @@ public class Inventory : MonoBehaviour
     public List<Things> Tap5Items = new List<Things>();
     public List<GameObject> Tap5Slots = new List<GameObject>();
 
-    public List<Things> Tap6Items = new List<Things>();
-    public List<GameObject> Tap6Slots = new List<GameObject>();
+    //public List<Things> Tap6Items = new List<Things>();
+    //public List<GameObject> Tap6Slots = new List<GameObject>();
 
     GameObject CollectionPopup;
     GameObject CollectionPanel;
@@ -43,7 +43,7 @@ public class Inventory : MonoBehaviour
     GameObject Tap3Panel;
     GameObject Tap4Panel;
     GameObject Tap5Panel;
-    GameObject Tap6Panel;
+    //GameObject Tap6Panel;
 
     //컬렉션 탭 전환
     GameObject Tap1Push;
@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
     GameObject Tap3Push;
     GameObject Tap4Push;
     GameObject Tap5Push;
-    GameObject Tap6Push;
+    //GameObject Tap6Push;
 
     //컬렉션 탭 버튼
     GameObject Tap1Button;
@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
     GameObject Tap3Button;
     GameObject Tap4Button;
     GameObject Tap5Button;
-    GameObject Tap6Button;
+    //GameObject Tap6Button;
 
     Text t_SlotText; //인벤토리 아이템 갯수
     Text t_SlotTitleText; //인벤토리 카테고리 타이틀
@@ -90,14 +90,14 @@ public class Inventory : MonoBehaviour
         Tap3Panel = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/Scroll/Panel_3").gameObject;
         Tap4Panel = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/Scroll/Panel_4").gameObject;
         Tap5Panel = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/Scroll/Panel_5").gameObject;
-        Tap6Panel = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/Scroll/Panel_6").gameObject;
+        //Tap6Panel = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/Scroll/Panel_6").gameObject;
 
         Tap1Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal1").gameObject;
         Tap2Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal2").gameObject;
         Tap3Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal3").gameObject;
         Tap4Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal4").gameObject;
         Tap5Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal5").gameObject;
-        Tap6Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal6").gameObject;
+        //Tap6Button = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Normal6").gameObject;
 
         //컬렉션 탭 전환
         Tap1Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab1").gameObject;
@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
         Tap3Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab3").gameObject;
         Tap4Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab4").gameObject;
         Tap5Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab5").gameObject;
-        Tap6Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab6").gameObject;
+        //Tap6Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab6").gameObject;
 
 
         ItemInfoPopup = transform.Find("/02_UI/System/ItemInfoPopup").gameObject;
@@ -192,11 +192,11 @@ public class Inventory : MonoBehaviour
             TempItem = Tap5Items;
             TempSlot = Tap5Slots;
         }
-        else if (tapNo == 5)
-        {
-            TempItem = Tap6Items;
-            TempSlot = Tap6Slots;
-        }
+        //else if (tapNo == 5)
+        //{
+        //    TempItem = Tap6Items;
+        //    TempSlot = Tap6Slots;
+        //}
         if (NewItemCount <= 0)
         {
             NewItemIcon.SetActive(false);
@@ -252,10 +252,10 @@ public class Inventory : MonoBehaviour
         {
             items = Tap5Items;
         }
-        else if (tatNo == 5)
-        {
-            items = Tap6Items;
-        }
+        //else if (tatNo == 5)
+        //{
+        //    items = Tap6Items;
+        //}
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].item_no == item.item_no)
@@ -300,11 +300,11 @@ public class Inventory : MonoBehaviour
             item = Tap5Items;
             slot = Tap5Slots;
         }
-        else if (tapNo == 5)
-        {
-            item = Tap6Items;
-            slot = Tap6Slots;
-        }
+        //else if (tapNo == 5)
+        //{
+        //    item = Tap6Items;
+        //    slot = Tap6Slots;
+        //}
         //RemoveItem(item, slot, tapNo, id);
     }
     //void RemoveItem(List<Things> Items, List<GameObject> Slots, int tapNo, int id) //삭제할 아이템을 지움
@@ -375,11 +375,11 @@ public class Inventory : MonoBehaviour
             TempItems = Tap5Items;
             TempISlot = Tap5Slots;
         }
-        else if (DatabaseNo == 5)
-        {
-            TempItems = Tap6Items;
-            TempISlot = Tap6Slots;
-        }
+        //else if (DatabaseNo == 5)
+        //{
+        //    TempItems = Tap6Items;
+        //    TempISlot = Tap6Slots;
+        //}
 
         //ConstructDataString(TempItems, TempISlot, id);
     }
@@ -420,21 +420,21 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < Tap3Slots.Count; i++)            Destroy(Tap3Slots[i]);
         for (int i = 0; i < Tap4Slots.Count; i++)            Destroy(Tap4Slots[i]);
         for (int i = 0; i < Tap5Slots.Count; i++)            Destroy(Tap5Slots[i]);
-        for (int i = 0; i < Tap6Slots.Count; i++)            Destroy(Tap6Slots[i]);
+        //for (int i = 0; i < Tap6Slots.Count; i++)            Destroy(Tap6Slots[i]);
 
         Tap1Items.Clear();
         Tap2Items.Clear();
         Tap3Items.Clear();
         Tap4Items.Clear();
         Tap5Items.Clear();
-        Tap6Items.Clear();
+        //Tap6Items.Clear();
 
         Tap1Slots.Clear();
         Tap2Slots.Clear();
         Tap3Slots.Clear();
         Tap4Slots.Clear();
         Tap5Slots.Clear();
-        Tap6Slots.Clear();
+        //Tap6Slots.Clear();
 
         //아이템 전체
         List<Things> tempItemList1 = new List<Things>();
@@ -488,9 +488,9 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        //머리
+        //무기
         List<Things> tempItemList2 = new List<Things>();
-        tempItemList2 = thingsData.getThingsList().FindAll(x => x.type == "Helmet");
+        tempItemList2 = thingsData.getThingsList().FindAll(x => x.type == "Weapon");
         for (int i = 0; i < tempItemList2.Count; i++)
         {
             if (tempItemList2[i].possession > 0)
@@ -507,7 +507,7 @@ public class Inventory : MonoBehaviour
                 Tap2Slots[Tap2Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList2[i].recent);
 
                 //무기 팝업
-                if (tempItemList2[i].type == "Helmet")
+                if (tempItemList2[i].type == "Weapon")
                 {
                     int index = i;
                     Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
@@ -519,15 +519,15 @@ public class Inventory : MonoBehaviour
             }
 
         }
-        //몸통
+        //방어구
         List<Things> tempItemList3 = new List<Things>();
-        tempItemList3 = thingsData.getThingsList().FindAll(x => x.type == "Armor");
+        tempItemList3 = thingsData.getThingsList().FindAll(x => x.type == "Armor" || x.type == "Helmet" || x.type == "Gloves" || x.type == "Pants"|| x.type == "Boots");
         for (int i = 0; i < tempItemList3.Count; i++)
         {
             if (tempItemList3[i].possession > 0)
             {
                 Tap3Items.Add(tempItemList3[i]);
-                Tap3Slots.Add(Instantiate(InventorySlot)); // 아이템 생성
+                Tap3Slots.Add(Instantiate(InventorySlot)); // 아이템 생성Helmetv     
                 Tap3Slots[Tap3Slots.Count - 1].SetActive(true);
                 Tap3Slots[Tap3Slots.Count - 1].GetComponent<Slot>().id = Tap3Slots.Count - 1;
                 Tap3Slots[Tap3Slots.Count - 1].transform.SetParent(Tap3Panel.transform);
@@ -537,8 +537,8 @@ public class Inventory : MonoBehaviour
                 Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList3[i].possession.ToString();
                 Tap3Slots[Tap3Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList3[i].recent);
 
-                //무기 팝업
-                if (tempItemList3[i].type == "Armor")
+                //방어구 팝업
+                if (tempItemList3[i].type == "Armor" || tempItemList3[i].type == "Helmet" || tempItemList3[i].type == "Gloves" || tempItemList3[i].type == "Pants" || tempItemList3[i].type == "Boots")
                 {
                     int index = i;
                     Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
@@ -549,9 +549,9 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        //무기
+        //재료
         List<Things> tempItemList4 = new List<Things>();
-        tempItemList4 = thingsData.getThingsList().FindAll(x => x.type == "Weapon");
+        tempItemList4 = thingsData.getThingsList().FindAll(x => x.type == "Book" || x.type == "Ore");
         for (int i = 0; i < tempItemList4.Count; i++)
         {
             if (tempItemList4[i].possession > 0)
@@ -567,21 +567,21 @@ public class Inventory : MonoBehaviour
                 Tap4Slots[Tap4Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList4[i].possession.ToString();
                 Tap4Slots[Tap4Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList4[i].recent);
 
-                //무기 팝업
-                if (tempItemList4[i].type == "Weapon")
+                //재료 팝업
+                if (tempItemList4[i].type == "Book" || tempItemList4[i].type == "Ore")
                 {
                     int index = i;
                     Tap4Slots[Tap4Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        EquipInfoPopup(tempItemList4[index]);
-                        EquipItemInfoPopup.SetActive(true);
+                        OthersItemInfoPopup(tempItemList4[index]);
+                        ItemInfoPopup.SetActive(true);
                     });
                 }
             }
         }
-        //발
+        //기타
         List<Things> tempItemList5 = new List<Things>();
-        tempItemList5 = thingsData.getThingsList().FindAll(x => x.type == "Boots");
+        tempItemList5 = thingsData.getThingsList().FindAll(x => x.type == "Others");
         for (int i = 0; i < tempItemList5.Count; i++)
         {
             if (tempItemList5[i].possession > 0)
@@ -597,58 +597,58 @@ public class Inventory : MonoBehaviour
                 Tap5Slots[Tap5Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList5[i].possession.ToString();
                 Tap5Slots[Tap5Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList5[i].recent);
 
-                if (tempItemList5[i].type == "Boots")
+                if (tempItemList5[i].type == "Others")
                 {
                     int index = i;
                     Tap5Slots[Tap5Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        EquipInfoPopup(tempItemList5[index]);
-                        EquipItemInfoPopup.SetActive(true);
+                        OthersItemInfoPopup(tempItemList5[index]);
+                        ItemInfoPopup.SetActive(true);
                     });
                 }
             }
         }
         //재료, 기타 아이템
-        List<Things> tempItemList6 = new List<Things>();
-        tempItemList6 = thingsData.getThingsList().FindAll(x => (x.type == "Ore" || x.type == "Others") );
-        for (int i = 0; i < tempItemList6.Count; i++)
-        {
-            if (tempItemList6[i].possession > 0)
-            {
-                Tap6Items.Add(tempItemList6[i]);
-                Tap6Slots.Add(Instantiate(InventorySlot)); //인벤토리 슬롯 생성
-                Tap6Slots[Tap6Slots.Count - 1].SetActive(true);
-                Tap6Slots[Tap6Slots.Count - 1].GetComponent<Slot>().id = Tap6Slots.Count - 1;
-                Tap6Slots[Tap6Slots.Count - 1].transform.SetParent(Tap6Panel.transform);
-                Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localScale = Vector3.one;
-                Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localPosition = Vector3.one;
-                Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(tempItemList6[i].icon);
-                Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList6[i].possession.ToString();
-                Tap6Slots[Tap6Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList6[i].recent);
+        //List<Things> tempItemList6 = new List<Things>();
+        //tempItemList6 = thingsData.getThingsList().FindAll(x => (x.type == "Ore" || x.type == "Others") );
+        //for (int i = 0; i < tempItemList6.Count; i++)
+        //{
+        //    if (tempItemList6[i].possession > 0)
+        //    {
+        //        Tap6Items.Add(tempItemList6[i]);
+        //        Tap6Slots.Add(Instantiate(InventorySlot)); //인벤토리 슬롯 생성
+        //        Tap6Slots[Tap6Slots.Count - 1].SetActive(true);
+        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<Slot>().id = Tap6Slots.Count - 1;
+        //        Tap6Slots[Tap6Slots.Count - 1].transform.SetParent(Tap6Panel.transform);
+        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localScale = Vector3.one;
+        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localPosition = Vector3.one;
+        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(tempItemList6[i].icon);
+        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList6[i].possession.ToString();
+        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList6[i].recent);
 
-                //광석 팝업
-                if (tempItemList6[i].type == "Ore")
-                {
-                    int index = i;
-                    Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
-                    {
-                        GameObject.Find("PlayerData").GetComponent<OreSelect>().ClickInventory(tempItemList6[index]);
-                        GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
-                    });
-                }
-                //기타 아이템 팝업
-                if (tempItemList6[i].type == "Others")
-                {
-                    int index = i;
-                    Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
-                    {
-                        OthersItemInfoPopup(tempItemList6[index]);
-                        ItemInfoPopup.SetActive(true);
-                    });
-                }
+        //        //광석 팝업
+        //        if (tempItemList6[i].type == "Ore")
+        //        {
+        //            int index = i;
+        //            Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+        //            {
+        //                GameObject.Find("PlayerData").GetComponent<OreSelect>().ClickInventory(tempItemList6[index]);
+        //                GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
+        //            });
+        //        }
+        //        //기타 아이템 팝업
+        //        if (tempItemList6[i].type == "Others")
+        //        {
+        //            int index = i;
+        //            Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+        //            {
+        //                OthersItemInfoPopup(tempItemList6[index]);
+        //                ItemInfoPopup.SetActive(true);
+        //            });
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         //new icon 감추기
         for(int i=0;i< thingsData.getThingsList().Count; i++)
@@ -695,11 +695,11 @@ public class Inventory : MonoBehaviour
             item = Tap5Items;
             slot = Tap5Slots;
         }
-        else if (tapNo == 5)
-        {
-            item = Tap6Items;
-            slot = Tap6Slots;
-        }
+        //else if (tapNo == 5)
+        //{
+        //    item = Tap6Items;
+        //    slot = Tap6Slots;
+        //}
         //AddItem(item, slot, tapNo, id);
     }
 
@@ -771,14 +771,14 @@ public class Inventory : MonoBehaviour
             Tap3Push.SetActive(false);
             Tap4Push.SetActive(false);
             Tap5Push.SetActive(false);
-            Tap6Push.SetActive(false);
+            //Tap6Push.SetActive(false);
 
             Tap1Panel.SetActive(true);
             Tap2Panel.SetActive(false);
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
 
             SlotSize(Tap1Items);
             t_SlotTitleText.text = "전체";
@@ -793,10 +793,10 @@ public class Inventory : MonoBehaviour
             Tap3Push.SetActive(false);
             Tap4Push.SetActive(false);
             Tap5Push.SetActive(false);
-            Tap6Push.SetActive(false);
+            //Tap6Push.SetActive(false);
 
             //SlotSize(Tap2Items);
-            t_SlotTitleText.text = "머리";
+            t_SlotTitleText.text = "무기";
 
             //Tap2Panel.transform.localPosition = Vector3.one;
             BackSlot.GetComponent<ScrollRect>().content = Tap2Panel.GetComponent<RectTransform>();
@@ -809,10 +809,10 @@ public class Inventory : MonoBehaviour
             Tap3Push.SetActive(true);
             Tap4Push.SetActive(false);
             Tap5Push.SetActive(false);
-            Tap6Push.SetActive(false);
+            //Tap6Push.SetActive(false);
 
            // SlotSize(Tap3Items);
-            t_SlotTitleText.text = "몸통";
+            t_SlotTitleText.text = "방어구";
 
             //Tap3Panel.transform.localPosition = Vector3.one;
             BackSlot.GetComponent<ScrollRect>().content = Tap3Panel.GetComponent<RectTransform>();
@@ -825,10 +825,10 @@ public class Inventory : MonoBehaviour
             Tap3Push.SetActive(false);
             Tap4Push.SetActive(true);
             Tap5Push.SetActive(false);
-            Tap6Push.SetActive(false);
+            //Tap6Push.SetActive(false);
 
             //SlotSize(Tap4Items);
-            t_SlotTitleText.text = "무기";
+            t_SlotTitleText.text = "재료";
 
             //Tap4Panel.transform.localPosition = Vector3.one;
             BackSlot.GetComponent<ScrollRect>().content = Tap4Panel.GetComponent<RectTransform>();
@@ -841,31 +841,31 @@ public class Inventory : MonoBehaviour
             Tap3Push.SetActive(false);
             Tap4Push.SetActive(false);
             Tap5Push.SetActive(true);
-            Tap6Push.SetActive(false);
+            //Tap6Push.SetActive(false);
 
             //SlotSize(Tap5Items);
-            t_SlotTitleText.text = "발";
+            t_SlotTitleText.text = "기타";
 
             //Tap5Panel.transform.localPosition = Vector3.one;
             BackSlot.GetComponent<ScrollRect>().content = Tap5Panel.GetComponent<RectTransform>();
 
         }
-        else if (Tap6Panel.activeSelf == true)
-        {
-            Tap1Push.SetActive(false);
-            Tap2Push.SetActive(false);
-            Tap3Push.SetActive(false);
-            Tap4Push.SetActive(false);
-            Tap5Push.SetActive(false);
-            Tap6Push.SetActive(true);
+        //else if (Tap6Panel.activeSelf == true)
+        //{
+        //    Tap1Push.SetActive(false);
+        //    Tap2Push.SetActive(false);
+        //    Tap3Push.SetActive(false);
+        //    Tap4Push.SetActive(false);
+        //    Tap5Push.SetActive(false);
+        //    Tap6Push.SetActive(true);
 
-            //SlotSize(Tap6Items);
-            t_SlotTitleText.text = "재료, 기타 아이템";
+        //    //SlotSize(Tap6Items);
+        //    t_SlotTitleText.text = "재료, 기타 아이템";
 
-            //Tap6Panel.transform.localPosition = Vector3.one;
-            BackSlot.GetComponent<ScrollRect>().content = Tap6Panel.GetComponent<RectTransform>();
+        //    //Tap6Panel.transform.localPosition = Vector3.one;
+        //    BackSlot.GetComponent<ScrollRect>().content = Tap6Panel.GetComponent<RectTransform>();
 
-        }
+        //}
     } //아이템 탭을 선택할경우 스크롤 변경
 
 
@@ -891,7 +891,7 @@ public class Inventory : MonoBehaviour
         Tap3Button.GetComponent<Button>().onClick.AddListener(() => TapButtonSetup(3));
         Tap4Button.GetComponent<Button>().onClick.AddListener(() => TapButtonSetup(4));
         Tap5Button.GetComponent<Button>().onClick.AddListener(() => TapButtonSetup(5));
-        Tap6Button.GetComponent<Button>().onClick.AddListener(() => TapButtonSetup(6));
+        //Tap6Button.GetComponent<Button>().onClick.AddListener(() => TapButtonSetup(6));
     }
     //버튼 이벤트 추가
     void TapButtonSetup(int TapNum)
@@ -903,7 +903,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
         }
         else if (TapNum == 2)
         {
@@ -912,7 +912,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
         }
         else if (TapNum == 3)
         {
@@ -921,7 +921,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(true);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
         }
         else if (TapNum == 4)
         {
@@ -930,7 +930,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(true);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
         }
         else if (TapNum == 5)
         {
@@ -939,7 +939,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(true);
-            Tap6Panel.SetActive(false);
+            //Tap6Panel.SetActive(false);
         }
         else if (TapNum == 6)
         {
@@ -948,7 +948,7 @@ public class Inventory : MonoBehaviour
             Tap3Panel.SetActive(false);
             Tap4Panel.SetActive(false);
             Tap5Panel.SetActive(false);
-            Tap6Panel.SetActive(true);
+            //Tap6Panel.SetActive(true);
         }
         SwitchScrollPanel();
     }
@@ -993,8 +993,6 @@ public class Inventory : MonoBehaviour
     //기타 아이템 정보 팝업
     public void OthersItemInfoPopup(Things things)
     {
-        Debug.Log(things.type);
-        Debug.Log(things.name);
         GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/InfoBox/ItemNameText").gameObject.GetComponent<Text>().text = things.name;
         GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/InfoBox/ItemInfoText").gameObject.GetComponent<Text>().text = things.explanation;
         GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/ItemBox/HaveText").gameObject.GetComponent<Text>().text = things.possession.ToString();

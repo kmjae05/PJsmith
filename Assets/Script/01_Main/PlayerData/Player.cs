@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
     {
         t_PlayerGold = GameObject.Find("GoldText").GetComponent<Text>();
         t_PlayerCash = GameObject.Find("CashText").GetComponent<Text>();
-        t_PlayerLevel = GameObject.Find("LevelText").GetComponent<Text>();
+        t_PlayerLevel = GameObject.Find("ProfilePanel").transform.Find("Panel/LevelText").gameObject.GetComponent<Text>();
         t_ProfileLevel = GameObject.Find("Menu").gameObject.transform.Find("ProfilePopup/UIPanel/ProfilePanel/PlayerInfo/InfoPanel/LevelText").gameObject.GetComponent<Text>(); //프로필 팝업 레벨 텍스트
         t_playerExp = GameObject.Find("ExpText").GetComponent<Text>();    //프로필 패널 경험치 텍스트
         PlayerExpBarSlider = GameObject.Find("PlayerExpSlider").GetComponent<Slider>();

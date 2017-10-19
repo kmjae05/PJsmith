@@ -140,16 +140,16 @@ public class DiceManager : MonoBehaviour {
                 ThingsData.instance.getThingsList().Find(x => x.name == "티켓").possession += num;
                 ThingsData.instance.getThingsList().Find(x => x.name == "티켓").recent = true;
                 break;
-            case 2: ThingsData.instance.getThingsList().Find(x => x.name == "철").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "철").recent = true; break;
-            case 3: ThingsData.instance.getThingsList().Find(x => x.name == "구리").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "구리").recent = true; break;
-            case 4: ThingsData.instance.getThingsList().Find(x => x.name == "원석").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "원석").recent = true; break;
-            case 5: ThingsData.instance.getThingsList().Find(x => x.name == "금").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "금").recent = true; break;
-            case 6: ThingsData.instance.getThingsList().Find(x => x.name == "은").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "은").recent = true; break;
+            case 2: ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").possession += num;
+                ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").recent = true; break;
+            case 3: ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").possession += num;
+                ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").recent = true; break;
+            case 4: ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").possession += num;
+                ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").recent = true; break;
+            case 5: ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").possession += num;
+                ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").recent = true; break;
+            case 6: ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").possession += num;
+                ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").recent = true; break;
             default: // case 0
                 break;
                 //
@@ -164,7 +164,17 @@ public class DiceManager : MonoBehaviour {
             GameObject reward = GameObject.Find("reward" + dice_pip.value.ToString());
             rewardPrefab.transform.position = reward.transform.position;
             //이미지 교체
-            rewardPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Reward/reward" + dice_pip.value.ToString());
+            string path = null;
+            switch (dice_pip.value)
+            {
+                case 1: path = ThingsData.instance.getThingsList().Find(x => x.name == "티켓").icon; break;
+                case 2: path = ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").icon; break;
+                case 3: path = ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").icon; break;
+                case 4: path = ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").icon; break;
+                case 5: path = ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").icon; break;
+                case 6: path = ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").icon; break;
+            }
+            rewardPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
             rewardPrefab.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);

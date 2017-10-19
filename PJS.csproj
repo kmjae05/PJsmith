@@ -350,6 +350,7 @@
     <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />
+    <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\GetItemManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemDatabase.cs" />
