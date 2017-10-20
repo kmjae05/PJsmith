@@ -224,7 +224,7 @@ public class StageData : MonoBehaviour
                 stageInfoListtmp[i].getRecentItemFlag = false;
                 //아이템 획득 시간 정하기
                 stageInfoListtmp[i].getItemTimeFlag = true;
-                float time = Random.Range(50f, 60f);
+                float time = 10f;
                 stageInfoListtmp[i].getItemTime = stageInfoListtmp[i].time - time;
             }
 
@@ -283,7 +283,7 @@ public class StageData : MonoBehaviour
     //스테이지 이미지 변경.
     public void stageImageChange(StageInfo stin)
     {
-        if (stin.type == "던전")
+        if (stin.type == "사냥")
             stin.sprite = Resources.Load<Sprite>("Gather/minimonster");
     }
 
@@ -291,14 +291,14 @@ public class StageData : MonoBehaviour
     public void getItem(StageInfo stin)
     {
         int rand = 0;
-        if (stin.type == "던전")
+        if (stin.type == "사냥")
         {
             //하이그라스 단검30, 엘더 소드30, 팔라딘 소드30, 고급 하이그라스 단검10
             rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "하이그라스 단검"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 60) { stin.getItem[1] = "엘더 소드"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "팔라딘 소드"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
-            else { stin.getItem[3] = "고급 하이그라스 단검"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
+            if (rand < 30) { stin.getItem[0] = "오딘의 단검"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
+            else if (rand < 60) { stin.getItem[1] = "무기제작서-고급"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
+            else if (rand < 90) { stin.getItem[2] = "여행자의 가죽바지"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
+            else { stin.getItem[3] = "오딘의 갑옷"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
         }
 
     }
@@ -328,7 +328,7 @@ public class StageData : MonoBehaviour
     public string typeNumToString(int stageNum, int i)
     {
         ////사냥
-        if (i == 1) return "던전"; else if (i == 2) return "던전"; else if (i == 3) return "던전"; else return null;
+        if (i == 1) return "사냥"; else if (i == 2) return "사냥"; else if (i == 3) return "사냥"; else return null;
     }
 
     public List<StageInfo> getStageInfoList() { return stageInfoList; }

@@ -20,7 +20,7 @@ public class DiceManager : MonoBehaviour {
 
     private GameObject buttonBox;   //주사위를 굴리고 있을 때 버튼 클릭 방지.
 
-    private int ticket = 3;             //티켓 수
+    private int ticket = 0;             //티켓 수
     private Text ticketText;            //티켓 수 텍스트
 
     private GameObject checkImage;
@@ -63,7 +63,7 @@ public class DiceManager : MonoBehaviour {
     //팝업창 나타날 때 초기화
     public void init()
     {
-        ticket = ThingsData.instance.getThingsList().Find(x => x.name == "티켓").possession;
+        ticket = ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession;
         ticketText = GameObject.Find("PossessText").gameObject.GetComponent<Text>();
         ticketText.text = "소지 : " + ticket.ToString();
         checkImage = GameObject.Find("DiceGameUIPanel (1)").transform.Find("checkImage").gameObject;
@@ -136,20 +136,42 @@ public class DiceManager : MonoBehaviour {
         int num = dice_numN.value;
         switch (dice_pip.value)
         {
-            case 1: ticket += num; ticketText.text = "소지 : " + ticket.ToString();
-                ThingsData.instance.getThingsList().Find(x => x.name == "티켓").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "티켓").recent = true;
+            case 1:
+                ticket += num; ticketText.text = "소지 : " + ticket.ToString();
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession += num;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").recent = true;
                 break;
-            case 2: ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").recent = true; break;
-            case 3: ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").recent = true; break;
-            case 4: ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").recent = true; break;
-            case 5: ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").recent = true; break;
-            case 6: ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").possession += num;
-                ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").recent = true; break;
+            case 2:
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "철 주괴") == null)
+                    { ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "철 주괴").type, "철 주괴", num));  }
+                else
+                { ThingsData.instance.getInventoryThingsList().Find(x => x.name == "철 주괴").possession += num; }
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "철 주괴").recent = true;
+                break;
+            case 3:
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "구리 주괴") == null)
+                { ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "구리 주괴").type, "구리 주괴", num)); }
+                else
+                { ThingsData.instance.getInventoryThingsList().Find(x => x.name == "구리 주괴").possession += num; }
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "구리 주괴").recent = true; break;
+            case 4:
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "돌 주괴") == null)
+                { ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "돌 주괴").type, "돌 주괴", num)); }
+                else
+                { ThingsData.instance.getInventoryThingsList().Find(x => x.name == "돌 주괴").possession += num; }
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "돌 주괴").recent = true; break;
+            case 5:
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "금 주괴") == null)
+                { ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").type, "금 주괴", num)); }
+                else
+                { ThingsData.instance.getInventoryThingsList().Find(x => x.name == "금 주괴").possession += num; }
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "금 주괴").recent = true; break;
+            case 6:
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "은 주괴") == null)
+                { ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").type, "은 주괴", num)); }
+                else
+                { ThingsData.instance.getInventoryThingsList().Find(x => x.name == "은 주괴").possession += num; }
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "은 주괴").recent = true; break;
             default: // case 0
                 break;
                 //

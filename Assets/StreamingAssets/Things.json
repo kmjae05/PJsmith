@@ -74,7 +74,7 @@
         },
         {
             "item_no": 12,
-            "type": "Others",
+            "type": "Material",
             "name": "돌 주괴",
             "explanation": "돌 주괴입니다.",
             "grade": 1,
@@ -83,7 +83,7 @@
         },
         {
             "item_no": 13,
-            "type": "Others",
+            "type": "Material",
             "name": "구리 주괴",
             "explanation": "구리 주괴입니다.",
             "grade": 1,
@@ -92,7 +92,7 @@
         },
         {
             "item_no": 14,
-            "type": "Others",
+            "type": "Material",
             "name": "은 주괴",
             "explanation": "은 주괴입니다.",
             "grade": 1,
@@ -101,7 +101,7 @@
         },
         {
             "item_no": 15,
-            "type": "Others",
+            "type": "Material",
             "name": "금 주괴",
             "explanation": "금 주괴입니다.",
             "grade": 1,
@@ -110,7 +110,7 @@
         },
         {
             "item_no": 16,
-            "type": "Others",
+            "type": "Material",
             "name": "철 주괴",
             "explanation": "철 주괴입니다.",
             "grade": 1,
@@ -119,7 +119,7 @@
         },
         {
             "item_no": 17,
-            "type": "Others",
+            "type": "Material",
             "name": "미스릴 주괴",
             "explanation": "미스릴 주괴입니다.",
             "grade": 1,
@@ -128,7 +128,7 @@
         },
         {
             "item_no": 18,
-            "type": "Others",
+            "type": "Material",
             "name": "검은무쇠 주괴",
             "explanation": "검은무쇠 주괴입니다.",
             "grade": 1,
@@ -137,7 +137,7 @@
         },
         {
             "item_no": 19,
-            "type": "Others",
+            "type": "Material",
             "name": "아케나이트 주괴",
             "explanation": "아케나이트 주괴입니다.",
             "grade": 1,
@@ -147,7 +147,7 @@
 
         {
             "item_no": 20,
-            "type": "Others",
+            "type": "Material",
             "name": "광명석",
             "explanation": "광명석입니다.",
             "grade": 1,
@@ -156,7 +156,7 @@
         },
         {
             "item_no": 21,
-            "type": "Others",
+            "type": "Material",
             "name": "석류석",
             "explanation": "석류석입니다.",
             "grade": 1,
@@ -165,7 +165,7 @@
         },
         {
             "item_no": 22,
-            "type": "Others",
+            "type": "Material",
             "name": "자황수정",
             "explanation": "자황수정입니다.",
             "grade": 1,
@@ -174,7 +174,7 @@
         },
         {
             "item_no": 23,
-            "type": "Others",
+            "type": "Material",
             "name": "암흑석",
             "explanation": "암흑석입니다.",
             "grade": 1,
@@ -183,7 +183,7 @@
         },
         {
             "item_no": 24,
-            "type": "Others",
+            "type": "Material",
             "name": "용암석",
             "explanation": "용암석입니다.",
             "grade": 1,
@@ -192,7 +192,7 @@
         },
         {
             "item_no": 25,
-            "type": "Others",
+            "type": "Material",
             "name": "비취",
             "explanation": "비취입니다.",
             "grade": 1,
@@ -201,7 +201,7 @@
         },
         {
             "item_no": 26,
-            "type": "Others",
+            "type": "Material",
             "name": "에메랄드",
             "explanation": "에메랄드입니다.",
             "grade": 1,
@@ -210,7 +210,7 @@
         },
         {
             "item_no": 27,
-            "type": "Others",
+            "type": "Material",
             "name": "다이아몬드",
             "explanation": "다이아몬드입니다.",
             "grade": 1,
@@ -219,7 +219,7 @@
         },
         {
             "item_no": 28,
-            "type": "Others",
+            "type": "Material",
             "name": "자수정",
             "explanation": "자수정입니다.",
             "grade": 1,
@@ -228,7 +228,7 @@
         },
         {
             "item_no": 29,
-            "type": "Others",
+            "type": "Material",
             "name": "사파이어",
             "explanation": "사파이어입니다.",
             "grade": 1,

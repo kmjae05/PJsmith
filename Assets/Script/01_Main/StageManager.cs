@@ -686,9 +686,31 @@ public class StageManager : MonoBehaviour
             //ItemLogInst.SetActive(true);
 
             //획득 아이템 데이터 저장
-            ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).possession += result.getItemNum[i];
-            ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).recent = true;
 
+            string type = ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type;
+            //장비 구분
+            if (type == "Helmet" || type == "Armor" || type == "Gloves" || type == "Pants" || type == "Weapon" || type == "Boots")
+            {
+                for(int j = 0; j < result.getItemNum[i]; j++)
+                {
+                    ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], 1));
+                    //ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
+                }
+            }
+            //장비 외 아이템
+            else
+            {
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]) != null)
+                {
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).possession += result.getItemNum[i];
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
+                }
+                else
+                {
+                    ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], result.getItemNum[i]));
+                }
+                
+            }
 
             //yield return new WaitForSeconds(0.3f);
             yield return null;
@@ -707,29 +729,23 @@ public class StageManager : MonoBehaviour
     public void setGetItemInfo(StageInfo result)
     {
         //사냥
-        stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword");
-        stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "하이그라스 단검";
-        stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword2");
-        stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "엘더 소드";
-        stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword3");
-        stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "팔라딘 소드";
-        stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>("Gather/sword");
-        stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "고급 하이그라스 단검";
+        stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x=>x.name == "오딘의 단검").icon);
+        stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "오딘의 단검";
+        stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "무기제작서-고급").icon);
+        stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "무기제작서-고급";
+        stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "여행자의 가죽바지").icon);
+        stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "여행자의 가죽바지";
+        stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 갑옷").icon);
+        stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "오딘의 갑옷";
     }
 
     //이미지 변경
     public void ItemImageChange(string stageInfoListtmp, Image spr)
     {
-        if (stageInfoListtmp == "철 가루") { spr.sprite = Resources.Load<Sprite>("Gather/ironDust"); }
-        else if (stageInfoListtmp == "원석") { spr.sprite = Resources.Load<Sprite>("Gather/gemstone"); }
-        else if (stageInfoListtmp == "구리") { spr.sprite = Resources.Load<Sprite>("Gather/copper"); }
-        else if (stageInfoListtmp == "철") { spr.sprite = Resources.Load<Sprite>("Gather/iron"); }
-        else if (stageInfoListtmp == "은") { spr.sprite = Resources.Load<Sprite>("Gather/silver"); }
-        else if (stageInfoListtmp == "금") { spr.sprite = Resources.Load<Sprite>("Gather/gold"); }
-        else if (stageInfoListtmp == "하이그라스 단검") { spr.sprite = Resources.Load<Sprite>("Gather/sword"); }
-        else if (stageInfoListtmp == "엘더 소드") { spr.sprite = Resources.Load<Sprite>("Gather/sword2"); }
-        else if (stageInfoListtmp == "팔라딘 소드") { spr.sprite = Resources.Load<Sprite>("Gather/sword3"); }
-        else if (stageInfoListtmp == "고급 하이그라스 단검") { spr.sprite = Resources.Load<Sprite>("Gather/sword"); }
+        if (stageInfoListtmp == "오딘의 단검") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 단검").icon); }
+        else if (stageInfoListtmp == "무기제작서-고급") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "무기제작서-고급").icon); }
+        else if (stageInfoListtmp == "여행자의 가죽바지") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "여행자의 가죽바지").icon); }
+        else if (stageInfoListtmp == "오딘의 갑옷") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 갑옷").icon); }
     }
 
 

@@ -337,9 +337,6 @@
     <Compile Include="Assets\OneSignal\src\OneSignalIOS.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
-    <Compile Include="Assets\ProgressBar\Script\ProgressBarBehaviour.cs" />
-    <Compile Include="Assets\ProgressBar\Script\ProgressRadialBehaviour.cs" />
-    <Compile Include="Assets\ProgressBar\Script\Utils.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
@@ -457,7 +454,6 @@
     <None Include="Assets\Dice\-Read-Me-.txt" />
     <None Include="Assets\FX Quest\!Quick start walkthrough.txt" />
     <None Include="Assets\FX Quest\Readme.txt" />
-    <None Include="Assets\FantasyIconsMegaPack\ReadMe.txt" />
     <None Include="Assets\GE Common Assets\Readme.txt" />
     <None Include="Assets\GUI Animator\GUI Animator FREE\!How to.txt" />
     <None Include="Assets\GUI Animator\GUI Animator FREE\Readme.txt" />

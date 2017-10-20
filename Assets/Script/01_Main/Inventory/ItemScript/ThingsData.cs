@@ -15,8 +15,7 @@ public class ThingsData : MonoBehaviour
     static public JsonData thingsData;
 
     static private List<Things> thingsList = new List<Things>();
-    private List<GameObject> thingsListObj = new List<GameObject>();
-
+    static private List<InventoryThings> invenThings = new List<InventoryThings>();
 
     void Awake()
     {
@@ -52,7 +51,13 @@ public class ThingsData : MonoBehaviour
         thingsList.Find(x => x.name == "돌").possession = 30000;
         thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
+        thingsList.Find(x => x.name == "영웅의 단검").possession = 2;
 
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
     }
 
     public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록
@@ -98,10 +103,11 @@ public class ThingsData : MonoBehaviour
 
     public List<Things> getThingsList() { return thingsList; }
     public void setThingsList(Things things, int index) { thingsList[index] = things; }
-
+    public List<InventoryThings> getInventoryThingsList() { return invenThings; }
+    public void setInventoryThingsList(InventoryThings things, int index) { invenThings[index] = things; }
 }
 
-
+//아이템 기본 정보
 public class Things
 {
     public int item_no;
@@ -114,7 +120,6 @@ public class Things
 
     public int possession;
     public bool isLock;
-    public bool recent;
 
     
 
@@ -130,9 +135,43 @@ public class Things
 
         this.possession = 0;
         this.isLock = false;
-        this.recent = true;
 
     }
 
+
+}
+
+//인벤토리 등에서 보여지는 아이템
+public class InventoryThings
+{
+    public string type;
+    public string name;    
+
+    public int possession;
+    public bool isLock;
+    public bool recent;
+
+    //장비관련
+    public int reinforcement;   //강화수치
+    public bool equip;          //장비 착용 상태
+
+    public InventoryThings()
+    {
+        this.possession = 0;
+        this.recent = true;
+        this.reinforcement = 0;
+        this.equip = false;
+        
+    }
+
+    public InventoryThings(string type, string name, int possession)
+    {
+        this.type = type;
+        this.name = name;
+        this.possession = possession;
+        this.recent = true;
+        this.reinforcement = 0;
+        this.equip = false;
+    }
 
 }

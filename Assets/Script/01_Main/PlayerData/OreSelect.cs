@@ -241,7 +241,9 @@ public class OreSelect : MonoBehaviour
             {
                 OreNameText[i].text = oreList[i].name;
                 LockIcon[i].gameObject.SetActive(false);
-                oreList[i].have = ThingsData.instance.getThingsList().Find(x => x.name == oreList[i].name).possession; 
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == oreList[i].name) != null)
+                    oreList[i].have = ThingsData.instance.getInventoryThingsList().Find(x => x.name == oreList[i].name).possession;
+                else oreList[i].have = 0;
                 HaveText[i].gameObject.SetActive(true);
                 Icon[i].color = new Color(1.0f, 1.0f, 1.0f);
                 SelectLock[i].SetActive(false);
@@ -270,7 +272,9 @@ public class OreSelect : MonoBehaviour
     {
         for (int i = 0; i < G_OreList.Count; i++)
         {
-            oreList[i].have = ThingsData.instance.getThingsList().Find(x => x.name == oreList[i].name).possession;
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == oreList[i].name) != null)
+                oreList[i].have = ThingsData.instance.getInventoryThingsList().Find(x => x.name == oreList[i].name).possession;
+            else oreList[i].have = 0;
             HaveText[i].text = oreList[i].have.ToString();  //갯수 최신화
 
             //오브젝트 위치에 따라 크기, 글자색 조정
@@ -341,6 +345,8 @@ public class OreSelect : MonoBehaviour
         if (G_OreList[index] == minBttn)
         {
             _OreIcon.sprite = Icon[index].sprite;
+            Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == oreList[index].name).grade);
+            _OreInfoPopup.transform.Find("UIPanel/OreBox/GradeFrame").gameObject.GetComponent<Image>().color = col;
             _OreInfoPopup.SetActive(true);
 
             if (!oreList[index].isLock)     //사용 가능한 광석 선택 시
@@ -386,15 +392,15 @@ public class OreSelect : MonoBehaviour
     }
 
     //인벤토리에서 버튼 클릭
-    public void ClickInventory(Things things)
+    public void ClickInventory(InventoryThings things)
     {
-        _OreIcon.sprite = Resources.Load<Sprite>(things.icon);
+        _OreIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x=>x.name == things.name).icon);
         _LockIcon.enabled = false;
         _OreIcon.color = new Color(1.0f, 1.0f, 1.0f);
         _OreNameText.text = things.name;        //광석 이름 출력
         _OreNameText.color = new Color(1.0f, 0.573f, 0.0f);
-        _OreInfoText.text = things.explanation;    //광석 설명 출력
-        _Price_Gold.text = oreList[things.item_no-3].price.ToString();
+        _OreInfoText.text = ThingsData.instance.getThingsList().Find(x => x.name == things.name).explanation;    //광석 설명 출력
+        _Price_Gold.text = oreList[ThingsData.instance.getThingsList().Find(x => x.name == things.name).item_no-3].price.ToString();
         _AlertText.gameObject.SetActive(false);
         _TipText.text = "";
         _BuyButton.gameObject.SetActive(false);          //구매버튼 활성화
@@ -473,8 +479,18 @@ public class OreSelect : MonoBehaviour
         }
         GetComponent<Player>().LostMoney("gold", SelectOre.price);
         SelectOre.have += 1;
-        ThingsData.instance.getThingsList().Find(x => x.name == SelectOre.name).possession += 1;
-        ThingsData.instance.getThingsList().Find(x => x.name == SelectOre.name).recent = true;
+
+        if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name) != null)
+        {
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name).possession += 1;
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name).recent = true;
+        }
+        else
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(
+                ThingsData.instance.getThingsList().Find(x => x.name == SelectOre.name).type, SelectOre.name, 1));
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name).recent = true;
+        }
         _AmountText.text = SelectOre.have.ToString();
         
     }
@@ -576,7 +592,7 @@ public class OreSelect : MonoBehaviour
         else        //정상 시작
         {
             SelectOre.have -= consume_ores;
-            ThingsData.instance.getThingsList().Find(x => x.name == SelectOre.name).possession -= consume_ores;
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name).possession -= consume_ores;
 
             StartCoroutine("FadeOut");
         }

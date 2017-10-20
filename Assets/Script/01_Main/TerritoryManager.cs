@@ -216,12 +216,12 @@ public class TerritoryManager : MonoBehaviour
     {
         MineInfo info = mineInfo.Find(x => x.type == curType);
 
-        
+
         //재료 체크
         //for(int i = 0; i < info.necessaryMaterials.Length; i++)
         //{
         //재료랑 갖고 있는 아이템 체크
-        Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[0]);
+        InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
         if (thing != null)
             {
                 if (thing.possession >= info.curMaterial)
@@ -360,7 +360,7 @@ public class TerritoryManager : MonoBehaviour
         //재료 소모
         //for (int i = 0; i < info.necessaryMaterials.Length; i++)
         //{
-        Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[0]);
+        InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
             thing.possession -= info.curMaterial;
         //}
 
@@ -582,28 +582,37 @@ public class TerritoryManager : MonoBehaviour
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "부스트 아이템 사용";
-            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "부스트 아이템을 사용하시겠습니까?" 
-                + "(남은 개수 : " + ThingsData.instance.getThingsList().Find(x=>x.name == "부스트").possession.ToString() + ")";
+            //부스트 아이템 없는 경우
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "부스트") == null)
+            {
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "부스트 아이템을 사용하시겠습니까? (남은 개수 : 0)";
+            }
+            //있는 경우
+            else
+            {
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "부스트 아이템을 사용하시겠습니까?"
+                + "(남은 개수 : " + ThingsData.instance.getInventoryThingsList().Find(x => x.name == "부스트").possession.ToString() + ")";
+            }
             sys_yesButton.gameObject.SetActive(true);
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
-                if (ThingsData.instance.getThingsList().Find(x => x.name == "부스트").possession <= 0)
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "부스트") == null)
                 {
-                    SystemPopup.SetActive(true);
+                        SystemPopup.SetActive(true);
 
-                    SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "부스트 아이템이 부족합니다.";
-                    SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "부스트 아이템이 부족합니다.";
-                    sys_yesButton.gameObject.SetActive(false);
-                    sys_NoButton.gameObject.SetActive(false);
-                    sys_OkButton.gameObject.SetActive(true);
-                    sys_OkButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-                    sys_OkButton.GetComponent<Button>().onClick.AddListener(() => { SystemPopup.SetActive(false); MiningPopup.SetActive(false); });
-                    return;
+                        SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "부스트 아이템이 부족합니다.";
+                        SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "부스트 아이템이 부족합니다.";
+                        sys_yesButton.gameObject.SetActive(false);
+                        sys_NoButton.gameObject.SetActive(false);
+                        sys_OkButton.gameObject.SetActive(true);
+                        sys_OkButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+                        sys_OkButton.GetComponent<Button>().onClick.AddListener(() => { SystemPopup.SetActive(false); MiningPopup.SetActive(false); });
+                        return;
                 }
                 MiningPopup.SetActive(false);
-                ThingsData.instance.getThingsList().Find(x => x.name == "부스트").possession -= 1;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "부스트").possession -= 1;
                 //주기를 1/2로
                 MineData.instance.getMineList()[num].miningTime /= 2;
                 MineData.instance.getMineList()[num].boostState = true;
@@ -669,19 +678,45 @@ public class TerritoryManager : MonoBehaviour
         obj.transform.Find("BoostIcon").gameObject.SetActive(false);
 
         //기본 광석 획득
-        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).possession
-            += MineData.instance.getMineList()[num].deposit;
-        ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).recent = true;
+        if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]) != null)
+        {
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).possession
+                += MineData.instance.getMineList()[num].deposit;
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).recent = true;
+        }
+        else
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                x => x.name == MineData.instance.getMineList()[num].getThingName[0]).type, MineData.instance.getMineList()[num].getThingName[0], MineData.instance.getMineList()[num].deposit));
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[0]).recent = true;
+        }
+
         //부가 아이템 획득
         for (int i = 1; i < MineData.instance.getMineList()[num].getThingName.Length; i++)
         {
-            if (MineData.instance.getMineList()[num].getThingNum[i] > 0)
+            if (MineData.instance.getMineList()[num].getThingName[i] != null)
             {
-                ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]).possession
-                    += MineData.instance.getMineList()[num].getThingNum[i];
-                ThingsData.instance.getThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]).recent = true;
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]) != null)
+                {
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]).possession
+                        += MineData.instance.getMineList()[num].getThingNum[i];
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]).recent = true;
+
+                }
+                else
+                {
+                    ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                        x => x.name == MineData.instance.getMineList()[num].getThingName[i]).type, MineData.instance.getMineList()[num].getThingName[i], MineData.instance.getMineList()[num].getThingNum[i]));
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == MineData.instance.getMineList()[num].getThingName[i]).recent = true;
+                }
             }
         }
+
+        int[] itemnum = new int[3];
+        itemnum[0] = MineData.instance.getMineList()[num].deposit;
+        itemnum[1] = MineData.instance.getMineList()[num].getThingNum[1];
+        itemnum[2] = MineData.instance.getMineList()[num].getThingNum[2];
+        GameObject.Find("InventoryScript").GetComponent<GetItemManager>().getItem(MineData.instance.getMineList()[num].getThingName, itemnum);
 
 
         //로그
@@ -741,7 +776,7 @@ public class TerritoryManager : MonoBehaviour
         ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
 
             //재료 모자람
-            Things thing = ThingsData.instance.getThingsList().Find(x => x.name == info.necessaryMaterials[0]);
+            InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
             if (thing != null)
             {
                 if (thing.possession >= info.curMaterial)
