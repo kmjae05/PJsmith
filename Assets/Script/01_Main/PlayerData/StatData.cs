@@ -40,10 +40,10 @@ public class StatData : MonoBehaviour {
     public void playerRepreStatCal()
     {
         Stat equipStat = new Stat();
-        equipStat = SumEquip(Player.Play.equipHelmet[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipArmor[SetSlotData.instance.getRepreSet() - 1],
-            Player.Play.equipWeapon[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipBoots[SetSlotData.instance.getRepreSet() - 1]
-            , Player.Play.equipGloves[SetSlotData.instance.getRepreSet() - 1], Player.Play.equipPants[SetSlotData.instance.getRepreSet() - 1]);
-        playerRepreStat = SumChrEquip(Player.Play, equipStat);
+        equipStat = SumEquip(Player.instance.getUser().equipHelmet[SetSlotData.instance.getRepreSet() - 1], Player.instance.getUser().equipArmor[SetSlotData.instance.getRepreSet() - 1],
+            Player.instance.getUser().equipWeapon[SetSlotData.instance.getRepreSet() - 1], Player.instance.getUser().equipBoots[SetSlotData.instance.getRepreSet() - 1]
+            , Player.instance.getUser().equipGloves[SetSlotData.instance.getRepreSet() - 1], Player.instance.getUser().equipPants[SetSlotData.instance.getRepreSet() - 1]);
+        playerRepreStat = SumChrEquip(Player.instance.getUser(), equipStat);
     }
     //대표 세트 계산
     public void repreSetStatCal()
@@ -72,10 +72,11 @@ public class StatData : MonoBehaviour {
         for (int i = 0; i < playerStat.Count; i++)
         {
             Stat equipStat = new Stat();
-            equipStat = SumEquip(Player.Play.equipHelmet[i], Player.Play.equipArmor[i],
-                Player.Play.equipWeapon[i], Player.Play.equipBoots[i]
-                , Player.Play.equipGloves[i], Player.Play.equipPants[i]);
-            playerStat[i] = SumChrEquip(Player.Play, equipStat);
+
+            equipStat = SumEquip(Player.instance.getUser().equipHelmet[i], Player.instance.getUser().equipArmor[i],
+                Player.instance.getUser().equipWeapon[i], Player.instance.getUser().equipBoots[i]
+                , Player.instance.getUser().equipGloves[i], Player.instance.getUser().equipPants[i]);
+            playerStat[i] = SumChrEquip(Player.instance.getUser(), equipStat);
         }
     }
     //용병 스탯 계산
@@ -125,7 +126,7 @@ public class StatData : MonoBehaviour {
     }
 
     //캐릭터 + 장비 합산
-    public Stat SumChrEquip(Player.User chr, Stat equipStat)
+    public Stat SumChrEquip(User chr, Stat equipStat)
     {
         Stat stat = new Stat();
         stat.strPower = chr.stat.strPower + equipStat.strPower;
@@ -158,7 +159,7 @@ public class StatData : MonoBehaviour {
 
 
     //대장장이 + 장비 합산 + 용병 합산
-    public Stat SumChrEquipMer(Player.User player, Stat equipStat, Stat mer)
+    public Stat SumChrEquipMer(User player, Stat equipStat, Stat mer)
     {
         Stat stat = new Stat();
         stat.strPower = player.stat.strPower + equipStat.strPower + mer.strPower;

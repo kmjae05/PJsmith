@@ -58,7 +58,7 @@ public class Attack : MonoBehaviour {
     void Start()
     {
         item.SetActive(false);
-        chrPower = (int)Player.Play.stat.strPower + Player.equipHm.power;
+        chrPower = (int)Player.instance.getUser().stat.strPower + Player.equipHm.power;
     }
 
     void atkEffect()

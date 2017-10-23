@@ -11,6 +11,9 @@ public class StageManager : MonoBehaviour
     private int cashPrice = 5;  //즉시완료에 필요한 보석
     private bool mode = true;   // 사냥/약탈
 
+    private Camera worldCam;
+    private Camera uiCam;
+
     private MercenaryManager mercenaryManager;  //mercenary info
     private StatData statData;
 
@@ -45,6 +48,12 @@ public class StageManager : MonoBehaviour
 
     private GameObject SpotObj;
     private GameObject SpotButtonObj;
+    private GameObject Monster;
+    private GameObject MonsterObj;
+    private List<GameObject> MonsterObjList;
+    private GameObject light;
+
+
     private GameObject StageObj;
     private GameObject PlunderObj;
     private GameObject PlunderButtonObj;
@@ -58,9 +67,12 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        worldCam = GameObject.Find("Monster_Camera").GetComponent<Camera>();
+        uiCam = GameObject.Find("UI_Camera").GetComponent<Camera>();
+
         //worldmapManager = GameObject.Find("Menu").transform.Find("WorldMap").gameObject.GetComponent<WorldMapManager>();
         mercenaryManager = GameObject.Find("StageManager").GetComponent<MercenaryManager>();
-        statData = GameObject.Find("PlayerData").GetComponent<StatData>();
+        statData = GameObject.Find("PlayerManager").GetComponent<StatData>();
         stageData = GameObject.Find("StageData").GetComponent<StageData>();
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
@@ -71,6 +83,11 @@ public class StageManager : MonoBehaviour
         stageStatePopup = GameObject.Find("System").transform.Find("StageStatePopup").gameObject;
         SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         SpotButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/SpotButton").gameObject;
+        Monster = GameObject.Find("Monster");
+        MonsterObj = Monster.transform.Find("Scollwarrior").gameObject;
+        MonsterObjList = new List<GameObject>();
+        light = Monster.transform.Find("Spotlight").gameObject;
+
         StageObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject;
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;
         PlunderButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/PlunderButton").gameObject;
@@ -100,9 +117,7 @@ public class StageManager : MonoBehaviour
         int count = SpotObj.transform.childCount;
         for (int i = 0; i < count; i++)
         {
-            StageData.spotList[StageData.spotList.FindIndex(
-                x => x.getSpotName() == SpotObj.transform.GetChild(i).name)].position
-                = SpotObj.transform.GetChild(i);
+            StageData.spotList[StageData.spotList.FindIndex(x => x.getSpotName() == SpotObj.transform.GetChild(i).name)].position = SpotObj.transform.GetChild(i);
         }
 
         //사냥 오브젝트 배치
@@ -121,7 +136,7 @@ public class StageManager : MonoBehaviour
                 spotButton.SetActive(true);
                 spotButton.transform.Find("StageText").GetComponent<Text>().text = sList[i].getStageNum().ToString();
                 spotButton.name = sList[i].stageName + "Button"; //오브젝트 이름 변경
-                spotButton.GetComponent<Image>().sprite = sList[i].sprite;
+                //spotButton.GetComponent<Image>().sprite = sList[i].sprite;
                 if (sList[i].state)
                 {
                     //if (sList[i].getStageNum() <= 15)
@@ -131,14 +146,15 @@ public class StageManager : MonoBehaviour
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + sList[i].mercenaryName);
                 }
+                MonsterObjList.Add(Instantiate(MonsterObj.gameObject));
+                MonsterObjList[i].transform.SetParent(GameObject.Find("Monster").transform);
+
 
                 //리젠 상태일 때 반투명
                 if (sList[i].regen) spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
                 else spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 1.0f);
             }
         }
-
-
 
         //약탈 오브젝트 배치
         List<PlunderInfo> pList = plunderInfoList;
@@ -175,7 +191,11 @@ public class StageManager : MonoBehaviour
         plunderInfoList = stageData.getPlunderInfoList();
         stageInfoListtmp.Clear();
 
-        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.Play.level.ToString();
+        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.instance.getUser().level.ToString();
+
+        if(GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
+            SetPositionHUD();
+
 
         //탐험 완료 시 버튼 변경.
         for (int i = 0; i < stageInfoList.Count; i++)
@@ -479,7 +499,7 @@ public class StageManager : MonoBehaviour
     {
         if (money == "골드")
         {
-            if (Player.Play.gold < goldPrice)
+            if (Player.instance.getUser().gold < goldPrice)
             {
                 systemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
                 systemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
@@ -492,7 +512,7 @@ public class StageManager : MonoBehaviour
         }
         else if (money == "보석")
         {
-            if (Player.Play.cash < cashPrice)
+            if (Player.instance.getUser().cash < cashPrice)
             {
                 systemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
                 systemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
@@ -648,8 +668,8 @@ public class StageManager : MonoBehaviour
         stageData.stageImageChange(result);
 
         result.time = typeNumToRegenTime();             //리젠 시간 설정
-        spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
-        spotButton.GetComponent<Image>().sprite = result.sprite;
+        //spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
+        //spotButton.GetComponent<Image>().sprite = result.sprite;
 
         //스테이지 변경된 정보 저장
         stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
@@ -769,8 +789,8 @@ public class StageManager : MonoBehaviour
         else
         {
             //플레이어 정보 갱신
-            plunderPlayerBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = Player.Play.Name;
-            plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = Player.Play.level.ToString();
+            plunderPlayerBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = Player.instance.getUser().Name;
+            plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = Player.instance.getUser().level.ToString();
 
             plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().dps).ToString();
             plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().strPower).ToString();
@@ -989,6 +1009,35 @@ public class StageManager : MonoBehaviour
     }
 
 
+    //UI에 맞게 위치 고정
+    void SetPositionHUD()
+    {
+        List<StageInfo> sList = stageInfoList;
+        for (int i = 0; i < sList.Count; i++)
+        {
+            if (sList[i].spotName != null)
+            {
+                string spotName = sList[i].spotName;
+                //스팟 인덱스
+                int index = StageData.spotList.FindIndex(x => x.getSpotName() == spotName);
+
+                Vector3 position = uiCam.ViewportToWorldPoint(StageData.spotList[index].getPosition().position);
+                MonsterObjList[i].transform.position = worldCam.WorldToViewportPoint(position);
+
+                //값 정리. 
+                position = MonsterObjList[i].transform.localPosition;
+                //position.x = Mathf.RoundToInt(position.x);
+                //position.y = Mathf.RoundToInt(position.y);
+                //position.x = Mathf.Round(position.x);
+                //position.y = Mathf.Round(position.y);
+
+                position.z = 20.0f;
+                MonsterObjList[i].transform.localPosition = position;
+                MonsterObjList[i].SetActive(true);
+            }
+        }
+        light.transform.position = worldCam.transform.position;
+    }
 
 
     //모드 전환

@@ -216,7 +216,7 @@ public class EmblemHandle : MonoBehaviour{
     }
     IEnumerator getEmblem(Emblem emblem)    //테두리 획득 함수
     {
-        yield return new WaitUntil(() => Player.Play.level >= emblem.level);
+        yield return new WaitUntil(() => Player.instance.getUser().level >= emblem.level);
         yield return new WaitForSeconds(0.1f);
         emblem.isGet = true;
         //StartCoroutine(transform.GetComponent<Achievementhandle>().AcvBoxHandle(emblem.no + "번째 테두리 획득"));
@@ -257,7 +257,7 @@ public class EmblemHandle : MonoBehaviour{
         switch (statType)
         {
             case "attack":
-                Player.Play.stat.strPower += statAmount;
+                Player.instance.getUser().stat.strPower += statAmount;
                 break;
             case "attack_Speed":
                 break;
@@ -278,7 +278,7 @@ public class EmblemHandle : MonoBehaviour{
             switch (statType)
             {
                 case "attack":
-                    Player.Play.stat.strPower -= statAmount;
+                    Player.instance.getUser().stat.strPower -= statAmount;
                     break;
                 case "attack_Speed":
                     break;

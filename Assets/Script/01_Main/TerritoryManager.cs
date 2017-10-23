@@ -73,16 +73,16 @@ public class TerritoryManager : MonoBehaviour
         {
             int index = i;
             bottonButtonList[i].transform.Find("OreImage").gameObject.GetComponent<Button>().onClick.AddListener(() => BottomButtonSetting(index));
-            if (i>=2 && Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
+            if (i>=2 && Player.instance.getUser().level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
-        uiPanel.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.Play.level.ToString();
+        uiPanel.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.instance.getUser().level.ToString();
         for (int i = 2; i < bottonButtonList.Count; i++)
-            if (Player.Play.level >= MineData.instance.getMineInfoList()[i].buildLevel)
+            if (Player.instance.getUser().level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
         for (int i = 0; i < MineData.instance.getMineList().Count; i++)
         {
@@ -296,7 +296,7 @@ public class TerritoryManager : MonoBehaviour
         info.afterLevel = info.level + 1;
         info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time; Debug.Log(info.afterTime);
         info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
-        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).material;
+        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
         
         //텍스트 변경.
         buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
@@ -433,7 +433,7 @@ public class TerritoryManager : MonoBehaviour
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 
-                if (Player.Play.cash < 20)
+                if (Player.instance.getUser().cash < 20)
                 {
                     SystemPopup.SetActive(true);
                     SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "보석이 부족합니다.";
@@ -530,7 +530,7 @@ public class TerritoryManager : MonoBehaviour
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
             sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
                 
-                if (Player.Play.cash < 5)
+                if (Player.instance.getUser().cash < 5)
                 {
                     SystemPopup.SetActive(true);
                     SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "보석이 부족합니다.";
@@ -747,7 +747,7 @@ public class TerritoryManager : MonoBehaviour
         info.afterLevel = info.level + 1;
         info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time;
         info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
-        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).material;
+        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
 
         ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + "광산 고갈";
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;

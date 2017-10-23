@@ -1,0 +1,27 @@
+{
+    "Monster": [
+        {
+            "name" : "전갈",
+            "grade" : 1,
+            "dps" : 0,
+            "strPower" : 0,
+            "attackSpeed" : 0,
+            "focus" : 0,
+            "critical" : 0,
+            "defPower" : 0,
+            "evaRate" : 0,
+			"getThingName":[
+			{
+				"itemName" : "초보자의 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			}
+			
+			]
+        }
+        
+           
+        
+        
+    ]
+}

@@ -157,7 +157,7 @@ public class MineData : MonoBehaviour {
     public void Unlock()
     {
         for(int i = 0; i < mineInfoList.Count; i++)
-            if(mineInfoList[i].buildLevel <= Player.Play.level)
+            if(mineInfoList[i].buildLevel <= Player.instance.getUser().level)
                 mineInfoList[i].isLock = false;
     }
 

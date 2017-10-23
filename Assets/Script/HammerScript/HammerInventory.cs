@@ -256,7 +256,7 @@ public class HammerInventory : MonoBehaviour
     }
     public void Click_Yes_AddSlot() //슬롯추가
     {
-        if (Player.Play.cash < 30)
+        if (Player.instance.getUser().cash < 30)
         {
             Sys_Controller.SystemPopup.SetActive(false);
 
@@ -276,7 +276,7 @@ public class HammerInventory : MonoBehaviour
         }
         else
         {
-            Player.Play.cash -= 30;
+            Player.instance.getUser().cash -= 30;
             Sys_Controller.SystemPopup.SetActive(false);
 
             Sys_Controller.Sys_OkButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제

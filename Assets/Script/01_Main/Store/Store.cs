@@ -20,7 +20,7 @@ public class Store : MonoBehaviour
 
     public void HammerClaw(int money){
 
-        if (Player.Play.gold < money) //골드가 부족할 경우
+        if (Player.instance.getUser().gold < money) //골드가 부족할 경우
         {
             LackGold.SetActive(true);
             return;

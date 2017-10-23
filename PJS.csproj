@@ -365,6 +365,7 @@
     <Compile Include="Assets\Script\01_Main\PlayerData\MineData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\OreSelect.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\Player.cs" />
+    <Compile Include="Assets\Script\01_Main\PlayerData\PlayerManager.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\SceneData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />

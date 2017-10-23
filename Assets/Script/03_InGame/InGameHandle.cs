@@ -10,6 +10,7 @@ public class InGameHandle : MonoBehaviour {
     private Slider HpSlider;
     private Slider FeverSlider;
     private Text OreNameText;
+    private Image OreImage;
     private Text TimeText;
 
     private Animator CharAni;
@@ -40,6 +41,7 @@ public class InGameHandle : MonoBehaviour {
         HpSlider = GameObject.Find("HPBar").GetComponent<Slider>();
         //FeverSlider = GameObject.Find("FeverBar").GetComponent<Slider>();
         OreNameText = GameObject.Find("OreText").GetComponent<Text>();
+        OreImage = GameObject.Find("OreIcon").GetComponent<Image>();
         TimeText = GameObject.Find("TimeText").GetComponent<Text>();
         CharAni = GameObject.Find("Chr_001").GetComponent<Animator>();
         FadeImage = GameObject.Find("FadeImage").GetComponent<Image>();
@@ -48,7 +50,6 @@ public class InGameHandle : MonoBehaviour {
         //_ScoreText = GameObject.Find("UPBox").transform.Find("Text").GetComponent<Text>();
         //ScoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         GoldBox = GameObject.Find("GoldBox");
-        GoldBox.SetActive(false);
 
         //CoolTimeImage = GameObject.Find("NormalSkill").transform.Find("SkillLock").GetComponent<Image>();
 
@@ -63,6 +64,7 @@ public class InGameHandle : MonoBehaviour {
 
         OreSelect.Ore TargetOre = OreSelect.SelectOre;
         OreNameText.text = TargetOre.name;
+        OreImage.sprite = OreSelect.Icon[OreSelect.SelectOre.no].sprite;
         HpSlider.maxValue = TargetOre.hp;
         ore_hp = TargetOre.hp;
         ore_gold = TargetOre.gold;
@@ -171,7 +173,7 @@ public class InGameHandle : MonoBehaviour {
 
     void NormalMode()
     {
-        CharAni.speed = (float)Player.Play.stat.attackSpeed;
+        CharAni.speed = (float)Player.instance.getUser().stat.attackSpeed;
         feverGauge = 0; 
         fever = false;
     }

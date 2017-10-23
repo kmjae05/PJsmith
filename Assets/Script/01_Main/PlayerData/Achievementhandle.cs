@@ -310,7 +310,7 @@ public class Achievementhandle : MonoBehaviour {
             }
             NewIcon.SetActive(false);
         }
-        PlayerScoreText.text = GetThousandCommaText(Player.Play.achvScore);
+        PlayerScoreText.text = GetThousandCommaText(Player.instance.getUser().achvScore);
     }
 
 
@@ -340,7 +340,7 @@ public class Achievementhandle : MonoBehaviour {
                     break;
                 case "level":
                     commentsText = "레벨 " + GetThousandCommaText(AchvList[index].amount) + " 달성";
-                    data = Player.Play.level;
+                    data = Player.instance.getUser().level;
                     break;
                 case "ore":
                     commentsText = "광석 " + GetThousandCommaText(AchvList[index].amount) + "개 격파";
@@ -409,7 +409,7 @@ public class Achievementhandle : MonoBehaviour {
                 yield return new WaitUntil(() => get_cash_count >= amount);
                 break;
             case "level":
-                yield return new WaitUntil(() => Player.Play.level >= amount);
+                yield return new WaitUntil(() => Player.instance.getUser().level >= amount);
                 break;
             case "ore":
                 yield return new WaitUntil(() => ore_crash_count >= amount);
@@ -477,7 +477,7 @@ public class Achievementhandle : MonoBehaviour {
         string type = AchvList[r_index].achv_reward_type;
         int quantity = AchvList[r_index].achv_reward_quantity;
         GetComponent<Player>().GetMoney("gold", quantity);
-        Player.Play.achvScore += AchvList[r_index].score;
+        Player.instance.getUser().achvScore += AchvList[r_index].score;
         #region 업적갱신
         AchvList[r_index].amount *= 5;  //목표 갱신
         AchvList[r_index].achv_reward_quantity *= 2; //보상 갱신

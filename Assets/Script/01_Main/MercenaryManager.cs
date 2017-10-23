@@ -26,7 +26,7 @@ public class MercenaryManager : MonoBehaviour {
         mercenaryData = GameObject.Find("MercenaryData").GetComponent<MercenaryData>();
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         stageStatePopup = GameObject.Find("System").transform.Find("StageStatePopup").gameObject;
-        profilePopupManager = GameObject.Find("PlayerData").GetComponent<ProfilePopupManager>();
+        profilePopupManager = GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>();
 
         mercenary = new List<Mercenary>();
         mercenarytmp = new Mercenary();
@@ -36,7 +36,7 @@ public class MercenaryManager : MonoBehaviour {
     {
         mercenary = mercenaryData.getMercenary();
         for (int i = 0; i < mercenary.Count; i++)
-            mercenary[i].level = Player.Play.level;
+            mercenary[i].level = Player.instance.getUser().level;
         LobbyMerActive();
         //mercenaryData.setMercenary(mercenary);
     }
@@ -100,7 +100,7 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
 
         //statusCal(profilePopupManager.getCurSetNum(), merTemp);
-        Stat stat = GameObject.Find("PlayerData").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
+        Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
         
         GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
         GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
@@ -207,7 +207,7 @@ public class MercenaryManager : MonoBehaviour {
 
         //statusCal(profilePopupManager.getSetNum(), merTemp);
         merInfoPopup.transform.Find("UIPanel/ChrBox/Text").GetComponent<Text>().text = merTemp.getName();
-        Stat stat = GameObject.Find("PlayerData").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
+        Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
 
         merInfoPopup.transform.Find("UIPanel/InfoPanel/DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString();

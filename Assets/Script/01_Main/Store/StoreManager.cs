@@ -14,8 +14,8 @@ public class StoreManager : MonoBehaviour {
         goldText = GameObject.Find("GoldText").GetComponent<Text>();
         cashText = GameObject.Find("CashText").GetComponent<Text>();
 
-        goldText.text = Player.Play.gold.ToString();
-        cashText.text = Player.Play.cash.ToString();
+        goldText.text = Player.instance.getUser().gold.ToString();
+        cashText.text = Player.instance.getUser().cash.ToString();
     }
 
 

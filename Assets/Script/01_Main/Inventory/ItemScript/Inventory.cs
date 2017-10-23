@@ -491,7 +491,7 @@ public class Inventory : MonoBehaviour
                     int index = i;
                     Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        GameObject.Find("PlayerData").GetComponent<OreSelect>().ClickInventory(tempItemList1[index]);
+                        GameObject.Find("PlayerManager").GetComponent<OreSelect>().ClickInventory(tempItemList1[index]);
                         GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
                     });
                 }
@@ -695,7 +695,7 @@ public class Inventory : MonoBehaviour
         //            int index = i;
         //            Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
         //            {
-        //                GameObject.Find("PlayerData").GetComponent<OreSelect>().ClickInventory(tempItemList6[index]);
+        //                GameObject.Find("PlayerManager").GetComponent<OreSelect>().ClickInventory(tempItemList6[index]);
         //                GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
         //            });
         //        }

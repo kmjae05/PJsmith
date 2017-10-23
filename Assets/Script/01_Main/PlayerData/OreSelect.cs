@@ -10,7 +10,7 @@ public class OreSelect : MonoBehaviour
 {
     //Main GameObjects
     private GameObject MainCamera;
-    private GameObject PlayerData;
+    private GameObject PlayerManager;
     private GameObject Main;
 
     //Json Data
@@ -98,7 +98,7 @@ public class OreSelect : MonoBehaviour
         public int ava_level;
         public int price;
         public string comments;
-        public string iconNum;
+        public string icon;
         public int unLockCost;
         public int have;
         public bool isLock;
@@ -115,7 +115,7 @@ public class OreSelect : MonoBehaviour
             this.ava_level = (int)oreData["Ore"][index]["ava_level"];
             this.price = (int)oreData["Ore"][index]["price"];
             this.comments = oreData["Ore"][index]["comments"].ToString();
-            this.iconNum = oreData["Ore"][index]["Icon"].ToString();
+            this.icon = oreData["Ore"][index]["Icon"].ToString();
             this.unLockCost = (int)oreData["Ore"][index]["unlockCost"];
             this.have = 0;
             this.isLock = false;
@@ -127,7 +127,7 @@ public class OreSelect : MonoBehaviour
     {
         Main = GameObject.Find("Main");
         MainCamera = GameObject.Find("Main_Camera");
-        PlayerData = GameObject.Find("PlayerData");
+        PlayerManager = GameObject.Find("PlayerManager");
         OreSelectPopup = GameObject.Find("Menu").transform.Find("OreSelectPopup").gameObject;
         Panel = OreSelectPopup.transform.Find("UIPanel/Scroll/Panel").gameObject;
         defaultOre = Panel.transform.Find("OreBox").gameObject;
@@ -217,7 +217,7 @@ public class OreSelect : MonoBehaviour
                         break;
                     case "Icon":
                         Icon[i] = objects[j].gameObject.GetComponent<Image>();
-                        Icon[i].sprite = Resources.Load<Sprite>("Ore/" + oreList[i].iconNum);
+                        Icon[i].sprite = Resources.Load<Sprite>("Ore/" + oreList[i].icon);
                         Icon[i].color = new Color(0.0f, 0.0f, 0.0f);
                         break;
                     case "LockIcon":
@@ -328,7 +328,7 @@ public class OreSelect : MonoBehaviour
 
     IEnumerator Get_Ore(int index)  //광석 잠금 해제
     {
-        yield return new WaitUntil(() => oreList[index].level <= Player.Play.level);
+        yield return new WaitUntil(() => oreList[index].level <= Player.instance.getUser().level);
         if (oreList[index].isLock)
         {
             oreList[index].isLock = false;
@@ -463,7 +463,7 @@ public class OreSelect : MonoBehaviour
 
     public void BuyOre()            //광석 구매 버튼 클릭 시 호출되는 함수
     {
-        if (Player.Play.gold < SelectOre.price)     //골드 부족하면 시스템 팝업 호출
+        if (Player.instance.getUser().gold < SelectOre.price)     //골드 부족하면 시스템 팝업 호출
         {
             Sys_YesButton.gameObject.SetActive(true);
             Sys_NoButton.gameObject.SetActive(true);
@@ -513,7 +513,7 @@ public class OreSelect : MonoBehaviour
 
     public void Click_Yes_UnLockOre()   //잠금해제 창 팝업 후 예 버튼을 눌렀을 때 실행되는 함수
     {
-        if (Player.Play.cash < SelectOre.unLockCost)
+        if (Player.instance.getUser().cash < SelectOre.unLockCost)
         {
             SystemPopup.SetActive(false);
 
@@ -627,7 +627,7 @@ public class OreSelect : MonoBehaviour
         {
             if (gameSucceed)    //게임 성공 시 보상 부여
             {
-                PlayerData.GetComponent<Player>().GetGameReward(Iron.GetComponent<Attack>().Exp, Iron.GetComponent<Attack>().Gold);    //보상 관련 함수 실행
+                PlayerManager.GetComponent<Player>().GetGameReward(Iron.GetComponent<Attack>().Exp, Iron.GetComponent<Attack>().Gold);    //보상 관련 함수 실행
             }
         }
     }
