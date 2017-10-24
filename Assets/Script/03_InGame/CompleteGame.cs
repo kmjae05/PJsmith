@@ -10,6 +10,8 @@ public class CompleteGame : MonoBehaviour {
     private GameObject Panel;
     private GameObject[] RewardItems;
 
+    private bool win_lose = true;
+
     void Awake()
     {
         RewardPopup = GameObject.Find("Popup").transform.Find("GameReward").gameObject;
@@ -35,20 +37,21 @@ public class CompleteGame : MonoBehaviour {
     public void Complete_Win()
     {
         ClearFail.SetActive(true);
+        win_lose = true;
         StartCoroutine(ActiveRewardPopup());
     }
     IEnumerator ActiveRewardPopup()
     {
-        yield return new WaitUntil(()=>ClearFail.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        if(win_lose)
+            yield return new WaitUntil(()=>ClearFail.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         RewardPopup.SetActive(true);
         ClearFail.SetActive(false);
         StartCoroutine(OpenRewards());
     }
     public void Complete_Lose()
     {
-        //
-
-
+        win_lose = false;
+        StartCoroutine(ActiveRewardPopup());    //보상 동일
 
     }
 
@@ -58,6 +61,19 @@ public class CompleteGame : MonoBehaviour {
         for (int i = 0; i < RewardItems.Length; i++)
         {
             Things things = ThingsData.instance.getThingsList().Find(x => x.name == (OreSelect.SelectOre.name + " 주괴"));
+            //아이템 획득
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name) != null)
+            {
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).possession += 1;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+            }
+            else
+            {
+                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                    x => x.name == things.name).type, things.name, 1));
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+            }
+
 
             RewardItems[i].transform.Find("ItemIcon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(things.icon);
             RewardItems[i].transform.Find("Text").gameObject.GetComponent<Text>().text = things.name;

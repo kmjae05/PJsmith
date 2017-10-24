@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour {
     private GameObject GoldPanel;
     private GameObject CashPanel;
 
+    private Animator chrAni;
+
+
     void Awake()
     {
         t_PlayerGold = GameObject.Find("GoldText").GetComponent<Text>();
@@ -26,6 +29,7 @@ public class PlayerManager : MonoBehaviour {
         GoldPanel = GameObject.Find("Gold");
         CashPanel = GameObject.Find("Cash");
 
+        chrAni = GameObject.Find("Chr_001").GetComponent<Animator>();
 
     }
 
@@ -35,13 +39,25 @@ public class PlayerManager : MonoBehaviour {
         t_PlayerCash.text = Player.instance.getUser().cash.ToString();
         PlayerExpBarSlider.maxValue = Player.instance.getUser().max_exp;
         PlayerExpBarSlider.value = Player.instance.getUser().exp;
-
-        Debug.Log(Player.instance.getUser().equipBoots[1]);
     }
 
 
     void Update()
     {
+            #region 공격 애니메이션 속도 조절
+            if (chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_longin")
+            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_long")
+            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_long0")
+            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_logout"))
+            {
+                chrAni.speed = 1.0f; // Play.stat.attackSpeed;
+            }
+            else
+            {
+                chrAni.speed = 1.0f;
+            }
+            #endregion
+
         t_PlayerGold.text = GetThousandCommaText(Player.instance.getUser().gold);       //골드출력
         t_PlayerCash.text = GetThousandCommaText(Player.instance.getUser().cash);       //보석 출력
         t_PlayerLevel.text = (Player.instance.getUser().level).ToString();              //프로필 패널 레벨 출력
@@ -64,6 +80,7 @@ public class PlayerManager : MonoBehaviour {
         float v = exp * 0.015f;     //경험치량 차오르는 속도
         float move_sum = 0.0f;      //슬라이더 핸들이 움직인 총 거리
         PlayerExpBarSlider.maxValue = Player.instance.getUser().max_exp; //현재레벨 경험치 총량
+        Player.instance.getUser().exp += exp;
 
         while (move_sum <= exp)
         {
@@ -71,13 +88,16 @@ public class PlayerManager : MonoBehaviour {
             move_sum += v;
 
             PlayerExpBarSlider.value = i;
-
+            Debug.Log(PlayerExpBarSlider.value);
+            
             if (i >= PlayerExpBarSlider.maxValue)
             {
                 i -= PlayerExpBarSlider.maxValue;           //경험치가 넘치면 핸들 값을 0으로 만들고
-                Player.instance.getUser().exp -= Player.instance.getUser().max_exp;                   //경험치도 0으로 초기화
+                Player.instance.getUser().exp -= Player.instance.getUser().max_exp;                   //
                 Player.instance.getUser().level += 1;                            //레벨 업
                 Player.instance.getUser().max_exp = Player.instance.getUser().level * 20;             //경험치 총량 재 조정
+                Debug.Log(Player.instance.getUser().max_exp);
+                Debug.Log(Player.instance.getUser().exp);
                 PlayerExpBarSlider.maxValue = Player.instance.getUser().max_exp; //슬라이더 총량 재 조정
 
                 Player.instance.getUser().stat.strPower += Player.instance.getUser().stat.strPower * 0.1f;

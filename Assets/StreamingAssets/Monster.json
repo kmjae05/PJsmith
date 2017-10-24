@@ -15,11 +15,302 @@
 				"itemName" : "초보자의 단검",
 				"itemAmount" : "1",
 				"itemProb" : "1"
+			},{
+				"itemName" : "날카로운 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "무기제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "방어제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "고기",
+				"itemAmount" : "1",
+				"itemProb" : "66"
+			},{
+				"itemName" : "돌 주괴",
+				"itemAmount" : "1",
+				"itemProb" : "10"
 			}
-			
 			]
+			//
+        },
+		//오쿰
+		{
+            "name" : "오쿰",
+            "grade" : 1,
+            "dps" : 0,
+            "strPower" : 0,
+            "attackSpeed" : 0,
+            "focus" : 0,
+            "critical" : 0,
+            "defPower" : 0,
+            "evaRate" : 0,
+			"getThingName":[
+			{
+				"itemName" : "초보자의 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "날카로운 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "무기제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "방어제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "고기",
+				"itemAmount" : "1",
+				"itemProb" : "66"
+			},{
+				"itemName" : "돌 주괴",
+				"itemAmount" : "1",
+				"itemProb" : "10"
+			}
+			]
+			//
+        },
+        //인큐버스
+		{
+            "name" : "인큐버스",
+            "grade" : 1,
+            "dps" : 0,
+            "strPower" : 0,
+            "attackSpeed" : 0,
+            "focus" : 0,
+            "critical" : 0,
+            "defPower" : 0,
+            "evaRate" : 0,
+			"getThingName":[
+			{
+				"itemName" : "초보자의 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "날카로운 단검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 장검",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 창",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 도끼",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽갑옷",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽부츠",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽장갑",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽투구",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "초보자의 천바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "여행자의 가죽바지",
+				"itemAmount" : "1",
+				"itemProb" : "1"
+			},{
+				"itemName" : "무기제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "방어제작서-고급조각",
+				"itemAmount" : "1",
+				"itemProb" : "3"
+			},{
+				"itemName" : "고기",
+				"itemAmount" : "1",
+				"itemProb" : "66"
+			},{
+				"itemName" : "돌 주괴",
+				"itemAmount" : "1",
+				"itemProb" : "10"
+			}
+			]
+			//
         }
-        
            
         
         

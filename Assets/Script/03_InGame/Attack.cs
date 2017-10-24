@@ -86,18 +86,20 @@ public class Attack : MonoBehaviour {
 
     void NormalHit()
     {
-        InGameHandle.ore_hp -= chrPower;
+        int random = Random.Range(chrPower - 10, chrPower + 10);
+        InGameHandle.ore_hp -= random;
         normalFx.SetBool("Click", true);
         //StartCoroutine(GetItem());
-        StartCoroutine(PrintDamageNormal(chrPower));
+        StartCoroutine(PrintDamageNormal(random));
     }
 
     void CriticalHit()
     {
-        InGameHandle.ore_hp -= (int)(chrPower * 1.5f);
+        int random = (int)Random.Range((chrPower - 10) * 1.5f, (chrPower + 10) * 1.5f);
+        InGameHandle.ore_hp -= random;
         cameraShake.EnableShake(0.1f);
         criFx.SetBool("Click", true);
-        StartCoroutine(PrintDamageCritical((int)(chrPower * 1.5)));
+        StartCoroutine(PrintDamageCritical(random));
     }
     void SkillHit()
     {

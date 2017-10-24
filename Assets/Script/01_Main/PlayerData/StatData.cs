@@ -121,7 +121,7 @@ public class StatData : MonoBehaviour {
         //stat.collectSpeed = helmet.stat.collectSpeed + armor.stat.collectSpeed + weapon.stat.collectSpeed + boots.stat.collectSpeed;
         //stat.collectAmount = helmet.stat.collectAmount + armor.stat.collectAmount + weapon.stat.collectAmount + boots.stat.collectAmount;
 
-        stat.dps = helmet.stat.dps + armor.stat.dps + weapon.stat.dps + boots.stat.dps + gloves.stat.dps + pants.stat.dps;
+        stat.dps = stat.strPower*(float)stat.attackSpeed*stat.critical + stat.defPower*stat.evaRate;
         return stat;
     }
 
@@ -138,7 +138,7 @@ public class StatData : MonoBehaviour {
         //stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
         //stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
 
-        stat.dps = chr.stat.dps + equipStat.dps;
+        stat.dps = stat.strPower * (float)stat.attackSpeed * stat.critical + stat.defPower * stat.evaRate;
         return stat;
     }
     public Stat SumChrEquip(Mercenary chr, Stat equipStat)
@@ -153,7 +153,7 @@ public class StatData : MonoBehaviour {
         //stat.collectSpeed = chr.stat.collectSpeed + equipStat.collectSpeed;
         //stat.collectAmount = chr.stat.collectAmount + equipStat.collectAmount;
 
-        stat.dps = chr.stat.dps + equipStat.dps;
+        stat.dps = stat.strPower * (float)stat.attackSpeed * stat.critical + stat.defPower * stat.evaRate;
         return stat;
     }
 
@@ -171,7 +171,7 @@ public class StatData : MonoBehaviour {
         //stat.collectSpeed = player.stat.collectSpeed + equipStat.collectSpeed + mer.collectSpeed;
         //stat.collectAmount = player.stat.collectAmount + equipStat.collectAmount + mer.collectAmount;
 
-        stat.dps = player.stat.dps + equipStat.dps + mer.dps;
+        stat.dps = stat.strPower * (float)stat.attackSpeed * stat.critical + stat.defPower * stat.evaRate;
 
         return stat;
     }
@@ -189,7 +189,7 @@ public class StatData : MonoBehaviour {
         //stat.collectSpeed = stat1.collectSpeed+ stat2.collectSpeed;
         //stat.collectAmount = stat1.collectAmount + stat2.collectAmount;
 
-        stat.dps = stat1.dps + stat2.dps;
+        stat.dps = stat.strPower * (float)stat.attackSpeed * stat.critical + stat.defPower * stat.evaRate;
         return stat;
     }
 

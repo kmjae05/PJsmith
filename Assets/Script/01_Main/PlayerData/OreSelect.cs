@@ -477,7 +477,7 @@ public class OreSelect : MonoBehaviour
             SystemPopup.SetActive(true);
             return;
         }
-        GetComponent<Player>().LostMoney("gold", SelectOre.price);
+        Player.instance.LostMoney("gold", SelectOre.price);
         SelectOre.have += 1;
 
         if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name) != null)
@@ -542,7 +542,7 @@ public class OreSelect : MonoBehaviour
             Icon[SelectOre.no].color = new Color(1.0f, 1.0f, 1.0f);
             SelectLock[SelectOre.no].SetActive(false);
 
-            GetComponent<Player>().LostMoney("cash", SelectOre.unLockCost);
+            Player.instance.LostMoney("cash", SelectOre.unLockCost);
             SystemPopup.SetActive(false);
 
             Sys_OkButton.GetComponent<Button>().onClick.RemoveAllListeners();       //버튼 리스너 모두 삭제

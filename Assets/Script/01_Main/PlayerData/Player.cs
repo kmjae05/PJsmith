@@ -13,7 +13,6 @@ public class Player : MonoBehaviour {
     static public Hammer equipHm = new Hammer();   //장착 망치
     private EquipmentData equipmentData;
 
-    private Animator chrAni;
 
     
     void Awake()
@@ -24,12 +23,10 @@ public class Player : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-
-        chrAni = GameObject.Find("Chr_001").GetComponent<Animator>();
-
     }
     void Start()
     {
+
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
         Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
         Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
@@ -43,29 +40,8 @@ public class Player : MonoBehaviour {
         Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
         Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
         Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
-
-        Debug.Log(Play.equipBoots[1]);
     }
 
-    void Update()
-    {
-        if (SceneManager.GetActiveScene().name == "02_Lobby")
-        {
-            #region 공격 애니메이션 속도 조절
-            if (chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_longin")
-            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_long")
-            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_long0")
-            || chrAni.GetCurrentAnimatorStateInfo(0).IsName("attack_logout"))
-            {
-                chrAni.speed = 1.0f; // Play.stat.attackSpeed;
-            }
-            else
-            {
-                chrAni.speed = 1.0f;
-            }
-            #endregion
-        }
-    }
     
     public void GetGameReward(int exp, int gold)        //제련 보상 획득
     {
@@ -86,14 +62,14 @@ public class Player : MonoBehaviour {
         }
         else
         {
-            Debug.Log(Play.exp);
+            Play.exp += exp;
             if (Play.exp >= Play.max_exp)
             {
                 Play.exp -= Play.max_exp;
                 Play.level += 1;
                 Play.max_exp = Play.level * 20;
                 Play.stat.strPower += Play.stat.strPower * 0.1f;
-                Play.stat.dps = Play.stat.strPower * (float)Play.stat.attackSpeed * Play.stat.critical;
+                Play.stat.dps = Play.stat.strPower * (float)Play.stat.attackSpeed * Play.stat.critical + Play.stat.defPower*Play.stat.evaRate;
                 MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
             }
         }
@@ -105,13 +81,15 @@ public class Player : MonoBehaviour {
         {
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.gold, "to", Player.Play.gold + amount, "onUpdate", "GoldCount", "time", 1));
             Play.gold += amount;
-            StartCoroutine(GameObject.Find("PlayerManager").transform.GetComponent<PlayerManager>().TextAnimation_Gold(new GameObject(), amount));
+            if (SceneManager.GetActiveScene().name == "02_Lobby")
+                StartCoroutine(GameObject.Find("PlayerManager").transform.GetComponent<PlayerManager>().TextAnimation_Gold(new GameObject(), amount));
         }
         else if (string.Compare(type, "cash") == 0)
         {
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.cash, "to", Player.Play.cash + amount, "onUpdate", "CashCount", "time", 1));
             Play.cash += amount;
-            StartCoroutine(GameObject.Find("PlayerManager").transform.GetComponent<PlayerManager>().TextAnimation_Cash(new GameObject(), amount));
+            if (SceneManager.GetActiveScene().name == "02_Lobby")
+                StartCoroutine(GameObject.Find("PlayerManager").transform.GetComponent<PlayerManager>().TextAnimation_Cash(new GameObject(), amount));
         }
 
     }
@@ -190,7 +168,7 @@ public class User
         this.attribute = "no";
         this.stat.collectSpeed = 1.0f;
         this.stat.collectAmount = 1;
-        this.stat.dps = this.stat.strPower + this.stat.defPower * 0.2f;
+        this.stat.dps = this.stat.strPower * (float)this.stat.attackSpeed * this.stat.critical + this.stat.defPower*this.stat.evaRate;
 
         this.equipWeapon = new Equipment[2];
         this.equipArmor = new Equipment[2];

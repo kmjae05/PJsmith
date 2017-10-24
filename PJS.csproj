@@ -354,6 +354,8 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
+    <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
+    <Compile Include="Assets\Script\01_Main\PlayerData\AchievementData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\Achievementhandle.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\EmblemHandle.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\KanaiTest\KanaiHandle.cs" />

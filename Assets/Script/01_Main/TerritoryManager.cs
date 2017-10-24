@@ -448,7 +448,7 @@ public class TerritoryManager : MonoBehaviour
                     return;
                 }
 
-                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 5);
+                Player.instance.LostMoney("cash", 5);
 
                 //
                 if (MineData.instance.getMineList()[num].buildState == "upgrade")
@@ -544,7 +544,7 @@ public class TerritoryManager : MonoBehaviour
                     return;
                 }
                 MiningPopup.SetActive(false);
-                GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", 1);
+                Player.instance.LostMoney("cash", 1);
 
                 MineData.instance.getMineList()[num].miningState = false;
 
@@ -661,7 +661,7 @@ public class TerritoryManager : MonoBehaviour
     {
         Debug.Log("완료");
 
-        GameObject.Find("PlayerData").GetComponent<Player>().getExp(10);
+        Player.instance.getExp(10);
 
         MineData.instance.getMineList()[num].buildState = "exhaustion";
         MineData.instance.getMineList()[num].getAmount = 0;

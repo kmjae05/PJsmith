@@ -38,13 +38,14 @@ public class MercenaryData : MonoBehaviour {
             if (i == 1) {
                 mercenaryCreate.setName("A"); mercenaryCreate.setMer_no(1);
                 mercenaryCreate.level = Player.instance.getUser().level;
-                mercenaryCreate.stat.dps = 100;
                 mercenaryCreate.stat.strPower = 100;
                 mercenaryCreate.stat.attackSpeed = 100;
                 mercenaryCreate.stat.focus = 100;
                 mercenaryCreate.stat.critical = 100;
                 mercenaryCreate.stat.defPower = 100;
                 mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
+                    + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
@@ -66,13 +67,15 @@ public class MercenaryData : MonoBehaviour {
             if (i == 2) {
                 mercenaryCreate.setName("B"); mercenaryCreate.setMer_no(2);
                 mercenaryCreate.level = Player.instance.getUser().level;
-                mercenaryCreate.stat.dps = 100;
+                
                 mercenaryCreate.stat.strPower = 100;
                 mercenaryCreate.stat.attackSpeed = 100;
                 mercenaryCreate.stat.focus = 100;
                 mercenaryCreate.stat.critical = 100;
                 mercenaryCreate.stat.defPower = 100;
                 mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
+                    + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
@@ -93,13 +96,15 @@ public class MercenaryData : MonoBehaviour {
             if (i == 3) {
                 mercenaryCreate.setName("C"); mercenaryCreate.setMer_no(3);
                 mercenaryCreate.level = Player.instance.getUser().level;
-                mercenaryCreate.stat.dps = 100;
+               
                 mercenaryCreate.stat.strPower = 100;
                 mercenaryCreate.stat.attackSpeed = 100;
                 mercenaryCreate.stat.focus = 100;
                 mercenaryCreate.stat.critical = 100;
                 mercenaryCreate.stat.defPower = 100;
                 mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
+                    + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
@@ -162,13 +167,13 @@ public class Mercenary
         this.exp = 0;
         this.max_exp = this.level * 55;
         this.stat = new Stat();
-        this.stat.dps = 1;
         this.stat.strPower = 1;
         this.stat.attackSpeed = 1.0f;
         this.stat.focus = 50;
         this.stat.critical = 20;
         this.stat.defPower = 5;
         this.stat.evaRate = 3;
+        this.stat.dps = this.stat.strPower * (float)this.stat.attackSpeed * this.stat.critical;
         this.attribute = "no";
         this.stat.collectSpeed = 1.0f;
         this.stat.collectAmount = 1;
