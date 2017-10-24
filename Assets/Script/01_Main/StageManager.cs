@@ -33,6 +33,8 @@ public class StageManager : MonoBehaviour
     private GameObject stagePopup;
     private Text nameText;
     private GameObject stageGetItemBox;
+    private GameObject itemListObj;
+    private GameObject ItemBox;
 
     private GameObject stageStatePopup;     //스테이지 현황 팝업창
     private GameObject plunderPopup;        //약탈 팝업
@@ -49,7 +51,7 @@ public class StageManager : MonoBehaviour
     private GameObject SpotObj;
     private GameObject SpotButtonObj;
     private GameObject Monster;
-    private GameObject MonsterObj;
+    private GameObject[] MonsterObj;
     private List<GameObject> MonsterObjList;
     private GameObject light;
 
@@ -80,11 +82,18 @@ public class StageManager : MonoBehaviour
 
         stagePopup = GameObject.Find("System").transform.Find("StagePopup").gameObject;
         stageGetItemBox = stagePopup.transform.Find("UIPanel/GetItemBox").gameObject;
+        itemListObj = stageGetItemBox.transform.Find("Scroll/ItemList").gameObject;
+        ItemBox = itemListObj.transform.Find("ItemBox").gameObject;
+
         stageStatePopup = GameObject.Find("System").transform.Find("StageStatePopup").gameObject;
         SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         SpotButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/SpotButton").gameObject;
         Monster = GameObject.Find("Monster");
-        MonsterObj = Monster.transform.Find("Scollwarrior").gameObject;
+        MonsterObj = new GameObject[3];
+        MonsterObj[0] = Monster.transform.Find("Scollwarrior").gameObject;
+        MonsterObj[1] = Monster.transform.Find("Keurot").gameObject;
+        MonsterObj[2] = Monster.transform.Find("Syaonil").gameObject;
+
         MonsterObjList = new List<GameObject>();
         light = Monster.transform.Find("Spotlight").gameObject;
 
@@ -146,7 +155,10 @@ public class StageManager : MonoBehaviour
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + sList[i].mercenaryName);
                 }
-                MonsterObjList.Add(Instantiate(MonsterObj.gameObject));
+
+                //3D몬스터 생성
+                int random = Random.Range(0, 3);
+                MonsterObjList.Add(Instantiate(MonsterObj[random].gameObject));
                 MonsterObjList[i].transform.SetParent(GameObject.Find("Monster").transform);
 
 
@@ -472,11 +484,26 @@ public class StageManager : MonoBehaviour
             //else 
             GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(true);
 
+            //획득 가능 아이템 삭제
+            destroyItemBox();
+
             GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
             GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
 
         }
 
+    }
+
+    public void destroyItemBox()
+    {
+            //오브젝트 삭제
+            if (itemListObj.transform.childCount > 1)
+            {
+                for (int i = 1; i < itemListObj.transform.childCount; i++)
+                {
+                    Destroy(itemListObj.transform.GetChild(i).gameObject);
+                }
+            }
     }
 
 
@@ -665,11 +692,18 @@ public class StageManager : MonoBehaviour
         result.stageName = "stage" + result.getStageNum().ToString();
         spotButton.transform.Find("StageText").GetComponent<Text>().text = result.getStageNum().ToString();  //
         spotButton.name = result.stageName + "Button"; //오브젝트 이름 변경
-        stageData.stageImageChange(result);
+        //stageData.stageImageChange(result);
 
         result.time = typeNumToRegenTime();             //리젠 시간 설정
         //spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
         //spotButton.GetComponent<Image>().sprite = result.sprite;
+
+        //3D 몬스터
+        Destroy(MonsterObjList[index].gameObject);
+        random = Random.Range(0, 3);
+        MonsterObjList[index] = Instantiate(MonsterObj[random].gameObject);
+        MonsterObjList[index].transform.SetParent(GameObject.Find("Monster").transform);
+
 
         //스테이지 변경된 정보 저장
         stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
@@ -748,24 +782,29 @@ public class StageManager : MonoBehaviour
     //스테이지 정보창 획득 가능한 아이템 정리
     public void setGetItemInfo(StageInfo result)
     {
-        //사냥
-        stageGetItemBox.transform.Find("item1").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x=>x.name == "오딘의 단검").icon);
-        stageGetItemBox.transform.Find("item1/InfoText").GetComponent<Text>().text = "오딘의 단검";
-        stageGetItemBox.transform.Find("item2").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "무기제작서-고급").icon);
-        stageGetItemBox.transform.Find("item2/InfoText").GetComponent<Text>().text = "무기제작서-고급";
-        stageGetItemBox.transform.Find("item3").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "여행자의 가죽바지").icon);
-        stageGetItemBox.transform.Find("item3/InfoText").GetComponent<Text>().text = "여행자의 가죽바지";
-        stageGetItemBox.transform.Find("specialItem/Box1").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 갑옷").icon);
-        stageGetItemBox.transform.Find("specialItem/SpecialItemText").GetComponent<Text>().text = "오딘의 갑옷";
+        for(int i = 0; i < result.getItem.Length; i++)
+        {
+            if(result.getItem[i] != null)
+            {
+                Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).grade);
+                ItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+
+                ItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).icon);
+                ItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = result.getItem[i];
+
+                GameObject obj = Instantiate(ItemBox);
+                obj.transform.SetParent(itemListObj.transform, false);
+                obj.SetActive(true);
+
+
+            }
+        }
     }
 
     //이미지 변경
     public void ItemImageChange(string stageInfoListtmp, Image spr)
     {
-        if (stageInfoListtmp == "오딘의 단검") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 단검").icon); }
-        else if (stageInfoListtmp == "무기제작서-고급") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "무기제작서-고급").icon); }
-        else if (stageInfoListtmp == "여행자의 가죽바지") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "여행자의 가죽바지").icon); }
-        else if (stageInfoListtmp == "오딘의 갑옷") { spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == "오딘의 갑옷").icon); }
+        spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp).icon); 
     }
 
 

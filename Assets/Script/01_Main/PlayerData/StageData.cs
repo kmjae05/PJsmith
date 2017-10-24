@@ -32,7 +32,7 @@ public class StageData : MonoBehaviour
     //스테이지 정보
     private StageManager stageManager;
     private GameObject SpotObj;
-
+    private MonsterData monsterData;
 
     void Awake()
     {
@@ -67,6 +67,7 @@ public class StageData : MonoBehaviour
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
         plunderInfoList = new List<PlunderInfo>();
+        monsterData = GameObject.Find("StageManager").GetComponent<MonsterData>();
 
         SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         spotList = new List<Spot>();
@@ -122,14 +123,15 @@ public class StageData : MonoBehaviour
 
             random = Random.Range(1, 3 + 1);
             stin.type = typeNumToString(stin.getStageNum(), random);
-            random = Random.Range(0, 100);
-            if (random < 50) stin.typeNum = 1;
-            else if (random > 49 && random < 90) stin.typeNum = 2;
-            else if (random > 89) stin.typeNum = 3;
+            //random = Random.Range(0, 100);
+            //if (random < 50) stin.typeNum = 1;
+            //else if (random > 49 && random < 90) stin.typeNum = 2;
+            //else if (random > 89) stin.typeNum = 3;
+            stin.typeNum = 3;
             stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
 
             //스테이지 아이콘 변경
-            stageImageChange(stin);
+            //stageImageChange(stin);
 
 
             //랜덤 위치에 약탈 버튼 생성
@@ -281,24 +283,33 @@ public class StageData : MonoBehaviour
 
 
     //스테이지 이미지 변경.
-    public void stageImageChange(StageInfo stin)
-    {
-        if (stin.type == "사냥")
-            stin.sprite = Resources.Load<Sprite>("Gather/minimonster");
-    }
+    //public void stageImageChange(StageInfo stin)
+    //{
+    //    if (stin.type == "사냥")
+    //        stin.sprite = Resources.Load<Sprite>("Gather/minimonster");
+    //}
 
     //아이템 획득
     public void getItem(StageInfo stin)
     {
         int rand = 0;
-        if (stin.type == "사냥")
+        for (int i = 0; i < monsterData.getMonsterList().Count; i++)
         {
-            //하이그라스 단검30, 엘더 소드30, 팔라딘 소드30, 고급 하이그라스 단검10
-            rand = Random.Range(0, 100);
-            if (rand < 30) { stin.getItem[0] = "오딘의 단검"; stin.getItemNum[0]++; stin.getRecentItem = stin.getItem[0]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 60) { stin.getItem[1] = "무기제작서-고급"; stin.getItemNum[1]++; stin.getRecentItem = stin.getItem[1]; stin.getRecentItemNum = 1; return; }
-            else if (rand < 90) { stin.getItem[2] = "여행자의 가죽바지"; stin.getItemNum[2]++; stin.getRecentItem = stin.getItem[2]; stin.getRecentItemNum = 1; return; }
-            else { stin.getItem[3] = "오딘의 갑옷"; stin.getItemNum[3]++; stin.getRecentItem = stin.getItem[3]; stin.getRecentItemNum = 1; return; }
+            if (stin.type == monsterData.getMonsterList()[i].name)
+            {
+                rand = Random.Range(1, 101);
+                int prob = 0;
+                for (int j = 0; j < monsterData.getMonsterList()[i].itemName.Length; j++)
+                {
+                    if (rand == prob + monsterData.getMonsterList()[i].itemProb[j])
+                    {
+                        stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j]; stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
+                        stin.getRecentItem = stin.getItem[j]; stin.getRecentItemNum = 1;
+                        return;
+                    }
+                    else { prob += monsterData.getMonsterList()[i].itemProb[j]; }
+                }
+            }
         }
 
     }
@@ -328,7 +339,7 @@ public class StageData : MonoBehaviour
     public string typeNumToString(int stageNum, int i)
     {
         ////사냥
-        if (i == 1) return "사냥"; else if (i == 2) return "사냥"; else if (i == 3) return "사냥"; else return null;
+        if (i == 1) return "전갈"; else if (i == 2) return "오쿰"; else if (i == 3) return "인큐버스"; else return null;
     }
 
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
@@ -374,11 +385,11 @@ public class StageInfo
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public StageInfo() { wait = true; spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
+    public StageInfo() { wait = true; spotName = null; sprite = new Sprite(); getItem = new string[30]; getItemNum = new int[30]; }
     public StageInfo(int stageNum)
     {
         this.stageNum = stageNum; this.wait = true; spotName = null; sprite = new Sprite();
-        getItem = new string[4]; getItemNum = new int[4];
+        getItem = new string[30]; getItemNum = new int[30];
     }
 
     public int getStageNum() { return stageNum; }
