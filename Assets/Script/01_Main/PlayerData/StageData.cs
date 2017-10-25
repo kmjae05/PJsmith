@@ -121,6 +121,7 @@ public class StageData : MonoBehaviour
             spotList[index].stageNum = stin.getStageNum();    //스테이지 번호 저장
             stin.spotName = spotList[index].getPosition().name;
 
+            //몬스터 종류
             random = Random.Range(1, 3 + 1);
             stin.type = typeNumToString(stin.getStageNum(), random);
             //random = Random.Range(0, 100);
@@ -207,8 +208,9 @@ public class StageData : MonoBehaviour
             //아이템 획득
             if (stageInfoListtmp[i].getItemTimeFlag)
             {
-                if (stageInfoListtmp[i].time < stageInfoListtmp[i].getItemTime)
+                if (stageInfoListtmp[i].time <= stageInfoListtmp[i].getItemTime)
                 {
+                    Debug.Log(stageInfoListtmp[i].time);
                     stageInfoListtmp[i].getItemTimeFlag = false;
 
                     //아이템 획득
@@ -216,7 +218,11 @@ public class StageData : MonoBehaviour
 
                     //flag
                     stageInfoListtmp[i].getRecentItemFlag = true;
-
+                    if (stageInfoListtmp[i].time <= 0)
+                    {
+                        stageInfoListtmp[i].getItemTimeFlag = false;
+                        //stageInfoListtmp[i].getRecentItemFlag = false;
+                    }
                     //for (int k=0;k<4;k++)
                     //    Debug.Log(stageInfoListtmp[i].getItem[k]);
                 }
@@ -228,13 +234,14 @@ public class StageData : MonoBehaviour
                 stageInfoListtmp[i].getItemTimeFlag = true;
                 float time = 10f;
                 stageInfoListtmp[i].getItemTime = stageInfoListtmp[i].time - time;
+
             }
 
 
 
             //시간
             stageInfoListtmp[i].time = stageInfoListtmp[i].time - Time.deltaTime;
-            if (stageInfoListtmp[i].time <= 0)
+            if (stageInfoListtmp[i].time <= 0 && !stageInfoListtmp[i].getItemTimeFlag)
             {
                 stageInfoListtmp[i].time = 0;
                 stageInfoListtmp[i].state = false;
@@ -295,17 +302,20 @@ public class StageData : MonoBehaviour
         int rand = 0;
         for (int i = 0; i < monsterData.getMonsterList().Count; i++)
         {
+            //몬스터 확인
             if (stin.type == monsterData.getMonsterList()[i].name)
             {
-                rand = Random.Range(1, 101);
+                //확률 체크
                 int prob = 0;
+                rand = Random.Range(1, 101);
                 for (int j = 0; j < monsterData.getMonsterList()[i].itemName.Length; j++)
                 {
-                    if (rand == prob + monsterData.getMonsterList()[i].itemProb[j])
+                    if (rand <= prob + monsterData.getMonsterList()[i].itemProb[j] && rand > prob)
                     {
                         stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j]; stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
                         stin.getRecentItem = stin.getItem[j]; stin.getRecentItemNum = 1;
-                        return;
+                        Debug.Log(stin.getRecentItem);
+                        break;
                     }
                     else { prob += monsterData.getMonsterList()[i].itemProb[j]; }
                 }

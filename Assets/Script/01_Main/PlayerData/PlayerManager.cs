@@ -88,7 +88,7 @@ public class PlayerManager : MonoBehaviour {
             move_sum += v;
 
             PlayerExpBarSlider.value = i;
-            Debug.Log(PlayerExpBarSlider.value);
+            //Debug.Log(PlayerExpBarSlider.value);
             
             if (i >= PlayerExpBarSlider.maxValue)
             {
@@ -96,8 +96,6 @@ public class PlayerManager : MonoBehaviour {
                 Player.instance.getUser().exp -= Player.instance.getUser().max_exp;                   //
                 Player.instance.getUser().level += 1;                            //레벨 업
                 Player.instance.getUser().max_exp = Player.instance.getUser().level * 20;             //경험치 총량 재 조정
-                Debug.Log(Player.instance.getUser().max_exp);
-                Debug.Log(Player.instance.getUser().exp);
                 PlayerExpBarSlider.maxValue = Player.instance.getUser().max_exp; //슬라이더 총량 재 조정
 
                 Player.instance.getUser().stat.strPower += Player.instance.getUser().stat.strPower * 0.1f;

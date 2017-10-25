@@ -37,10 +37,10 @@ public class MonsterData : MonoBehaviour {
         }
 
 
-        for(int i = 0; i < MonsterList[0].itemName.Length; i++)
-        {
-            Debug.Log(MonsterList[0].itemName[i]);
-        }
+        //for(int i = 0; i < MonsterList[0].itemName.Length; i++)
+        //{
+        //    Debug.Log(MonsterList[0].itemName[i]);
+        //}
 
 
     }
