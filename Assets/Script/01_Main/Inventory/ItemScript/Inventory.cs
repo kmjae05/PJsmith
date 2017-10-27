@@ -943,7 +943,7 @@ public class Inventory : MonoBehaviour
                 SlotTextSize++;
             }
         }
-        t_SlotText.text = SlotTextSize.ToString() + "/ 50";// + items.Count;
+        t_SlotText.text = SlotTextSize.ToString();// + "/ 50";// + items.Count;
     }
 
     //버튼 설정

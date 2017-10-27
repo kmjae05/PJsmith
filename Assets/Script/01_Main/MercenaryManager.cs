@@ -18,6 +18,8 @@ public class MercenaryManager : MonoBehaviour {
     private StageManager stageManager;
     //스테이지 현황 팝업창
     private GameObject stageStatePopup;
+    private GameObject stateItemList;
+    private GameObject stateItemBox;
 
     private ProfilePopupManager profilePopupManager;
 
@@ -26,6 +28,9 @@ public class MercenaryManager : MonoBehaviour {
         mercenaryData = GameObject.Find("MercenaryData").GetComponent<MercenaryData>();
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         stageStatePopup = GameObject.Find("System").transform.Find("StageStatePopup").gameObject;
+        stateItemList = stageStatePopup.transform.Find("StageStatePanel/GetItemList/Scroll/ItemList").gameObject;
+        stateItemBox = stateItemList.transform.Find("ItemBox").gameObject;
+
         profilePopupManager = GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>();
 
         mercenary = new List<Mercenary>();
@@ -173,6 +178,28 @@ public class MercenaryManager : MonoBehaviour {
             GameObject.Find("StageStateText").GetComponent<Text>().text = stageInfo.type + " " + stageInfo.typeNum.ToString();
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + nameText.text).gameObject.SetActive(true);
 
+            stageManager.destroyItemBox(stateItemList);
+            //얻은 아이템
+            int num = stageInfo.getItem.Length;
+            string[] item = new string[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                item[i] = stageInfo.getItem[i];
+                if (item[i] != null)
+                {
+                    Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
+                    stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+                    stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
+                    stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = stageInfo.getItemNum[i].ToString();
+                    stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
+
+                    GameObject boxobj = Instantiate(stateItemBox);
+                    boxobj.transform.SetParent(stateItemList.transform, false);
+                    boxobj.name = "statePopupGetItem" + item[i];
+                    boxobj.SetActive(true);
+                }
+            }
 
             //완료 안 된 상태 stage state = true, stage complete =  false
             if (stageInfo.state && !stageInfo.complete)

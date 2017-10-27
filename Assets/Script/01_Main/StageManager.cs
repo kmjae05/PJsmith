@@ -43,6 +43,7 @@ public class StageManager : MonoBehaviour
     private GameObject plunderPopup;        //약탈 팝업
     private GameObject plunderPlayerBox;
     private GameObject plunderEnemyBox;
+    private GameObject plunderItemListObj;
     private GameObject plunderItemBox;
 
     private GameObject ClearFail;
@@ -111,7 +112,8 @@ public class StageManager : MonoBehaviour
         plunderPopup = GameObject.Find("System").transform.Find("PlunderPopup").gameObject;
         plunderPlayerBox = plunderPopup.transform.Find("UIPanel/PlayerBox").gameObject;
         plunderEnemyBox = plunderPopup.transform.Find("UIPanel/EnemyBox").gameObject;
-        plunderItemBox = plunderPopup.transform.Find("UIPanel/ItemBox").gameObject;
+        plunderItemListObj = plunderPopup.transform.Find("UIPanel/ItemBox/Scroll/ItemList").gameObject;
+        plunderItemBox = plunderItemListObj.transform.Find("ItemBox").gameObject;
         ClearFail = GameObject.Find("System").transform.Find("ClearFail").gameObject;
 
         stageInfoList = stageData.getStageInfoList();
@@ -160,7 +162,11 @@ public class StageManager : MonoBehaviour
                     //else
                     spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
-                    spotButton.transform.Find("MercImage").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + sList[i].mercenaryName);
+                    string merImageName = null;
+                    if (sList[i].mercenaryName == "A") merImageName = "miner";
+                    if (sList[i].mercenaryName == "B") merImageName = "ninja";
+                    if (sList[i].mercenaryName == "C") merImageName = "knight";
+                    spotButton.transform.Find("MercImage/Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
                 }
 
                 //3D몬스터 생성
@@ -249,11 +255,14 @@ public class StageManager : MonoBehaviour
                 Debug.Log("1111");
                 for (int i = 0; i < stin.getItem.Length; i++)
                 {
-                    if (stin.getItem[i] != null)
+                    if (stin.getItem[i] != null  && stin.getItem[i] == stin.getRecentItem)
                     {
+                        Debug.Log("i : " + i);
+                        Debug.Log(stin.getItemNum[i]);
                         //최근 획득한 아이템이 기존에 있을 경우
                         if(stin.getItemNum[i]>1)/////
                         {
+                            Debug.Log("기존");
                             GameObject.Find("statePopupGetItem" + stin.getItem[i]).transform.Find("AmountText").gameObject.GetComponent<Text>().text = stin.getItemNum[i].ToString();
                             break;
                         }
@@ -570,14 +579,14 @@ public class StageManager : MonoBehaviour
 
     public void destroyItemBox(GameObject Obj)
     {
-            //오브젝트 삭제
-            if (Obj.transform.childCount > 1)
+        //오브젝트 삭제
+        if (Obj.transform.childCount > 1)
+        {
+            for (int i = 1; i < Obj.transform.childCount; i++)
             {
-                for (int i = 1; i < Obj.transform.childCount; i++)
-                {
-                    Destroy(Obj.transform.GetChild(i).gameObject);
-                }
+                Destroy(Obj.transform.GetChild(i).gameObject);
             }
+        }
     }
 
 
@@ -638,6 +647,29 @@ public class StageManager : MonoBehaviour
             num--;
         }
 
+
+        destroyItemBox(stateItemList);
+        //얻은 아이템
+        num = result.getItem.Length;
+        string[] item = new string[num];
+
+        for (int i = 0; i < num; i++)
+        {
+            item[i] = result.getItem[i];
+            if (item[i] != null)
+            {
+                Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
+                stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+                stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
+                stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = result.getItemNum[i].ToString();
+                stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
+
+                GameObject boxobj = Instantiate(stateItemBox);
+                boxobj.transform.SetParent(stateItemList.transform, false);
+                boxobj.name = "statePopupGetItem" + item[i];
+                boxobj.SetActive(true);
+            }
+        }
         result.time = 0f;
         result.complete = true;
         stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
@@ -698,12 +730,13 @@ public class StageManager : MonoBehaviour
 
         //보상
         //월드맵/스테이지에서 완료한 경우
-        if (GameObject.Find("Menu").transform.Find("WorldMapPopup").gameObject.activeInHierarchy)
+        if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
         {
             Vector3 getItemListObj = GameObject.Find(result.stageName + "Button").transform.position; // 시작 위치
             GameObject stageItem = GameObject.Find("StageItemImagePos").transform.Find("StageItemImage").gameObject;
             GameObject.Find("PlayerData").GetComponent<Player>().getExp(30);
             StartCoroutine(createGetItem(result, stageItem, "StageItemImagePos", getItemListObj));
+            GameObject.Find("InventoryScript").GetComponent<GetItemManager>().getItem(result.getItem, result.getItemNum);
         }
         //로비에서 완료한 경우
         else
@@ -712,7 +745,9 @@ public class StageManager : MonoBehaviour
             GameObject stageItem = GameObject.Find("StageItemImagePos").transform.Find("StageItemImage").gameObject;
             GameObject.Find("PlayerData").GetComponent<Player>().getExp(30);
             StartCoroutine(createGetItem(result, stageItem, "StageItemImagePos", getItemListObj));
+            GameObject.Find("InventoryScript").GetComponent<GetItemManager>().getItem(result.getItem, result.getItemNum);
         }
+        
         destroyItemBox(stateItemList);
 
         result.complete = false;
@@ -721,12 +756,11 @@ public class StageManager : MonoBehaviour
 
         WorldMapBackObj.transform.Find("Stage/stage" + result.getStageNum().ToString() + "Button/MercImage").gameObject.SetActive(false);
 
+        //용병 초기화
         Mercenary mer = mercenaryManager.getMercenary().Find(x => x.getName() == result.mercenaryName);
-
         mer.setStageNum(0);
         mer.setState(false);
         mercenaryManager.setMercenaryIndex(mercenaryManager.getMercenary().FindIndex(x => x.getName() == mer.getName()), mer);
-
         stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(false);
         result.mercenaryName = null;
 
@@ -748,7 +782,7 @@ public class StageManager : MonoBehaviour
                 bool distanceBool = false;
                 for (int k = 0; k < stif.Count; k++)
                 {
-                    GameObject spottmp = WorldMapBackObj.transform.Find("Spot/" + stif[k].spotName).gameObject;
+                    GameObject spottmp = SpotObj.transform.Find(stif[k].spotName).gameObject;
                     float disCul = Vector2.Distance(StageData.spotList[index].getPosition().transform.localPosition, spottmp.transform.localPosition);
                     if (disCul < stageData.getDist()) distanceBool = true;
                 }
@@ -777,7 +811,7 @@ public class StageManager : MonoBehaviour
         //spotButton.GetComponent<Image>().sprite = result.sprite;
 
         //3D 몬스터
-        Debug.Log(MonsterObjList[result.getStageNum()-1].gameObject);
+        //Debug.Log(MonsterObjList[result.getStageNum()-1].gameObject);
         Destroy(MonsterObjList[result.getStageNum()-1].gameObject);
         int num = 0;
         if (result.type == "전갈")
@@ -785,7 +819,7 @@ public class StageManager : MonoBehaviour
         else if (result.type == "오쿰") num = 1;
         else if (result.type == "인큐버스") num = 2;
         MonsterObjList[result.getStageNum()-1] = Instantiate(MonsterObj[num].gameObject);
-        MonsterObjList[result.getStageNum()-1].transform.SetParent(GameObject.Find("Monster").transform);
+        MonsterObjList[result.getStageNum()-1].transform.SetParent(GameObject.Find("01_3D").transform.Find("Monster").gameObject.transform);
 
 
         //스테이지 변경된 정보 저장
@@ -939,7 +973,7 @@ public class StageManager : MonoBehaviour
             plunderEnemyBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.defPower).ToString();
             plunderEnemyBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.evaRate).ToString();
 
-            plunderItemBox.transform.Find("ItemTitleText").gameObject.GetComponent<Text>().text = "획득 가능한 아이템";
+            plunderPopup.transform.Find("UIPanel/ItemBox/ItemTitleText").gameObject.GetComponent<Text>().text = "획득 가능한 아이템";
             plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.SetActive(true);
             plunderPopup.transform.Find("UIPanel/OKButton").gameObject.SetActive(false);
             plunderPlayerBox.transform.Find("Win").gameObject.SetActive(false);
@@ -949,9 +983,36 @@ public class StageManager : MonoBehaviour
             plunderPopup.transform.Find("FrontBox").gameObject.SetActive(false);
             plunderPopup.SetActive(true);
 
+
+            destroyItemBox(plunderItemListObj);
+
+            //획득 가능한 아이템 리스트
+            int num = plunder.getItem.Length;
+            string[] item = new string[num];
+
+            for (int i = 0; i < num; i++)
+            {
+                item[i] = plunder.getItem[i];
+                if (item[i] != null)
+                {
+                    Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
+                    plunderItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+                    plunderItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
+                    plunderItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
+
+                    GameObject boxobj = Instantiate(plunderItemBox);
+                    boxobj.transform.SetParent(plunderItemListObj.transform, false);
+                    boxobj.SetActive(true);
+                }
+            }
+
+
+
+
             //약탈 버튼
             plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
             plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.GetComponent<Button>().onClick.AddListener(() => PlunderButton(plunder, result));
+
         }
     }
 
@@ -959,18 +1020,23 @@ public class StageManager : MonoBehaviour
     //약탈 시작 버튼
     public void PlunderButton(Plunder plunder, PlunderInfo result)
     {
+        Debug.Log("약탈 시작");
         //리젠
+        result.regen = true;
         StageData.spotList[StageData.spotList.FindIndex(x => x.plunderNum == result.getPlunderNum())].plunderActive = false;
         int random = 0;
         int index = 0;
+        result.spotName = null;
 
+        List<Spot> sList = StageData.spotList;
         //위치 변경
         while (true)
         {
-            random = Random.Range(1, 100 + 1);
+            random = Random.Range(1, sList.Count + 1);
             index = StageData.spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
             //이미 위치한 스테이지 범위에 없게 배치
             List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.spotName != null);
+            Debug.Log(plif.Count);
             if (plif != null)
             {
                 bool distanceBool = false;
@@ -980,13 +1046,14 @@ public class StageManager : MonoBehaviour
                     float disCul = Vector2.Distance(StageData.spotList[index].getPosition().transform.localPosition, spottemp.transform.localPosition);
                     if (disCul < stageData.getDist()) distanceBool = true;
                 }
-                if (distanceBool) continue;
+                if (distanceBool) continue; 
             }
-            if (!StageData.spotList[index].plunderActive) break;
+            if (StageData.spotList[index].plunderActive==false) Debug.Log("배치 완료");break;
         }
         StageData.spotList[index].plunderActive = true;
 
-
+        //기존 상대 데이터의 스팟 할당 해제
+        plunder.assignment = false;
         //랜덤으로 리스트에 ai 정보 넣기
         PlunderInfo plInfo = plunderInfoList.Find(x => x.opponentName == plunder.getName());    //해당 스팟
         while (true)
@@ -997,18 +1064,20 @@ public class StageManager : MonoBehaviour
             if (plunderTmp.assignment == false)
             {
                 plInfo.opponentName = plunderTmp.getName();
+                plunder.assignment = true;
                 break;
             }
             else continue;
         }
-        //기존 상대 데이터의 스팟 할당 해제
-        plunder.assignment = false;
-        result.regen = true;
+       
+        
         result.time = 30f;
 
         GameObject spotButton = WorldMapBackObj.transform.Find("Plunder/" + result.PlunderName + "Button").gameObject;
         spotButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
 
+        StageData.spotList[index].plunderNum = result.getPlunderNum();    //스테이지 번호 저장
+        StageData.spotList[index].plunderActive = true;    //스팟 활성화
         result.spotName = StageData.spotList[index].getPosition().name;
         result.PlunderName = "plunder" + result.getPlunderNum().ToString();
         spotButton.transform.Find("StageText").GetComponent<Text>().text = result.opponentName;
@@ -1027,8 +1096,8 @@ public class StageManager : MonoBehaviour
 
         //결과
         //획득 가능한 아이템->획득한 아이템
-        plunderItemBox.transform.Find("ItemTitleText").gameObject.GetComponent<Text>().text = "획득한 아이템";
-        //아이템 자동 획득, 경험치
+        plunderPopup.transform.Find("UIPanel/ItemBox/ItemTitleText").gameObject.GetComponent<Text>().text = "획득한 아이템";
+        
 
         //약탈 버튼->확인 버튼
         plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.SetActive(false);
@@ -1039,6 +1108,22 @@ public class StageManager : MonoBehaviour
         {
             GameObject.Find("PlayerData").GetComponent<Player>().getExp(40);
             plunderPopup.transform.Find("FrontBox").gameObject.SetActive(true);
+
+            //아이템 자동 획득
+            for (int i = 0; i < plunder.getItem.Length; i++)
+            {
+                if (plunder.getItem[i] != null)
+                {
+                    int rand = Random.Range(0, 100);
+                    if (rand < plunder.getItemWinProb[i])
+                    {
+                        result.getItem[i] = plunder.getItem[i];
+                        result.getItemNum[i] = 1;
+                    }
+                }
+            }
+
+
             ClearFail.SetActive(true);
             StartCoroutine(closeWin());
         }
@@ -1047,11 +1132,86 @@ public class StageManager : MonoBehaviour
         {
             GameObject.Find("PlayerData").GetComponent<Player>().getExp(10);
             plunderPopup.transform.Find("FrontBox").gameObject.SetActive(true);
+
+            //아이템 자동 획득
+            for (int i = 0; i < plunder.getItem.Length; i++)
+            {
+                if (plunder.getItem[i] != null)
+                {
+                    int rand = Random.Range(0, 100);
+                    if (rand < plunder.getItemLoseProb[i])
+                    {
+                        result.getItem[i] = plunder.getItem[i];
+                        result.getItemNum[i] = 1;
+                    }
+                }
+            }
+
             //애니
             StartCoroutine(closeLose());
         }
-        //아이템 하나씩 띄우기 애니메이션
-        //코루틴
+
+        //획득한 아이템 표시
+        destroyItemBox(plunderItemListObj);
+
+        int num = result.getItem.Length;
+        string[] item = new string[num];
+
+        for (int i = 0; i < num; i++)
+        {
+            item[i] = result.getItem[i];
+            if (item[i] != null)
+            {
+                Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
+                plunderItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+                plunderItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
+                plunderItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
+
+                GameObject boxobj = Instantiate(plunderItemBox);
+                boxobj.transform.SetParent(plunderItemListObj.transform, false);
+                boxobj.SetActive(true);
+            }
+        }
+
+        //인벤토리 저장
+        for (int i = 0; i < result.getItem.Length; i++)
+        {
+            if (result.getItem[i] != null)
+            {
+                string type = ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type;
+                //장비 구분
+                if (type == "Helmet" || type == "Armor" || type == "Gloves" || type == "Pants" || type == "Weapon" || type == "Boots")
+                {
+                    for (int j = 0; j < result.getItemNum[i]; j++)
+                    {
+                        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], 1));
+                        //ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
+                    }
+                }
+                //장비 외 아이템
+                else
+                {
+                    if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]) != null)
+                    {
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).possession
+                            += result.getItemNum[i];
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
+                    }
+                    else
+                    {
+                        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                            x => x.name == result.getItem[i]).type, result.getItem[i], result.getItemNum[i]));
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
+                    }
+                }
+                //초기화
+                result.getItem[i] = null;
+                result.getItemNum[i] = 0;
+            }
+        }
+
+        
+
 
     }
 

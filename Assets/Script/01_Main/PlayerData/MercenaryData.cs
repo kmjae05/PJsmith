@@ -38,12 +38,12 @@ public class MercenaryData : MonoBehaviour {
             if (i == 1) {
                 mercenaryCreate.setName("A"); mercenaryCreate.setMer_no(1);
                 mercenaryCreate.level = Player.instance.getUser().level;
-                mercenaryCreate.stat.strPower = 100;
-                mercenaryCreate.stat.attackSpeed = 100;
-                mercenaryCreate.stat.focus = 100;
-                mercenaryCreate.stat.critical = 100;
-                mercenaryCreate.stat.defPower = 100;
-                mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.strPower = 60;
+                mercenaryCreate.stat.attackSpeed = 1.0f;
+                mercenaryCreate.stat.focus = 50;
+                mercenaryCreate.stat.critical = 20;
+                mercenaryCreate.stat.defPower = 5;
+                mercenaryCreate.stat.evaRate = 3;
                 mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
                     + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
@@ -68,19 +68,19 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.setName("B"); mercenaryCreate.setMer_no(2);
                 mercenaryCreate.level = Player.instance.getUser().level;
                 
-                mercenaryCreate.stat.strPower = 100;
-                mercenaryCreate.stat.attackSpeed = 100;
-                mercenaryCreate.stat.focus = 100;
-                mercenaryCreate.stat.critical = 100;
-                mercenaryCreate.stat.defPower = 100;
-                mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.strPower = 70;
+                mercenaryCreate.stat.attackSpeed = 1.0f;
+                mercenaryCreate.stat.focus = 50;
+                mercenaryCreate.stat.critical = 20;
+                mercenaryCreate.stat.defPower = 5;
+                mercenaryCreate.stat.evaRate = 3;
                 mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
                     + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "영웅의 단검");
-                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "오딘의 단검");
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 창");
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "수련자의 창");
                 mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
                 mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
                 mercenaryCreate.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
@@ -97,19 +97,19 @@ public class MercenaryData : MonoBehaviour {
                 mercenaryCreate.setName("C"); mercenaryCreate.setMer_no(3);
                 mercenaryCreate.level = Player.instance.getUser().level;
                
-                mercenaryCreate.stat.strPower = 100;
-                mercenaryCreate.stat.attackSpeed = 100;
-                mercenaryCreate.stat.focus = 100;
-                mercenaryCreate.stat.critical = 100;
-                mercenaryCreate.stat.defPower = 100;
-                mercenaryCreate.stat.evaRate = 100;
+                mercenaryCreate.stat.strPower = 80;
+                mercenaryCreate.stat.attackSpeed = 1.0f;
+                mercenaryCreate.stat.focus = 50;
+                mercenaryCreate.stat.critical = 20;
+                mercenaryCreate.stat.defPower = 5;
+                mercenaryCreate.stat.evaRate = 3;
                 mercenaryCreate.stat.dps = mercenaryCreate.stat.strPower * (float)mercenaryCreate.stat.attackSpeed * mercenaryCreate.stat.critical
                     + mercenaryCreate.stat.defPower * mercenaryCreate.stat.evaRate;
                 mercenaryCreate.attribute = "no";
                 mercenaryCreate.stat.collectSpeed = 100;
                 mercenaryCreate.stat.collectAmount = 100;
-                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "여신의 단검");
-                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "드래곤의 단검");
+                mercenaryCreate.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "여행자의 도끼");
+                mercenaryCreate.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 도끼");
                 mercenaryCreate.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
                 mercenaryCreate.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
                 mercenaryCreate.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");

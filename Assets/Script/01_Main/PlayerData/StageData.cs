@@ -312,10 +312,12 @@ public class StageData : MonoBehaviour
                 {
                     if (rand <= prob + monsterData.getMonsterList()[i].itemProb[j] && rand > prob)
                     {
-                        stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j]; stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
+                        Debug.Log("j : " + j);
+                        stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j];
+                        stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
                         stin.getRecentItem = stin.getItem[j]; stin.getRecentItemNum = 1;
                         Debug.Log(stin.getRecentItem);
-                        break;
+                        return;
                     }
                     else { prob += monsterData.getMonsterList()[i].itemProb[j]; }
                 }
@@ -451,12 +453,12 @@ public class PlunderInfo
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public PlunderInfo() { spotName = null; sprite = new Sprite(); getItem = new string[4]; getItemNum = new int[4]; }
+    public PlunderInfo() { spotName = null; sprite = new Sprite(); getItem = new string[5]; getItemNum = new int[5]; }
     public PlunderInfo(int PlunderNum)
     {
         this.PlunderNum = PlunderNum; spotName = null; opponentName = null;
         sprite = new Sprite();
-        getItem = new string[4]; getItemNum = new int[4];
+        getItem = new string[5]; getItemNum = new int[5];
     }
 
     public int getPlunderNum() { return PlunderNum; }
@@ -475,10 +477,9 @@ public class Plunder
     //능력치
     public Stat stat;
 
-    public string[] getItem;       //전체 획득한 아이템
-    public int[] getItemNum;       //전체 획득한 아이템 수량
-    public string getRecentItem;   //최근 획득한 아이템
-    public int getRecentItemNum;    //최근 획득한 아이템 수
+    public string[] getItem;       //획득 가능한 아이템
+    public int[] getItemWinProb;       //획득 가능한 아이템 승리했을 때 얻는 확률
+    public int[] getItemLoseProb;       //획득 가능한 아이템 패배했을 때 얻는 확률
 
     public bool assignment;         //스팟에 할당 여부
 
@@ -496,6 +497,25 @@ public class Plunder
         this.stat.critical = (int)data["Plunder"][index]["critical"];
         this.stat.defPower = (int)data["Plunder"][index]["defPower"];
         this.stat.evaRate = (int)data["Plunder"][index]["evaRate"];
+
+        this.getItem = new string[5];
+        for(int i = 0; i < 5; i++)
+        {
+            int rand = Random.Range(0, ThingsData.instance.getThingsList().Count);
+            getItem[i] = ThingsData.instance.getThingsList()[rand].name;
+        }
+        this.getItemWinProb = new int[5];
+        this.getItemWinProb[0] = 100; this.getItemWinProb[1] = 50; this.getItemWinProb[2] = 50;
+        this.getItemWinProb[3] = 50; this.getItemWinProb[4] = 50;
+        this.getItemLoseProb = new int[5];
+        this.getItemLoseProb[0] = 10; this.getItemLoseProb[1] = 10; this.getItemLoseProb[2] = 10;
+        this.getItemLoseProb[3] = 0; this.getItemLoseProb[4] = 0;
+
+        //획득 가능한 아이템 랜덤으로 넣기
+
+
+
+
         this.assignment = false;
     }
 
