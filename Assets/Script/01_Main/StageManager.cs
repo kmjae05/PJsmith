@@ -1064,7 +1064,7 @@ public class StageManager : MonoBehaviour
             if (plunderTmp.assignment == false)
             {
                 plInfo.opponentName = plunderTmp.getName();
-                plunder.assignment = true;
+                plunderTmp.assignment = true;
                 break;
             }
             else continue;
