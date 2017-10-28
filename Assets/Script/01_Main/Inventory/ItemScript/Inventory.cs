@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
 {
     public GameObject InventorySlot;
     private GameObject InventoryItem;
+    private SellManager sellManager;
 
     //private int slotAmount; //슬롯개수 -> 향후 탭별로 갯수에 맞도록 관리
     //ItemDatabase database;
@@ -108,7 +109,7 @@ public class Inventory : MonoBehaviour
         //Tap6Push = transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/TabPanel/Tab6").gameObject;
 
 
-        ItemInfoPopup = transform.Find("/02_UI/System/ItemInfoPopup").gameObject;
+        ItemInfoPopup = GameObject.Find("System").transform.Find("ItemInfoPopup").gameObject;
         EquipItemInfoPopup = GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject;
         //NewItemIcon = transform.Find("/02_UI/Main/Button/CollectionButton/Icon").gameObject;
 
@@ -121,6 +122,8 @@ public class Inventory : MonoBehaviour
     {
         //database = GetComponent<ItemDatabase>();
         thingsData = GameObject.Find("ThingsData").GetComponent<ThingsData>();
+        sellManager = GameObject.Find("InventoryScript").GetComponent<SellManager>();
+
         ItemSlotCreate();
         TapButtonSetup();
         CollectionPopup.SetActive(false);
@@ -712,9 +715,9 @@ public class Inventory : MonoBehaviour
 
         //    }
         //}
-
+        SlotSize(Tap1Items);
         //new icon 감추기
-        for(int i=0;i< thingsData.getInventoryThingsList().Count; i++)
+        for (int i=0;i< thingsData.getInventoryThingsList().Count; i++)
         {
             if (thingsData.getInventoryThingsList()[i].recent) thingsData.getInventoryThingsList()[i].recent = false;
         }
@@ -1061,6 +1064,11 @@ public class Inventory : MonoBehaviour
         //되도록이면 최대 5개까지만..
         EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/AbilityText").gameObject.GetComponent<Text>().text = abstr;
 
+        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
+        //시스템 팝업으로 판매
+        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener( () => sellManager.OpenEquipSellPopup(things) );
+
     }
 
 
@@ -1068,15 +1076,20 @@ public class Inventory : MonoBehaviour
     //기타 아이템 정보 팝업
     public void OthersItemInfoPopup(InventoryThings things)
     {
-        GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/InfoBox/ItemNameText").gameObject.GetComponent<Text>().text = things.name;
-        GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/InfoBox/ItemInfoText").gameObject.GetComponent<Text>().text 
+        ItemInfoPopup.transform.Find("UIPanel/InfoBox/ItemNameText").gameObject.GetComponent<Text>().text = things.name;
+        ItemInfoPopup.transform.Find("UIPanel/InfoBox/ItemInfoText").gameObject.GetComponent<Text>().text 
             = ThingsData.instance.getThingsList().Find(x => x.name == things.name).explanation;
-        GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/ItemBox/HaveText").gameObject.GetComponent<Text>().text = things.possession.ToString();
+        ItemInfoPopup.transform.Find("UIPanel/ItemBox/HaveText").gameObject.GetComponent<Text>().text = things.possession.ToString();
         Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == things.name).grade);
-        GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/ItemBox/GradeFrame").gameObject.GetComponent<Image>().color = col;
+        ItemInfoPopup.transform.Find("UIPanel/ItemBox/GradeFrame").gameObject.GetComponent<Image>().color = col;
 
-        GameObject.Find("System").transform.Find("ItemInfoPopup/UIPanel/ItemBox/Icon").gameObject.GetComponent<Image>().sprite
+        ItemInfoPopup.transform.Find("UIPanel/ItemBox/Icon").gameObject.GetComponent<Image>().sprite
             = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == things.name).icon);
+
+        ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
+        ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenSellPopup(things));
+
 
     }
 

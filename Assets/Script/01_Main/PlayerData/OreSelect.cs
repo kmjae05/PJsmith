@@ -348,6 +348,7 @@ public class OreSelect : MonoBehaviour
             Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == oreList[index].name).grade);
             _OreInfoPopup.transform.Find("UIPanel/OreBox/GradeFrame").gameObject.GetComponent<Image>().color = col;
             _OreInfoPopup.SetActive(true);
+            _OreInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
 
             if (!oreList[index].isLock)     //사용 가능한 광석 선택 시
             {
@@ -406,6 +407,12 @@ public class OreSelect : MonoBehaviour
         _BuyButton.gameObject.SetActive(false);          //구매버튼 활성화
         _UnLockButton.gameObject.SetActive(false);      //잠금해제 버튼 비활성화
         _AmountText.text = things.possession.ToString();
+
+        _OreInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
+        _OreInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        _OreInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(
+            () => GameObject.Find("InventoryScript").GetComponent<SellManager>().OpenSellPopup(things));
+
     }
 
 

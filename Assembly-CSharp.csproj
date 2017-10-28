@@ -286,9 +286,12 @@
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemDatabase.cs" />
+     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\SellManager.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
      <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
      <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
+     <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\AchievementData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\Achievementhandle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\EmblemHandle.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\KanaiTest\KanaiHandle.cs" />
@@ -300,6 +303,7 @@
      <Compile Include="Assets\Script\01_Main\PlayerData\MineData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\OreSelect.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\Player.cs" />
+     <Compile Include="Assets\Script\01_Main\PlayerData\PlayerManager.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SceneData.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
      <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />
@@ -492,7 +496,7 @@
      <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
  <Reference Include="Facebook.Unity.Settings">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -516,22 +520,28 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="GETween">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/GUI Animator/Common/Plugins/GETween.dll</HintPath>
  </Reference>
  <Reference Include="GUIAnimatorFREE">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/GUI Animator/GUI Animator FREE/Plugins/GUIAnimatorFREE.dll</HintPath>
  </Reference>
  <Reference Include="OneSignalSDK_WP_WNS">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/OneSignal/Platforms/OneSignalSDK_WP_WNS.dll</HintPath>
  </Reference>
  <Reference Include="I18N.CJK">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.CJK.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/Plugins/I18N.CJK.dll</HintPath>
  </Reference>
  <Reference Include="I18N">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/I18N.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/Plugins/I18N.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
- <HintPath>C:/Users/JOO/Documents/PJsmith/Assets/Plugins/LitJson.dll</HintPath>
+ <HintPath>C:/Users/Admin/Documents/PJsmith/Assets/Plugins/LitJson.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Common">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
