@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
     private MercenaryManager mercenaryManager;  //mercenary info
     private StatData statData;
     private MonsterData monsterdata;
+    private TerritoryManager territoryManager;
 
     //스테이지 정보
     private StageData stageData;
@@ -24,6 +25,8 @@ public class StageManager : MonoBehaviour
     private List<StageInfo> stageInfoListtmp;   //임시 스테이지 정보 저장공간
     //약탈 정보
     private List<PlunderInfo> plunderInfoList;
+    //광산 정보
+    private List<Mine> mineList;
 
     //private string curContSelect;              //현재 선택된 대륙
     private int curStageSelect;               //현재 선택된 스테이지
@@ -59,14 +62,23 @@ public class StageManager : MonoBehaviour
     private List<GameObject> MonsterObjList;
     private GameObject light;
 
+    //광산 관련
+    private GameObject MineButtonObj;
+    private GameObject BeUnderPopup;
+    private GameObject MiningPopup;
+    private GameObject ExhaustionPopup;
+    private int curMineNum = 0;             //현재 선택한 광산 번호
+
 
     private GameObject StageObj;
     private GameObject PlunderObj;
     private GameObject PlunderButtonObj;
     private GameObject WorldMapBackObj;
 
-    private GameObject systemPopup; //시스템 팝업
+    private GameObject SystemPopup; //시스템 팝업
     private Button sys_yesButton;
+    private Button sys_NoButton;
+    private Button sys_OkButton;
     private GameObject imdComPopup; //즉시 완료 팝업
     private Button imd_yesButton;
 
@@ -81,6 +93,8 @@ public class StageManager : MonoBehaviour
         statData = GameObject.Find("PlayerManager").GetComponent<StatData>();
         stageData = GameObject.Find("StageData").GetComponent<StageData>();
         monsterdata = GameObject.Find("StageManager").GetComponent<MonsterData>();
+        territoryManager = GameObject.Find("PlayerManager").GetComponent<TerritoryManager>();
+
         stageInfoList = new List<StageInfo>();
         stageInfoListtmp = new List<StageInfo>();
         plunderInfoList = new List<PlunderInfo>();
@@ -101,9 +115,13 @@ public class StageManager : MonoBehaviour
         MonsterObj[0] = Monster.transform.Find("Scollwarrior").gameObject;
         MonsterObj[1] = Monster.transform.Find("Keurot").gameObject;
         MonsterObj[2] = Monster.transform.Find("Syaonil").gameObject;
-
         MonsterObjList = new List<GameObject>();
         light = Monster.transform.Find("Spotlight").gameObject;
+
+        MineButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/MineButton").gameObject;
+        BeUnderPopup = GameObject.Find("System").transform.Find("BeUnderPopup").gameObject;
+        MiningPopup = GameObject.Find("System").transform.Find("MiningPopup").gameObject;
+        ExhaustionPopup = GameObject.Find("System").transform.Find("ExhaustionPopup").gameObject;
 
         StageObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject;
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;
@@ -118,14 +136,17 @@ public class StageManager : MonoBehaviour
 
         stageInfoList = stageData.getStageInfoList();
         plunderInfoList = stageData.getPlunderInfoList();
+        mineList = stageData.getMineList();
 
         stageInfoListtmp = stageInfoList.FindAll(x => (x.state == true || x.complete == true));
         for (int i = 0; i < stageInfoListtmp.Count; i++)
         {
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + stageInfoListtmp[i].mercenaryName + "Selection").GetComponent<Button>().interactable = false;
         }
-        systemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
-        sys_yesButton = systemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
+        sys_yesButton = SystemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
+        sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
         imdComPopup = GameObject.Find("System").transform.Find("ImdCompletePopup").gameObject;
         imd_yesButton = imdComPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
 
@@ -210,6 +231,34 @@ public class StageManager : MonoBehaviour
             }
         }
 
+        //광산 오브젝트 배치
+        List<Mine> mList = mineList;
+        for(int i = 0; i < mList.Count; i++)
+        {
+            if (mList[i].spotName != null)
+            {
+                string spotName = mList[i].spotName;
+                //스팟 인덱스
+                int index = StageData.spotList.FindIndex(x => x.getSpotName() == spotName);
+
+                GameObject spotButton = Instantiate(MineButtonObj.gameObject);
+                spotButton.transform.SetParent(StageObj.gameObject.transform);
+                spotButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
+                spotButton.SetActive(true);
+                spotButton.transform.Find("StageText").GetComponent<Text>().text = mList[i].getMineNum().ToString();
+                spotButton.name = mList[i].stageName + "Button"; //오브젝트 이름 변경
+                Color clr = spotButton.transform.Find("Image").gameObject.GetComponent<Image>().color;
+                spotButton.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
+                spotButton.transform.Find("Text").gameObject.SetActive(false);
+                spotButton.transform.Find("pickax").gameObject.SetActive(false);
+                spotButton.transform.Find("TypeName").gameObject.SetActive(true);
+                spotButton.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = mList[i].type + " 광산";
+                spotButton.transform.Find("BoostIcon").gameObject.SetActive(false);
+                int num = i;
+                spotButton.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(spotButton, num));
+            }
+        }
+
     }
 
 
@@ -232,8 +281,8 @@ public class StageManager : MonoBehaviour
             if (stageStatePopup.activeInHierarchy && stageInfoList[i].complete &&
                 curStageSelect == stageInfoList[i].getStageNum())
             {
-                GameObject systemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
-                systemPopup.SetActive(false);
+                GameObject SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
+                SystemPopup.SetActive(false);
 
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
@@ -409,6 +458,91 @@ public class StageManager : MonoBehaviour
         }
 
         stageData.setStageInfoList(stageInfoList);
+
+
+        //광산
+        for (int i = 0; i < mineList.Count; i++)
+        {
+            GameObject mineObj = StageObj.transform.Find(mineList[i].stageName + "Button").gameObject;
+            //건설 중
+            if (mineList[i].buildState == "beunder"
+                || mineList[i].buildState == "upgrade")
+            {
+                
+                //시간 0이면 건설완료 상태로
+                if (mineList[i].buildTime < 0.5f)
+                {
+                    //mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
+
+                    if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
+                }
+                //시간 빼기
+                else
+                {
+                    float time = mineList[i].buildTime;
+                    if (time > 3600)
+                    {
+                        mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text =
+                           "남은 시간 : " + ((int)(time / 3600)).ToString() + "시간 " + ((int)((time % 3600) / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+                        BeUnderPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text =
+                            "남은 시간 : " + ((int)(time / 3600)).ToString() + "시간 " + ((int)((time % 3600) / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+                    }
+                    else if (time > 60)
+                    {
+                        mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text =
+                           "남은 시간 : " + ((int)((time % 3600) / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+                        BeUnderPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text =
+                            "남은 시간 : " + ((int)((time % 3600) / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+                    }
+                    else
+                    {
+                        mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text =
+                           "남은 시간 : " + ((int)(time % 60)).ToString() + "초";
+                        BeUnderPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text =
+                            "남은 시간 : " + ((int)(time % 60)).ToString() + "초";
+                    }
+                }
+            }
+
+            //채굴 상태
+            if (mineList[i].buildState == "complete" && mineList[i].miningState)
+            {
+                Color clr = mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color;
+                mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
+                mineObj.transform.Find("Image").gameObject.SetActive(true);
+                mineObj.transform.Find("Text").gameObject.SetActive(true);
+                mineObj.transform.Find("DottedCircle").gameObject.SetActive(false);
+                mineObj.transform.Find("pickax").gameObject.SetActive(true);
+
+                mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
+                int num = i;
+                mineObj.GetComponent<Button>().onClick.AddListener(() => territoryManager.Mining(mineObj, num));
+
+                //획득
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[i].getAmount.ToString() + " / " + mineList[i].deposit.ToString();
+
+                if (MiningPopup.activeInHierarchy)
+                {
+                    MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = mineList[curMineNum].type + " 광산 채굴 중";
+                    MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + mineList[curMineNum].level.ToString();
+                    MiningPopup.transform.Find("UIPanel/InfoBox/AmountText").gameObject.GetComponent<Text>().text = "채굴량 : " + mineList[curMineNum].getAmount.ToString() + " / " + mineList[curMineNum].deposit.ToString();
+                    MiningPopup.transform.Find("UIPanel/InfoBox/MiningTimeText").gameObject.GetComponent<Text>().text = "채굴 주기 : " + mineList[curMineNum].miningTime.ToString();
+                }
+
+            }
+            //매장량 다 채우면 pickax없애고 텍스트 바꾸기
+            if (mineList[i].buildState == "complete" && !mineList[i].miningState)
+            {
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[i].deposit.ToString() + "개 채굴 완료";
+                mineObj.transform.Find("pickax").gameObject.SetActive(false);
+                MiningPopup.SetActive(false);
+
+                mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
+                int num = i;
+                mineObj.GetComponent<Button>().onClick.AddListener(() => territoryManager.getOre(mineObj, num));
+            }
+        }
+
 
 
     }
@@ -611,11 +745,11 @@ public class StageManager : MonoBehaviour
         {
             if (Player.instance.getUser().gold < goldPrice)
             {
-                systemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
-                systemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
+                SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
                 sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
                 sys_yesButton.GetComponent<Button>().onClick.AddListener(() => GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true));
-                systemPopup.SetActive(true);
+                SystemPopup.SetActive(true);
                 return;
             }
             else GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("gold", goldPrice);
@@ -624,11 +758,11 @@ public class StageManager : MonoBehaviour
         {
             if (Player.instance.getUser().cash < cashPrice)
             {
-                systemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
-                systemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
+                SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = money + "가 부족합니다.";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = money + " 구매 페이지로 이동하시겠습니까?";
                 sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
                 sys_yesButton.GetComponent<Button>().onClick.AddListener(() => GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true));
-                systemPopup.SetActive(true);
+                SystemPopup.SetActive(true);
                 return;
             }
             else GameObject.Find("PlayerData").GetComponent<Player>().LostMoney("cash", cashPrice);
@@ -683,9 +817,9 @@ public class StageManager : MonoBehaviour
     public void CancelButton()
     {
         //시스템 팝업창 띄우기
-        systemPopup.SetActive(true);
-        systemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "탐험 취소";
-        systemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "탐험을 취소하고 용병을 불러오시겠습니까?";
+        SystemPopup.SetActive(true);
+        SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "탐험 취소";
+        SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "탐험을 취소하고 용병을 불러오시겠습니까?";
 
         sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
         sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
@@ -1296,6 +1430,254 @@ public class StageManager : MonoBehaviour
     }
 
 
+    //광산
+
+
+    //광산 고갈 상태 팝업 //레벨업과 채광 용도
+    public void ExhaustionCondition(GameObject obj, int num)
+    {
+        MineInfo info = MineData.instance.getMineInfoList().Find(x => x.type == stageData.getMineList()[num].type);
+
+        ExhaustionPopup.SetActive(true);
+        ExhaustionPopup.transform.Find("UIPanel/CancleButton").gameObject.SetActive(false);
+        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.SetActive(true);
+
+        info.afterLevel = info.level + 1;
+        info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time;
+        info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
+        info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
+
+        ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + " 광산";
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초 -> " + info.afterTime + "초";
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
+            = "매장량 : " + MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit.ToString() + " -> " + info.afterDeposit;
+        string mtr = null;
+        for (int i = 0; i < info.getThingName.Length; i++)
+        {
+            if (info.getThingName.Length == 1)
+            {
+                mtr = info.getThingName[0];
+                break;
+            }
+            else
+            {
+                if (i == 0) { mtr = info.getThingName[0]; }
+                else { mtr += ", " + info.getThingName[i]; }
+            }
+        }
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = "획득 아이템 : " + mtr;
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + stageData.getMineList()[num].type + " " + info.curMaterial + "개";
+
+        //레벨업
+        ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+
+            //재료 모자람
+            InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
+            if (thing != null)
+            {
+                if (thing.possession >= info.curMaterial)
+                {
+                    //건설 조건 만족
+                    Debug.Log("y");
+                }
+                else
+                {
+                    //재료 수량 부족
+                    Debug.Log("no");
+                    //팝업
+                    SystemPopup.SetActive(true);
+                    SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                    SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                    sys_yesButton.gameObject.SetActive(false);
+                    sys_NoButton.gameObject.SetActive(false);
+                    sys_OkButton.gameObject.SetActive(true);
+
+                    return;
+                }
+            }
+            //아이템 못 찾음
+            else
+            {
+                Debug.Log("null");
+                //팝업
+                SystemPopup.SetActive(true);
+                SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                sys_yesButton.gameObject.SetActive(false);
+                sys_NoButton.gameObject.SetActive(false);
+                sys_OkButton.gameObject.SetActive(true);
+                return;
+            }
+            //재료 체크 완료//
+            //스팟 선택 없이 바로 그 자리에 건설.
+            //광산에 정보 저장
+
+            mineList[num].type = info.type;
+            mineList[num].level = info.afterLevel;
+            mineList[num].buildState = "upgrade";
+            info.upgradeFlag = false;
+
+            mineList[num].buildTime = MineData.instance.getMineBuildList().Find(x => x.level == info.level).time;
+            for (int i = 0; i < info.getThingName.Length; i++)
+            {
+                mineList[num].getThingName[i] = info.getThingName[i];
+            }
+            mineList[num].getOnceAmount = 1;
+            mineList[num].deposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
+            mineList[num].miningTime = 1f;
+
+            //재료 소모
+            thing.possession -= info.curMaterial;
+
+            obj.GetComponent<Button>().onClick.RemoveAllListeners();
+            obj.GetComponent<Button>().onClick.AddListener(() => BuildCondition(obj, num));
+
+            obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            obj.transform.Find("Image").gameObject.SetActive(true);
+            obj.transform.Find("Text").gameObject.SetActive(true);
+            obj.transform.Find("pickax").gameObject.SetActive(false);
+            obj.transform.Find("TypeName").gameObject.SetActive(true);
+            obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
+
+
+            //BlackBack.SetActive(false);
+            //하단메뉴 잠금
+            //BottomMenuLock.SetActive(true);
+            //대장장이 행동 제한
+            //StartLock.SetActive(true);
+
+            ExhaustionPopup.SetActive(false);
+        });
+
+        //채굴
+        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+            mineList[num].miningState = true;
+            mineList[num].buildState = "complete";
+            Debug.Log(mineList[num].miningState);
+            Debug.Log(mineList[num].buildState);
+            ExhaustionPopup.SetActive(false);
+
+        });
+
+
+
+    }
+
+    //건설 진행 중 버튼 (현황 창
+    public void BuildCondition(GameObject obj, int num)
+    {
+        string type = mineList[num].type;
+
+            BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 업그레이드 중";
+
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text =
+                "레벨 : " + (mineList[num].level).ToString();
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
+                = "매장량 : " + MineData.instance.getMineBuildList().Find(x => x.level == mineList[num].level).deposit.ToString();
+        //팝업 올리기
+        BeUnderPopup.SetActive(true);
+
+        //즉시 완료 버튼
+        BeUnderPopup.transform.Find("UIPanel/ImdBuildButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        BeUnderPopup.transform.Find("UIPanel/ImdBuildButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+            SystemPopup.SetActive(true);
+
+            SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
+            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 5개를 사용하여 즉시 완료하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
+
+            sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+
+                if (Player.instance.getUser().cash < 20)
+                {
+                    SystemPopup.SetActive(true);
+                    SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "보석이 부족합니다.";
+                    SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 구매 페이지로 이동하시겠습니까?";
+                    sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+                    sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true);
+                        BeUnderPopup.SetActive(false);
+                    });
+
+                    return;
+                }
+
+                Player.instance.LostMoney("cash", 5);
+
+                //
+                if (mineList[num].buildState == "upgrade")
+                {
+                    MineData.instance.getMineInfoList().Find(x => x.type == type).level++;
+                    mineList[num].level = MineData.instance.getMineInfoList().Find(x => x.type == type).level;
+                    MineData.instance.getMineInfoList().Find(x => x.type == type).buildTime
+                        = MineData.instance.getMineBuildList().Find(x => x.level == mineList[num].level).time;
+                    mineList[num].buildTime = MineData.instance.getMineInfoList().Find(x => x.type == type).buildTime;
+                    mineList[num].deposit
+                        = MineData.instance.getMineBuildList().Find(x => x.level == mineList[num].level).deposit;
+                }
+
+                mineList[num].buildTime = 0f;
+                mineList[num].buildState = "complete";
+                mineList[num].miningState = true;
+                obj.transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
+                Color clr = obj.transform.Find("Image").gameObject.GetComponent<Image>().color;
+                obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
+                obj.transform.Find("Image").gameObject.SetActive(true);
+                obj.transform.Find("Text").gameObject.SetActive(true);
+                obj.transform.Find("DottedCircle").gameObject.SetActive(false);
+                obj.transform.Find("pickax").gameObject.SetActive(true);
+
+                //BottomMenuLock.SetActive(false);
+                //StartLock.SetActive(false);
+                if (BeUnderPopup.activeInHierarchy)
+                    BeUnderPopup.SetActive(false);
+
+                obj.GetComponent<Button>().onClick.RemoveAllListeners();
+
+            });
+
+        });
+
+
+        //건설 취소 버튼->SystemPopup
+        BeUnderPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        BeUnderPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+            SystemPopup.SetActive(true);
+
+            SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "건설 취소";
+            SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설을 취소하시겠습니까?";
+            sys_yesButton.gameObject.SetActive(true);
+            sys_NoButton.gameObject.SetActive(true);
+            sys_OkButton.gameObject.SetActive(false);
+            sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+                SystemPopup.SetActive(false);
+                mineList[num].buildTime = 0f;
+                mineList[num].buildState = "nothing";
+                obj.transform.Find("Image").gameObject.SetActive(false);
+                obj.transform.Find("Text").gameObject.SetActive(false);
+                obj.transform.Find("TypeName").gameObject.SetActive(false);
+                //BottomMenuLock.SetActive(false);
+                //StartLock.SetActive(false);
+                if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
+            });
+        });
+    }
+
+
+
+
+
+
+
+
     //UI에 맞게 위치 고정
     void SetPositionHUD()
     {
@@ -1331,6 +1713,8 @@ public class StageManager : MonoBehaviour
     {
         mode = b;
     }
+
+    public void MineClick(GameObject obj) { curMineNum = mineList.FindIndex(x=> x.stageName + "Button" == obj.name); Debug.Log(curMineNum); }
 
     //typeNum string 변환
     public string typeNumToString(int i) { if (i == 1) return "소"; else if (i == 2) return "중"; else if (i == 3) return "대"; else return null; }

@@ -25,9 +25,12 @@ public class StageData : MonoBehaviour
     //약탈 스팟 데이터
     private static List<PlunderInfo> plunderInfoList;
 
-
     //스팟 데이터
     public static List<Spot> spotList;
+
+    //광산 데이터
+    static private List<Mine> mineList;
+    static private List<MineBuild> mineBuildList = new List<MineBuild>();
 
     //스테이지 정보
     private StageManager stageManager;
@@ -68,6 +71,7 @@ public class StageData : MonoBehaviour
         stageInfoListtmp = new List<StageInfo>();
         plunderInfoList = new List<PlunderInfo>();
         monsterData = GameObject.Find("StageManager").GetComponent<MonsterData>();
+        mineBuildList = MineData.instance.getMineBuildList();
 
         SpotObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Spot").gameObject;
         spotList = new List<Spot>();
@@ -189,9 +193,40 @@ public class StageData : MonoBehaviour
             plunderInfoList[i].opponentName = plunderList[random].getName();
             plunderList[random].assignment = true;
 
-
-
         }
+
+        //광산 생성
+        mineList = new List<Mine>();
+        for (int i = 0; i < 4; i++)
+        {
+            mineList.Add(new Mine(i+100));
+
+            int random = 0;
+            int index = 0;
+            //범위 상관없이 배치
+            while (true)
+            {
+                random = Random.Range(1, 100 + 1);
+                index = spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
+                if (!spotList[index].stageActive) break;
+            }
+            spotList[index].stageActive = true;
+            Debug.Log(index);
+
+            spotList[index].stageNum = mineList[i].getMineNum();    //스테이지 번호 저장
+            mineList[i].spotName = spotList[index].getPosition().name;
+            mineList[i].stageName = "mine" + mineList[i].getMineNum().ToString();   // ex) mine100
+
+            //광산 종류
+            random = Random.Range(0, 2);
+            if(random == 0)
+            {
+                mineList[i].type = "검은무쇠";
+            }
+            else { mineList[i].type = "아케나이트"; }
+        }
+
+
 
         stageManager.setStageInfoList(stageInfoList);
         
@@ -283,6 +318,65 @@ public class StageData : MonoBehaviour
         }
 
 
+        //광산
+        for (int i = 0; i < 4; i++)
+        {
+            //건설 진행 중
+            if (mineList[i].buildState == "upgrade")
+            {
+                mineList[i].buildTime -= Time.deltaTime;
+                if (mineList[i].buildTime < 0)
+                {
+                    mineList[i].buildTime = 0f;
+                    if (mineList[i].buildState == "upgrade")
+                    {
+                        mineList[i].level++;
+                        mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
+                        MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level++;
+                        MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).buildTime = mineBuildList.Find(x => x.level == MineData.instance.getMineInfoList().Find(y => y.type == mineList[i].type).level).time;
+                    }
+
+                    mineList[i].buildState = "complete";
+                    mineList[i].miningState = true;
+                }
+            }
+            //채굴 진행 중
+            if (mineList[i].miningState)
+            {
+                //획득 주기에 따라 획득
+                mineList[i].curTime += Time.deltaTime;
+                if (mineList[i].curTime > mineList[i].miningTime)
+                {
+                    mineList[i].curTime = 0f;
+
+                    mineList[i].getAmount += mineList[i].getOnceAmount;
+                    //확률에 따른 아이템 획득
+                    for (int j = 1; j < mineList[i].getThingName.Length; j++)
+                    {
+                        if (mineList[i].getThingName[j] != null)
+                        {
+                            int random = UnityEngine.Random.Range(1, 100 + 1);      //100확률
+                            //Debug.Log(random);
+                            int prob = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).getThingProb[j];  //아이템 확률
+                            if (random <= prob)
+                            {
+                                //Debug.Log(mineList[i].getThingName[j] + " 획득1");
+                                mineList[i].getThingNum[j]++;
+                            }
+                        }
+                    }
+
+                    //획득 가능한 양에 도달
+                    if (mineList[i].getAmount >= mineList[i].deposit)
+                    {
+                        mineList[i].getAmount = mineList[i].deposit;
+                        mineList[i].miningState = false;    //채굴 완료
+                    }
+                }
+            }
+        }
+
+
     }
 
 
@@ -359,6 +453,8 @@ public class StageData : MonoBehaviour
     public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }
     public void setPlunderInfoList(List<PlunderInfo> list) { plunderInfoList = list; }
     public List<Plunder> getPlundeList() { return plunderList; }
+    public List<Mine> getMineList() { return mineList; }
+    public void setMineList(List<Mine> list) { mineList = list; }
 
     public int getDist() { return dist; }
 

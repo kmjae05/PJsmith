@@ -332,7 +332,7 @@ public class TerritoryManager : MonoBehaviour
 
         //광산에 정보 저장
         MineData.instance.getMineList()[num].type = info.type;
-        MineData.instance.getMineList()[num].level = info.afterLevel;
+        MineData.instance.getMineList()[num].level = info.level;
         if (info.upgradeFlag)
         {
             MineData.instance.getMineList()[num].buildState = "upgrade";
@@ -356,6 +356,8 @@ public class TerritoryManager : MonoBehaviour
         MineData.instance.getMineList()[num].getOnceAmount = 1;
         MineData.instance.getMineList()[num].deposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
         MineData.instance.getMineList()[num].miningTime = 1f;
+
+        Debug.Log(info.level);
 
         //재료 소모
         //for (int i = 0; i < info.necessaryMaterials.Length; i++)
@@ -504,10 +506,7 @@ public class TerritoryManager : MonoBehaviour
                 StartLock.SetActive(false);
                 if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
             });
-
         });
-
-
     }
 
     //채굴 중
@@ -742,14 +741,17 @@ public class TerritoryManager : MonoBehaviour
     {
         MineInfo info = mineInfo.Find(x => x.type == curType);
 
+
         ExhaustionPopup.SetActive(true);
+        ExhaustionPopup.transform.Find("UIPanel/CancleButton").gameObject.SetActive(true);
+        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.SetActive(false);
 
         info.afterLevel = info.level + 1;
         info.afterTime = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).time;
         info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
         info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
 
-        ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + "광산 고갈";
+        ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + " 광산 고갈";
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초 -> " + info.afterTime + "초";
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text

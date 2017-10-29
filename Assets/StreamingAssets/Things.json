@@ -1,4 +1,4 @@
-{
+﻿{
     "Things": [
         {
             "item_no": 3,
@@ -46,7 +46,7 @@
             "icon": "Ore/st_b_01"
         },
         {
-            "item_no": 9,
+            "item_no": 8,
             "type": "Ore",
             "name": "미스릴",
             "explanation": "미스릴입니다.",
@@ -55,7 +55,7 @@
             "icon": "Ore/quartz_b_01"
         },
         {
-            "item_no": 10,
+            "item_no": 9,
             "type": "Ore",
             "name": "검은무쇠",
             "explanation": "검은무쇠입니다.",
@@ -64,7 +64,7 @@
             "icon": "Ore/st_b_08"
         },
         {
-            "item_no": 11,
+            "item_no": 10,
             "type": "Ore",
             "name": "아케나이트",
             "explanation": "아케나이트입니다.",

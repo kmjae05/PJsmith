@@ -52,12 +52,14 @@ public class ThingsData : MonoBehaviour
         thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
         thingsList.Find(x => x.name == "영웅의 단검").possession = 1;
+        thingsList.Find(x => x.name == "아케나이트").possession = 10000;
 
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
         //invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "아케나이트").type, "아케나이트", thingsList.Find(x => x.name == "아케나이트").possession));
     }
 
     public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록

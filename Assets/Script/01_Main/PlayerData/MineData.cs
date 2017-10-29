@@ -184,6 +184,10 @@ public class Mine
     public bool miningState;    //채굴 상태     t채굴 중, f채굴 완료
     public bool boostState;     //부스트 아이템 사용 상태
 
+    //스테이지에서 위치
+    public string spotName;     //위치한 곳 이름
+    public string stageName;    //스테이지에서 보일 이름
+
     public Mine(int mineNum)
     {
         this.mineNum = mineNum;
@@ -200,6 +204,8 @@ public class Mine
         curTime = 0f;
         miningState = false;
         boostState = false;
+
+        spotName = null;
     }
 
 
