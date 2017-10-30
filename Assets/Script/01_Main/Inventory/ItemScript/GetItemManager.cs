@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class GetItemManager : MonoBehaviour {
 
-    public static GetItemManager instance = new GetItemManager();
 
     private GameObject GetItemPopup;
     private GameObject itemListObj;

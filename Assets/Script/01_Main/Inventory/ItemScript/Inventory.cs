@@ -76,7 +76,7 @@ public class Inventory : MonoBehaviour
     private Text ItemText; //아이템 생성완료창 텍스트
 
     GameObject NewItemIcon; //new아이콘
-    int NewItemCount = 0; //새로운 아이템 카운트 new아이콘 활성화
+   // int NewItemCount = 0; //새로운 아이템 카운트 new아이콘 활성화
 
     void Awake()
     {

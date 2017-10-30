@@ -10,10 +10,10 @@ public class FadeHandle : MonoBehaviour {
         FadeImage = gameObject.transform.Find("FadeImage").GetComponent<Image>();
         FadeImage.gameObject.SetActive(false);
     }
-    void OnLevelWasLoaded()
-    {
-        StartCoroutine(FadeIn());
-    }
+    //void OnLevelWasLoaded()
+    //{
+    //    StartCoroutine(FadeIn());
+    //}
     IEnumerator FadeIn()
     {
         FadeImage.gameObject.SetActive(true);
