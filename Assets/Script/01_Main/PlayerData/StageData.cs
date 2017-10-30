@@ -197,7 +197,7 @@ public class StageData : MonoBehaviour
 
         //광산 생성
         mineList = new List<Mine>();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 2; i++)
         {
             mineList.Add(new Mine(i+100));
 
@@ -216,14 +216,14 @@ public class StageData : MonoBehaviour
             spotList[index].stageNum = mineList[i].getMineNum();    //스테이지 번호 저장
             mineList[i].spotName = spotList[index].getPosition().name;
             mineList[i].stageName = "mine" + mineList[i].getMineNum().ToString();   // ex) mine100
-
             //광산 종류
-            random = Random.Range(0, 2);
-            if(random == 0)
+            if (i == 0)
             {
                 mineList[i].type = "검은무쇠";
             }
             else { mineList[i].type = "아케나이트"; }
+            mineList[i].level = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level;
+            mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
         }
 
 
@@ -319,7 +319,7 @@ public class StageData : MonoBehaviour
 
 
         //광산
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < mineList.Count; i++)
         {
             //건설 진행 중
             if (mineList[i].buildState == "upgrade")
@@ -330,19 +330,21 @@ public class StageData : MonoBehaviour
                     mineList[i].buildTime = 0f;
                     if (mineList[i].buildState == "upgrade")
                     {
-                        mineList[i].level++;
+                        mineList[i].level = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).afterLevel;
                         mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
-                        MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level++;
+                        MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).afterLevel;
                         MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).buildTime = mineBuildList.Find(x => x.level == MineData.instance.getMineInfoList().Find(y => y.type == mineList[i].type).level).time;
                     }
 
                     mineList[i].buildState = "complete";
                     mineList[i].miningState = true;
+                    mineList[i].getAmount = 0;
                 }
             }
             //채굴 진행 중
             if (mineList[i].miningState)
             {
+                Debug.Log("채굴진행중");
                 //획득 주기에 따라 획득
                 mineList[i].curTime += Time.deltaTime;
                 if (mineList[i].curTime > mineList[i].miningTime)
@@ -350,6 +352,7 @@ public class StageData : MonoBehaviour
                     mineList[i].curTime = 0f;
 
                     mineList[i].getAmount += mineList[i].getOnceAmount;
+                    Debug.Log(mineList[i].getAmount);
                     //확률에 따른 아이템 획득
                     for (int j = 1; j < mineList[i].getThingName.Length; j++)
                     {
@@ -369,6 +372,7 @@ public class StageData : MonoBehaviour
                     //획득 가능한 양에 도달
                     if (mineList[i].getAmount >= mineList[i].deposit)
                     {
+                        Debug.Log("획득 가능한 양에 도달");
                         mineList[i].getAmount = mineList[i].deposit;
                         mineList[i].miningState = false;    //채굴 완료
                     }

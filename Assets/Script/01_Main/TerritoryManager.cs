@@ -137,7 +137,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(true);
 
                 mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
-                int num = i;
+                int num = i; Debug.Log("설마");
                 mineObj[i].GetComponent<Button>().onClick.AddListener(() => Mining(mineObj[num], num));
 
                 //획득
@@ -512,6 +512,7 @@ public class TerritoryManager : MonoBehaviour
     //채굴 중
     public void Mining(GameObject obj, int num)
     {
+        Debug.Log("mining111");
         MiningPopup.SetActive(true);
         MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = MineData.instance.getMineList()[num].type + " 광산 채굴 중";
         MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level.ToString();
@@ -627,6 +628,7 @@ public class TerritoryManager : MonoBehaviour
 
 
         //폐광
+        MiningPopup.transform.Find("UIPanel/CancleButton/Text").gameObject.GetComponent<Text>().text = "폐광";
         MiningPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         MiningPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
             SystemPopup.SetActive(true);
