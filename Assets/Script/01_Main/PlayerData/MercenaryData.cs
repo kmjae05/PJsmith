@@ -126,6 +126,94 @@ public class MercenaryData : MonoBehaviour {
         }
         
         mercenaryManager.setMercenary(mercenary);
+
+
+       ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "수련자의 단검").type, "수련자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 단검").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 단검").equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 단검").equipSetNum = 1;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "기사의 단검").type, "기사의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "기사의 단검").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "기사의 단검").equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "기사의 단검").equipSetNum = 2;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 창").type, "초보자의 창", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 창").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 창").equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 창").equipSetNum = 1;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "수련자의 창").type, "수련자의 창", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 창").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 창").equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "수련자의 창").equipSetNum = 2;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "여행자의 도끼").type, "여행자의 도끼", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "여행자의 도끼").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "여행자의 도끼").equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "여행자의 도끼").equipSetNum = 1;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 도끼").type, "초보자의 도끼", 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 도끼").equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 도끼").equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == "초보자의 도끼").equipSetNum = 2;
+
+        for (int i = 0; i < ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천갑옷").possession; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천갑옷").type, "초보자의 천갑옷", 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            if (i / 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 1;
+            else ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천바지").possession; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천바지").type, "초보자의 천바지", 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            if (i / 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 1;
+            else ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천투구").possession; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천투구").type, "초보자의 천투구", 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            if (i / 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 1;
+            else ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천장갑").possession; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천장갑").type, "초보자의 천장갑", 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            if (i / 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 1;
+            else ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천부츠").possession; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천부츠").type, "초보자의 천부츠", 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            if (i / 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 1;
+            else ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = 2;
+        }
+
     }
 
 
