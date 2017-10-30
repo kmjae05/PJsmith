@@ -211,7 +211,6 @@ public class StageData : MonoBehaviour
                 if (!spotList[index].stageActive) break;
             }
             spotList[index].stageActive = true;
-            Debug.Log(index);
 
             spotList[index].stageNum = mineList[i].getMineNum();    //스테이지 번호 저장
             mineList[i].spotName = spotList[index].getPosition().name;

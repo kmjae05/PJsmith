@@ -466,6 +466,10 @@ public class Inventory : MonoBehaviour
                 Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite 
                     = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == tempItemList1[i].name).icon);
 
+                //장비 장착 표시
+                if (tempItemList1[i].equip) Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(true);
+                else Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(false);
+
                 //장비일 경우 수량 대신 강화 수치 표시
                 if (tempItemList1[i].type == "Helmet" || tempItemList1[i].type == "Armor" || tempItemList1[i].type == "Gloves" || tempItemList1[i].type == "Pants"
                     || tempItemList1[i].type == "Weapon" || tempItemList1[i].type == "Boots")
@@ -541,6 +545,9 @@ public class Inventory : MonoBehaviour
                 Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite 
                     = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == tempItemList2[i].name).icon);
 
+                //장비 장착 표시
+                if (tempItemList2[i].equip) Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(true);
+                else Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(false);
 
                 //강화 수치 있는 경우
                 if (tempItemList1[i].reinforcement > 0)
@@ -585,6 +592,11 @@ public class Inventory : MonoBehaviour
 
                 Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite
                     = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == tempItemList3[i].name).icon);
+
+                //장비 장착 표시
+                if (tempItemList3[i].equip) Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(true);
+                else Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(false);
+
                 //강화 수치 있는 경우
                 if (tempItemList1[i].reinforcement > 0)
                 {
@@ -1064,11 +1076,23 @@ public class Inventory : MonoBehaviour
         //되도록이면 최대 5개까지만..
         EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/AbilityText").gameObject.GetComponent<Text>().text = abstr;
 
-        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
-        //시스템 팝업으로 판매
-        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener( () => sellManager.OpenEquipSellPopup(things) );
-
+        //장비 중
+        if (things.equip)
+        {
+            EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(true);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.GetComponent<Text>().text = things.equipChrName + " 세트" + things.equipSetNum.ToString() + "에 장비 중";
+        }
+        else
+        {
+            EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
+            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(false);
+            //시스템 팝업으로 판매
+            EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenEquipSellPopup(things));
+        }
     }
 
 

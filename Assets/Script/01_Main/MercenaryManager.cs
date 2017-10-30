@@ -51,54 +51,97 @@ public class MercenaryManager : MonoBehaviour {
     public void setMerInfo(GameObject obj)
     {
         Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
+
+        //장비 찾기
+        profilePopupManager.setEquipment(merTemp.getName(), profilePopupManager.getCurSetNum());
+
         //장비 이미지, 텍스트 변경
         GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite =
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipHelmet.name).icon);
         GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = 
-            merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipHelmet.name;
 
         GameObject.Find("EquipArmor/Image").GetComponent<Image>().sprite = 
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipArmor.name).icon);
         GameObject.Find("EquipArmor/Text").GetComponent<Text>().text = 
-            merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipArmor.name;
 
         GameObject.Find("EquipWeapon/Image").GetComponent<Image>().sprite = 
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipWeapon.name).icon);
         GameObject.Find("EquipWeapon/Text").GetComponent<Text>().text = 
-            merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipWeapon.name;
 
         GameObject.Find("EquipBoots/Image").GetComponent<Image>().sprite = 
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipBoots.name).icon);
         GameObject.Find("EquipBoots/Text").GetComponent<Text>().text = 
-            merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipBoots.name;
 
         GameObject.Find("EquipGloves/Image").GetComponent<Image>().sprite =
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipGloves.name).icon);
         GameObject.Find("EquipGloves/Text").GetComponent<Text>().text =
-            merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipGloves.name;
 
         GameObject.Find("EquipPants/Image").GetComponent<Image>().sprite =
-            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name).icon);
+            Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipPants.name).icon);
         GameObject.Find("EquipPants/Text").GetComponent<Text>().text =
-            merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name;
+            profilePopupManager.equipPants.name;
 
 
         //등급 프레임
         GameObject.Find("EquipHelmet/GradeFrame").GetComponent<Image>().color = 
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipHelmet[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipHelmet.name).grade);
         GameObject.Find("EquipArmor/GradeFrame").GetComponent<Image>().color = 
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipArmor[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipArmor.name).grade);
         GameObject.Find("EquipWeapon/GradeFrame").GetComponent<Image>().color = 
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipWeapon[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipWeapon.name).grade);
         GameObject.Find("EquipBoots/GradeFrame").GetComponent<Image>().color = 
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipBoots[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipBoots.name).grade);
         GameObject.Find("EquipGloves/GradeFrame").GetComponent<Image>().color =
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipGloves[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipGloves.name).grade);
         GameObject.Find("EquipPants/GradeFrame").GetComponent<Image>().color =
-            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == merTemp.equipPants[profilePopupManager.getCurSetNum() - 1].name).grade);
+            ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == profilePopupManager.equipPants.name).grade);
+
+        //장비 인포 버튼
+        GameObject.Find("EquipWeapon").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipWeapon").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipWeapon);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+        GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipHelmet);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+        GameObject.Find("EquipArmor").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipArmor").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipArmor);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+        GameObject.Find("EquipGloves").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipGloves").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipGloves);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+        GameObject.Find("EquipPants").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipPants").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipPants);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+        GameObject.Find("EquipBoots").GetComponent<Button>().onClick.RemoveAllListeners();
+        GameObject.Find("EquipBoots").GetComponent<Button>().onClick.AddListener(() => {
+            GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(profilePopupManager.equipBoots);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
+            GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+        });
+
 
         //*****캐릭터 3D모델 변경
-        GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(false);
+        //GameObject.Find("01_3D").transform.Find("Chr/Chr_Profile").gameObject.SetActive(false);
 
         //*****캐릭터 이미지 변경
         GameObject.Find("LevelText").GetComponent<Text>().text = merTemp.level.ToString();

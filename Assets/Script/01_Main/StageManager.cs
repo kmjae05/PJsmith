@@ -50,6 +50,7 @@ public class StageManager : MonoBehaviour
     private GameObject plunderItemBox;
 
     private GameObject ClearFail;
+    private GameObject Fail;
 
     private GameObject selectFrame;     //용병 선택 표시
     private bool selectMerFlag = false;         //용병 선택
@@ -133,6 +134,7 @@ public class StageManager : MonoBehaviour
         plunderItemListObj = plunderPopup.transform.Find("UIPanel/ItemBox/Scroll/ItemList").gameObject;
         plunderItemBox = plunderItemListObj.transform.Find("ItemBox").gameObject;
         ClearFail = GameObject.Find("System").transform.Find("ClearFail").gameObject;
+        Fail = GameObject.Find("System").transform.Find("Fail").gameObject;
 
         stageInfoList = stageData.getStageInfoList();
         plunderInfoList = stageData.getPlunderInfoList();
@@ -1281,7 +1283,7 @@ public class StageManager : MonoBehaviour
                     }
                 }
             }
-
+            Fail.SetActive(true);
             //애니
             StartCoroutine(closeLose());
         }
@@ -1364,7 +1366,7 @@ public class StageManager : MonoBehaviour
     IEnumerator closeLose()
     {
         yield return new WaitForSeconds(2.0f);
-        ClearFail.SetActive(false);
+        Fail.SetActive(false);
         plunderPlayerBox.transform.Find("Win").gameObject.SetActive(false);
         plunderPlayerBox.transform.Find("Lose").gameObject.SetActive(true);
         plunderEnemyBox.transform.Find("Win").gameObject.SetActive(true);

@@ -51,15 +51,127 @@ public class ThingsData : MonoBehaviour
         thingsList.Find(x => x.name == "돌").possession = 300;
         thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
-        thingsList.Find(x => x.name == "영웅의 단검").possession = 1;
         thingsList.Find(x => x.name == "아케나이트").possession = 10000;
+        thingsList.Find(x => x.name == "초보자의 단검").possession = 1;
+        thingsList.Find(x => x.name == "날카로운 단검").possession = 1;
+        thingsList.Find(x => x.name == "수련자의 단검").possession = 1;
+        thingsList.Find(x => x.name == "기사의 단검").possession = 1;
+        thingsList.Find(x => x.name == "초보자의 창").possession = 1;
+        thingsList.Find(x => x.name == "수련자의 창").possession = 1;
+        thingsList.Find(x => x.name == "여행자의 도끼").possession = 1;
+        thingsList.Find(x => x.name == "초보자의 도끼").possession = 1;
+        thingsList.Find(x => x.name == "초보자의 천갑옷").possession = 8;
+        thingsList.Find(x => x.name == "초보자의 천바지").possession = 8;
+        thingsList.Find(x => x.name == "초보자의 천투구").possession = 8;
+        thingsList.Find(x => x.name == "초보자의 천장갑").possession = 8;
+        thingsList.Find(x => x.name == "초보자의 천부츠").possession = 8;
+        //
+        thingsList.Find(x => x.name == "영웅의 단검").possession = 1;
 
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        //invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "아케나이트").type, "아케나이트", thingsList.Find(x => x.name == "아케나이트").possession));
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        invenThings.Find(x => x.name == "영웅의 단검").equip = false;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        invenThings.Find(x => x.name == "초보자의 단검").equip = true;
+        invenThings.Find(x => x.name == "초보자의 단검").equipChrName = Player.instance.getUser().Name;
+        invenThings.Find(x => x.name == "초보자의 단검").equipSetNum = 1;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "날카로운 단검").type, "날카로운 단검", 1));
+        invenThings.Find(x => x.name == "날카로운 단검").equip = true;
+        invenThings.Find(x => x.name == "날카로운 단검").equipChrName = Player.instance.getUser().Name;
+        invenThings.Find(x => x.name == "날카로운 단검").equipSetNum = 2;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "수련자의 단검").type, "수련자의 단검", 1));
+        invenThings.Find(x => x.name == "수련자의 단검").equip = true;
+        invenThings.Find(x => x.name == "수련자의 단검").equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+        invenThings.Find(x => x.name == "수련자의 단검").equipSetNum = 1;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "기사의 단검").type, "기사의 단검", 1));
+        invenThings.Find(x => x.name == "기사의 단검").equip = true;
+        invenThings.Find(x => x.name == "기사의 단검").equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+        invenThings.Find(x => x.name == "기사의 단검").equipSetNum = 2;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 창").type, "초보자의 창", 1));
+        invenThings.Find(x => x.name == "초보자의 창").equip = true;
+        invenThings.Find(x => x.name == "초보자의 창").equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+        invenThings.Find(x => x.name == "초보자의 창").equipSetNum = 1;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "수련자의 창").type, "수련자의 창", 1));
+        invenThings.Find(x => x.name == "수련자의 창").equip = true;
+        invenThings.Find(x => x.name == "수련자의 창").equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+        invenThings.Find(x => x.name == "수련자의 창").equipSetNum = 2;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "여행자의 도끼").type, "여행자의 도끼", 1));
+        invenThings.Find(x => x.name == "여행자의 도끼").equip = true;
+        invenThings.Find(x => x.name == "여행자의 도끼").equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+        invenThings.Find(x => x.name == "여행자의 도끼").equipSetNum = 1;
+
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 도끼").type, "초보자의 도끼", 1));
+        invenThings.Find(x => x.name == "초보자의 도끼").equip = true;
+        invenThings.Find(x => x.name == "초보자의 도끼").equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+        invenThings.Find(x => x.name == "초보자의 도끼").equipSetNum = 2;
+
+        for (int i = 0; i < thingsList.Find(x => x.name == "초보자의 천갑옷").possession; i++)
+        {
+            invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 천갑옷").type, "초보자의 천갑옷", 1));
+            invenThings[invenThings.Count - 1].equip = true;
+            if (i / 2 == 0)  invenThings[invenThings.Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if(i%2==0) invenThings[invenThings.Count - 1].equipSetNum = 1;
+            else invenThings[invenThings.Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < thingsList.Find(x => x.name == "초보자의 천바지").possession; i++)
+        {
+            invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 천바지").type, "초보자의 천바지", 1));
+            invenThings[invenThings.Count - 1].equip = true;
+            if (i / 2 == 0) invenThings[invenThings.Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) invenThings[invenThings.Count - 1].equipSetNum = 1;
+            else invenThings[invenThings.Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < thingsList.Find(x => x.name == "초보자의 천투구").possession; i++)
+        {
+            invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 천투구").type, "초보자의 천투구", 1));
+            invenThings[invenThings.Count - 1].equip = true;
+            if (i / 2 == 0) invenThings[invenThings.Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) invenThings[invenThings.Count - 1].equipSetNum = 1;
+            else invenThings[invenThings.Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < thingsList.Find(x => x.name == "초보자의 천장갑").possession; i++)
+        {
+            invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 천장갑").type, "초보자의 천장갑", 1));
+            invenThings[invenThings.Count - 1].equip = true;
+            if (i / 2 == 0) invenThings[invenThings.Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) invenThings[invenThings.Count - 1].equipSetNum = 1;
+            else invenThings[invenThings.Count - 1].equipSetNum = 2;
+        }
+        for (int i = 0; i < thingsList.Find(x => x.name == "초보자의 천부츠").possession; i++)
+        {
+            invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "초보자의 천부츠").type, "초보자의 천부츠", 1));
+            invenThings[invenThings.Count - 1].equip = true;
+            if (i / 2 == 0) invenThings[invenThings.Count - 1].equipChrName = Player.instance.getUser().Name;
+            else if (i / 2 == 1) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[0].getName();
+            else if (i / 2 == 2) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[1].getName();
+            else if (i / 2 == 3) invenThings[invenThings.Count - 1].equipChrName = MercenaryData.instance.getMercenary()[2].getName();
+            if (i % 2 == 0) invenThings[invenThings.Count - 1].equipSetNum = 1;
+            else invenThings[invenThings.Count - 1].equipSetNum = 2;
+        }
+
     }
 
     public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록
@@ -156,6 +268,8 @@ public class InventoryThings
     //장비관련
     public int reinforcement;   //강화수치
     public bool equip;          //장비 착용 상태
+    public int equipSetNum;     //장비 착용 세트 번호
+    public string equipChrName; //착용한 캐릭터 이름
 
     public InventoryThings()
     {
@@ -163,7 +277,8 @@ public class InventoryThings
         this.recent = true;
         this.reinforcement = 0;
         this.equip = false;
-        
+        equipChrName = null;
+        equipSetNum = 0;
     }
 
     public InventoryThings(string type, string name, int possession)
@@ -174,6 +289,8 @@ public class InventoryThings
         this.recent = true;
         this.reinforcement = 0;
         this.equip = false;
+        equipChrName = null;
+        equipSetNum = 0;
     }
 
 }
