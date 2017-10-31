@@ -248,6 +248,12 @@ public class TerritoryManager : MonoBehaviour
             else
             {
                 Debug.Log("null");
+                SystemPopup.SetActive(true);
+                SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                sys_yesButton.gameObject.SetActive(false);
+                sys_NoButton.gameObject.SetActive(false);
+                sys_OkButton.gameObject.SetActive(true);
                 return;
             }
 
@@ -803,6 +809,12 @@ public class TerritoryManager : MonoBehaviour
             else
             {
                 Debug.Log("null");
+                SystemPopup.SetActive(true);
+                SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                sys_yesButton.gameObject.SetActive(false);
+                sys_NoButton.gameObject.SetActive(false);
+                sys_OkButton.gameObject.SetActive(true);
                 return;
             }
             //재료 체크 완료//
