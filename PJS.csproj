@@ -351,6 +351,7 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemDatabase.cs" />
+    <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\SellManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
