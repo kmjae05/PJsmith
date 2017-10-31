@@ -1,0 +1,160 @@
+{
+    "MineBuild": [
+        
+		{
+            "level" : 1,
+            "deposit" : 100,
+            "material" : 1000,
+            "time" : 30
+        },{
+            "level" : 2,
+            "deposit" : 200,
+            "material" : 2000,
+            "time" : 40
+        },{
+            "level" : 3,
+            "deposit" : 300,
+            "material" : 3000,
+            "time" : 50
+        },{
+            "level" : 4,
+            "deposit" : 400,
+            "material" : 4000,
+            "time" : 60
+        },{
+            "level" : 5 ,
+            "deposit" : 500,
+            "material" : 5000,
+            "time" : 70
+        },{
+            "level" : 6,
+            "deposit" : 600,
+            "material" : 6000,
+            "time" : 80
+        },{
+            "level" : 7,
+            "deposit" : 700,
+            "material" : 7000,
+            "time" : 30
+        },{
+            "level" : 8,
+            "deposit" : 800,
+            "material" : 8000,
+            "time" : 30
+        },{
+            "level" : 9,
+            "deposit" : 900,
+            "material" : 9000,
+            "time" : 30
+        },{
+            "level" : 10,
+            "deposit" : 1000,
+            "material" : 10000,
+            "time" : 30
+        },{
+            "level" : 11,
+            "deposit" : 1100,
+            "material" : 11000,
+            "time" : 30
+        },{
+            "level" : 12,
+            "deposit" : 1200,
+            "material" : 12000,
+            "time" : 30
+        },{
+            "level" : 13,
+            "deposit" : 1300,
+            "material" : 13000,
+            "time" : 30
+        },{
+            "level" : 14,
+            "deposit" : 1400,
+            "material" : 14000,
+            "time" : 30
+        },{
+            "level" : 15,
+            "deposit" : 1500,
+            "material" : 15000,
+            "time" : 30
+        },{
+            "level" : 16,
+            "deposit" : 1600,
+            "material" : 16000,
+            "time" : 30
+        },{
+            "level" : 17,
+            "deposit" : 1700,
+            "material" : 17000,
+            "time" : 30
+        },{
+            "level" : 18,
+            "deposit" : 1800,
+            "material" : 18000,
+            "time" : 30
+        },{
+            "level" : 19,
+            "deposit" : 1900,
+            "material" : 19000,
+            "time" : 30
+        },{
+            "level" : 20,
+            "deposit" : 2000,
+            "material" : 20000,
+            "time" : 30
+        },{
+            "level" : 21,
+            "deposit" : 2100,
+            "material" : 21000,
+            "time" : 30
+        },{
+            "level" : 22,
+            "deposit" : 2200,
+            "material" : 22000,
+            "time" : 30
+        },{
+            "level" : 23,
+            "deposit" : 2300,
+            "material" : 23000,
+            "time" : 30
+        },{
+            "level" : 24,
+            "deposit" : 2400,
+            "material" : 24000,
+            "time" : 30
+        },{
+            "level" : 25,
+            "deposit" : 2500,
+            "material" : 25000,
+            "time" : 30
+        },{
+            "level" : 26,
+            "deposit" : 2600,
+            "material" : 26000,
+            "time" : 30
+        },{
+            "level" : 27,
+            "deposit" : 2700,
+            "material" : 27000,
+            "time" : 30
+        },{
+            "level" : 28,
+            "deposit" : 2800,
+            "material" : 28000,
+            "time" : 30
+        },{
+            "level" : 29,
+            "deposit" : 2900,
+            "material" : 29000,
+            "time" : 30
+        },{
+            "level" : 30,
+            "deposit" : 3000,
+            "material" : 30000,
+            "time" : 30
+        }
+        
+           
+        
+        
+    ]
+}

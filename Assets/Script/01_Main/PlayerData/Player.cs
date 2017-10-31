@@ -41,15 +41,40 @@ public class Player : MonoBehaviour {
         Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
         Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[0].name).type, Play.equipWeapon[0].name, 1));
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equip = true;
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equipChrName = getUser().Name;
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equipSetNum = 1;
+        for (int i = 0; i < 2; i++)
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[i].name).type, Play.equipWeapon[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i+ 1);
 
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[1].name).type, Play.equipWeapon[1].name, 1));
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equip = true;
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equipChrName = getUser().Name;
-        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equipSetNum = 2;
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipArmor[i].name).type, Play.equipArmor[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
+
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipPants[i].name).type, Play.equipPants[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
+
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipHelmet[i].name).type, Play.equipHelmet[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
+
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipGloves[i].name).type, Play.equipGloves[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
+
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipBoots[i].name).type, Play.equipBoots[i].name, 1));
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
+
+        }
+
 
 
     }
