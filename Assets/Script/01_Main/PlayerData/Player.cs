@@ -40,9 +40,21 @@ public class Player : MonoBehaviour {
         Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
         Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
         Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[0].name).type, Play.equipWeapon[0].name, 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equipChrName = getUser().Name;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[0].name).equipSetNum = 1;
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[1].name).type, Play.equipWeapon[1].name, 1));
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equip = true;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equipChrName = getUser().Name;
+        ThingsData.instance.getInventoryThingsList().Find(x => x.name == Play.equipWeapon[1].name).equipSetNum = 2;
+
+
     }
 
-    
+
     public void GetGameReward(int exp, int gold)        //제련 보상 획득
     {
         if (Play.level <= 30)
