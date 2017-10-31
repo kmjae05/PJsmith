@@ -37,7 +37,7 @@ public class NormalLoad : MonoBehaviour
     IEnumerator FadeOut()
     {
         FadeImageObject.SetActive(true);
-        for (float fade = 0.0f; fade < 1.0f; fade += 0.01f)
+        for (float fade = 0.0f; fade < 1.0f; fade += 0.05f)
         {
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;

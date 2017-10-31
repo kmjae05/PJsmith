@@ -354,6 +354,7 @@ public class StageData : MonoBehaviour
         if (i == 1) return "전갈"; else if (i == 2) return "오쿰"; else if (i == 3) return "인큐버스"; else return null;
     }
 
+
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
     public void setStageInfoList(List<StageInfo> list) { stageInfoList = list; }
     public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }

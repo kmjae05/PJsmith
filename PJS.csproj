@@ -373,6 +373,7 @@
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectEmblem.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\SelectTitle.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\StageData.cs" />
+    <Compile Include="Assets\Script\01_Main\PlayerData\StageMineData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\StatData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\TitleHandler.cs" />
     <Compile Include="Assets\Script\01_Main\ProfileChrDrag.cs" />
@@ -384,6 +385,7 @@
     <Compile Include="Assets\Script\01_Main\SetUp\ToggleSetupScript.cs" />
     <Compile Include="Assets\Script\01_Main\StageItem.cs" />
     <Compile Include="Assets\Script\01_Main\StageManager.cs" />
+    <Compile Include="Assets\Script\01_Main\StageMineManager.cs" />
     <Compile Include="Assets\Script\01_Main\Store\Store.cs" />
     <Compile Include="Assets\Script\01_Main\Store\StoreManager.cs" />
     <Compile Include="Assets\Script\01_Main\TerritoryManager.cs" />
