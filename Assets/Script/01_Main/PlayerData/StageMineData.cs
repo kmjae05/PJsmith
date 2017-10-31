@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageMineData : MonoBehaviour {
+public class StageMineData : MonoBehaviour
+{
 
+    public static StageMineData instance = null;
 
     //광산 데이터
     static private List<Mine> mineList;
@@ -12,7 +14,13 @@ public class StageMineData : MonoBehaviour {
     StageData stageData;
 
 
-    void Start ()
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
+    void Start()
     {
 
         stageData = GameObject.Find("StageData").GetComponent<StageData>();
@@ -47,10 +55,9 @@ public class StageMineData : MonoBehaviour {
             mineList[i].level = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level;
             mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
         }
-
     }
 
-    void Update ()
+    void Update()
     {
         //광산
         for (int i = 0; i < mineList.Count; i++)

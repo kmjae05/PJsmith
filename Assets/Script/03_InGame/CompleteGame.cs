@@ -2,9 +2,11 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class CompleteGame : MonoBehaviour {
+public class CompleteGame : MonoBehaviour
+{
     private GameObject RewardPopup;
     private GameObject ClearFail;
+    private GameObject Fail;
 
     private GameObject defaultItem;
     private GameObject Panel;
@@ -16,6 +18,7 @@ public class CompleteGame : MonoBehaviour {
     {
         RewardPopup = GameObject.Find("Popup").transform.Find("GameReward").gameObject;
         ClearFail = GameObject.Find("Popup").transform.Find("ClearFail").gameObject;
+        Fail = GameObject.Find("Popup").transform.Find("Fail").gameObject;
         RewardPopup.SetActive(false);
         Panel = RewardPopup.transform.Find("UIBack/Scroll/Panel").gameObject;
         //
@@ -42,14 +45,17 @@ public class CompleteGame : MonoBehaviour {
     }
     IEnumerator ActiveRewardPopup()
     {
-        if(win_lose)
-            yield return new WaitUntil(()=>ClearFail.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        if (win_lose)
+            yield return new WaitUntil(() => ClearFail.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        else yield return new WaitUntil(() => Fail.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
         RewardPopup.SetActive(true);
         ClearFail.SetActive(false);
+        Fail.SetActive(false);
         StartCoroutine(OpenRewards());
     }
     public void Complete_Lose()
     {
+        Fail.SetActive(true);
         win_lose = false;
         StartCoroutine(ActiveRewardPopup());    //보상 동일
 
@@ -58,30 +64,35 @@ public class CompleteGame : MonoBehaviour {
     IEnumerator OpenRewards()
     {
         yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < RewardItems.Length; i++)
+        if (win_lose)
         {
-            Things things = ThingsData.instance.getThingsList().Find(x => x.name == (OreSelect.SelectOre.name + " 주괴"));
-            //아이템 획득
-            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name) != null)
+            for (int i = 0; i < RewardItems.Length; i++)
             {
-                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).possession += 1;
-                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
-            }
-            else
-            {
-                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
-                    x => x.name == things.name).type, things.name, 1));
-                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
-            }
+                Things things = ThingsData.instance.getThingsList().Find(x => x.name == (OreSelect.SelectOre.name + " 주괴"));
+                //아이템 획득
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name) != null)
+                {
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).possession += 1;
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+                }
+                else
+                {
+                    ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                        x => x.name == things.name).type, things.name, 1));
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+                }
 
 
-            RewardItems[i].transform.Find("ItemIcon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(things.icon);
-            RewardItems[i].transform.Find("Text").gameObject.GetComponent<Text>().text = things.name;
-            RewardItems[i].SetActive(true);
-            //yield return new WaitUntil(() => RewardItems[i].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
-            yield return new WaitForSeconds(0.1f);
+                RewardItems[i].transform.Find("ItemIcon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(things.icon);
+                RewardItems[i].transform.Find("Text").gameObject.GetComponent<Text>().text = things.name;
+                RewardItems[i].SetActive(true);
+                //yield return new WaitUntil(() => RewardItems[i].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         RewardPopup.GetComponent<Animator>().SetTrigger("moveNext");
     }
-    
+
+
+    public bool getwin_lose() { return win_lose; }
 }

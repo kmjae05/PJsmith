@@ -85,6 +85,8 @@ public class InGameHandle : MonoBehaviour {
 
         //연속 제련 상태가 아니라면 연속 제련 버튼 끔
         //AutoRestart.gameObject.SetActive(false);
+
+        GoldBox.transform.Find("GoldText").GetComponent<Text>().text = Player.instance.getUser().gold.ToString();
 	}
     //#region UIAnimation
     //void UIAnimation_01()

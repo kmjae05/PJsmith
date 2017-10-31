@@ -9,6 +9,8 @@ public class RewardHandle : MonoBehaviour
     private Text ExpText;
     private Image RewardIcon;
     private Text RewardText;
+    int gold = 0;
+    int exp = 0;
 
     void Awake()
     {
@@ -20,19 +22,27 @@ public class RewardHandle : MonoBehaviour
     void Reward_Gold()
     {
         iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.gold, "onUpdate", "GoldCount", "time", 1));
-        GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", OreSelect.SelectOre.gold);
+
+        if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
+            gold = OreSelect.SelectOre.gold;
+        else gold = OreSelect.SelectOre.gold / 2;
+        GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", gold);
     }
     void Reward_Exp()
     {
         iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.exp, "onUpdate", "ExpCount", "time", 1));
-        GameObject.Find("PlayerData").GetComponent<Player>().getExp(OreSelect.SelectOre.exp);
+
+        if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
+            exp = OreSelect.SelectOre.exp;
+        else exp = OreSelect.SelectOre.exp / 2;
+        GameObject.Find("PlayerData").GetComponent<Player>().getExp(exp);
     }
-    void GoldCount(int num)
+    void GoldCount()
     {
-        GoldText.text = num.ToString();
+        GoldText.text = gold.ToString();
     }
-    void ExpCount(int num)
+    void ExpCount()
     {
-        ExpText.text = num.ToString();
+        ExpText.text = exp.ToString();
     }
 }

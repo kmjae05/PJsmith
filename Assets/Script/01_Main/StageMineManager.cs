@@ -73,7 +73,6 @@ public class StageMineManager : MonoBehaviour {
             }
         }
 
-
     }
 
     void Update ()
@@ -149,9 +148,11 @@ public class StageMineManager : MonoBehaviour {
                 }
 
             }
+
             //매장량 다 채우면 pickax없애고 텍스트 바꾸기
             if (mineList[i].buildState == "complete" && !mineList[i].miningState)
             {
+                mineObj.transform.Find("Text").gameObject.SetActive(true);
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[i].deposit.ToString() + "개 채굴 완료";
                 mineObj.transform.Find("pickax").gameObject.SetActive(false);
                 MiningPopup.SetActive(false);
