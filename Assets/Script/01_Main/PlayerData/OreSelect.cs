@@ -260,13 +260,13 @@ public class OreSelect : MonoBehaviour
         StartCoroutine(PinPanel());
 
     }
-    IEnumerator OnLevelWasLoaded()
-    {
-        int index = SelectOre.no;
-        //OreSelectPopup.SetActive(true);
-        yield return new WaitForSeconds(0.0003f);
-        Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(Panel.GetComponent<RectTransform>().anchoredPosition.x - index * 500, 150);
-    }
+    //IEnumerator OnLevelWasLoaded()
+    //{
+    //    int index = SelectOre.no;
+    //    //OreSelectPopup.SetActive(true);
+    //    yield return new WaitForSeconds(0.0003f);
+    //    Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(Panel.GetComponent<RectTransform>().anchoredPosition.x - index * 500, 150);
+    //}
 
     void Update()
     {

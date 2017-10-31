@@ -37,7 +37,7 @@ public class NormalLoad : MonoBehaviour
     IEnumerator FadeOut()
     {
         FadeImageObject.SetActive(true);
-        for (float fade = 0.0f; fade < 1.0f; fade += 0.05f)
+        for (float fade = 0.0f; fade < 1.0f; fade += 0.01f)
         {
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;
@@ -52,16 +52,20 @@ public class NormalLoad : MonoBehaviour
         //yield return StartCoroutine(LoadingTime()); //로딩시간
         //yield return StartCoroutine(FadeOut());     //페이드아웃
 
-        ////Logo 화면일 경우 일정 시간 후 Title 화면으로.
-        //if (SceneManager.GetActiveScene().buildIndex == 0)
-        //{
-        //    yield return StartCoroutine(LoadingTime()); //로딩시간
-        //    yield return StartCoroutine(FadeOut());     //페이드아웃
-        //    SceneManager.LoadScene("01_Title");
-        //}
+        //Logo 화면일 경우 일정 시간 후 Title 화면으로.
+        if (SceneManager.GetActiveScene().name == "00_Logo")
+        {
+            GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(false);
+            yield return StartCoroutine(LoadingTime()); //로딩시간
+            //animation
+            GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(true);
+            yield return new WaitUntil(() => GameObject.Find("Box").transform.Find("LogoImage").gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+            yield return StartCoroutine(FadeOut());     //페이드아웃
+            SceneManager.LoadScene("01_Title");
+        }
 
         //로딩화면
-        if(SceneManager.GetActiveScene().name == "08_Loading_GameIn"
+        if ( SceneManager.GetActiveScene().name == "08_Loading_GameIn"
             || SceneManager.GetActiveScene().name == "09_Loading_Normal")
         {
             yield return StartCoroutine(LoadingTime()); //로딩시간
@@ -72,7 +76,7 @@ public class NormalLoad : MonoBehaviour
     }
     IEnumerator LoadingTime()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
     }
 
 
