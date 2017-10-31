@@ -76,14 +76,16 @@ public class Clicker : MonoBehaviour {
     //        {
     //            if (click_state <= 0.0f)
     //            {
+    //                touchedPos = ui_camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y, ui_camera.transform.position.z));
     //                if (Chr_001.GetComponent<Animator>().GetBool("Atk_State"))
     //                {
-                        
-    //                    GameObject touchEff = Instantiate(touchEffectObj);
-    //                    touchEff.transform.SetParent(GameObject.Find("03_Effect").transform);
-    //                    touchEff.transform.position = touchedPos;
-    //                    touchEff.SetActive(true);
 
+    //                    GameObject touchEff = Instantiate(touchEffectObj);//, touchedPos, Quaternion.identity);
+    //                    touchEff.transform.SetParent(GameObject.Find("Effect").transform);
+    //                    touchEff.transform.position = new Vector3(touchedPos.x, touchedPos.y, 0f);
+    //                    touchEff.transform.localScale = new Vector3(1, 1, 1);
+    //                    Debug.Log(touchEff.transform.position.z);
+    //                    touchEff.SetActive(true);
     //                    Debug.Log("click");
     //                    click_state = 0.5f;
     //                    Chr_001.GetComponent<Animator>().SetTrigger("Click");//애니메이션 트리거 작동
