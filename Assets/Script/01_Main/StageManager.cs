@@ -552,13 +552,13 @@ public class StageManager : MonoBehaviour
 
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = false;
 
-            GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
-            mercImage.SetActive(true);
-            string merImageName = null;
-            if (result.mercenaryName == "A") merImageName = "miner";
-            if (result.mercenaryName == "B") merImageName = "ninja";
-            if (result.mercenaryName == "C") merImageName = "knight";
-            mercImage.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
+            //GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
+            //mercImage.SetActive(true);
+            //string merImageName = null;
+            //if (result.mercenaryName == "A") merImageName = "miner";
+            //if (result.mercenaryName == "B") merImageName = "ninja";
+            //if (result.mercenaryName == "C") merImageName = "knight";
+            //mercImage.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
 
             Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
             float time = stageInfoList.Find(x => x.getStageNum() == curStageSelect).time;

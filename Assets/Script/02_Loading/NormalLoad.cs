@@ -52,7 +52,7 @@ public class NormalLoad : MonoBehaviour
         //yield return StartCoroutine(LoadingTime()); //로딩시간
         //yield return StartCoroutine(FadeOut());     //페이드아웃
 
-        //Logo 화면일 경우 일정 시간 후 Title 화면으로.
+         //Logo 화면일 경우 일정 시간 후 Title 화면으로.
         if (SceneManager.GetActiveScene().name == "00_Logo")
         {
             GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(false);
@@ -63,9 +63,14 @@ public class NormalLoad : MonoBehaviour
             yield return StartCoroutine(FadeOut());     //페이드아웃
             SceneManager.LoadScene("01_Title");
         }
+        if (SceneManager.GetActiveScene().name == "01_Title")
+        {
+            yield return StartCoroutine(LoadingTime()); //로딩시간
+            ToLobby();
+        }
 
-        //로딩화면
-        if ( SceneManager.GetActiveScene().name == "08_Loading_GameIn"
+            //로딩화면
+            if ( SceneManager.GetActiveScene().name == "08_Loading_GameIn"
             || SceneManager.GetActiveScene().name == "09_Loading_Normal")
         {
             yield return StartCoroutine(LoadingTime()); //로딩시간
@@ -76,7 +81,7 @@ public class NormalLoad : MonoBehaviour
     }
     IEnumerator LoadingTime()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
     }
 
 
@@ -87,7 +92,7 @@ public class NormalLoad : MonoBehaviour
     IEnumerator LobbyFadeOut()
     {
         FadeImageObject.SetActive(true);
-        for (float fade = 0.0f; fade < 1.0f; fade += 0.08f)
+        for (float fade = 0.0f; fade < 1.0f; fade += 0.02f)
         {
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;

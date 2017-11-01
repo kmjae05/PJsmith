@@ -58,7 +58,7 @@ public class TerritoryManager : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            mineObj.Add(uiPanel.transform.Find("Mine/Spot" + (i + 1).ToString()).gameObject);
+            mineObj.Add(uiPanel.transform.Find("Back/Mine/Spot" + (i + 1).ToString()).gameObject);
             mineObj[i].SetActive(true);
         }
         for (int i = 0; i < 6; i++)
@@ -80,7 +80,7 @@ public class TerritoryManager : MonoBehaviour
 
     private void Update()
     {
-        uiPanel.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.instance.getUser().level.ToString();
+        uiPanel.transform.Find("Back/Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.instance.getUser().level.ToString();
         for (int i = 2; i < bottonButtonList.Count; i++)
             if (Player.instance.getUser().level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
@@ -132,6 +132,7 @@ public class TerritoryManager : MonoBehaviour
                 Color clr = mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
                 mineObj[i].transform.Find("Image").gameObject.SetActive(true);
+                mineObj[i].transform.Find("road").gameObject.SetActive(true);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(true);
@@ -269,6 +270,7 @@ public class TerritoryManager : MonoBehaviour
                 if (MineData.instance.getMineList()[j].buildState == "nothing")
                 {
                     mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                    mineObj[j].transform.Find("road").gameObject.SetActive(false);
                     mineObj[j].transform.Find("Text").gameObject.SetActive(false);
                     mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
                     mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
@@ -287,6 +289,7 @@ public class TerritoryManager : MonoBehaviour
                 int num = j;
                 mineObj[j].GetComponent<Button>().onClick.AddListener(() => BuildSpotClick(obj, num));
                 mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                mineObj[j].transform.Find("road").gameObject.SetActive(false);
                 mineObj[j].transform.Find("Text").gameObject.SetActive(false);
                 mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
                 mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
@@ -375,6 +378,7 @@ public class TerritoryManager : MonoBehaviour
 
         obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         obj.transform.Find("Image").gameObject.SetActive(true);
+        obj.transform.Find("road").gameObject.SetActive(true);
         obj.transform.Find("Text").gameObject.SetActive(true);
         obj.transform.Find("DottedCircle").gameObject.SetActive(false);
         obj.transform.Find("pickax").gameObject.SetActive(false);
@@ -388,6 +392,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[j].buildState == "nothing")
             {
                 mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                mineObj[j].transform.Find("road").gameObject.SetActive(false);
                 mineObj[j].transform.Find("Text").gameObject.SetActive(false);
                 mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
@@ -475,6 +480,7 @@ public class TerritoryManager : MonoBehaviour
                 Color clr = mineObj[num].transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj[num].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
                 mineObj[num].transform.Find("Image").gameObject.SetActive(true);
+                mineObj[num].transform.Find("road").gameObject.SetActive(true);
                 mineObj[num].transform.Find("Text").gameObject.SetActive(true);
                 mineObj[num].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[num].transform.Find("pickax").gameObject.SetActive(true);
@@ -504,11 +510,13 @@ public class TerritoryManager : MonoBehaviour
                 MineData.instance.getMineList()[num].buildTime = 0f;
                 MineData.instance.getMineList()[num].buildState = "nothing";
                 obj.transform.Find("Image").gameObject.SetActive(false);
+                obj.transform.Find("road").gameObject.SetActive(false);
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("TypeName").gameObject.SetActive(false);
                 BottomMenuLock.SetActive(false);
                 StartLock.SetActive(false);
                 if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
+                obj.GetComponent<Button>().onClick.RemoveAllListeners();
             });
 
         });
@@ -653,6 +661,7 @@ public class TerritoryManager : MonoBehaviour
                 MineData.instance.getMineList()[num].miningState = false;
                 MineData.instance.getMineList()[num].boostState = false;
                 obj.transform.Find("Image").gameObject.SetActive(false);
+                obj.transform.Find("road").gameObject.SetActive(false);
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("pickax").gameObject.SetActive(false);
                 obj.transform.Find("TypeName").gameObject.SetActive(false);
@@ -846,6 +855,7 @@ public class TerritoryManager : MonoBehaviour
 
             obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
             obj.transform.Find("Image").gameObject.SetActive(true);
+            obj.transform.Find("road").gameObject.SetActive(true);
             obj.transform.Find("Text").gameObject.SetActive(true);
             obj.transform.Find("DottedCircle").gameObject.SetActive(false);
             obj.transform.Find("pickax").gameObject.SetActive(false);
@@ -912,6 +922,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[i].buildState == "nothing")
             {
                 mineObj[i].transform.Find("Image").gameObject.SetActive(false);
+                mineObj[i].transform.Find("road").gameObject.SetActive(false);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(false);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
@@ -922,6 +933,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[i].buildState == "beunder" || MineData.instance.getMineList()[i].buildState == "upgrade")
             {
                 mineObj[i].transform.Find("Image").gameObject.SetActive(true);
+                mineObj[i].transform.Find("road").gameObject.SetActive(true);
                 Color clr = mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 0.5f);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);               //시간은 update에서
@@ -934,6 +946,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[i].buildState == "complete")
             {
                 mineObj[i].transform.Find("Image").gameObject.SetActive(true);
+                mineObj[i].transform.Find("road").gameObject.SetActive(true);
                 Color clr = mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);               //획득량은 update에서
@@ -954,6 +967,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[i].buildState == "exhaustion")
             {
                 mineObj[i].transform.Find("Image").gameObject.SetActive(true);
+                mineObj[i].transform.Find("road").gameObject.SetActive(true);
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);               //시간은 update에서
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
