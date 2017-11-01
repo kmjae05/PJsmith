@@ -20,7 +20,7 @@ public class BrazierManager : MonoBehaviour {
         worldCam = GameObject.Find("Main_Camera").GetComponent<Camera>();
         uiCam = GameObject.Find("UI_Camera").GetComponent<Camera>();
         brazier = GameObject.Find("brazierImg").transform;
-        brazierButtonPos = GameObject.Find("MenuButton (1)").transform.Find("BrazierButton").gameObject;
+        brazierButtonPos = GameObject.Find("MenuButton").transform.Find("BrazierButton").gameObject;
 
         miniButton = brazierButtonPos.transform.Find("BrazierMiniButton").gameObject;
         miniButton.SetActive(false);
