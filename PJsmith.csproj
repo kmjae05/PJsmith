@@ -346,6 +346,7 @@
     <Compile Include="Assets\Script\01_Main\ExitScript.cs" />
     <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
+    <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipChangeManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\GetItemManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
