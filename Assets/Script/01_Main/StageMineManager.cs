@@ -97,6 +97,7 @@ public class StageMineManager : MonoBehaviour {
                 else
                 {
                     float time = mineList[i].buildTime;
+                    mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1, 1, 1);
                     if (time > 3600)
                     {
                         mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text =
@@ -124,11 +125,12 @@ public class StageMineManager : MonoBehaviour {
             //채굴 상태
             if (mineList[i].buildState == "complete" && mineList[i].miningState)
             {
-                Debug.Log("채굴상태");
+                 //Debug.Log("채굴상태");
                 Color clr = mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
                 mineObj.transform.Find("Image").gameObject.SetActive(true);
                 mineObj.transform.Find("Text").gameObject.SetActive(true);
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
                 mineObj.transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj.transform.Find("pickax").gameObject.SetActive(true);
 
@@ -154,6 +156,7 @@ public class StageMineManager : MonoBehaviour {
             {
                 mineObj.transform.Find("Text").gameObject.SetActive(true);
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[i].deposit.ToString() + "개 채굴 완료";
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
                 mineObj.transform.Find("pickax").gameObject.SetActive(false);
                 MiningPopup.SetActive(false);
 
@@ -184,11 +187,19 @@ public class StageMineManager : MonoBehaviour {
         info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
 
         ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + " 광산";
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + info.level + " -> " + info.afterLevel;
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.SetActive(false);
-        //ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = "소요 시간 : " + info.buildTime + "초 -> " + info.afterTime + "초";
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
-            = "매장량 : " + MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit.ToString() + " -> " + info.afterDeposit;
+
+        ExhaustionPopup.transform.Find("UIPanel/CurInfoBox/LevelText").gameObject.GetComponent<Text>().text = info.level.ToString();
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = info.afterLevel.ToString();
+
+        ExhaustionPopup.transform.Find("UIPanel/CurInfoBox/TimeText").gameObject.GetComponent<Text>().text = info.buildTime.ToString() + "초";
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = info.afterTime + "초";
+
+        ExhaustionPopup.transform.Find("UIPanel/CurInfoBox/DepositText").gameObject.GetComponent<Text>().text = MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit.ToString();
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = info.afterDeposit.ToString();
+
         string mtr = null;
         for (int i = 0; i < info.getThingName.Length; i++)
         {
@@ -203,8 +214,22 @@ public class StageMineManager : MonoBehaviour {
                 else { mtr += ", " + info.getThingName[i]; }
             }
         }
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = "획득 아이템 : " + mtr;
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = "필요 재료 : " + mineList[num].type + " " + info.curMaterial + "개";
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text =  mtr;
+        ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = mineList[num].type + " " + info.curMaterial + "개";
+        //보유 개수
+        InventoryThings have = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.type);
+        if (have == null)
+        {
+            ExhaustionPopup.transform.Find("UIPanel/HaveText").gameObject.GetComponent<Text>().text = "보유 재료 개수 : 0";
+            ExhaustionPopup.transform.Find("UIPanel/HaveText").gameObject.GetComponent<Text>().color = new Color(1f, 0.32f, 0.21f);
+        }
+        else
+        {
+            ExhaustionPopup.transform.Find("UIPanel/HaveText").gameObject.GetComponent<Text>().text = "보유 재료 개수 : " + have.possession;
+            if (have.possession >= info.curMaterial)
+                ExhaustionPopup.transform.Find("UIPanel/HaveText").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
+            else ExhaustionPopup.transform.Find("UIPanel/HaveText").gameObject.GetComponent<Text>().color = new Color(1f, 0.32f, 0.21f);
+        }
 
         //레벨업
         ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();

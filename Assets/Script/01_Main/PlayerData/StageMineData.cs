@@ -85,7 +85,7 @@ public class StageMineData : MonoBehaviour
             //채굴 진행 중
             if (mineList[i].miningState)
             {
-                Debug.Log("채굴진행중");
+                //Debug.Log("채굴진행중");
                 //획득 주기에 따라 획득
                 mineList[i].curTime += Time.deltaTime;
                 if (mineList[i].curTime > mineList[i].miningTime)

@@ -63,7 +63,9 @@ public class DiceManager : MonoBehaviour {
     //팝업창 나타날 때 초기화
     public void init()
     {
-        ticket = ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession;
+        if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓") != null)
+            ticket = ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession;
+        else ticket = 0;
         ticketText = GameObject.Find("PossessText").gameObject.GetComponent<Text>();
         ticketText.text = "소지 : " + ticket.ToString();
         checkImage = GameObject.Find("DiceGameUIPanel (1)").transform.Find("checkImage").gameObject;
@@ -79,8 +81,8 @@ public class DiceManager : MonoBehaviour {
         if (ticket > 0)
         {
             buttonBox.SetActive(true);
-            ticket--;
-            ThingsData.instance.getThingsList().Find(x => x.name == "티켓").possession = ticket;
+            ticket = ticket -1;
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession = ticket;
             ticketText.text = "소지 : " + ticket.ToString();
             StartCoroutine(throwDice());
         }
@@ -88,7 +90,7 @@ public class DiceManager : MonoBehaviour {
         else
         {
             ticket = 0;
-            ThingsData.instance.getThingsList().Find(x => x.name == "티켓").possession = ticket;
+            ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession = ticket;
         }
         
 
@@ -138,7 +140,10 @@ public class DiceManager : MonoBehaviour {
         {
             case 1:
                 ticket += num; ticketText.text = "소지 : " + ticket.ToString();
-                ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession += num;
+                if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓") == null)
+                    ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "티켓").type, "티켓", num));
+                else
+                    ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession += num;
                 ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").recent = true;
                 break;
             case 2:

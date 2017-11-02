@@ -703,7 +703,7 @@ public class StageManager : MonoBehaviour
                 }
                 result.getItemTimeFlag = false;
                 GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = true;
-                WorldMapBackObj.transform.Find("/Stage/stage" + result.getStageNum().ToString() + "Button/MercImage").gameObject.SetActive(false);
+                WorldMapBackObj.transform.Find("Stage/stage" + result.getStageNum().ToString() + "Button/MercImage").gameObject.SetActive(false);
 
                 Mercenary mer = mercenaryManager.getMercenary().Find(x => x.getName() == result.mercenaryName);
                 mer.setStageNum(0);
