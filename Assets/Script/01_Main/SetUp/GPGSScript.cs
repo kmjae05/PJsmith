@@ -13,9 +13,9 @@ public class GPGSScript : MonoBehaviour {
     {
         //초기화
         //recommended for debugging:
-        PlayGamesPlatform.DebugLogEnabled = true;
+        //PlayGamesPlatform.DebugLogEnabled = true;
         //Activate the Google Play gaems platform
-        PlayGamesPlatform.Activate();
+        //PlayGamesPlatform.Activate();
         //
 
 
@@ -34,6 +34,6 @@ public class GPGSScript : MonoBehaviour {
     public void googleLogoutButton()
     {
         // sign out
-        ((PlayGamesPlatform)Social.Active).SignOut();
+        //((PlayGamesPlatform)Social.Active).SignOut();
     }
 }
