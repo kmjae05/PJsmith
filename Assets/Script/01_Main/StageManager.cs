@@ -326,13 +326,12 @@ public class StageManager : MonoBehaviour
                     {
                         Image spr = GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemImage").gameObject.GetComponent<Image>();
                         //이미지 교체
-                        Debug.Log(stageInfoListtmp[i].getRecentItem);
+                        //Debug.Log(stageInfoListtmp[i].getRecentItem);
                         ItemImageChange(stageInfoListtmp[i].getRecentItem, spr);
                         //획득 개수
                         GameObject.Find(stageName + "Button").transform.Find("GetItemEff/Text").gameObject.GetComponent<Text>().text = "+" + stageInfoListtmp[i].getRecentItemNum;
                         StartCoroutine(getItemEff(stageInfoListtmp[i], stageName));
                     }
-
                 }
                 //완료
                 stageInfoListtmp = stageInfoList.FindAll(x => x.complete == true);

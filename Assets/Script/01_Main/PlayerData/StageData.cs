@@ -210,7 +210,7 @@ public class StageData : MonoBehaviour
             {
                 if (stageInfoListtmp[i].time <= stageInfoListtmp[i].getItemTime)
                 {
-                    Debug.Log(stageInfoListtmp[i].time);
+                    //Debug.Log(stageInfoListtmp[i].time);
                     stageInfoListtmp[i].getItemTimeFlag = false;
 
                     //아이템 획득
@@ -312,11 +312,10 @@ public class StageData : MonoBehaviour
                 {
                     if (rand <= prob + monsterData.getMonsterList()[i].itemProb[j] && rand > prob)
                     {
-                        Debug.Log("j : " + j);
                         stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j];
                         stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
                         stin.getRecentItem = stin.getItem[j]; stin.getRecentItemNum = 1;
-                        Debug.Log(stin.getRecentItem);
+                        //Debug.Log(stin.getRecentItem);
                         return;
                     }
                     else { prob += monsterData.getMonsterList()[i].itemProb[j]; }

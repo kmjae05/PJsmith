@@ -117,6 +117,15 @@ public class ProfilePopupManager : MonoBehaviour {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipWeapon);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipWeapon);
+
+
+
+                });
+
             });
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.AddListener(() => {

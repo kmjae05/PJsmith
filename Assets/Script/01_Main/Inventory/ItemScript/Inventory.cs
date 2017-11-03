@@ -550,7 +550,7 @@ public class Inventory : MonoBehaviour
                 else Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(false);
 
                 //강화 수치 있는 경우
-                if (tempItemList1[i].reinforcement > 0)
+                if (tempItemList2[i].reinforcement > 0)
                 {
                     Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList2[i].reinforcement.ToString();
                     Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);
@@ -598,7 +598,7 @@ public class Inventory : MonoBehaviour
                 else Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/EquipText").gameObject.SetActive(false);
 
                 //강화 수치 있는 경우
-                if (tempItemList1[i].reinforcement > 0)
+                if (tempItemList3[i].reinforcement > 0)
                 {
                     Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList3[i].reinforcement.ToString();
                     Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);

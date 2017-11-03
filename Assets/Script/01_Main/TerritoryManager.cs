@@ -889,7 +889,7 @@ public class TerritoryManager : MonoBehaviour
     //광석 획득
     public void getOre(GameObject obj, int num)
     {
-        Debug.Log("완료");
+        //Debug.Log("완료");
 
         Player.instance.getExp(10);
 
