@@ -131,6 +131,16 @@ public class StageManager : MonoBehaviour
         imdComPopup = GameObject.Find("System").transform.Find("ImdCompletePopup").gameObject;
         imd_yesButton = imdComPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
 
+        GameObject.Find("Menu").transform.Find("WorldMap (1)/Stage/CloseButton").gameObject.GetComponent<Button>().onClick.AddListener(
+            () => {
+                GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.SetActive(true);
+                GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject.SetActive(false);
+                GameObject.Find("Menu").transform.Find("WorldMap (1)/Stage/PlunderButton").gameObject.SetActive(true);
+                GameObject.Find("Menu").transform.Find("WorldMap (1)/Stage/HuntingButton").gameObject.SetActive(false);
+                mode = true;
+            });
+
+
         //위치 재배치
         //stage버튼 개수만큼 각 대륙별로 버튼 생성. 배치.
         //스팟 transform 설정
@@ -639,11 +649,11 @@ public class StageManager : MonoBehaviour
         result.state = false;
 
         //남은 시간 계산해서 아이템 획득
-        Debug.Log(result.time);
+        //Debug.Log(result.time);
         int num = ((int)result.time / 10) + 1;
         while (num>0)
         {
-            Debug.Log(num);
+            //Debug.Log(num);
             stageData.getItem(result);
             num--;
         }

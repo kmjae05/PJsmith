@@ -50,6 +50,7 @@ public class EquipChangeManager : MonoBehaviour
 
     private InventoryThings curInventoryThings;     //현재 선택된 장비
     private string curType;                         //현재 선택된 장비 종류
+
     private int selectNum;          //선택 개수
 
     private void Start()
@@ -100,6 +101,8 @@ public class EquipChangeManager : MonoBehaviour
     //교체
     public void ChangeEquip(InventoryThings equipThings)
     {
+        curInventoryThings = equipThings;
+
         TitleText.text = "장비 교체";
         curEquipBoxInfoText.text = "";
         changeEquipBoxInfoText.text = "";
@@ -170,12 +173,14 @@ public class EquipChangeManager : MonoBehaviour
 
 
                 //클릭
+                int objNum = inventoryThings.Count - 1;
+                int num = i;
                 inventoryThings[inventoryThings.Count - 1].GetComponent<Button>().onClick.RemoveAllListeners();
                 inventoryThings[inventoryThings.Count - 1].GetComponent<Button>().onClick.AddListener(
-                    () =>{
-                        SelectChangeItem(inventoryThings[inventoryThings.Count - 1], invenThingsList[i]);
+                    () => {
+                        SelectChangeItem(inventoryThings[objNum], invenThingsList[num]);
 
-                });
+                    });
             }
 
 
@@ -194,15 +199,62 @@ public class EquipChangeManager : MonoBehaviour
     //하나 선택하면 나머지 선택 해제
     void SelectChangeItem(GameObject obj, InventoryThings invenThings)
     {
-        for(int i=0; i< inventoryThings.Count; i++) { inventoryThings[i].transform.Find("SelectImage").gameObject.SetActive(false); }
+        for (int i = 0; i < inventoryThings.Count; i++) { inventoryThings[i].transform.Find("SelectImage").gameObject.SetActive(false); }
         obj.transform.Find("SelectImage").gameObject.SetActive(true);
 
+        //밑에 장비 표시
+        changeItemBoxGradeFrame.color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == invenThings.name).grade);
+        changeItemBoxIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == invenThings.name).icon);
+        changeItemBoxNameText.text = invenThings.name;
+        if (invenThings.reinforcement > 0)
+            changeInfoBoxReinText.text = invenThings.reinforcement.ToString();
+        else changeInfoBoxReinText.text = null;
+
+        string abstr = "";
+        string statstr = "";
+        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == invenThings.name);
+        //강화 수치에 따라 스탯 계산 다시 해줘야 함.
+
+        if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += equip.stat.dps + "\n"; }
+        if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += equip.stat.strPower + "\n"; }
+        if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += equip.stat.attackSpeed + "\n"; }
+        if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += equip.stat.focus + "\n"; }
+        if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += equip.stat.critical + "\n"; }
+        if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += equip.stat.defPower + "\n"; }
+        if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += equip.stat.evaRate + "\n"; }
+        if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
+        changeInfoBoxAbilityInfoText.text = abstr;
+        changeInfoBoxAbilityText.text = statstr;
+
+        changeItemBoxIcon.transform.gameObject.SetActive(true);
+        changeItemBoxNameText.transform.gameObject.SetActive(true);
+        changeInfoBoxReinText.transform.gameObject.SetActive(true);
+        changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
+
+
+        //버튼 
     }
 
 
+    //교체하기 버튼
+    void changeButton(InventoryThings invenThings)
+    {
+        //curInventoryThings
+
+        //기존 장비 세트 번호, 착용 유무, 용병 이름 저장. 바꿔줌.
+        //InventoryThings beforeThings = 
+        //선택한 장비 착용상태, 세트번호, 용병 이름 부여.
+
+        //전투력 변동 효과
+
+        //창 끄기
+    }
 
 
-    
+    //전투력 변동 효과
+
+
+
 
 
 }
