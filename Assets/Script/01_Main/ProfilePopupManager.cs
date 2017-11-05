@@ -8,7 +8,8 @@ public class ProfilePopupManager : MonoBehaviour {
     private int setNum = 0;     //선택된 세트 번호
     private int curSetNum = 0;  //현재 선택된 세트 번호
 
-    private GameObject curSelectChr; //현재 선택된 캐릭터 이름
+    private GameObject curSelectChrObj; //현재 선택된 캐릭터 이름
+    private string curSelectChr;
 
     public InventoryThings equipWeapon = new InventoryThings();
     public InventoryThings equipHelmet = new InventoryThings();
@@ -49,12 +50,12 @@ public class ProfilePopupManager : MonoBehaviour {
     {
         curSetNum = 1;
         setChrInfo(GameObject.Find("SmithSelect"));
-        //setOutLine(GameObject.Find("SmithSelect"));
+        setOutLine(GameObject.Find("SmithSelect"));
     }
 
 
     //현재 세트 번호
-    public void setCurSetNum(int num) { curSetNum = num; setChrInfo(curSelectChr); }
+    public void setCurSetNum(int num) { curSetNum = num; setChrInfo(curSelectChrObj); }
 
     //대표 세트 변경
     public void changeSet()
@@ -82,8 +83,9 @@ public class ProfilePopupManager : MonoBehaviour {
     //
     public void setChrInfo(GameObject obj)
     {
-        curSelectChr = obj;
-
+        curSelectChrObj = obj;
+        nameExtra(obj);
+        Debug.Log(curSelectChr);
         if (obj.name == "SmithSelect")
         {
             //장비 찾기
@@ -120,42 +122,69 @@ public class ProfilePopupManager : MonoBehaviour {
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
                     () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipWeapon);
-
-
-
                 });
-
             });
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.AddListener(() => {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipHelmet);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipHelmet);
+                    });
             });
             GameObject.Find("EquipArmor").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipArmor").GetComponent<Button>().onClick.AddListener(() => {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipArmor);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipArmor);
+                    });
             });
             GameObject.Find("EquipGloves").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipGloves").GetComponent<Button>().onClick.AddListener(() => {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipGloves);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipGloves);
+                    });
             });
             GameObject.Find("EquipPants").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipPants").GetComponent<Button>().onClick.AddListener(() => {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipPants);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipPants);
+                    });
             });
             GameObject.Find("EquipBoots").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipBoots").GetComponent<Button>().onClick.AddListener(() => {
                 GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(equipBoots);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject.SetActive(true);
                 GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ChangeButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("EquipItemInfoPopup").SetActive(false);
+                        GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipBoots);
+                    });
             });
 
 
@@ -206,14 +235,15 @@ public class ProfilePopupManager : MonoBehaviour {
         GameObject.Find("ChrSelect/ProfileOutline").transform.localPosition = chr.transform.localPosition;
     }
 
-
+    //이름 추출
+    void nameExtra(GameObject obj) { curSelectChr = obj.transform.Find("NameText").GetComponent<Text>().text; }
 
 
     public void setSetNum(int num) { setNum = num; }
     public int getSetNum() { return setNum; }
 
     public int getCurSetNum() { return curSetNum; }
-
+    public string getCurChr() { return curSelectChr; }
 }
 
 

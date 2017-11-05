@@ -143,7 +143,7 @@ public class SellManager : MonoBehaviour {
                 {
                     GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
                 }
-
+                
                 sellPopup.SetActive(false);
                 if (equipItemInfoPopup.activeInHierarchy) equipItemInfoPopup.SetActive(false);
 

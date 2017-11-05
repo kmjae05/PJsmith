@@ -72,7 +72,6 @@ public class StatData : MonoBehaviour {
         for (int i = 0; i < playerStat.Count; i++)
         {
             Stat equipStat = new Stat();
-
             equipStat = SumEquip(Player.instance.getUser().equipHelmet[i], Player.instance.getUser().equipArmor[i],
                 Player.instance.getUser().equipWeapon[i], Player.instance.getUser().equipBoots[i]
                 , Player.instance.getUser().equipGloves[i], Player.instance.getUser().equipPants[i]);
