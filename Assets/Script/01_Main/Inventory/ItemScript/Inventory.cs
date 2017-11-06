@@ -1062,9 +1062,9 @@ public class Inventory : MonoBehaviour
         }
         else EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/ReinText").gameObject.SetActive(false);
         //강화 버튼
-        //if(things.reinforcement<10)
-        //EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(true);
-        //else EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
+        if(things.reinforcement<10)
+        EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(true);
+        else EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
 
         string abstr = "";
         if (equip.stat.dps > 0) abstr += "전투력 " + equip.stat.dps + "\n";

@@ -51,7 +51,7 @@ public class EquipReinforceManager : MonoBehaviour {
 
     //버튼
     private Button ChangeButton;
-    //private Button ReinforceButton;
+    private Button ReinforceButton;
 
     private InventoryThings curInventoryThings;     //현재 선택된 장비
     private string curType;                         //현재 선택된 장비 종류
@@ -105,10 +105,17 @@ public class EquipReinforceManager : MonoBehaviour {
         selectNumText = inventoryUIPanel.transform.Find("SelectNumText").gameObject.GetComponent<Text>();
 
         ChangeButton = inventoryUIPanel.transform.Find("ChangeButton").gameObject.GetComponent<Button>();
-        //ReinforceButton = inventoryUIPanel.transform.Find("ReinforceButton").gameObject.GetComponent<Button>();
+        ReinforceButton = inventoryUIPanel.transform.Find("ReinforceButton").gameObject.GetComponent<Button>();
 
         curInventoryThings = new InventoryThings();
         curType = null;
+
+        Button closeButton = inventoryUIPanel.transform.Find("CloseButton").gameObject.GetComponent<Button>();
+        closeButton.onClick.AddListener(() =>
+       {
+           for (int i = 0; i < inventoryThings.Count; i++) Destroy(inventoryThings[i]);
+           inventoryThings.Clear();
+       });
 
     }
 
@@ -160,7 +167,7 @@ public class EquipReinforceManager : MonoBehaviour {
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
-
+        selectNumText.text = "재료 선택 0 / 10";
 
         selectNumText.transform.gameObject.SetActive(true);
             
@@ -184,18 +191,14 @@ public class EquipReinforceManager : MonoBehaviour {
         obj.transform.Find("SelectImage").gameObject.SetActive(true);
 
         //강화 상태 미리보기
-        tmpexp = invenThings.exp;
-        tmprein = invenThings.reinforcement;
+        //tmprein = invenThings.reinforcement;
         tmpexp += 10;
-        if(tmpexp >= 100)
+        Debug.Log(tmpexp);
+        if(tmpexp + invenThings.exp >= 100)
         {
-            tmpexp -= 100;
+            tmpexp = 0;
             tmprein += 1;
-
         }
-
-
-
 
         //밑에 장비 표시
         if (invenThings.reinforcement > 0)
@@ -204,8 +207,8 @@ public class EquipReinforceManager : MonoBehaviour {
 
         string abstr = "";
         string statstr = "";
-        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == invenThings.name);
-        //강화 수치에 따라 스탯 계산 다시 해줘야 함.
+        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
+
         float dps = 0;
         if (equip.stat.strPower > 0)
         {
@@ -219,24 +222,39 @@ public class EquipReinforceManager : MonoBehaviour {
         {
             //기본 스탯
             dps = equip.stat.dps;
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower ) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus ) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical ) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower ) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate ) + "\n"; }
+            if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         }
-        if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
-        if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower * tmprein * 1.5f) + "\n"; }
-        if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (int)(equip.stat.attackSpeed * tmprein * 1.5f) + "\n"; }
-        if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus * tmprein * 1.5f) + "\n"; }
-        if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical * tmprein * 1.5f) + "\n"; }
-        if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower * tmprein * 1.5f) + "\n"; }
-        if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate * tmprein * 1.5f) + "\n"; }
-        if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
+        else
+        {
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate * tmprein * 1.5f) + "\n"; }
+            if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
+        }
+        
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
+        if (curInventoryThings.reinforcement > 0)
+            changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
+        else changeInfoBoxReinText.text = null;
 
         changeItemBoxIcon.transform.gameObject.SetActive(true);
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
 
-        selectNumText.text = "재료 선택 " + selectNum + "/10";
+        selectNumText.text = "재료 선택 " + selectNum + " / 10";
 
         obj.GetComponent<Button>().onClick.RemoveAllListeners();
         obj.GetComponent<Button>().onClick.AddListener(
@@ -245,19 +263,88 @@ public class EquipReinforceManager : MonoBehaviour {
             });
 
         //강화 버튼 
-        //ReinforceButton.onClick.RemoveAllListeners();
-        //ReinforceButton.onClick.AddListener(() => Reinforce(invenThings));
+        ReinforceButton.onClick.RemoveAllListeners();
+        ReinforceButton.onClick.AddListener(() => Reinforce(invenThings));
     }
 
     //선택 해제
     void CancelItem(GameObject obj, InventoryThings invenThings)
     {
-        //중복 해결 가능?
         selectObjList.Remove(obj);
         selectInvenList.Remove(invenThings);
 
         selectNum--;
 
+        obj.transform.Find("SelectImage").gameObject.SetActive(false);
+
+        //강화 상태 미리보기
+        tmpexp -= 10;
+        Debug.Log(tmpexp);
+        if (tmpexp + invenThings.exp < 0)
+        {
+            //
+            tmpexp = 90;
+            tmprein -= 1;
+        }
+
+
+        //밑에 장비 표시
+        if (invenThings.reinforcement > 0)
+            changeInfoBoxReinText.text = invenThings.reinforcement.ToString();
+        else changeInfoBoxReinText.text = null;
+
+        string abstr = "";
+        string statstr = "";
+        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
+
+        float dps = 0;
+        if (equip.stat.strPower > 0)
+        {
+            dps = (equip.stat.strPower * tmprein * 1.5f) * ((float)equip.stat.attackSpeed * tmprein * 1.5f) * (equip.stat.critical * tmprein * 1.5f);
+        }
+        else if (equip.stat.defPower > 0)
+        {
+            dps = (equip.stat.defPower * tmprein * 1.5f) * ((float)equip.stat.evaRate * tmprein * 1.5f);
+        }
+        if (dps == 0)
+        {
+            //기본 스탯
+            dps = equip.stat.dps;
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate) + "\n"; }
+            if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
+        }
+        else
+        {
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate * tmprein * 1.5f) + "\n"; }
+            if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
+        }
+
+        changeInfoBoxAbilityInfoText.text = abstr;
+        changeInfoBoxAbilityText.text = statstr;
+        if (curInventoryThings.reinforcement > 0)
+            changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
+        else changeInfoBoxReinText.text = null;
+
+        changeItemBoxIcon.transform.gameObject.SetActive(true);
+        changeItemBoxNameText.transform.gameObject.SetActive(true);
+        changeInfoBoxReinText.transform.gameObject.SetActive(true);
+        changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
+
+
+
+        selectNumText.text = "재료 선택 " + selectNum + " / 10";
 
 
         obj.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -291,6 +378,7 @@ public class EquipReinforceManager : MonoBehaviour {
             => x.type == ThingsData.instance.getThingsList().Find(y => y.name == equip.name).type);
         for (int i = 0; i < inventoryThings.Count; i++) Destroy(inventoryThings[i]);
         inventoryThings.Clear();
+
         for (int i = 0; i < invenThingsList.Count; i++)
         {
             if (!invenThingsList[i].equip && invenThingsList[i].possession > 0)

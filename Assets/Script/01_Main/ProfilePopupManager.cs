@@ -124,7 +124,13 @@ public class ProfilePopupManager : MonoBehaviour {
                     () => {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipWeapon);
-                });
+                    });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipWeapon);
+                    });
             });
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipHelmet").GetComponent<Button>().onClick.AddListener(() => {
@@ -137,6 +143,13 @@ public class ProfilePopupManager : MonoBehaviour {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipHelmet);
                     });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipHelmet);
+                    });
+
             });
             GameObject.Find("EquipArmor").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipArmor").GetComponent<Button>().onClick.AddListener(() => {
@@ -149,6 +162,13 @@ public class ProfilePopupManager : MonoBehaviour {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipArmor);
                     });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipArmor);
+                    });
+
             });
             GameObject.Find("EquipGloves").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipGloves").GetComponent<Button>().onClick.AddListener(() => {
@@ -161,6 +181,13 @@ public class ProfilePopupManager : MonoBehaviour {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipGloves);
                     });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipGloves);
+                    });
+
             });
             GameObject.Find("EquipPants").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipPants").GetComponent<Button>().onClick.AddListener(() => {
@@ -173,6 +200,13 @@ public class ProfilePopupManager : MonoBehaviour {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipPants);
                     });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipPants);
+                    });
+
             });
             GameObject.Find("EquipBoots").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipBoots").GetComponent<Button>().onClick.AddListener(() => {
@@ -185,6 +219,13 @@ public class ProfilePopupManager : MonoBehaviour {
                         GameObject.Find("EquipItemInfoPopup").SetActive(false);
                         GameObject.Find("PlayerManager").GetComponent<EquipChangeManager>().ChangeEquip(equipBoots);
                     });
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.SetActive(true);
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                    () => {
+                        GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(equipBoots);
+                    });
+
             });
 
 

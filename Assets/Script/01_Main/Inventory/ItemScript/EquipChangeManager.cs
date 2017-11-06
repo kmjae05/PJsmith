@@ -105,6 +105,12 @@ public class EquipChangeManager : MonoBehaviour
         curInventoryThings = new InventoryThings();
         curType = null;
 
+        Button closeButton = inventoryUIPanel.transform.Find("CloseButton").gameObject.GetComponent<Button>();
+        closeButton.onClick.AddListener(() =>
+        {
+            for (int i = 0; i < inventoryThings.Count; i++) Destroy(inventoryThings[i]);
+            inventoryThings.Clear();
+        });
     }
 
 
@@ -495,7 +501,7 @@ public class EquipChangeManager : MonoBehaviour
 
 
     //인벤토리 생성
-    void createInventory(Equipment equip)
+    public void createInventory(Equipment equip)
     {
         List<InventoryThings> invenThingsList = ThingsData.instance.getInventoryThingsList().FindAll(x
             => x.type == ThingsData.instance.getThingsList().Find(y => y.name == equip.name).type);
