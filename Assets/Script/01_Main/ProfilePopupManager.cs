@@ -85,7 +85,7 @@ public class ProfilePopupManager : MonoBehaviour {
     {
         curSelectChrObj = obj;
         nameExtra(obj);
-        Debug.Log(curSelectChr);
+
         if (obj.name == "SmithSelect")
         {
             //장비 찾기

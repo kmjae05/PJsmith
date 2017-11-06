@@ -70,7 +70,6 @@ public class DiceManager : MonoBehaviour {
         ticketText.text = "소지 : " + ticket.ToString();
         checkImage = GameObject.Find("DiceGameUIPanel (1)").transform.Find("checkImage").gameObject;
         checkImage.SetActive(false);
-
     }
 
 

@@ -417,6 +417,17 @@ public class StageManager : MonoBehaviour
                     }
                 }
             }
+
+            //기상 변화
+            if (StageData.instance.rainFlag)
+            {
+
+            }
+            else
+            {
+
+            }
+
         }
 
         stageData.setStageInfoList(stageInfoList);

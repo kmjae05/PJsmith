@@ -477,7 +477,7 @@ public class Inventory : MonoBehaviour
                     //강화 수치 있는 경우
                     if (tempItemList1[i].reinforcement > 0)
                     {
-                        Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList1[i].reinforcement.ToString();
+                        Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = "+" + tempItemList1[i].reinforcement.ToString();
                         Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);
                     }
                     //강화 수치 없는 경우
@@ -552,7 +552,7 @@ public class Inventory : MonoBehaviour
                 //강화 수치 있는 경우
                 if (tempItemList2[i].reinforcement > 0)
                 {
-                    Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList2[i].reinforcement.ToString();
+                    Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = "+" + tempItemList2[i].reinforcement.ToString();
                     Tap2Slots[Tap2Slots.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);
                 }
                 //강화 수치 없는 경우
@@ -600,7 +600,7 @@ public class Inventory : MonoBehaviour
                 //강화 수치 있는 경우
                 if (tempItemList3[i].reinforcement > 0)
                 {
-                    Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList3[i].reinforcement.ToString();
+                    Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = "+" + tempItemList3[i].reinforcement.ToString();
                     Tap3Slots[Tap3Slots.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);
                 }
                 //강화 수치 없는 경우
@@ -1054,13 +1054,17 @@ public class Inventory : MonoBehaviour
         EquipItemInfoPopup.transform.Find("UIPanel/ItemBox/Icon").gameObject.GetComponent<Image>().sprite 
             = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == things.name).icon);
 
-
+        //강화 표시
         if (things.reinforcement > 0)
         {
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/ReinText").gameObject.SetActive(true);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/ReinText").gameObject.GetComponent<Text>().text = "+" + things.reinforcement;
         }
         else EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/ReinText").gameObject.SetActive(false);
+        //강화 버튼
+        //if(things.reinforcement<10)
+        //EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(true);
+        //else EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
 
         string abstr = "";
         if (equip.stat.dps > 0) abstr += "전투력 " + equip.stat.dps + "\n";

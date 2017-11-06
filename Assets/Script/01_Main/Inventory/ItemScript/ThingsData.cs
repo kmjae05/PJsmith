@@ -134,10 +134,10 @@ public class Things
     public int sell;
     public string icon;
 
-    public int possession;
-    public bool isLock;
+    public int possession;  //안 씀
+    public bool isLock;     //안 씀
 
-    
+        //도감
 
     public Things(JsonData thingsData, int index)
     {
@@ -164,7 +164,7 @@ public class InventoryThings
     public string name;    
 
     public int possession;
-    public bool isLock;
+    //public bool isLock;
     public bool recent;
 
     //장비관련
@@ -172,6 +172,7 @@ public class InventoryThings
     public bool equip;          //장비 착용 상태
     public int equipSetNum;     //장비 착용 세트 번호
     public string equipChrName; //착용한 캐릭터 이름
+    public int exp;             //강화도
 
     public InventoryThings()
     {
@@ -181,7 +182,7 @@ public class InventoryThings
         this.equip = false;
         equipChrName = null;
         equipSetNum = 0;
-
+        exp = 0;
     }
 
     public InventoryThings(string type, string name, int possession)
@@ -194,6 +195,7 @@ public class InventoryThings
         this.equip = false;
         equipChrName = null;
         equipSetNum = 0;
+        exp = 0;
     }
 
 }

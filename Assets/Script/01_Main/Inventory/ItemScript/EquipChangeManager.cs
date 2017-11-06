@@ -121,7 +121,7 @@ public class EquipChangeManager : MonoBehaviour
         curItemBoxIcon.sprite = Resources.Load < Sprite > (ThingsData.instance.getThingsList().Find(x => x.name == equipThings.name).icon);
         curItemBoxNameText.text = equipThings.name;
         if (equipThings.reinforcement > 0)
-            curInfoBoxReinText.text = equipThings.reinforcement.ToString();
+            curInfoBoxReinText.text = "+" + equipThings.reinforcement.ToString();
         else curInfoBoxReinText.text = null;
 
         string abstr = "";
@@ -171,7 +171,7 @@ public class EquipChangeManager : MonoBehaviour
         changeItemBoxIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == invenThings.name).icon);
         changeItemBoxNameText.text = invenThings.name;
         if (invenThings.reinforcement > 0)
-            changeInfoBoxReinText.text = invenThings.reinforcement.ToString();
+            changeInfoBoxReinText.text = "+" + invenThings.reinforcement.ToString();
         else changeInfoBoxReinText.text = null;
 
         string abstr = "";
@@ -420,7 +420,7 @@ public class EquipChangeManager : MonoBehaviour
         curItemBoxIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == curInventoryThings.name).icon);
         curItemBoxNameText.text = curInventoryThings.name;
         if (curInventoryThings.reinforcement > 0)
-            curInfoBoxReinText.text = curInventoryThings.reinforcement.ToString();
+            curInfoBoxReinText.text = "+" + curInventoryThings.reinforcement.ToString();
         else curInfoBoxReinText.text = null;
 
         string abstr = "";
@@ -494,7 +494,7 @@ public class EquipChangeManager : MonoBehaviour
 
 
 
-//인벤토리 생성
+    //인벤토리 생성
     void createInventory(Equipment equip)
     {
         List<InventoryThings> invenThingsList = ThingsData.instance.getInventoryThingsList().FindAll(x
@@ -519,13 +519,13 @@ public class EquipChangeManager : MonoBehaviour
                 //강화 수치 있는 경우
                 if (invenThingsList[i].reinforcement > 0)
                 {
-                    inventoryThings[inventoryThings.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = invenThingsList[i].reinforcement.ToString();
+                    inventoryThings[inventoryThings.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = "+" + invenThingsList[i].reinforcement.ToString();
                     inventoryThings[inventoryThings.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(true);
                 }
                 //강화 수치 없는 경우
                 else inventoryThings[inventoryThings.Count - 1].transform.Find("Item/AmountText").gameObject.SetActive(false);
 
-                //클릭
+                //선택
                 int objNum = inventoryThings.Count - 1;
                 int num = i;
                 inventoryThings[inventoryThings.Count - 1].GetComponent<Button>().onClick.RemoveAllListeners();
@@ -536,7 +536,6 @@ public class EquipChangeManager : MonoBehaviour
                     });
             }
         }
-
     }
 
 }

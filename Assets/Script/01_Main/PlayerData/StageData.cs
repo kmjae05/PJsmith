@@ -34,6 +34,13 @@ public class StageData : MonoBehaviour
     private GameObject SpotObj;
     private MonsterData monsterData;
 
+    //기상 변화
+    private float delayTime = 30 * 60;  //30분마다
+    private float delayDeltaTime;
+    private float rainTime = 5f;        //5분
+    private float rainDeltaTime;
+    public bool rainFlag;          //플래그
+
     void Awake()
     {
         if (instance == null)
@@ -282,6 +289,22 @@ public class StageData : MonoBehaviour
             }
         }
 
+
+        //기상
+        if(!rainFlag)
+            delayDeltaTime += Time.deltaTime;
+        if (delayDeltaTime > delayTime)
+        {
+            delayDeltaTime = 0;
+            rainFlag = true;
+        }
+        if (rainFlag)
+            rainDeltaTime += Time.deltaTime;
+        if (rainDeltaTime > rainTime)
+        {
+            rainDeltaTime = 0;
+            rainFlag = false;
+        }
 
     }
 
