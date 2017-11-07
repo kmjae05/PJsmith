@@ -88,6 +88,7 @@ public class ProfilePopupManager : MonoBehaviour {
 
         if (obj.name == "SmithSelect")
         {
+            GameObject.Find("ChrImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Chr/smith");
             //장비 찾기
             setEquipment(Player.instance.getUser().Name, curSetNum);
 
@@ -253,6 +254,7 @@ public class ProfilePopupManager : MonoBehaviour {
         }
         else
         {
+            GameObject.Find("ChrImage").GetComponent<Image>().sprite = null;
             mercenaryManager.setMerInfo(obj);
         }
     }

@@ -514,7 +514,8 @@ public class Inventory : MonoBehaviour
                     });
                 }
                 //기타 아이템 팝업
-                else if (tempItemList1[i].type == "Others" || tempItemList1[i].type == "Material"|| tempItemList1[i].type == "Book")
+                else if (tempItemList1[i].type == "Others" || tempItemList1[i].type == "Material" || tempItemList1[i].type == "Book"
+                    || tempItemList1[i].type == "Bookpiece")
                 {
                     int index = i;
                     Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
@@ -655,7 +656,7 @@ public class Inventory : MonoBehaviour
         }
         //기타
         List<InventoryThings> tempItemList5 = new List<InventoryThings>();
-        tempItemList5 = thingsData.getInventoryThingsList().FindAll(x => x.type == "Others" || x.type == "Book");
+        tempItemList5 = thingsData.getInventoryThingsList().FindAll(x => x.type == "Others" || x.type == "Book" || x.type == "Bookpiece");
         for (int i = 0; i < tempItemList5.Count; i++)
         {
             if (tempItemList5[i].possession > 0)
@@ -675,7 +676,7 @@ public class Inventory : MonoBehaviour
                 Tap5Slots[Tap5Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList5[i].possession.ToString();
                 Tap5Slots[Tap5Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList5[i].recent);
 
-                if (tempItemList5[i].type == "Others" || tempItemList5[i].type == "Book")
+                if (tempItemList5[i].type == "Others" || tempItemList5[i].type == "Book" || tempItemList5[i].type == "Bookpiece")
                 {
                     int index = i;
                     Tap5Slots[Tap5Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
@@ -1089,18 +1090,20 @@ public class Inventory : MonoBehaviour
         if (things.equip)
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(true);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(true);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.GetComponent<Text>().text = things.equipChrName + " 세트" + things.equipSetNum.ToString() + "에 장비 중";
         }
         else
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
+            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(false);
             //시스템 팝업으로 판매
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenEquipSellPopup(things));
         }
-        EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
+        
 
     }
 
@@ -1123,8 +1126,24 @@ public class Inventory : MonoBehaviour
         ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenSellPopup(things));
 
+        //제련북 버튼    //하나씩
+        if(things.type == "Book")
+        {
+
+        }
+
+        //제련북 조각 버튼     //여럿
+        if (things.type == "Bookpiece")
+        {
+            //slider.minValue = 0;
+            //slider.maxValue = things.possession/10;
+
+            
+        }
 
     }
+
+
 
 
 

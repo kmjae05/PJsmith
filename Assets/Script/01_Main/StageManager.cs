@@ -175,9 +175,9 @@ public class StageManager : MonoBehaviour
                     spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
                     string merImageName = null;
-                    if (sList[i].mercenaryName == "A") merImageName = "miner";
-                    if (sList[i].mercenaryName == "B") merImageName = "ninja";
-                    if (sList[i].mercenaryName == "C") merImageName = "knight";
+                    if (sList[i].mercenaryName == "soldier1") merImageName = "soldier1";
+                    if (sList[i].mercenaryName == "soldier2") merImageName = "soldier2";
+                    if (sList[i].mercenaryName == "soldier3") merImageName = "soldier3";
                     spotButton.transform.Find("MercImage/Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
                 }
 
@@ -214,6 +214,7 @@ public class StageManager : MonoBehaviour
                 plunderButton.name = pList[i].PlunderName + "Button";
                 //sprite
                 plunderButton.transform.Find("State/NameText").gameObject.GetComponent<Text>().text = pList[i].opponentName;
+                plunderButton.transform.Find("State/NameText").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
                 plunderButton.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = "Level " + (1).ToString();//
 
                 //리젠 상태일 때 반투명

@@ -36,7 +36,7 @@ public class MercenaryData : MonoBehaviour {
         {
             mercenaryCreate = new Mercenary();
             if (i == 1) {
-                mercenaryCreate.setName("A"); mercenaryCreate.setMer_no(1);
+                mercenaryCreate.setName("soldier1"); mercenaryCreate.setMer_no(1);
                 mercenaryCreate.level = Player.instance.getUser().level;
                 mercenaryCreate.stat.strPower = 60;
                 mercenaryCreate.stat.attackSpeed = 1.0f;
@@ -99,7 +99,7 @@ public class MercenaryData : MonoBehaviour {
 
             }
             if (i == 2) {
-                mercenaryCreate.setName("B"); mercenaryCreate.setMer_no(2);
+                mercenaryCreate.setName("soldier2"); mercenaryCreate.setMer_no(2);
                 mercenaryCreate.level = Player.instance.getUser().level;
                 
                 mercenaryCreate.stat.strPower = 70;
@@ -161,7 +161,7 @@ public class MercenaryData : MonoBehaviour {
 
             }
             if (i == 3) {
-                mercenaryCreate.setName("C"); mercenaryCreate.setMer_no(3);
+                mercenaryCreate.setName("soldier3"); mercenaryCreate.setMer_no(3);
                 mercenaryCreate.level = Player.instance.getUser().level;
                
                 mercenaryCreate.stat.strPower = 80;

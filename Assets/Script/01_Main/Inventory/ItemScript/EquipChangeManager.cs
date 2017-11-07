@@ -37,6 +37,9 @@ public class EquipChangeManager : MonoBehaviour
     private Text changeInfoBoxReinText;
     private Text changeInfoBoxAbilityInfoText;
     private Text changeInfoBoxAbilityText;
+    private Text changeInfoBoxAdditionText;
+    private Slider changeInfoBoxExpSlider;
+
 
     // 인벤토리
     private GameObject inventoryUIPanel;
@@ -90,6 +93,8 @@ public class EquipChangeManager : MonoBehaviour
         changeInfoBoxReinText = changeInfoBox.transform.Find("ReinText").gameObject.GetComponent<Text>();
         changeInfoBoxAbilityInfoText = changeInfoBox.transform.Find("AbilityInfoText").gameObject.GetComponent<Text>();
         changeInfoBoxAbilityText = changeInfoBox.transform.Find("AbilityText").gameObject.GetComponent<Text>();
+        changeInfoBoxAdditionText = changeInfoBox.transform.Find("AdditionText").gameObject.GetComponent<Text>();
+        changeInfoBoxExpSlider = changeInfoBox.transform.Find("ExpSlider").gameObject.GetComponent<Slider>();
 
         inventoryUIPanel = equipSelectPopup.transform.Find("InventoryUIPanel").gameObject;
         inventoryPanel = inventoryUIPanel.transform.Find("Scroll/Panel").gameObject;
@@ -119,8 +124,10 @@ public class EquipChangeManager : MonoBehaviour
     //교체
     public void ChangeEquip(InventoryThings equipThings)
     {
-        ChangeButton.transform.gameObject.SetActive(false);
-        ReinforceButton.transform.gameObject.SetActive(true);
+        ChangeButton.transform.gameObject.SetActive(true);
+        ReinforceButton.transform.gameObject.SetActive(false);
+        changeInfoBoxExpSlider.transform.gameObject.SetActive(false);
+        changeInfoBoxAdditionText.transform.gameObject.SetActive(false);
 
         curInventoryThings = equipThings;
 

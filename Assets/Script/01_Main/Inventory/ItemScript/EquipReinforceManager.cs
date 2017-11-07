@@ -37,6 +37,9 @@ public class EquipReinforceManager : MonoBehaviour {
     private Text changeInfoBoxReinText;
     private Text changeInfoBoxAbilityInfoText;
     private Text changeInfoBoxAbilityText;
+    private Text changeInfoBoxAdditionText;
+    private Slider changeInfoBoxExpSlider;
+    private Text changeInfoBoxExpText;
 
     // 인벤토리
     private GameObject inventoryUIPanel;
@@ -93,6 +96,9 @@ public class EquipReinforceManager : MonoBehaviour {
         changeInfoBoxReinText = changeInfoBox.transform.Find("ReinText").gameObject.GetComponent<Text>();
         changeInfoBoxAbilityInfoText = changeInfoBox.transform.Find("AbilityInfoText").gameObject.GetComponent<Text>();
         changeInfoBoxAbilityText = changeInfoBox.transform.Find("AbilityText").gameObject.GetComponent<Text>();
+        changeInfoBoxAdditionText = changeInfoBox.transform.Find("AdditionText").gameObject.GetComponent<Text>();
+        changeInfoBoxExpSlider = changeInfoBox.transform.Find("ExpSlider").gameObject.GetComponent<Slider>();
+        changeInfoBoxExpText = changeInfoBoxExpSlider.transform.Find("ExpText").gameObject.GetComponent<Text>();
 
         inventoryUIPanel = equipSelectPopup.transform.Find("InventoryUIPanel").gameObject;
         inventoryPanel = inventoryUIPanel.transform.Find("Scroll/Panel").gameObject;
@@ -124,6 +130,8 @@ public class EquipReinforceManager : MonoBehaviour {
     {
         ChangeButton.transform.gameObject.SetActive(false);
         ReinforceButton.transform.gameObject.SetActive(true);
+        changeInfoBoxExpSlider.transform.gameObject.SetActive(true);
+        changeInfoBoxAdditionText.transform.gameObject.SetActive(true);
 
         curInventoryThings = equipThings;
 
@@ -162,14 +170,18 @@ public class EquipReinforceManager : MonoBehaviour {
         if (equipThings.reinforcement > 0)
             changeInfoBoxReinText.text = "+" + equipThings.reinforcement.ToString();
         else changeInfoBoxReinText.text = null;
-        Debug.Log(abstr);
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
+        changeInfoBoxAdditionText.text = null;
 
         changeItemBoxIcon.transform.gameObject.SetActive(true);
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
+        changeInfoBoxAdditionText.transform.gameObject.SetActive(true);
+        changeInfoBoxExpSlider.value = curInventoryThings.exp;
+        changeInfoBoxExpText.text = curInventoryThings.exp + "%";
+
         selectNumText.text = "재료 선택 0 / 10";
 
         selectNumText.transform.gameObject.SetActive(true);
@@ -210,6 +222,7 @@ public class EquipReinforceManager : MonoBehaviour {
 
         string abstr = "";
         string statstr = "";
+        string addstr = "";
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
 
         float dps = 0;
@@ -236,18 +249,19 @@ public class EquipReinforceManager : MonoBehaviour {
         }
         else
         {
-            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + " (+" + (int)(dps - equip.stat.dps) + ")\n"; }
-            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + " (+" + (int)((equip.stat.strPower + tmprein * 1.5f) - equip.stat.strPower) + ")\n"; }
-            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + " (+" + ((equip.stat.attackSpeed + tmprein * 1.5f) - equip.stat.attackSpeed) + ")\n"; }
-            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower+ tmprein * 1.5f) + "\n"; }
-            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n";  addstr += "+" + (int)(dps - equip.stat.dps) + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.strPower + tmprein * 1.5f) - equip.stat.strPower) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + "\n"; addstr += "+" + ((equip.stat.attackSpeed + tmprein * 1.5f) - equip.stat.attackSpeed) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.focus + tmprein * 1.5f) - equip.stat.focus) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
             if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         }
         
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
+        changeInfoBoxAdditionText.text = addstr;
         if (curInventoryThings.reinforcement > 0 || tmprein>0)
             changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
         else changeInfoBoxReinText.text = null;
@@ -256,6 +270,9 @@ public class EquipReinforceManager : MonoBehaviour {
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
+        changeInfoBoxAdditionText.transform.gameObject.SetActive(true);
+        changeInfoBoxExpSlider.value = curInventoryThings.exp + tmpexp;
+        changeInfoBoxExpText.text = (curInventoryThings.exp + tmpexp) + "%";
 
         selectNumText.text = "재료 선택 " + selectNum + " / 10";
 
@@ -298,6 +315,7 @@ public class EquipReinforceManager : MonoBehaviour {
 
         string abstr = "";
         string statstr = "";
+        string addstr = "";
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
 
         float dps = 0;
@@ -324,18 +342,19 @@ public class EquipReinforceManager : MonoBehaviour {
         }
         else
         {
-            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + " (+" + (int)(dps - equip.stat.dps) + ")\n"; }
-            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower + tmprein * 1.5f) + "\n"; }
-            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; addstr += "+" + (int)(dps - equip.stat.dps) + "\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.strPower + tmprein * 1.5f) - equip.stat.strPower) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + "\n"; addstr += "+" + ((equip.stat.attackSpeed + tmprein * 1.5f) - equip.stat.attackSpeed) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.focus + tmprein * 1.5f) - equip.stat.focus) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; addstr += "+" + (int)((equip.stat.critical + tmprein * 1.5f) - equip.stat.critical) + "\n"; }
             if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         }
 
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
+        changeInfoBoxAdditionText.text = addstr;
         if (curInventoryThings.reinforcement > 0)
             changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
         else changeInfoBoxReinText.text = null;
@@ -344,8 +363,9 @@ public class EquipReinforceManager : MonoBehaviour {
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityText.transform.gameObject.SetActive(true);
-
-
+        changeInfoBoxAdditionText.transform.gameObject.SetActive(true);
+        changeInfoBoxExpSlider.value = curInventoryThings.exp + tmpexp;
+        changeInfoBoxExpText.text = (curInventoryThings.exp + tmpexp) + "%";
 
         selectNumText.text = "재료 선택 " + selectNum + " / 10";
 

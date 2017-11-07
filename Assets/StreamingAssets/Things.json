@@ -934,7 +934,7 @@
         },
         {
             "item_no": 104,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "무기제작서-일반조각",
             "explanation": "조각 10개로 무기제작서-일반조각을 획득할 수 있습니다.",
             "grade": 1,
@@ -952,7 +952,7 @@
         },
         {
             "item_no": 106,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "방어제작서-일반조각",
             "explanation": "조각 10개로 방어제작서-일반조각을 획득할 수 있습니다.",
             "grade": 1,
@@ -971,7 +971,7 @@
         },
         {
             "item_no": 108,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "무기제작서-고급조각",
             "explanation": "조각 10개로 무기제작서-고급조각을 획득할 수 있습니다.",
             "grade": 2,
@@ -989,7 +989,7 @@
         },
         {
             "item_no": 110,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "방어제작서-고급조각",
             "explanation": "조각 10개로 방어제작서-고급조각을 획득할 수 있습니다.",
             "grade": 2,
@@ -1008,7 +1008,7 @@
         },
         {
             "item_no": 112,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "무기제작서-희귀조각",
             "explanation": "조각 10개로 무기제작서-희귀조각을 획득할 수 있습니다.",
             "grade": 3,
@@ -1026,7 +1026,7 @@
         },
         {
             "item_no": 114,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "방어제작서-희귀조각",
             "explanation": "조각 10개로 방어제작서-희귀조각을 획득할 수 있습니다.",
             "grade": 3,
@@ -1046,7 +1046,7 @@
         },
         {
             "item_no": 116,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "무기제작서-영웅조각",
             "explanation": "조각 10개로 무기제작서-영웅조각을 획득할 수 있습니다.",
             "grade": 4,
@@ -1064,7 +1064,7 @@
         },
         {
             "item_no": 118,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "방어제작서-영웅조각",
             "explanation": "조각 10개로 방어제작서-영웅조각을 획득할 수 있습니다.",
             "grade": 4,
@@ -1083,7 +1083,7 @@
         },
         {
             "item_no": 120,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "무기제작서-전설조각",
             "explanation": "조각 10개로 무기제작서-전설조각을 획득할 수 있습니다.",
             "grade": 5,
@@ -1101,7 +1101,7 @@
         },
         {
             "item_no": 122,
-            "type": "Book",
+            "type": "Bookpiece",
             "name": "방어제작서-전설조각",
             "explanation": "조각 10개로 방어제작서-전설조각을 획득할 수 있습니다.",
             "grade": 5,

@@ -148,7 +148,7 @@ public class Things
     public int possession;  //안 씀
     public bool isLock;     //안 씀
 
-        //도감
+    public bool illustrate;    //도감
 
     public Things(JsonData thingsData, int index)
     {
@@ -162,7 +162,7 @@ public class Things
 
         this.possession = 0;
         this.isLock = false;
-
+        illustrate = false;
     }
 
 
@@ -207,6 +207,8 @@ public class InventoryThings
         equipChrName = null;
         equipSetNum = 0;
         exp = 0;
+
+        ThingsData.instance.getThingsList().Find(x => x.name == name).illustrate = true;
     }
 
 }

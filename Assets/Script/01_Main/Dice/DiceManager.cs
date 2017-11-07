@@ -184,7 +184,7 @@ public class DiceManager : MonoBehaviour {
         while (num > 0)
         {
             num--;
-            GameObject rewardPrefab = Instantiate(GameObject.Find("DiceGameUIPanel (1)").transform.Find("rewardImg").gameObject);
+            GameObject rewardPrefab = Instantiate(GameObject.Find("DiceGameUIPanel (1)").transform.Find("reward").gameObject);
             rewardPrefab.transform.SetParent(GameObject.Find("InfoBox").transform, false);
             //위치 지정
             GameObject reward = GameObject.Find("reward" + dice_pip.value.ToString());
@@ -200,7 +200,7 @@ public class DiceManager : MonoBehaviour {
                 case 5: path = ThingsData.instance.getThingsList().Find(x => x.name == "금 주괴").icon; break;
                 case 6: path = ThingsData.instance.getThingsList().Find(x => x.name == "은 주괴").icon; break;
             }
-            rewardPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
+            rewardPrefab.transform.Find("rewardImg").GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
             rewardPrefab.SetActive(true);
 
             yield return new WaitForSeconds(0.3f);
