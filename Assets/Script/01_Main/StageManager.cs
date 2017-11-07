@@ -335,9 +335,9 @@ public class StageManager : MonoBehaviour
                     //획득 효과
                     if (stageInfoListtmp[i].getRecentItemFlag)
                     {
-                        Image spr = GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemImage").gameObject.GetComponent<Image>();
-                        //이미지 교체
-                        //Debug.Log(stageInfoListtmp[i].getRecentItem);
+                        Image spr = GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemFrame/GetItemImage").gameObject.GetComponent<Image>();
+                        GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemFrame").gameObject.GetComponent<Image>().color 
+                            = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp[i].getRecentItem).grade); 
                         ItemImageChange(stageInfoListtmp[i].getRecentItem, spr);
                         //획득 개수
                         GameObject.Find(stageName + "Button").transform.Find("GetItemEff/Text").gameObject.GetComponent<Text>().text = "+" + stageInfoListtmp[i].getRecentItemNum;
@@ -572,7 +572,8 @@ public class StageManager : MonoBehaviour
             mercenaryManager.setMercenaryIndex(mercenaryManager.getMercenary().FindIndex(x => x.getName() == mer.getName()), mer);
 
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = false;
-
+            Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color;
+            GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.5f);
             //GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
             //mercImage.SetActive(true);
             //string merImageName = null;
@@ -723,7 +724,11 @@ public class StageManager : MonoBehaviour
                     result.getItemNum[i] = 0;
                 }
                 result.getItemTimeFlag = false;
+                destroyItemBox(stateItemList);
+
                 GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = true;
+                Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color;
+                GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 1f);
                 WorldMapBackObj.transform.Find("Stage/stage" + result.getStageNum().ToString() + "Button/MercImage").gameObject.SetActive(false);
 
                 Mercenary mer = mercenaryManager.getMercenary().Find(x => x.getName() == result.mercenaryName);
@@ -776,7 +781,8 @@ public class StageManager : MonoBehaviour
         result.complete = false;
         result.getItemTimeFlag = false;
         GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = true;
-
+        Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color;
+        GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 1f);
         WorldMapBackObj.transform.Find("Stage/stage" + result.getStageNum().ToString() + "Button/MercImage").gameObject.SetActive(false);
 
         //용병 초기화

@@ -202,7 +202,7 @@ public class MercenaryManager : MonoBehaviour {
     }
 
 
-    //로비에 있는 용병 버튼 밑 text
+    //로비에 있는 용병 버튼 밑 게이지
     private void LobbyMerActive()
     {
         for (int i = 0; i < mercenary.Count; i++)
@@ -223,11 +223,18 @@ public class MercenaryManager : MonoBehaviour {
                         if (!stageInfo.complete)
                         {
                             float time = stageInfo.time;
-                            button.transform.Find("State/Text").gameObject.GetComponent<Text>().text =
-                                ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = 180f;
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (180f - time);
+                            button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = ( (int)((180 - time) / 180 *100)) + "%";
+                            //button.transform.Find("State/Text").gameObject.GetComponent<Text>().text =
+                            //    ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
                         }
                         //완료
-                        else button.transform.Find("State/Text").gameObject.GetComponent<Text>().text = "완료";
+                        else
+                        {
+                            button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "완료";
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = 180f;
+                        }
                     }
                 }
                 //대기 중
@@ -308,9 +315,7 @@ public class MercenaryManager : MonoBehaviour {
         GameObject merInfoPopup = GameObject.Find("System").transform.Find("MercenaryInfoPopup").gameObject;
         Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
 
-        //*****캐릭터 이미지 변경
-
-        //statusCal(profilePopupManager.getSetNum(), merTemp);
+        merInfoPopup.transform.Find("UIPanel/ChrBox/ChrFrame/ChrIcon").GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merTemp.getName());
         merInfoPopup.transform.Find("UIPanel/ChrBox/Text").GetComponent<Text>().text = merTemp.getName();
         Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
 
