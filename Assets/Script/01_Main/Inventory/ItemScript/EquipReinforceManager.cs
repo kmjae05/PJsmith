@@ -122,6 +122,9 @@ public class EquipReinforceManager : MonoBehaviour {
     //강화
     public void ReinforceEquip(InventoryThings equipThings)
     {
+        ChangeButton.transform.gameObject.SetActive(false);
+        ReinforceButton.transform.gameObject.SetActive(true);
+
         curInventoryThings = equipThings;
 
         TitleText.text = "장비 강화";
@@ -140,13 +143,13 @@ public class EquipReinforceManager : MonoBehaviour {
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == equipThings.name);
         //강화 수치에 따라 스탯 계산 다시 해줘야 함.
 
-        if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += equip.stat.dps + "\n"; }
-        if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += equip.stat.strPower + "\n"; }
+        if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)equip.stat.dps + "\n"; }
+        if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)equip.stat.strPower + "\n"; }
         if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += equip.stat.attackSpeed + "\n"; }
-        if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += equip.stat.focus + "\n"; }
-        if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += equip.stat.critical + "\n"; }
-        if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += equip.stat.defPower + "\n"; }
-        if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += equip.stat.evaRate + "\n"; }
+        if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)equip.stat.focus + "\n"; }
+        if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)equip.stat.critical + "\n"; }
+        if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)equip.stat.defPower + "\n"; }
+        if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)equip.stat.evaRate + "\n"; }
         if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         curInfoBoxAbilityInfoText.text = abstr;
         curInfoBoxAbilityText.text = statstr;
@@ -159,7 +162,7 @@ public class EquipReinforceManager : MonoBehaviour {
         if (equipThings.reinforcement > 0)
             changeInfoBoxReinText.text = "+" + equipThings.reinforcement.ToString();
         else changeInfoBoxReinText.text = null;
-
+        Debug.Log(abstr);
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
 
@@ -194,7 +197,7 @@ public class EquipReinforceManager : MonoBehaviour {
         //tmprein = invenThings.reinforcement;
         tmpexp += 10;
         Debug.Log(tmpexp);
-        if(tmpexp + invenThings.exp >= 100)
+        if(tmpexp + curInventoryThings.exp >= 100)
         {
             tmpexp = 0;
             tmprein += 1;
@@ -212,11 +215,11 @@ public class EquipReinforceManager : MonoBehaviour {
         float dps = 0;
         if (equip.stat.strPower > 0)
         {
-            dps = (equip.stat.strPower * tmprein * 1.5f) * ((float)equip.stat.attackSpeed * tmprein * 1.5f) * (equip.stat.critical * tmprein * 1.5f);
+            dps = (int)(equip.stat.strPower + tmprein * 1.5f) * ((float)equip.stat.attackSpeed + tmprein * 1.5f) * (int)(equip.stat.critical + tmprein * 1.5f);
         }
         else if(equip.stat.defPower > 0)
         {
-            dps = (equip.stat.defPower * tmprein * 1.5f) * ((float)equip.stat.evaRate * tmprein * 1.5f) ;
+            dps = (int)(equip.stat.defPower + tmprein * 1.5f) * (equip.stat.evaRate + tmprein * 1.5f) ;
         }
         if (dps == 0)
         {
@@ -233,19 +236,19 @@ public class EquipReinforceManager : MonoBehaviour {
         }
         else
         {
-            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
-            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + " (+" + (int)(dps - equip.stat.dps) + ")\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + " (+" + (int)((equip.stat.strPower + tmprein * 1.5f) - equip.stat.strPower) + ")\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + " (+" + ((equip.stat.attackSpeed + tmprein * 1.5f) - equip.stat.attackSpeed) + ")\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower+ tmprein * 1.5f) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate + tmprein * 1.5f) + "\n"; }
             if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         }
         
         changeInfoBoxAbilityInfoText.text = abstr;
         changeInfoBoxAbilityText.text = statstr;
-        if (curInventoryThings.reinforcement > 0)
+        if (curInventoryThings.reinforcement > 0 || tmprein>0)
             changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
         else changeInfoBoxReinText.text = null;
 
@@ -280,7 +283,7 @@ public class EquipReinforceManager : MonoBehaviour {
         //강화 상태 미리보기
         tmpexp -= 10;
         Debug.Log(tmpexp);
-        if (tmpexp + invenThings.exp < 0)
+        if (tmpexp + curInventoryThings.exp < 0)
         {
             //
             tmpexp = 90;
@@ -300,11 +303,11 @@ public class EquipReinforceManager : MonoBehaviour {
         float dps = 0;
         if (equip.stat.strPower > 0)
         {
-            dps = (equip.stat.strPower * tmprein * 1.5f) * ((float)equip.stat.attackSpeed * tmprein * 1.5f) * (equip.stat.critical * tmprein * 1.5f);
+            dps = (int)(equip.stat.strPower + tmprein * 1.5f) * ((float)equip.stat.attackSpeed + tmprein * 1.5f) * (int)(equip.stat.critical + tmprein * 1.5f);
         }
         else if (equip.stat.defPower > 0)
         {
-            dps = (equip.stat.defPower * tmprein * 1.5f) * ((float)equip.stat.evaRate * tmprein * 1.5f);
+            dps = (equip.stat.defPower + tmprein * 1.5f) * ((float)equip.stat.evaRate + tmprein * 1.5f);
         }
         if (dps == 0)
         {
@@ -321,13 +324,13 @@ public class EquipReinforceManager : MonoBehaviour {
         }
         else
         {
-            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + "\n"; }
-            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower * tmprein * 1.5f) + "\n"; }
-            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate * tmprein * 1.5f) + "\n"; }
+            if (equip.stat.dps > 0) { abstr += "전투력\n"; statstr += (int)dps + " (+" + (int)(dps - equip.stat.dps) + ")\n"; }
+            if (equip.stat.strPower > 0) { abstr += "공격력\n"; statstr += (int)(equip.stat.strPower + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.attackSpeed > 0) { abstr += "공격속도\n"; statstr += (equip.stat.attackSpeed + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)(equip.stat.focus + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.critical > 0) { abstr += "크리티컬\n"; statstr += (int)(equip.stat.critical + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.defPower > 0) { abstr += "방어력\n"; statstr += (int)(equip.stat.defPower + tmprein * 1.5f) + "\n"; }
+            if (equip.stat.evaRate > 0) { abstr += "회피율\n"; statstr += (int)(equip.stat.evaRate + tmprein * 1.5f) + "\n"; }
             if (equip.attribute != null) { abstr += "속성"; statstr += equip.attribute.ToString(); }
         }
 
@@ -362,7 +365,48 @@ public class EquipReinforceManager : MonoBehaviour {
     //강화
     public void Reinforce(InventoryThings equipThings)
     {
+        //수치 변화
+        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
 
+        if (tmprein > 0)
+        {
+            if (equip.stat.strPower > 0) equip.stat.strPower = (int)(equip.stat.strPower + tmprein * 1.5f);
+            if (equip.stat.attackSpeed > 0) equip.stat.attackSpeed = (float)equip.stat.attackSpeed + tmprein * 1.5f;
+            if (equip.stat.focus > 0) equip.stat.focus = (int)(equip.stat.focus + tmprein * 1.5f);
+            if (equip.stat.critical > 0) equip.stat.critical = (int)(equip.stat.critical + tmprein * 1.5f);
+            if (equip.stat.defPower > 0) equip.stat.defPower = (int)(equip.stat.defPower+ tmprein * 1.5f);
+            if (equip.stat.evaRate > 0) equip.stat.evaRate = (int)(equip.stat.evaRate + tmprein * 1.5f);
+
+            if (equip.stat.strPower > 0)
+            {
+                equip.stat.dps = equip.stat.strPower * (float)equip.stat.attackSpeed * equip.stat.critical;
+            }
+            else if (equip.stat.defPower > 0)
+            {
+                equip.stat.dps = equip.stat.defPower * equip.stat.evaRate;
+            }
+            curInventoryThings.reinforcement += tmprein;
+
+        }
+        curInventoryThings.exp += tmpexp;
+
+        //재료 삭제
+        for(int i = 0; i < selectInvenList.Count; i++)
+        {
+            selectInvenList[i].possession = 0;
+        }
+
+
+        //초기화
+        tmprein = 0;
+        tmpexp = 0;
+        selectNum = 0;
+        selectObjList.Clear();
+        selectInvenList.Clear();
+
+        ReinforceEquip(curInventoryThings);
+        GameObject.Find("InventoryScript").GetComponent<Inventory>().EquipInfoPopup(curInventoryThings);
+        GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
     }
 
 
@@ -381,7 +425,7 @@ public class EquipReinforceManager : MonoBehaviour {
 
         for (int i = 0; i < invenThingsList.Count; i++)
         {
-            if (!invenThingsList[i].equip && invenThingsList[i].possession > 0)
+            if (!invenThingsList[i].equip && invenThingsList[i].possession > 0 && invenThingsList[i] != curInventoryThings)
             {
                 //
                 inventoryThings.Add(Instantiate(inventoryBox));

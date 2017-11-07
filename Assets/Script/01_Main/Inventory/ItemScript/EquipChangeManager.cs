@@ -51,6 +51,7 @@ public class EquipChangeManager : MonoBehaviour
 
     //버튼
     private Button ChangeButton;
+    private Button ReinforceButton;
 
 
     private InventoryThings curInventoryThings;     //현재 선택된 장비
@@ -101,6 +102,7 @@ public class EquipChangeManager : MonoBehaviour
         selectNumText = inventoryUIPanel.transform.Find("SelectNumText").gameObject.GetComponent<Text>();
 
         ChangeButton = inventoryUIPanel.transform.Find("ChangeButton").gameObject.GetComponent<Button>();
+        ReinforceButton = inventoryUIPanel.transform.Find("ReinforceButton").gameObject.GetComponent<Button>();
 
         curInventoryThings = new InventoryThings();
         curType = null;
@@ -117,6 +119,9 @@ public class EquipChangeManager : MonoBehaviour
     //교체
     public void ChangeEquip(InventoryThings equipThings)
     {
+        ChangeButton.transform.gameObject.SetActive(false);
+        ReinforceButton.transform.gameObject.SetActive(true);
+
         curInventoryThings = equipThings;
 
         TitleText.text = "장비 교체";

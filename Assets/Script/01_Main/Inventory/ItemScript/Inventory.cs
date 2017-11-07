@@ -1062,8 +1062,13 @@ public class Inventory : MonoBehaviour
         }
         else EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/ReinText").gameObject.SetActive(false);
         //강화 버튼
-        if(things.reinforcement<10)
-        EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(true);
+        if (things.reinforcement < 10)
+        {
+            EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(true);
+            EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.GetComponent<Button>().onClick.AddListener(
+                () => { GameObject.Find("PlayerManager").GetComponent<EquipReinforceManager>().ReinforceEquip(things); });
+        }
         else EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
 
         string abstr = "";
@@ -1084,19 +1089,19 @@ public class Inventory : MonoBehaviour
         if (things.equip)
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
-            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(true);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.GetComponent<Text>().text = things.equipChrName + " 세트" + things.equipSetNum.ToString() + "에 장비 중";
         }
         else
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
-            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
             EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(false);
             //시스템 팝업으로 판매
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenEquipSellPopup(things));
         }
+        EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
+
     }
 
 
