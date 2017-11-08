@@ -63,11 +63,11 @@ public class NormalLoad : MonoBehaviour
             yield return StartCoroutine(FadeOut());     //페이드아웃
             SceneManager.LoadScene("01_Title");
         }
-        if (SceneManager.GetActiveScene().name == "01_Title")
-        {
-            yield return StartCoroutine(LoadingTime()); //로딩시간
-            ToLobby();
-        }
+        //if (SceneManager.GetActiveScene().name == "01_Title")
+        //{
+        //    yield return StartCoroutine(LoadingTime()); //로딩시간
+        //    ToLobby();
+        //}
 
             //로딩화면
             if ( SceneManager.GetActiveScene().name == "08_Loading_GameIn"

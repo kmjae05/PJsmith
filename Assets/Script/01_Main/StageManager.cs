@@ -173,6 +173,7 @@ public class StageManager : MonoBehaviour
                     //    spotButton.transform.Find("State/Progress/pickax").gameObject.SetActive(true);
                     //else
                     spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
+                    spotButton.transform.Find("State/Progress/Dust").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
                     string merImageName = null;
                     if (sList[i].mercenaryName == "soldier1") merImageName = "soldier1";
@@ -354,6 +355,7 @@ public class StageManager : MonoBehaviour
 
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(false);
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
+                    GameObject.Find(stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
                 }
                 //리젠
                 stageInfoListtmp = stageInfoList.FindAll(x => x.regen == true);
@@ -368,6 +370,7 @@ public class StageManager : MonoBehaviour
                             = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
                         GameObject.Find(stageName + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(false);
                         GameObject.Find(stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
+                        GameObject.Find(stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
                     }
                 }
                 //대기 상태
@@ -422,11 +425,11 @@ public class StageManager : MonoBehaviour
             //기상 변화
             if (StageData.instance.rainFlag)
             {
-
+                Monster.transform.Find("Rain").gameObject.SetActive(true);
             }
             else
             {
-
+                Monster.transform.Find("Rain").gameObject.SetActive(false);
             }
 
         }
@@ -590,6 +593,7 @@ public class StageManager : MonoBehaviour
             //    GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(true);
             //else 
             GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(true);
+            GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(true);
 
             //획득 가능 아이템 삭제
             destroyItemBox(itemListObj);

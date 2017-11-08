@@ -24,6 +24,8 @@ public class TerritoryManager : MonoBehaviour
     private Button sys_NoButton;
     private Button sys_OkButton;
 
+    private GameObject itemList;
+    private GameObject itemBox;
 
     private List<GameObject> mineObj;           //광산 스팟
     private List<GameObject> bottonButtonList;  //하단 버튼
@@ -54,6 +56,8 @@ public class TerritoryManager : MonoBehaviour
         sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
         sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
 
+        itemList = ExhaustionPopup.transform.Find("UIPanel/ItemList").gameObject;
+        itemBox = ExhaustionPopup.transform.Find("UIPanel/ItemList/ItemBox").gameObject;
 
         mineObj = new List<GameObject>();
         bottonButtonList = new List<GameObject>();
@@ -64,6 +68,7 @@ public class TerritoryManager : MonoBehaviour
             mineObj[i].SetActive(true);
             //광산 스팟 버튼 설정.
             mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
+            int num = i;
             mineObj[i].GetComponent<Button>().onClick.AddListener(() => 
             {
                 BottomMenu.SetActive(true);
@@ -72,6 +77,18 @@ public class TerritoryManager : MonoBehaviour
                 GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
                 GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
                 uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(false);
+                for (int j = 0; j < MineData.instance.getMineList().Count; j++)
+                {
+                    if (MineData.instance.getMineList()[j].buildState == "nothing")
+                    {
+                        mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                        mineObj[j].transform.Find("Text").gameObject.SetActive(false);
+                        mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
+                        mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
+                        //info.upgradeFlag = false;
+                    }
+                }
+                mineObj[num].transform.Find("DottedCircle").gameObject.SetActive(true);
                 //건설 취소 버튼
                 CancleButton.onClick.AddListener(() =>
                 {
@@ -173,6 +190,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(true);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(true);
 
                 mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -195,7 +213,8 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
 
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
-                if(curMineNum == i) { MiningPopup.SetActive(false); }
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
+                if (curMineNum == i) { MiningPopup.SetActive(false); }
 
                 mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -213,21 +232,36 @@ public class TerritoryManager : MonoBehaviour
         buildInfoPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = mineInfo[index].type + " 광산 건설";
         buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text =mineInfo[index].level.ToString();
         buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().text = mineInfo[index].buildTime + "초";
+        buildInfoPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == mineInfo[index].getThingName[0]).icon);
+
         string mtr = null;
+        destroyItemBox(buildInfoPopup.transform.Find("UIPanel/ItemList").gameObject);
         for (int i = 0; i < mineInfo[index].getThingName.Length; i++)
         {
             if (mineInfo[index].getThingName.Length == 1)
             {
                 mtr = mineInfo[index].getThingName[0] ;
+                GameObject box = Instantiate(buildInfoPopup.transform.Find("UIPanel/ItemList/ItemBox").gameObject);
+                box.transform.SetParent(buildInfoPopup.transform.Find("UIPanel/ItemList").gameObject.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite =Resources.Load<Sprite>( ThingsData.instance.getThingsList().Find(x => x.name == mineInfo[index].getThingName[0]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = mineInfo[index].getThingName[0];
+                box.SetActive(true);
+
                 break;
             }
             else
             {
                 if (i == 0) { mtr = mineInfo[index].getThingName[0] ; }
                 else { mtr += ", " + mineInfo[index].getThingName[i]; }
+                GameObject box = Instantiate(buildInfoPopup.transform.Find("UIPanel/ItemList/ItemBox").gameObject);
+                box.transform.SetParent(buildInfoPopup.transform.Find("UIPanel/ItemList").gameObject.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == mineInfo[index].getThingName[i]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = mineInfo[index].getThingName[i];
+                box.SetActive(true);
             }
         }
-        buildInfoPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = mtr;
+        //buildInfoPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text = mtr;
+
         buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text =  MineData.instance.getMineBuildList().Find(x => x.level == mineInfo[index].level).deposit.ToString();
         mtr = null;
         for(int i=0; i < mineInfo[index].necessaryMaterials.Length; i++)
@@ -995,20 +1029,34 @@ public class TerritoryManager : MonoBehaviour
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = info.afterDeposit.ToString();
 
         string mtr = null;
+        destroyItemBox(itemList);
         for (int i = 0; i < info.getThingName.Length; i++)
         {
             if (info.getThingName.Length == 1)
             {
                 mtr = info.getThingName[0];
+                GameObject box = Instantiate(itemBox);
+                box.transform.SetParent(itemList.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == info.getThingName[0]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = info.getThingName[0];
+                box.SetActive(true);
+
                 break;
             }
             else
             {
                 if (i == 0) { mtr = info.getThingName[0]; }
                 else { mtr += ", " + info.getThingName[i]; }
+                GameObject box = Instantiate(itemBox);
+                box.transform.SetParent(itemList.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == info.getThingName[i]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = info.getThingName[i];
+                box.SetActive(true);
+
             }
         }
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text =  mtr;
+        //ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text =  mtr;
+        
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text =  curType + " " + info.curMaterial + "개";
         //보유 개수
         InventoryThings have = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.type);
@@ -1201,6 +1249,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1, 1, 1);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(true);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
                 mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }
@@ -1214,6 +1263,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
 
                 //채굴 상태
                 if (MineData.instance.getMineList()[i].miningState)
@@ -1253,6 +1303,18 @@ public class TerritoryManager : MonoBehaviour
     public void territoryPosition()
     {
         uiPanel.transform.Find("Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
+    public void destroyItemBox(GameObject Obj)
+    {
+        //오브젝트 삭제
+        if (Obj.transform.childCount > 1)
+        {
+            for (int i = 1; i < Obj.transform.childCount; i++)
+            {
+                Destroy(Obj.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
 

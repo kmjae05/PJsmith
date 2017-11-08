@@ -133,6 +133,7 @@ public class StageMineManager : MonoBehaviour {
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
                 mineObj.transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj.transform.Find("pickax").gameObject.SetActive(true);
+                mineObj.transform.Find("Dust").gameObject.SetActive(true);
 
                 mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -158,6 +159,7 @@ public class StageMineManager : MonoBehaviour {
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[i].deposit.ToString() + "개 채굴 완료";
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
                 mineObj.transform.Find("pickax").gameObject.SetActive(false);
+                mineObj.transform.Find("Dust").gameObject.SetActive(false);
                 MiningPopup.SetActive(false);
 
                 mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -201,20 +203,33 @@ public class StageMineManager : MonoBehaviour {
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = info.afterDeposit.ToString();
 
         string mtr = null;
+        destroyItemBox(ExhaustionPopup.transform.Find("UIPanel/ItemList").gameObject);
         for (int i = 0; i < info.getThingName.Length; i++)
         {
             if (info.getThingName.Length == 1)
             {
                 mtr = info.getThingName[0];
+                GameObject box = Instantiate(ExhaustionPopup.transform.Find("UIPanel/ItemList/ItemBox").gameObject);
+                box.transform.SetParent(ExhaustionPopup.transform.Find("UIPanel/ItemList").gameObject.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == info.getThingName[0]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = info.getThingName[0];
+                box.SetActive(true);
+
                 break;
             }
             else
             {
                 if (i == 0) { mtr = info.getThingName[0]; }
                 else { mtr += ", " + info.getThingName[i]; }
+                GameObject box = Instantiate(ExhaustionPopup.transform.Find("UIPanel/ItemList/ItemBox").gameObject);
+                box.transform.SetParent(ExhaustionPopup.transform.Find("UIPanel/ItemList").gameObject.transform, false);
+                box.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == info.getThingName[i]).icon);
+                box.transform.Find("NameText").gameObject.GetComponent<Text>().text = info.getThingName[i];
+                box.SetActive(true);
+
             }
         }
-        ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text =  mtr;
+        //ExhaustionPopup.transform.Find("UIPanel/InfoBox/GetItemText").gameObject.GetComponent<Text>().text =  mtr;
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/MaterialText").gameObject.GetComponent<Text>().text = mineList[num].type + " " + info.curMaterial + "개";
         //보유 개수
         InventoryThings have = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.type);
@@ -339,6 +354,7 @@ public class StageMineManager : MonoBehaviour {
             obj.transform.Find("Text").gameObject.SetActive(true);
             obj.transform.Find("DottedCircle").gameObject.SetActive(false);
             obj.transform.Find("pickax").gameObject.SetActive(true);
+            obj.transform.Find("Dust").gameObject.SetActive(true);
             if (BeUnderPopup.activeInHierarchy)
                 BeUnderPopup.SetActive(false);
             if (mineList[num].boostState == true)
@@ -705,6 +721,19 @@ public class StageMineManager : MonoBehaviour {
     }
 
     public void MineClick(GameObject obj) { curMineNum = mineList.FindIndex(x => x.stageName + "Button" == obj.name); Debug.Log(curMineNum); }
+
+
+    public void destroyItemBox(GameObject Obj)
+    {
+        //오브젝트 삭제
+        if (Obj.transform.childCount > 1)
+        {
+            for (int i = 1; i < Obj.transform.childCount; i++)
+            {
+                Destroy(Obj.transform.GetChild(i).gameObject);
+            }
+        }
+    }
 
 
 }

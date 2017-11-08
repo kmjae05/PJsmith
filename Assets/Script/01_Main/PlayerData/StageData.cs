@@ -37,7 +37,7 @@ public class StageData : MonoBehaviour
     //기상 변화
     private float delayTime = 30 * 60;  //30분마다
     private float delayDeltaTime;
-    private float rainTime = 5f;        //5분
+    private float rainTime = 5 * 60;        //5분
     private float rainDeltaTime;
     public bool rainFlag;          //플래그
 
