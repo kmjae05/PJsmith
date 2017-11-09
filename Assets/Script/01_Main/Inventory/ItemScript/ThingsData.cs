@@ -71,19 +71,7 @@ public class ThingsData : MonoBehaviour
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
 
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
 
-        invenThings.Find(x => x.name == "영웅의 단검").equip = false;
 
     }
 
@@ -179,6 +167,8 @@ public class InventoryThings
     public bool recent;
 
     //장비관련
+    public Stat stat;
+    public string attribute;
     public int reinforcement;   //강화수치
     public bool equip;          //장비 착용 상태
     public int equipSetNum;     //장비 착용 세트 번호
@@ -202,6 +192,20 @@ public class InventoryThings
         this.name = name;
         this.possession = possession;
         this.recent = true;
+
+        stat = new Stat();
+        Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == name);
+        if (equip != null)
+        {
+            this.stat.strPower = equip.stat.strPower;
+            this.stat.attackSpeed = equip.stat.attackSpeed;
+            this.stat.focus = equip.stat.focus;
+            this.stat.critical = equip.stat.critical;
+            this.stat.defPower = equip.stat.defPower;
+            this.stat.evaRate = equip.stat.evaRate;
+            this.attribute = "없음";
+            this.stat.dps = equip.stat.dps ;
+        }
         this.reinforcement = 0;
         this.equip = false;
         equipChrName = null;

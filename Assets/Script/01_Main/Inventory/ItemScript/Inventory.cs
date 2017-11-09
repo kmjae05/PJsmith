@@ -120,6 +120,19 @@ public class Inventory : MonoBehaviour
     }
     void Start()
     {
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+
         //database = GetComponent<ItemDatabase>();
         thingsData = GameObject.Find("ThingsData").GetComponent<ThingsData>();
         sellManager = GameObject.Find("InventoryScript").GetComponent<SellManager>();
@@ -1073,14 +1086,14 @@ public class Inventory : MonoBehaviour
         else EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
 
         string abstr = "";
-        if (equip.stat.dps > 0) abstr += "전투력 " + equip.stat.dps + "\n";
-        if (equip.stat.strPower > 0) abstr += "공격력 " + equip.stat.strPower + "\n";
-        if (equip.stat.attackSpeed > 0) abstr += "공격속도 " + equip.stat.attackSpeed + "\n";
-        if (equip.stat.focus > 0) abstr += "명중률 " + equip.stat.focus + "\n";
-        if (equip.stat.critical > 0) abstr += "크리티컬 " + equip.stat.critical + "\n";
-        if (equip.stat.defPower > 0) abstr += "방어력 " + equip.stat.defPower + "\n";
-        if (equip.stat.evaRate > 0) abstr += "회피율 " + equip.stat.evaRate + "\n";
-        abstr += "속성 " + equip.attribute;
+        if (things.stat.dps > 0) abstr += "전투력 " + (int)things.stat.dps + "\n";
+        if (things.stat.strPower > 0) abstr += "공격력 " + things.stat.strPower + "\n";
+        if (things.stat.attackSpeed > 0) abstr += "공격속도 " + things.stat.attackSpeed + "\n";
+        if (things.stat.focus > 0) abstr += "명중률 " + things.stat.focus + "\n";
+        if (things.stat.critical > 0) abstr += "크리티컬 " + things.stat.critical + "\n";
+        if (things.stat.defPower > 0) abstr += "방어력 " + things.stat.defPower + "\n";
+        if (things.stat.evaRate > 0) abstr += "회피율 " + things.stat.evaRate + "\n";
+        abstr += "속성 " + things.attribute;
         //if (equip.stat.collectSpeed > 0) abstr += "채집속도 " + equip.stat.collectSpeed + "\n";
         //if (equip.stat.collectAmount > 0) abstr += "채집량 " + equip.stat.collectAmount;
         //되도록이면 최대 5개까지만..
@@ -1090,15 +1103,17 @@ public class Inventory : MonoBehaviour
         if (things.equip)
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
-            EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(true);
-            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipImage").gameObject.SetActive(true);
-            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipImage").gameObject.GetComponent<Text>().text = things.equipChrName + " 세트" + things.equipSetNum.ToString() + "에 장비 중";
+            if (GameObject.Find("Menu").transform.Find("ProfilePopup").gameObject.activeInHierarchy)
+                EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(true);
+            else EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(true);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.GetComponent<Text>().text = things.equipChrName + " 세트" + things.equipSetNum.ToString() + "에 장비 중";
         }
         else
         {
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(true);
             EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
-            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipImage").gameObject.SetActive(false);
+            EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/EquipText").gameObject.SetActive(false);
             //시스템 팝업으로 판매
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenEquipSellPopup(things));

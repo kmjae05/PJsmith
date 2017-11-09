@@ -114,6 +114,21 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("EquipGloves/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == equipGloves.name).grade);
             GameObject.Find("EquipPants/GradeFrame").GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == equipPants.name).grade);
 
+            //강화 수치
+            if (equipHelmet.reinforcement > 0) GameObject.Find("EquipHelmet/AmountText").GetComponent<Text>().text = "+" + equipHelmet.reinforcement;
+            else GameObject.Find("EquipHelmet/AmountText").GetComponent<Text>().text = null;
+            if (equipArmor.reinforcement > 0) GameObject.Find("EquipArmor/AmountText").GetComponent<Text>().text = "+" + equipArmor.reinforcement;
+            else GameObject.Find("EquipArmor/AmountText").GetComponent<Text>().text = null;
+            if (equipWeapon.reinforcement > 0) GameObject.Find("EquipWeapon/AmountText").GetComponent<Text>().text = "+" + equipWeapon.reinforcement;
+            else GameObject.Find("EquipWeapon/AmountText").GetComponent<Text>().text = null;
+            if (equipBoots.reinforcement > 0) GameObject.Find("EquipBoots/AmountText").GetComponent<Text>().text = "+" + equipBoots.reinforcement;
+            else GameObject.Find("EquipBoots/AmountText").GetComponent<Text>().text = null;
+            if (equipGloves.reinforcement > 0) GameObject.Find("EquipGloves/AmountText").GetComponent<Text>().text = "+" + equipGloves.reinforcement;
+            else GameObject.Find("EquipGloves/AmountText").GetComponent<Text>().text = null;
+            if (equipPants.reinforcement > 0) GameObject.Find("EquipPants/AmountText").GetComponent<Text>().text = "+" + equipPants.reinforcement;
+            else GameObject.Find("EquipPants/AmountText").GetComponent<Text>().text = null;
+
+
             //장비 인포 버튼
             GameObject.Find("EquipWeapon").GetComponent<Button>().onClick.RemoveAllListeners();
             GameObject.Find("EquipWeapon").GetComponent<Button>().onClick.AddListener(() => {

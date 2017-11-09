@@ -165,6 +165,7 @@ public class StageManager : MonoBehaviour
                 spotButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
                 spotButton.SetActive(true);
                 spotButton.transform.Find("StageText").GetComponent<Text>().text = sList[i].getStageNum().ToString();
+                spotButton.transform.Find("NameText").GetComponent<Text>().text = sList[i].type + " " + sList[i].typeNum.ToString();
                 spotButton.name = sList[i].stageName + "Button"; //오브젝트 이름 변경
                 //spotButton.GetComponent<Image>().sprite = sList[i].sprite;
                 if (sList[i].state)
@@ -175,10 +176,7 @@ public class StageManager : MonoBehaviour
                     spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
                     spotButton.transform.Find("State/Progress/Dust").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
-                    string merImageName = null;
-                    if (sList[i].mercenaryName == "soldier1") merImageName = "soldier1";
-                    if (sList[i].mercenaryName == "soldier2") merImageName = "soldier2";
-                    if (sList[i].mercenaryName == "soldier3") merImageName = "soldier3";
+                    string merImageName = sList[i].mercenaryName;
                     spotButton.transform.Find("MercImage/Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
                 }
 
@@ -330,8 +328,15 @@ public class StageManager : MonoBehaviour
                     string stageName = stageInfoListtmp[i].stageName;
                     float time = stageInfoListtmp[i].time;
                     GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
-                    GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text
-                        = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(true);
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfoListtmp[i].typeNum*60f;
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (stageInfoListtmp[i].typeNum * 60f - time);
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text 
+                        = (int)(GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
+                   
+                    
+                    //GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text
+                    //    = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
 
                     //획득 효과
                     if (stageInfoListtmp[i].getRecentItemFlag)
@@ -353,6 +358,8 @@ public class StageManager : MonoBehaviour
                     GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
                     GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text = "완료";
 
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue;
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "완료";
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(false);
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
@@ -368,6 +375,7 @@ public class StageManager : MonoBehaviour
                         GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
                         GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text
                             = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
+                        GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(false);
                         GameObject.Find(stageName + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(false);
                         GameObject.Find(stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
                         GameObject.Find(stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
@@ -475,7 +483,7 @@ public class StageManager : MonoBehaviour
             selectFrame.SetActive(false);
             nameText.text = result.type + " " + result.typeNum.ToString();
             GameObject.Find("StageTimeText").GetComponent<Text>().text =
-                "소요 시간 " + ((int)(180 / 60)).ToString() + "m " + ((int)(180 % 60)).ToString() + "s";
+                "소요 시간 " + (result.typeNum).ToString() + "분 ";
             //stage에 따라 획득 가능한 아이템
             setGetItemInfo(result);
 
@@ -563,7 +571,7 @@ public class StageManager : MonoBehaviour
                 result.getItem[i] = null;
                 result.getItemNum[i] = 0;
             }
-            result.time = 180f; // typeNumToTime(result.typeNum);
+            result.time = result.typeNum * 60f;
             result.mercenaryName = mercenaryManager.getCurSelect();
 
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(true);
@@ -577,13 +585,11 @@ public class StageManager : MonoBehaviour
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = false;
             Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color;
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.5f);
-            //GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
-            //mercImage.SetActive(true);
-            //string merImageName = null;
-            //if (result.mercenaryName == "A") merImageName = "miner";
-            //if (result.mercenaryName == "B") merImageName = "ninja";
-            //if (result.mercenaryName == "C") merImageName = "knight";
-            //mercImage.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
+
+            GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
+            mercImage.SetActive(true);
+            string merImageName = result.mercenaryName;
+            mercImage.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
 
             Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
             float time = stageInfoList.Find(x => x.getStageNum() == curStageSelect).time;
@@ -831,9 +837,9 @@ public class StageManager : MonoBehaviour
         result.spotName = StageData.spotList[index].getPosition().name;
         random = Random.Range(1, 3 + 1);
         Debug.Log(random);
-        result.type = stageData.typeNumToString(result.getStageNum(), random);
-        //random = Random.Range(0, 100);
-        result.typeNum = 3;
+        result.type = stageData.typeNumToString(random);
+        random = Random.Range(1, 4);
+        result.typeNum = random;
         result.stageName = "stage" + result.getStageNum().ToString();
         spotButton.transform.Find("StageText").GetComponent<Text>().text = result.getStageNum().ToString();  //
         spotButton.name = result.stageName + "Button"; //오브젝트 이름 변경
@@ -953,7 +959,7 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        itemListObj.GetComponent<RectTransform>().anchoredPosition = new Vector2( 0 + itemListObj.GetComponent<RectTransform>().sizeDelta.x /2, 0);
+        itemListObj.GetComponent<RectTransform>().anchoredPosition = new Vector2( 0, 0 - itemListObj.GetComponent<RectTransform>().sizeDelta.y / 2);
     }
 
     //이미지 변경

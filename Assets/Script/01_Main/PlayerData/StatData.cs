@@ -108,7 +108,7 @@ public class StatData : MonoBehaviour {
 
 
     //장비 6개 합산
-    public Stat SumEquip(Equipment helmet, Equipment armor, Equipment weapon, Equipment boots, Equipment gloves, Equipment pants)
+    public Stat SumEquip(InventoryThings helmet, InventoryThings armor, InventoryThings weapon, InventoryThings boots, InventoryThings gloves, InventoryThings pants)
     {
         Stat stat = new Stat();
         stat.strPower = helmet.stat.strPower + armor.stat.strPower + weapon.stat.strPower + boots.stat.strPower + gloves.stat.strPower + pants.stat.strPower;

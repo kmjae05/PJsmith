@@ -8,12 +8,8 @@ public class Player : MonoBehaviour {
 
     public static Player instance = null;
 
-
     static private User Play = new User();          //플레이어
     static public Hammer equipHm = new Hammer();   //장착 망치
-    private EquipmentData equipmentData;
-
-
     
     void Awake()
     {
@@ -26,50 +22,59 @@ public class Player : MonoBehaviour {
     }
     void Start()
     {
+        //Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
+        //Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
+        //Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        //Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
+        //Play.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+        //Play.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
+        //Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        //Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
+        //Play.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+        //Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
+        //Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+        //Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
 
-        equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
-        Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
-        Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
-        Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
-        Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
-        Play.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
-        Play.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
-        Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        Play.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
-        Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
-        Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
-        Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        Play.equipWeapon[0] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (0 + 1);
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "날카로운 단검").type, "날카로운 단검", 1));
+        Play.equipWeapon[1] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
+        ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (1 + 1);
+
 
         for (int i = 0; i < 2; i++)
         {
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipWeapon[i].name).type, Play.equipWeapon[i].name, 1));
-            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
-            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
-            ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i+ 1);
-            //ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].reinforcement = 2;
-
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipArmor[i].name).type, Play.equipArmor[i].name, 1));
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천갑옷").type, "초보자의 천갑옷", 1));
+            Play.equipArmor[i] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
 
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipPants[i].name).type, Play.equipPants[i].name, 1));
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천바지").type, "초보자의 천바지", 1));
+            Play.equipPants[i] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
 
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipHelmet[i].name).type, Play.equipHelmet[i].name, 1));
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천투구").type, "초보자의 천투구", 1));
+            Play.equipHelmet[i] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
 
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipGloves[i].name).type, Play.equipGloves[i].name, 1));
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천장갑").type, "초보자의 천장갑", 1));
+            Play.equipGloves[i] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
 
-            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == Play.equipBoots[i].name).type, Play.equipBoots[i].name, 1));
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 천부츠").type, "초보자의 천부츠", 1));
+            Play.equipBoots[i] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipChrName = getUser().Name;
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
@@ -173,13 +178,13 @@ public class User
     public Stat stat;
     public string attribute;
 
-    //장비 Equipment로
-    public Equipment[] equipWeapon;
-    public Equipment[] equipArmor;
-    public Equipment[] equipPants;
-    public Equipment[] equipHelmet;
-    public Equipment[] equipGloves;
-    public Equipment[] equipBoots;
+    //장비 InventoryThings
+    public InventoryThings[] equipWeapon;
+    public InventoryThings[] equipArmor;
+    public InventoryThings[] equipPants;
+    public InventoryThings[] equipHelmet;
+    public InventoryThings[] equipGloves;
+    public InventoryThings[] equipBoots;
 
     public string logoutTime;
 
@@ -203,17 +208,17 @@ public class User
         this.stat.critical = 20;
         this.stat.defPower = 5;
         this.stat.evaRate = 3;
-        this.attribute = "no";
+        this.attribute = "없음";
         this.stat.collectSpeed = 1.0f;
         this.stat.collectAmount = 1;
         this.stat.dps = this.stat.strPower * (float)this.stat.attackSpeed * this.stat.critical + this.stat.defPower*this.stat.evaRate;
 
-        this.equipWeapon = new Equipment[2];
-        this.equipArmor = new Equipment[2];
-        this.equipPants = new Equipment[2];
-        this.equipHelmet = new Equipment[2];
-        this.equipGloves = new Equipment[2];
-        this.equipBoots = new Equipment[2];
+        this.equipWeapon = new InventoryThings[2];
+        this.equipArmor = new InventoryThings[2];
+        this.equipPants = new InventoryThings[2];
+        this.equipHelmet = new InventoryThings[2];
+        this.equipGloves = new InventoryThings[2];
+        this.equipBoots = new InventoryThings[2];
 
         this.logoutTime = "0";
     }

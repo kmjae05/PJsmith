@@ -130,12 +130,9 @@ public class StageData : MonoBehaviour
 
             //몬스터 종류
             random = Random.Range(1, 3 + 1);
-            stin.type = typeNumToString(stin.getStageNum(), random);
-            //random = Random.Range(0, 100);
-            //if (random < 50) stin.typeNum = 1;
-            //else if (random > 49 && random < 90) stin.typeNum = 2;
-            //else if (random > 89) stin.typeNum = 3;
-            stin.typeNum = 3;
+            stin.type = typeNumToString(random);
+            random = Random.Range(1, 4);
+            stin.typeNum = random;
             stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
 
             //스테이지 아이콘 변경
@@ -370,7 +367,7 @@ public class StageData : MonoBehaviour
     //}
 
     //type int -> string
-    public string typeNumToString(int stageNum, int i)
+    public string typeNumToString(int i)
     {
         ////사냥
         if (i == 1) return "전갈"; else if (i == 2) return "오쿰"; else if (i == 3) return "인큐버스"; else return null;
