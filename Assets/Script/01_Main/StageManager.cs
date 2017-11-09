@@ -104,7 +104,7 @@ public class StageManager : MonoBehaviour
         MonsterObj[2] = Monster.transform.Find("Syaonil").gameObject;
 
         MonsterObjList = new List<GameObject>();
-        light = GameObject.Find("Spotlight").gameObject;
+        light = Monster.transform.Find("Spotlight").gameObject;
 
         StageObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject;
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;
@@ -1348,7 +1348,7 @@ public class StageManager : MonoBehaviour
                 position = MonsterObjList[i].transform.localPosition;
                 //position.x = Mathf.RoundToInt(position.x);
                 //position.y = Mathf.RoundToInt(position.y);
-                position.y = position.y-2.0f;
+                //position.y = position.y-2.0f;
 
                 position.z = 20.0f;
                 MonsterObjList[i].transform.localPosition = position;

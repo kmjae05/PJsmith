@@ -337,7 +337,6 @@
     <Compile Include="Assets\OneSignal\src\OneSignalIOS.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
-    <Compile Include="Assets\PinchZoom.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
@@ -359,6 +358,7 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
     <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
+    <Compile Include="Assets\Script\01_Main\PinchZoom.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\AchievementData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\Achievementhandle.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\EmblemHandle.cs" />
