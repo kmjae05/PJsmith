@@ -142,6 +142,7 @@ public class TerritoryManager : MonoBehaviour
             if (MineData.instance.getMineList()[i].buildState == "beunder"
                 || MineData.instance.getMineList()[i].buildState == "upgrade")
             {
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(true);
                 //시간 0이면 건설완료 상태로
                 if (MineData.instance.getMineList()[i].buildTime < 0.5f)
                 {
@@ -190,7 +191,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(true);
-                mineObj[i].transform.Find("Dust").gameObject.SetActive(true);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
 
                 mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -419,6 +420,7 @@ public class TerritoryManager : MonoBehaviour
         obj.transform.Find("Text").gameObject.SetActive(true);
         obj.transform.Find("DottedCircle").gameObject.SetActive(false);
         obj.transform.Find("pickax").gameObject.SetActive(false);
+        obj.transform.Find("Dust").gameObject.SetActive(true);
         obj.transform.Find("TypeName").gameObject.SetActive(true);
         obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
 
@@ -610,6 +612,9 @@ public class TerritoryManager : MonoBehaviour
 
     //}
 
+
+
+
     //건설 진행 중 버튼 (현황 창
     public void BuildCondition(GameObject obj, int num)
     {
@@ -688,6 +693,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[num].transform.Find("Text").gameObject.SetActive(true);
                 mineObj[num].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[num].transform.Find("pickax").gameObject.SetActive(true);
+                mineObj[num].transform.Find("Dust").gameObject.SetActive(false);
 
                 BottomMenuLock.SetActive(false);
                 StartLock.SetActive(false);
@@ -810,6 +816,7 @@ public class TerritoryManager : MonoBehaviour
 
                 obj.transform.Find("Text").gameObject.GetComponent<Text>().text = MineData.instance.getMineList()[num].deposit.ToString() + "개 채굴 완료";
                 obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
                 obj.transform.Find("BoostIcon").gameObject.SetActive(false);
             });
 
@@ -890,6 +897,7 @@ public class TerritoryManager : MonoBehaviour
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("DottedCircle").gameObject.SetActive(true);
                 obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
                 obj.transform.Find("TypeName").gameObject.SetActive(false);
                 obj.transform.Find("BoostIcon").gameObject.SetActive(false);
                 //광산 스팟 버튼 설정.
@@ -939,6 +947,7 @@ public class TerritoryManager : MonoBehaviour
         //obj.transform.Find("Text").gameObject.SetActive(false);
         //obj.transform.Find("DottedCircle").gameObject.SetActive(false);
         obj.transform.Find("pickax").gameObject.SetActive(false);
+        obj.transform.Find("Dust").gameObject.SetActive(false);
         //obj.transform.Find("TypeName").gameObject.SetActive(false);
         obj.transform.Find("BoostIcon").gameObject.SetActive(false);
 
@@ -1145,6 +1154,7 @@ public class TerritoryManager : MonoBehaviour
             obj.transform.Find("Text").gameObject.SetActive(true);
             obj.transform.Find("DottedCircle").gameObject.SetActive(false);
             obj.transform.Find("pickax").gameObject.SetActive(false);
+            obj.transform.Find("Dust").gameObject.SetActive(true);
             obj.transform.Find("TypeName").gameObject.SetActive(true);
             obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
 
@@ -1236,6 +1246,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.SetActive(false);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(true);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(false);
                 mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }
@@ -1284,6 +1295,7 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
+                mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
                 mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }

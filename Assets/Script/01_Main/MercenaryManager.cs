@@ -52,6 +52,8 @@ public class MercenaryManager : MonoBehaviour {
     {
         Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
 
+        GameObject.Find("ChrImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merTemp.getName() + "_profile");
+
         //장비 찾기
         profilePopupManager.setEquipment(merTemp.getName(), profilePopupManager.getCurSetNum());
 

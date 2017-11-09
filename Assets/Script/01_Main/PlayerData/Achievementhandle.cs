@@ -359,7 +359,7 @@ public class Achievementhandle : MonoBehaviour {
         RewardPanel[index].SetActive(true);
         G_AchvList[index].transform.SetAsFirstSibling();
         
-        yield return StartCoroutine(AcvBoxHandle(alertMessageHandle(type, amount)));
+        //yield return StartCoroutine(AcvBoxHandle(alertMessageHandle(type, amount)));
     }
 
     public string alertMessageHandle(string type, int amount)   //업적 달성 시 알림 창 내용 설정

@@ -104,7 +104,7 @@ public class StageManager : MonoBehaviour
         MonsterObj[2] = Monster.transform.Find("Syaonil").gameObject;
 
         MonsterObjList = new List<GameObject>();
-        light = Monster.transform.Find("Spotlight").gameObject;
+        light = GameObject.Find("Spotlight").gameObject;
 
         StageObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject;
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;

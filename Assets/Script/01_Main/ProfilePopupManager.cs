@@ -254,7 +254,6 @@ public class ProfilePopupManager : MonoBehaviour {
         }
         else
         {
-            GameObject.Find("ChrImage").GetComponent<Image>().sprite = null;
             mercenaryManager.setMerInfo(obj);
         }
     }

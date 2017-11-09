@@ -85,7 +85,7 @@ public class StageMineManager : MonoBehaviour {
             if (mineList[i].buildState == "beunder"
                 || mineList[i].buildState == "upgrade")
             {
-
+                mineObj.transform.Find("Dust").gameObject.SetActive(true);
                 //시간 0이면 건설완료 상태로
                 if (mineList[i].buildTime < 0.5f)
                 {
@@ -133,7 +133,7 @@ public class StageMineManager : MonoBehaviour {
                 mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
                 mineObj.transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj.transform.Find("pickax").gameObject.SetActive(true);
-                mineObj.transform.Find("Dust").gameObject.SetActive(true);
+                mineObj.transform.Find("Dust").gameObject.SetActive(false);
 
                 mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -318,6 +318,7 @@ public class StageMineManager : MonoBehaviour {
             obj.transform.Find("Image").gameObject.SetActive(true);
             obj.transform.Find("Text").gameObject.SetActive(true);
             obj.transform.Find("pickax").gameObject.SetActive(false);
+            obj.transform.Find("Dust").gameObject.SetActive(true);
             obj.transform.Find("TypeName").gameObject.SetActive(true);
             obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
 
@@ -354,7 +355,7 @@ public class StageMineManager : MonoBehaviour {
             obj.transform.Find("Text").gameObject.SetActive(true);
             obj.transform.Find("DottedCircle").gameObject.SetActive(false);
             obj.transform.Find("pickax").gameObject.SetActive(true);
-            obj.transform.Find("Dust").gameObject.SetActive(true);
+            obj.transform.Find("Dust").gameObject.SetActive(false);
             if (BeUnderPopup.activeInHierarchy)
                 BeUnderPopup.SetActive(false);
             if (mineList[num].boostState == true)
@@ -432,6 +433,7 @@ public class StageMineManager : MonoBehaviour {
                 obj.transform.Find("Text").gameObject.SetActive(true);
                 obj.transform.Find("DottedCircle").gameObject.SetActive(false);
                 obj.transform.Find("pickax").gameObject.SetActive(true);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
 
                 //BottomMenuLock.SetActive(false);
                 //StartLock.SetActive(false);
@@ -466,6 +468,7 @@ public class StageMineManager : MonoBehaviour {
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("DottedCircle").gameObject.SetActive(false);
                 obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
                 obj.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(obj, num));
                 //BottomMenuLock.SetActive(false);
                 //StartLock.SetActive(false);
@@ -536,6 +539,7 @@ public class StageMineManager : MonoBehaviour {
 
                 obj.transform.Find("Text").gameObject.GetComponent<Text>().text = mineList[num].deposit.ToString() + "개 채굴 완료";
                 obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
                 obj.transform.Find("BoostIcon").gameObject.SetActive(false);
             });
         });
@@ -610,6 +614,7 @@ public class StageMineManager : MonoBehaviour {
                 obj.transform.Find("Image").gameObject.SetActive(true);
                 obj.transform.Find("Text").gameObject.SetActive(false);
                 obj.transform.Find("pickax").gameObject.SetActive(false);
+                obj.transform.Find("Dust").gameObject.SetActive(false);
                 obj.transform.Find("TypeName").gameObject.SetActive(true);
                 obj.transform.Find("BoostIcon").gameObject.SetActive(false);
                 obj.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -632,13 +637,6 @@ public class StageMineManager : MonoBehaviour {
         mineList[num].boostState = false;
 
         obj.transform.Find("Text").gameObject.GetComponent<Text>().text = "고갈";
-        //obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
-        //obj.transform.Find("Image").gameObject.SetActive(false);
-        //obj.transform.Find("Text").gameObject.SetActive(false);
-        //obj.transform.Find("DottedCircle").gameObject.SetActive(false);
-        obj.transform.Find("pickax").gameObject.SetActive(false);
-        //obj.transform.Find("TypeName").gameObject.SetActive(false);
-        obj.transform.Find("BoostIcon").gameObject.SetActive(false);
 
         //기본 광석 획득
         if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == mineList[num].getThingName[0]) != null)
