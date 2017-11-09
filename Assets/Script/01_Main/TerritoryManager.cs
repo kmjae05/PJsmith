@@ -1310,6 +1310,24 @@ public class TerritoryManager : MonoBehaviour
     public void worldMapPosition()
     {
         GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
+        //크기 조정
+        GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel").gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        GameObject monster = GameObject.Find("Monster");
+        if (monster.transform.childCount > 2)
+        {
+            for (int i = 5; i < monster.transform.childCount; i++)
+            {
+
+                if (monster.transform.GetChild(i).gameObject.name == "Syaonil(Clone)")
+                {
+                    monster.transform.GetChild(i).gameObject.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+                }
+                else
+                {
+                    monster.transform.GetChild(i).gameObject.transform.localScale = new Vector3(4f, 4f, 4f);
+                }
+            }
+        }
     }
     //영지 위치 조정
     public void territoryPosition()

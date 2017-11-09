@@ -91,6 +91,8 @@ public class StageManager : MonoBehaviour
         plunderInfoList = new List<PlunderInfo>();
 
         stagePopup = GameObject.Find("System").transform.Find("StagePopup").gameObject;
+        stagePopup.SetActive(true);
+        stagePopup.SetActive(false);
         stageGetItemBox = stagePopup.transform.Find("UIPanel/GetItemBox").gameObject;
         itemListObj = stageGetItemBox.transform.Find("Scroll/ItemList").gameObject;
         ItemBox = itemListObj.transform.Find("ItemBox").gameObject;
