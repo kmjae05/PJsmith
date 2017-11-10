@@ -338,6 +338,7 @@
     <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
+    <Compile Include="Assets\Script\01_Main\ChangeDPSManager.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceManager.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="Assets\Script\01_Main\ExitScript.cs" />
     <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
+    <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\CollectionManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipChangeManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipReinforceManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />

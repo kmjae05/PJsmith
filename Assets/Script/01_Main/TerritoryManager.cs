@@ -77,6 +77,7 @@ public class TerritoryManager : MonoBehaviour
                 GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
                 GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
                 uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(false);
+                uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(false);
                 for (int j = 0; j < MineData.instance.getMineList().Count; j++)
                 {
                     if (MineData.instance.getMineList()[j].buildState == "nothing")
@@ -98,7 +99,7 @@ public class TerritoryManager : MonoBehaviour
                     GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
                     GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
                     uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(true);
-
+                    uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(true);
                     for (int j = 0; j < MineData.instance.getMineList().Count; j++)
                     {
                         if (MineData.instance.getMineList()[j].buildState == "nothing")
@@ -354,6 +355,7 @@ public class TerritoryManager : MonoBehaviour
         GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
         GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
         uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(true);
+        uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(true);
 
         buildInfoPopup.SetActive(false);
         //건설 취소 닫기 버튼
@@ -736,6 +738,7 @@ public class TerritoryManager : MonoBehaviour
                     GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
                     GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
                     uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(false);
+                    uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(false);
                     //건설 취소 버튼
                     CancleButton.onClick.AddListener(() =>
                     {
@@ -745,6 +748,7 @@ public class TerritoryManager : MonoBehaviour
                         GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
                         GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
                         uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(true);
+                        uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(true);
                         obj.transform.Find("DottedCircle").gameObject.SetActive(true);
                     
                     });
@@ -910,6 +914,7 @@ public class TerritoryManager : MonoBehaviour
                     GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
                     GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
                     uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(false);
+                    uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(false);
                     //건설 취소 버튼
                     CancleButton.onClick.AddListener(() =>
                     {
@@ -919,6 +924,7 @@ public class TerritoryManager : MonoBehaviour
                         GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
                         GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
                         uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(true);
+                        uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(true);
                         obj.transform.Find("DottedCircle").gameObject.SetActive(true);
 
                     });
@@ -1208,6 +1214,7 @@ public class TerritoryManager : MonoBehaviour
                     GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
                     GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
                     uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(false);
+                    uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(false);
                     //건설 취소 버튼
                     CancleButton.onClick.AddListener(() =>
                     {
@@ -1217,6 +1224,7 @@ public class TerritoryManager : MonoBehaviour
                         GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
                         GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
                         uiPanel.transform.Find("WorldMapButton").gameObject.SetActive(true);
+                        uiPanel.transform.Find("WorldMapButtonText").gameObject.SetActive(true);
                         obj.transform.Find("DottedCircle").gameObject.SetActive(true);
 
                     });
@@ -1312,7 +1320,7 @@ public class TerritoryManager : MonoBehaviour
         GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
         //크기 조정
         GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel").gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        GameObject monster = GameObject.Find("Monster");
+        GameObject monster = GameObject.Find("01_3D").transform.Find("Monster").gameObject;
         if (monster.transform.childCount > 2)
         {
             for (int i = 5; i < monster.transform.childCount; i++)

@@ -55,11 +55,11 @@ public class NormalLoad : MonoBehaviour
          //Logo 화면일 경우 일정 시간 후 Title 화면으로.
         if (SceneManager.GetActiveScene().name == "00_Logo")
         {
-            GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(false);
+            //GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(false);
             yield return StartCoroutine(LoadingTime()); //로딩시간
             //animation
-            GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(true);
-            yield return new WaitUntil(() => GameObject.Find("Box").transform.Find("LogoImage").gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+            //GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(true);
+            //yield return new WaitUntil(() => GameObject.Find("Box").transform.Find("LogoImage").gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
             yield return StartCoroutine(FadeOut());     //페이드아웃
             SceneManager.LoadScene("01_Title");
         }

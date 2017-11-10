@@ -513,7 +513,10 @@ public class StageManager : MonoBehaviour
                     position.z = 20.0f;
                     monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(0).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => { monsterObj.transform.GetChild(0).gameObject.SetActive(false); });
+                    close.onClick.AddListener(() => {
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
+                       });
                 }
                 if (result.typeNum == 2)
                 {
@@ -530,8 +533,9 @@ public class StageManager : MonoBehaviour
                     position.z = 20.0f;
                     monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(1).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => { monsterObj.transform.GetChild(0).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(1).gameObject.SetActive(false);
+                    close.onClick.AddListener(() => {
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
                 if (result.typeNum == 3)
@@ -557,9 +561,8 @@ public class StageManager : MonoBehaviour
                     monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(2).gameObject.SetActive(true);
                     close.onClick.AddListener(() => {
-                        monsterObj.transform.GetChild(0).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(1).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(2).gameObject.SetActive(false);
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
             }
@@ -573,7 +576,10 @@ public class StageManager : MonoBehaviour
                     position.z = 20.0f;
                     monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => { monsterObj.transform.GetChild(4).gameObject.SetActive(false); });
+                    close.onClick.AddListener(() => {
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
+                    });
                 }
                 if (result.typeNum == 2)
                 {
@@ -591,8 +597,8 @@ public class StageManager : MonoBehaviour
                     monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(5).gameObject.SetActive(true);
                     close.onClick.AddListener(() => {
-                        monsterObj.transform.GetChild(4).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(5).gameObject.SetActive(false);
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
                 if (result.typeNum == 3)
@@ -618,9 +624,8 @@ public class StageManager : MonoBehaviour
                     monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(3).gameObject.SetActive(true);
                     close.onClick.AddListener(() => {
-                        monsterObj.transform.GetChild(4).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(5).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(3).gameObject.SetActive(false);
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
             }
@@ -634,7 +639,10 @@ public class StageManager : MonoBehaviour
                     position.z = 20.0f;
                     monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => { monsterObj.transform.GetChild(7).gameObject.SetActive(false); });
+                    close.onClick.AddListener(() => {
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
+                    });
                 }
                 if (result.typeNum == 2)
                 {
@@ -652,8 +660,8 @@ public class StageManager : MonoBehaviour
                     monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(8).gameObject.SetActive(true);
                     close.onClick.AddListener(() => {
-                        monsterObj.transform.GetChild(7).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(8).gameObject.SetActive(false);
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
                 if (result.typeNum == 3)
@@ -679,9 +687,8 @@ public class StageManager : MonoBehaviour
                     monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
                     monsterObj.transform.GetChild(6).gameObject.SetActive(true);
                     close.onClick.AddListener(() => {
-                        monsterObj.transform.GetChild(7).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(8).gameObject.SetActive(false);
-                        monsterObj.transform.GetChild(6).gameObject.SetActive(false);
+                        for (int i = 0; i < monsterObj.transform.childCount; i++)
+                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
                     });
                 }
             }
@@ -761,7 +768,7 @@ public class StageManager : MonoBehaviour
     public void send()
     {
         GameObject monsterObj = GameObject.Find("Monster (1)");
-        for (int i = 1; i < monsterObj.transform.childCount; i++)
+        for (int i = 0; i < monsterObj.transform.childCount; i++)
         {
             monsterObj.transform.GetChild(i).gameObject.SetActive(false);
         }

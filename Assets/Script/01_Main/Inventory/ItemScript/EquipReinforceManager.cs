@@ -820,6 +820,7 @@ public class EquipReinforceManager : MonoBehaviour {
     //강화
     public void Reinforce(InventoryThings equipThings)
     {
+        ReinforceButton.onClick.RemoveAllListeners();
         //수치 변화
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
 
@@ -850,6 +851,18 @@ public class EquipReinforceManager : MonoBehaviour {
         {
             selectInvenList[i].possession = 0;
         }
+
+        Mercenary merTemp = new Mercenary();
+        //선택된 캐릭터 구별
+        if (profileManager.getCurChr() != Player.instance.getUser().Name)
+            merTemp = MercenaryData.instance.getMercenary().Find(x => x.getName() == profileManager.getCurChr());
+
+        //이전 전투력
+        Stat preStat = new Stat();
+        if (profileManager.getCurChr() == Player.instance.getUser().Name)
+            preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+        else preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+
 
         //전투력 계산
         GameObject.Find("PlayerManager").GetComponent<StatData>().playerStatCal();
@@ -896,13 +909,10 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
                 GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
+                GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }
             else
             {
-                Mercenary merTemp = new Mercenary();
-                //선택된 캐릭터 구별
-                if (profileManager.getCurChr() != Player.instance.getUser().Name)
-                    merTemp = MercenaryData.instance.getMercenary().Find(x => x.getName() == profileManager.getCurChr());
 
                 GameObject.Find("LevelText").GetComponent<Text>().text = merTemp.level.ToString();
                 GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
@@ -915,7 +925,9 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
                 GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
+                GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }
+
 
 
         }

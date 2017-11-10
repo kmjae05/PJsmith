@@ -387,6 +387,7 @@ public class EquipChangeManager : MonoBehaviour
     //교체하기 버튼
     void changeButton(InventoryThings invenThings)
     {
+        ChangeButton.onClick.RemoveAllListeners();
         InventoryThings beforeThings = curInventoryThings;
 
         Mercenary merTemp = new Mercenary();
@@ -639,8 +640,15 @@ public class EquipChangeManager : MonoBehaviour
         //인벤토리 변경
         createInventory(equip);
 
-        //전투력 계산, 변동 효과
-        Debug.Log(Player.instance.getUser().equipWeapon[0].stat.dps);
+        //이전 전투력
+        Stat preStat = new Stat();
+        if (profileManager.getCurChr() == Player.instance.getUser().Name)
+            preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+        else preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+
+
+
+        //전투력 계산
         GameObject.Find("PlayerManager").GetComponent<StatData>().playerStatCal();
         GameObject.Find("PlayerManager").GetComponent<StatData>().mercenaryStatCal();
         GameObject.Find("PlayerManager").GetComponent<StatData>().repreSetStatCal();
@@ -658,6 +666,8 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
             GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
+            
+            GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
         }
         else
         {
@@ -672,13 +682,17 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
             GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
+            GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
         }
 
     }
 
 
     //전투력 변동 효과
+    void changeDPS()
+    {
 
+    }
 
 
 

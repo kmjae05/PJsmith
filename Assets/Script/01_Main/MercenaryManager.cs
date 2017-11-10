@@ -240,8 +240,8 @@ public class MercenaryManager : MonoBehaviour {
                         if (!stageInfo.complete)
                         {
                             float time = stageInfo.time;
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = 180f;
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (180f - time);
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfo.typeNum *60f;
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (stageInfo.typeNum * 60f - time);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = ( (int)((180 - time) / 180 *100)) + "%";
                             //button.transform.Find("State/Text").gameObject.GetComponent<Text>().text =
                             //    ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
