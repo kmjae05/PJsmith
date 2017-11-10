@@ -48,13 +48,12 @@ public class NormalLoad : MonoBehaviour
 
     IEnumerator EnterToMain()
     {
-        yield return StartCoroutine(FadeIn());        //페이드인
-        //yield return StartCoroutine(LoadingTime()); //로딩시간
-        //yield return StartCoroutine(FadeOut());     //페이드아웃
 
          //Logo 화면일 경우 일정 시간 후 Title 화면으로.
         if (SceneManager.GetActiveScene().name == "00_Logo")
         {
+            yield return StartCoroutine(FadeIn());        //페이드인
+
             //GameObject.Find("Box").transform.Find("LogoImage").gameObject.SetActive(false);
             yield return StartCoroutine(LoadingTime()); //로딩시간
             //animation
@@ -63,16 +62,26 @@ public class NormalLoad : MonoBehaviour
             yield return StartCoroutine(FadeOut());     //페이드아웃
             SceneManager.LoadScene("01_Title");
         }
-        //if (SceneManager.GetActiveScene().name == "01_Title")
-        //{
-        //    yield return StartCoroutine(LoadingTime()); //로딩시간
-        //    ToLobby();
-        //}
-
-            //로딩화면
-            if ( SceneManager.GetActiveScene().name == "08_Loading_GameIn"
-            || SceneManager.GetActiveScene().name == "09_Loading_Normal")
+        if (SceneManager.GetActiveScene().name == "02_Lobby")
         {
+            yield return StartCoroutine(FadeIn());        //페이드인
+        }
+        if (SceneManager.GetActiveScene().name == "08_Loading_GameIn")
+        {
+            yield return StartCoroutine(FadeIn());        //페이드인
+
+            yield return StartCoroutine(LoadingTime()); //로딩시간
+            yield return StartCoroutine(FadeOut());     //페이드아웃
+            SceneManager.LoadScene("02_Lobby");
+        }
+        if (SceneManager.GetActiveScene().name == "09_Loading_Normal")
+        {
+            int random = Random.Range(0, 2);
+            if (random == 0) GameObject.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("loading_tip1");
+            else GameObject.Find("Image").GetComponent<Image>().sprite = Resources.Load<Sprite>("loading_tip2");
+
+            yield return StartCoroutine(FadeIn());        //페이드인
+
             yield return StartCoroutine(LoadingTime()); //로딩시간
             yield return StartCoroutine(FadeOut());     //페이드아웃
             SceneManager.LoadScene("02_Lobby");

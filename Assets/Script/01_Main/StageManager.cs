@@ -768,13 +768,14 @@ public class StageManager : MonoBehaviour
     public void send()
     {
         GameObject monsterObj = GameObject.Find("Monster (1)");
-        for (int i = 0; i < monsterObj.transform.childCount; i++)
-        {
-            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-        }
 
         if (selectMerFlag)
         {
+            for (int i = 0; i < monsterObj.transform.childCount; i++)
+            {
+                monsterObj.transform.GetChild(i).gameObject.SetActive(false);
+            }
+
             stagePopup.SetActive(false);
             stageStatePopup.SetActive(true);
 
@@ -825,8 +826,24 @@ public class StageManager : MonoBehaviour
             GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
 
         }
+        //용병 선택 안 하고 보내기 버튼 선택
+        else
+        {
+            GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(false);
+            GameObject.Find("System").transform.Find("AlertImage/AlrImage/Text").gameObject.GetComponent<Text>().text = "용병을 선택하세요.";
+            StartCoroutine(alrImageActive());
+        }
 
     }
+
+
+    //문구 출력 애니메이션
+    IEnumerator alrImageActive()
+    {
+        GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+    }
+
 
     public void destroyItemBox(GameObject Obj)
     {
@@ -1062,7 +1079,7 @@ public class StageManager : MonoBehaviour
         spotButton.name = result.stageName + "Button"; //오브젝트 이름 변경
         //stageData.stageImageChange(result);
 
-        result.time = 30f; // typeNumToRegenTime();             //리젠 시간 설정
+        result.time = 1f; // typeNumToRegenTime();             //리젠 시간 설정
         //spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
         //spotButton.GetComponent<Image>().sprite = result.sprite;
 
