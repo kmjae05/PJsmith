@@ -335,6 +335,7 @@
     <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
+    <Compile Include="Assets\Script\01_Main\ChangeDPSManager.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceGameReward.cs" />
     <Compile Include="Assets\Script\01_Main\Dice\DiceManager.cs" />

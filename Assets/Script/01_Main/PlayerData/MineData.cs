@@ -96,6 +96,7 @@ public class MineData : MonoBehaviour {
                     mineList[i].buildTime = 0f;
                     if (mineList[i].buildState == "upgrade")
                     {
+                        Debug.Log(mineList[i].level);
                         mineList[i].level++;
                         mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
                         mineInfoList.Find(x => x.type == mineList[i].type).level++;
@@ -228,6 +229,7 @@ public class MineInfo
     public int[] necessaryMaterialsNum; //수량
 
     public int level;
+    //업그레이드 상태
 
     //레벨업 시 비교
     public int afterLevel;
