@@ -85,6 +85,7 @@ public class MineData : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log(mineInfoList[0].upgradeState);
         for (int i = 0; i < 10; i++)
         {
             //건설 진행 중
@@ -101,6 +102,7 @@ public class MineData : MonoBehaviour {
                         mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
                         mineInfoList.Find(x => x.type == mineList[i].type).level++;
                         mineInfoList.Find(x => x.type == mineList[i].type).buildTime = mineBuildList.Find(x=>x.level == mineInfoList.Find(y => y.type == mineList[i].type).level).time;
+                        mineInfoList.Find(x => x.type == mineList[i].type).upgradeState = false;
                     }
 
                     mineList[i].buildState = "complete";
@@ -230,6 +232,7 @@ public class MineInfo
 
     public int level;
     //업그레이드 상태
+    public bool upgradeState = false;
 
     //레벨업 시 비교
     public int afterLevel;

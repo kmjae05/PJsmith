@@ -141,7 +141,7 @@ public class TerritoryManager : MonoBehaviour
 
     private void Update()
     {
-        uiPanel.transform.Find("Back/Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Lv " + Player.instance.getUser().level.ToString() + " 대장간";
+        uiPanel.transform.Find("Back/Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Lv" + Player.instance.getUser().level.ToString() + " 대장간";
         for (int i = 2; i < bottonButtonList.Count; i++)
             if (Player.instance.getUser().level >= MineData.instance.getMineInfoList()[i].buildLevel)
                 bottonButtonList[i].transform.Find("LockImage").gameObject.SetActive(false);
@@ -395,6 +395,7 @@ public class TerritoryManager : MonoBehaviour
         {
             MineData.instance.getMineList()[num].buildState = "upgrade";
             info.upgradeFlag = false;
+            info.upgradeState = true;
         }
         else
         {
@@ -449,27 +450,24 @@ public class TerritoryManager : MonoBehaviour
         //BottomMenuLock.SetActive(true);
         //대장장이 행동 제한
         //StartLock.SetActive(true);
-
-        ////빈 스팟 띄우기
-        //for (int j = 0; j < MineData.instance.getMineList().Count; j++)
-        //{
-        //    if (MineData.instance.getMineList()[j].buildState == "nothing")
-        //    {
-        //        mineObj[j].GetComponent<Button>().onClick.RemoveAllListeners();
-        //        GameObject obj = mineObj[j];
-        //        int num = j;
-        //        mineObj[j].GetComponent<Button>().onClick.AddListener(() => BuildSpotClick(obj, num));
-        //        mineObj[j].transform.Find("Image").gameObject.SetActive(false);
-        //        mineObj[j].transform.Find("Text").gameObject.SetActive(false);
-        //        mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
-        //        mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
-        //    }
-        //}
     }
     //업그레이드 버튼
     public void UpgradeButton()
     {
+
         MineInfo info = mineInfo.Find(x => x.type == curType);
+
+        //업그레이드 진행중이면 팝업
+        if(MineData.instance.getMineInfoList().Find(x => x.type == curType).upgradeState)
+        {
+            GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(false);
+            GameObject.Find("System").transform.Find("AlertImage/AlrImage/Text").gameObject.GetComponent<Text>().text = "같은 종류의 광산 업그레이드가 진행중입니다.";
+            StartCoroutine(alrImageActive());
+            return;
+        }
+        buildInfoPopup.transform.Find("UIPanel/UpgradeButton").gameObject.SetActive(false);
+        buildInfoPopup.transform.Find("UIPanel/UpgradeInitButton").gameObject.SetActive(true);
+
         info.upgradeFlag = true;
         
         info.afterLevel = info.level + 1;
@@ -514,6 +512,9 @@ public class TerritoryManager : MonoBehaviour
     //업그레이드 초기화 버튼
     public void UpgradeInitButton()
     {
+        buildInfoPopup.transform.Find("UIPanel/UpgradeButton").gameObject.SetActive(true);
+        buildInfoPopup.transform.Find("UIPanel/UpgradeInitButton").gameObject.SetActive(false);
+
         MineInfo info = mineInfo.Find(x => x.type == curType);
         info.upgradeFlag = false;
         info.afterLevel = info.level-1;
@@ -691,6 +692,7 @@ public class TerritoryManager : MonoBehaviour
                     MineData.instance.getMineList()[num].buildTime = MineData.instance.getMineInfoList().Find(x => x.type == type).buildTime;
                     MineData.instance.getMineList()[num].deposit 
                         = MineData.instance.getMineBuildList().Find(x => x.level == MineData.instance.getMineList()[num].level).deposit;
+                    MineData.instance.getMineInfoList().Find(x => x.type == type).upgradeState = false;
                 }
 
                 MineData.instance.getMineList()[num].buildTime = 0f;
@@ -736,6 +738,7 @@ public class TerritoryManager : MonoBehaviour
                 obj.transform.Find("Dust").gameObject.SetActive(false);
                 BottomMenuLock.SetActive(false);
                 StartLock.SetActive(false);
+                MineData.instance.getMineInfoList().Find(x => x.type == type).upgradeState = false;
                 if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
                 //광산 스팟 버튼 설정.
                 obj.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -1391,6 +1394,12 @@ public class TerritoryManager : MonoBehaviour
         }
     }
 
+    //문구 출력 애니메이션
+    IEnumerator alrImageActive()
+    {
+        GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+    }
 
     public void MineClick(int i) { curMineNum = i; }
 

@@ -171,7 +171,7 @@ public class StageManager : MonoBehaviour
                 spotButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
                 spotButton.SetActive(true);
                 spotButton.transform.Find("StageText").GetComponent<Text>().text = sList[i].getStageNum().ToString();
-                spotButton.transform.Find("NameText").GetComponent<Text>().text = sList[i].type + " " + sList[i].typeNum.ToString();
+                spotButton.transform.Find("NameImage/NameText").GetComponent<Text>().text = sList[i].type + " " + sList[i].typeNum.ToString();
                 spotButton.name = sList[i].stageName + "Button"; //오브젝트 이름 변경
                 //spotButton.GetComponent<Image>().sprite = sList[i].sprite;
                 if (sList[i].state)
@@ -218,9 +218,8 @@ public class StageManager : MonoBehaviour
                 plunderButton.transform.Find("StageText").GetComponent<Text>().text = pList[i].opponentName;
                 plunderButton.name = pList[i].PlunderName + "Button";
                 //sprite
-                plunderButton.transform.Find("State/NameText").gameObject.GetComponent<Text>().text = pList[i].opponentName;
-                plunderButton.transform.Find("State/NameText").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
-                plunderButton.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = "Level " + (1).ToString();//
+                plunderButton.transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" + (1).ToString() + " " + pList[i].opponentName;
+                plunderButton.transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
 
                 //리젠 상태일 때 반투명
                 if (pList[i].regen) plunderButton.GetComponent<Image>().color = new Color(plunderButton.GetComponent<Image>().color.r, plunderButton.GetComponent<Image>().color.g, plunderButton.GetComponent<Image>().color.b, 0.5f);
@@ -238,7 +237,7 @@ public class StageManager : MonoBehaviour
         plunderInfoList = stageData.getPlunderInfoList();
         stageInfoListtmp.Clear();
 
-        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Level " + Player.instance.getUser().level.ToString();
+        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Lv" + Player.instance.getUser().level.ToString() + " 대장간";
 
         if(GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
             SetPositionHUD();
@@ -290,7 +289,7 @@ public class StageManager : MonoBehaviour
                             stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
                             stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == stin.getRecentItem).icon);
                             stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = stin.getItemNum[i].ToString();
-                            stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = stin.getRecentItem;
+                            stateItemBox.transform.Find("NameImage/NameText").gameObject.GetComponent<Text>().text = stin.getRecentItem;
 
                             GameObject boxobj = Instantiate(stateItemBox);
                             boxobj.transform.SetParent(stateItemList.transform, false);
@@ -430,8 +429,8 @@ public class StageManager : MonoBehaviour
                         //리젠 끝나고 a값 복구
                         spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 1.0f);
                         if (GameObject.Find(stageName + "Button").activeInHierarchy)
-                            GameObject.Find(stageName + "Button").transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = "Level " +
-                                StageData.instance.getPlundeList().Find(x => x.getName() == plunderInfotmp[i].opponentName).level.ToString();
+                            GameObject.Find(stageName + "Button").transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" +
+                                StageData.instance.getPlundeList().Find(x => x.getName() == plunderInfotmp[i].opponentName).level.ToString() + " " + plunderInfotmp[i].opponentName;
                     }
                 }
             }
@@ -757,7 +756,7 @@ public class StageManager : MonoBehaviour
         GameObject.Find("System").transform.Find("MercenaryInfoPopup/UIPanel/OKButton").gameObject.GetComponent<Button>().onClick.AddListener(() => { worldCam1.depth = 5; });
         selectMerFlag = true;
         selectMerObj = obj;
-        mercenaryManager.setCurSelect(obj.transform.Find("NameText").gameObject.GetComponent<Text>().text);
+        mercenaryManager.setCurSelect(obj.transform.Find("NameImage/NameText").gameObject.GetComponent<Text>().text);
 
         //선택표시 이동
         selectFrame.transform.position = obj.transform.position;
@@ -1236,7 +1235,7 @@ public class StageManager : MonoBehaviour
 
             //상대방 데이터 가져와서 갱신
             plunderEnemyBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = plunder.getName();
-            plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = plunder.level.ToString();
+            //plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = plunder.level.ToString();
 
             plunderEnemyBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.dps).ToString();
             plunderEnemyBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.strPower).ToString();
@@ -1354,7 +1353,7 @@ public class StageManager : MonoBehaviour
         result.spotName = StageData.spotList[index].getPosition().name;
         result.PlunderName = "plunder" + result.getPlunderNum().ToString();
         spotButton.transform.Find("StageText").GetComponent<Text>().text = result.opponentName;
-        spotButton.transform.Find("State/NameText").GetComponent<Text>().text = result.opponentName;
+        spotButton.transform.Find("State/NameImage/NameText").GetComponent<Text>().text = result.opponentName;
         spotButton.name = result.PlunderName + "Button"; //오브젝트 이름 변경
 
         spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
@@ -1560,8 +1559,8 @@ public class StageManager : MonoBehaviour
             StageData.instance.getPlundeList()[random].assignment = true;
             GameObject obj = GameObject.Find("plunder" + (i + 1).ToString() + "Button");
             obj.transform.Find("StageText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].getName();
-            obj.transform.Find("State/NameText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].getName();
-            obj.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].level.ToString();
+            obj.transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" + StageData.instance.getPlundeList()[random].level + " " + StageData.instance.getPlundeList()[random].getName();
+            //obj.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].level.ToString();
         }
 
     }
