@@ -667,7 +667,7 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
             
-            GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
+            //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
         }
         else
         {
@@ -682,7 +682,7 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
             GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
-            GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
+           // GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
         }
 
     }
@@ -703,10 +703,13 @@ public class EquipChangeManager : MonoBehaviour
             => x.type == ThingsData.instance.getThingsList().Find(y => y.name == equip.name).type);
         for (int i = 0; i < inventoryThings.Count; i++) Destroy(inventoryThings[i]);
         inventoryThings.Clear();
+
+        bool nothing = false;
         for (int i = 0; i < invenThingsList.Count; i++)
         {
-            if (!invenThingsList[i].equip && invenThingsList[i].possession>0)
+            if (!invenThingsList[i].equip && invenThingsList[i].possession > 0)
             {
+                nothing = true;
                 //
                 inventoryThings.Add(Instantiate(inventoryBox));
                 inventoryThings[inventoryThings.Count - 1].SetActive(true);
@@ -738,6 +741,12 @@ public class EquipChangeManager : MonoBehaviour
                     });
             }
         }
+
+        if (!nothing) {
+            inventoryUIPanel.transform.Find("NothingText").gameObject.GetComponent<Text>().text = "교체할 장비가 없습니다.";
+            inventoryUIPanel.transform.Find("NothingText").gameObject.SetActive(true);
+        }
+        else inventoryUIPanel.transform.Find("NothingText").gameObject.SetActive(false);
     }
 
 }

@@ -60,6 +60,7 @@ public class EquipReinforceManager : MonoBehaviour {
     private string curType;                         //현재 선택된 장비 종류
 
     private int tmpexp = 0;             //미리보기 경험치
+    private int sliderexp = 0;
     private int tmprein= 0;             //미리보기 강화 수치
     private int selectNum = 0;          //선택 개수
     private List<GameObject> selectObjList = new List<GameObject>();
@@ -68,6 +69,10 @@ public class EquipReinforceManager : MonoBehaviour {
     private Color green = new Color(0.41f, 0.85f, 0.4f);
     private Color red = new Color(1f, 0.32f, 0.21f);
     private Color defaultColor = new Color(0.84f, 0.83f, 0.8f);
+
+    private GameObject success;
+    private GameObject lightImage;
+    float speed = 0.5f;
 
     private void Start()
     {
@@ -117,6 +122,9 @@ public class EquipReinforceManager : MonoBehaviour {
         ChangeButton = inventoryUIPanel.transform.Find("ChangeButton").gameObject.GetComponent<Button>();
         ReinforceButton = inventoryUIPanel.transform.Find("ReinforceButton").gameObject.GetComponent<Button>();
 
+        success = equipSelectPopup.transform.Find("Success").gameObject;
+        lightImage = success.transform.Find("LightImage").gameObject;
+
         curInventoryThings = new InventoryThings();
         curType = null;
 
@@ -131,6 +139,13 @@ public class EquipReinforceManager : MonoBehaviour {
        });
 
     }
+
+    void Update()
+    {
+        if (success.activeInHierarchy)
+            lightImage.transform.Rotate(new Vector3(0, 0, 1), 1 * speed);
+    }
+
 
     //강화
     public void ReinforceEquip(InventoryThings equipThings)
@@ -264,11 +279,17 @@ public class EquipReinforceManager : MonoBehaviour {
         //tmprein = invenThings.reinforcement;
         tmpexp += 10;
         Debug.Log(tmpexp);
-        if(tmpexp + curInventoryThings.exp >= 100)
+        sliderexp = tmpexp + curInventoryThings.exp;
+
+        if (sliderexp >= 100)
         {
-            tmpexp = 0;
-            tmprein += 1;
+            //tmpexp = 0;
+            sliderexp %= 100;
+            if(sliderexp == 0)
+                tmprein += 1;
+            
         }
+        
 
         //밑에 장비 표시
         if (invenThings.reinforcement > 0)
@@ -321,7 +342,6 @@ public class EquipReinforceManager : MonoBehaviour {
 
         if (tmprein > 0)
         {
-
             for (int i = 0; i < changeInfoBoxAbilityInfoTextGroup.transform.childCount; i++)
             {
                 changeInfoBoxAbilityInfoTextGroup.transform.GetChild(i).gameObject.SetActive(false);
@@ -508,15 +528,17 @@ public class EquipReinforceManager : MonoBehaviour {
         }
         else changeInfoBoxAdditionGroup.transform.gameObject.SetActive(false);
 
+        Debug.Log(tmpexp);
+        Debug.Log(curInventoryThings.exp);
 
         changeItemBoxIcon.transform.gameObject.SetActive(true);
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityTextGroup.transform.gameObject.SetActive(true);
-        changeInfoBoxExpSlider.value = curInventoryThings.exp + tmpexp;
-        changeInfoBoxExpText.text = (curInventoryThings.exp + tmpexp) + "%";
+        changeInfoBoxExpSlider.value = sliderexp;
+        changeInfoBoxExpText.text = sliderexp + "%";
 
-        if (tmprein > 0 && (curInventoryThings.exp + tmpexp) == 0)
+        if (tmprein > 0 && ((curInventoryThings.exp + tmpexp) == 0 || (curInventoryThings.exp + tmpexp) == 100))
         {
             changeInfoBoxExpSlider.value = changeInfoBoxExpSlider.maxValue;
             changeInfoBoxExpText.text = "100%";
@@ -547,15 +569,21 @@ public class EquipReinforceManager : MonoBehaviour {
         obj.transform.Find("SelectImage").gameObject.SetActive(false);
 
         //강화 상태 미리보기
+        
         tmpexp -= 10;
         Debug.Log(tmpexp);
-        if (tmpexp + curInventoryThings.exp < 0)
+        //if (tmpexp + curInventoryThings.exp < 0)
+        //{
+        //    //
+        //    tmpexp = 90;
+        //    tmprein -= 1;
+        //}
+        sliderexp = tmpexp + curInventoryThings.exp;
+        if (sliderexp == 90 && tmprein > 0)
         {
-            //
-            tmpexp = 90;
             tmprein -= 1;
         }
-
+        sliderexp %= 100;
 
         //밑에 장비 표시
         if (invenThings.reinforcement > 0)
@@ -602,7 +630,7 @@ public class EquipReinforceManager : MonoBehaviour {
 
         //changeInfoBoxAbilityInfoText.text = abstr;
         //changeInfoBoxAbilityText.text = statstr;
-        if (curInventoryThings.reinforcement > 0)
+        if (curInventoryThings.reinforcement + tmprein > 0)
             changeInfoBoxReinText.text = "+" + (tmprein + curInventoryThings.reinforcement).ToString();
         else changeInfoBoxReinText.text = null;
 
@@ -799,8 +827,15 @@ public class EquipReinforceManager : MonoBehaviour {
         changeItemBoxNameText.transform.gameObject.SetActive(true);
         changeInfoBoxReinText.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityTextGroup.transform.gameObject.SetActive(true);
-        changeInfoBoxExpSlider.value = curInventoryThings.exp + tmpexp;
-        changeInfoBoxExpText.text = (curInventoryThings.exp + tmpexp) + "%";
+        changeInfoBoxExpSlider.value = sliderexp;
+        changeInfoBoxExpText.text = sliderexp + "%";
+
+        if (tmprein > 0 && curInventoryThings.exp + tmpexp == 100)
+        {
+            changeInfoBoxExpSlider.value = changeInfoBoxExpSlider.maxValue;
+            changeInfoBoxExpText.text = "100%";
+        }
+
 
         selectNumText.text = "재료 선택 " + selectNum + " / 10";
 
@@ -843,11 +878,14 @@ public class EquipReinforceManager : MonoBehaviour {
             }
             curInventoryThings.reinforcement += tmprein;
 
+            success.transform.Find("LevelText").gameObject.GetComponent<Text>().text = "+" + curInventoryThings.reinforcement.ToString();
+            appear();
         }
         curInventoryThings.exp += tmpexp;
+        if (curInventoryThings.exp >= 100) curInventoryThings.exp %= curInventoryThings.exp;
 
         //재료 삭제
-        for(int i = 0; i < selectInvenList.Count; i++)
+        for (int i = 0; i < selectInvenList.Count; i++)
         {
             selectInvenList[i].possession = 0;
         }
@@ -857,11 +895,11 @@ public class EquipReinforceManager : MonoBehaviour {
         if (profileManager.getCurChr() != Player.instance.getUser().Name)
             merTemp = MercenaryData.instance.getMercenary().Find(x => x.getName() == profileManager.getCurChr());
 
-        //이전 전투력
-        Stat preStat = new Stat();
-        if (profileManager.getCurChr() == Player.instance.getUser().Name)
-            preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
-        else preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+        ////이전 전투력
+        //Stat preStat = new Stat();
+        //if (profileManager.getCurChr() == Player.instance.getUser().Name)
+        //    preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
+        //else preStat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
 
 
         //전투력 계산
@@ -909,7 +947,7 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
                 GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
-                GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
+                //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }
             else
             {
@@ -925,7 +963,7 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
                 GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
-                GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
+                //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }
 
 
@@ -950,11 +988,12 @@ public class EquipReinforceManager : MonoBehaviour {
             => x.type == ThingsData.instance.getThingsList().Find(y => y.name == equip.name).type);
         for (int i = 0; i < inventoryThings.Count; i++) Destroy(inventoryThings[i]);
         inventoryThings.Clear();
-
+        bool nothing = false;
         for (int i = 0; i < invenThingsList.Count; i++)
         {
             if (!invenThingsList[i].equip && invenThingsList[i].possession > 0 && invenThingsList[i] != curInventoryThings)
             {
+                nothing = true;
                 //
                 inventoryThings.Add(Instantiate(inventoryBox));
                 inventoryThings[inventoryThings.Count - 1].SetActive(true);
@@ -986,5 +1025,32 @@ public class EquipReinforceManager : MonoBehaviour {
                     });
             }
         }
+
+        if (!nothing)
+        {
+            inventoryUIPanel.transform.Find("NothingText").gameObject.GetComponent<Text>().text = "강화에 필요한 재료가 없습니다.";
+            inventoryUIPanel.transform.Find("NothingText").gameObject.SetActive(true);
+        }
+        else inventoryUIPanel.transform.Find("NothingText").gameObject.SetActive(false);
     }
+
+
+
+    public void appear()
+    {
+        success.SetActive(true);
+        //StartCoroutine(disappear());
+    }
+
+
+    //IEnumerator disappear()
+    //{
+    //    yield return new WaitForSeconds(2.0f);
+    //    success.SetActive(false);
+    //}
+
+
+
+
+
 }

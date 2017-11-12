@@ -1334,7 +1334,7 @@ public class StageManager : MonoBehaviour
         }
        
         
-        result.time = 30f;
+        result.time = 1f;
 
         GameObject spotButton = WorldMapBackObj.transform.Find("Plunder/" + result.PlunderName + "Button").gameObject;
         spotButton.transform.localPosition = StageData.spotList[index].getPosition().localPosition;
@@ -1589,7 +1589,6 @@ public class StageManager : MonoBehaviour
     //UI에 맞게 위치 고정
     void SetPositionHUDPopup()
     {
-        Debug.Log("dafdsaf");
         StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
         GameObject monsterObj = GameObject.Find("01_3D").transform.Find("Monster (1)").gameObject;
         Button close = stagePopup.transform.Find("UIPanel/CloseButton").gameObject.GetComponent<Button>();
