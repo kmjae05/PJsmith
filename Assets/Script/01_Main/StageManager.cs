@@ -241,6 +241,8 @@ public class StageManager : MonoBehaviour
 
         if(GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
             SetPositionHUD();
+        if (GameObject.Find("System").transform.Find("StagePopup").gameObject.activeInHierarchy)
+            SetPositionHUDPopup();
 
 
         //탐험 완료 시 버튼 변경.
@@ -467,7 +469,7 @@ public class StageManager : MonoBehaviour
 
     //스테이지 팝업창 갱신. (정보창, 현황창)
     public void initStagePopup(GameObject obj)
-    {
+    { 
         selectMerFlag = false;
         curStageSelect = System.Convert.ToInt32(obj.transform.Find("StageText").GetComponent<Text>().text);
 
@@ -494,203 +496,195 @@ public class StageManager : MonoBehaviour
 
 
             //몬스터 표시
-            GameObject monsterObj = GameObject.Find("Monster (1)");
-            for (int i = 1; i < monsterObj.transform.childCount; i++)
+            GameObject monsterObj = GameObject.Find("01_3D").transform.Find("Monster (1)").gameObject;
+            monsterObj.SetActive(true);
+            for (int i = 0; i < monsterObj.transform.childCount; i++)
             {
                 monsterObj.transform.GetChild(i).gameObject.transform.position = new Vector3(60, 60, 60);
             }
             Button close = stagePopup.transform.Find("UIPanel/CloseButton").gameObject.GetComponent<Button>();
             close.onClick.RemoveAllListeners();
-            //UI에 맞게 위치 고정
-            if (result.type == "전갈")
-            {
-                if (result.typeNum == 1)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(0).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                       });
-                }
-                if (result.typeNum == 2)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(0).gameObject.SetActive(true);
+            ////UI에 맞게 위치 고정
+            //if (result.type == "전갈")
+            //{
+            //    if (result.typeNum == 1)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+                    
+            //        close.onClick.AddListener(() => {
+            //                monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 2)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(0).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(1).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-                if (result.typeNum == 3)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(0).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(1).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 3)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(0).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(1).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(1).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(2).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(2).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(2).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-            }
-            if (result.type == "오쿰")
-            {
-                if (result.typeNum == 1)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-                if (result.typeNum == 2)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(2).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(2).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(2).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //}
+            //if (result.type == "오쿰")
+            //{
+            //    if (result.typeNum == 1)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 2)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(5).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-                if (result.typeNum == 3)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(5).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 3)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(5).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(5).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(3).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(3).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(3).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-            }
-            if (result.type == "인큐버스")
-            {
-                if (result.typeNum == 1)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-                if (result.typeNum == 2)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(3).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(3).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(3).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //}
+            //if (result.type == "인큐버스")
+            //{
+            //    if (result.typeNum == 1)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 2)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(8).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-                if (result.typeNum == 3)
-                {
-                    Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-                    monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(8).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //    if (result.typeNum == 3)
+            //    {
+            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-                    monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(8).gameObject.SetActive(true);
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(8).gameObject.SetActive(true);
 
-                    position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-                    monsterObj.transform.GetChild(6).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-                    position = monsterObj.transform.GetChild(6).gameObject.transform.localPosition;
-                    position.z = 20.0f;
-                    monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
-                    monsterObj.transform.GetChild(6).gameObject.SetActive(true);
-                    close.onClick.AddListener(() => {
-                        for (int i = 0; i < monsterObj.transform.childCount; i++)
-                            monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-                    });
-                }
-            }
+            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+            //        monsterObj.transform.GetChild(6).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+            //        position = monsterObj.transform.GetChild(6).gameObject.transform.localPosition;
+            //        position.z = 20.0f;
+            //        monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
+            //        monsterObj.transform.GetChild(6).gameObject.SetActive(true);
+            //        close.onClick.AddListener(() => {
+            //            monsterObj.SetActive(false);
+            //        });
+            //    }
+            //}
 
         }
         //용병 보낸 상태
@@ -766,14 +760,11 @@ public class StageManager : MonoBehaviour
     //용병 보내기
     public void send()
     {
-        GameObject monsterObj = GameObject.Find("Monster (1)");
+        GameObject monsterObj = GameObject.Find("01_3D").transform.Find("Monster (1)").gameObject;
 
         if (selectMerFlag)
         {
-            for (int i = 0; i < monsterObj.transform.childCount; i++)
-            {
-                monsterObj.transform.GetChild(i).gameObject.SetActive(false);
-            }
+            monsterObj.SetActive(false);
 
             stagePopup.SetActive(false);
             stageStatePopup.SetActive(true);
@@ -1593,6 +1584,196 @@ public class StageManager : MonoBehaviour
             }
         }
         light.transform.position = worldCam.transform.position;
+    }
+
+    //UI에 맞게 위치 고정
+    void SetPositionHUDPopup()
+    {
+        Debug.Log("dafdsaf");
+        StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
+        GameObject monsterObj = GameObject.Find("01_3D").transform.Find("Monster (1)").gameObject;
+        Button close = stagePopup.transform.Find("UIPanel/CloseButton").gameObject.GetComponent<Button>();
+        close.onClick.RemoveAllListeners();
+        if (result.type == "전갈")
+        {
+            if (result.typeNum == 1)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 2)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(0).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(1).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 3)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(0).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(1).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(2).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(2).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(2).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+        }
+        if (result.type == "오쿰")
+        {
+            if (result.typeNum == 1)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 2)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(5).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 3)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(4).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(5).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(3).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(3).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(3).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+        }
+        if (result.type == "인큐버스")
+        {
+            if (result.typeNum == 1)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 2)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(8).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+            if (result.typeNum == 3)
+            {
+                Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
+                monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(7).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
+                monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(8).gameObject.SetActive(true);
+
+                position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
+                monsterObj.transform.GetChild(6).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
+                position = monsterObj.transform.GetChild(6).gameObject.transform.localPosition;
+                position.z = 20.0f;
+                monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
+                monsterObj.transform.GetChild(6).gameObject.SetActive(true);
+                close.onClick.AddListener(() => {
+                    monsterObj.SetActive(false);
+                });
+            }
+        }
     }
 
     //return
