@@ -113,7 +113,8 @@ public class Player : MonoBehaviour {
                 Play.max_exp = Play.level * 20;
                 Play.stat.strPower += Play.stat.strPower * 0.1f;
                 Play.stat.dps = Play.stat.strPower * (float)Play.stat.attackSpeed * Play.stat.critical + Play.stat.defPower*Play.stat.evaRate;
-                MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
+                //MineData.instance.Unlock();                 //레벨업하면 광산 건설 잠금 해제 체크
+                
             }
         }
         yield return null;

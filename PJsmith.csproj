@@ -355,6 +355,7 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\SellManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
+    <Compile Include="Assets\Script\01_Main\LevelupPopupManager.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
     <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
     <Compile Include="Assets\Script\01_Main\PinchZoom.cs" />

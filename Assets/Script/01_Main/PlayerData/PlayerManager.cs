@@ -92,6 +92,7 @@ public class PlayerManager : MonoBehaviour {
             
             if (i >= PlayerExpBarSlider.maxValue)
             {
+                Debug.Log("levelup");
                 i -= PlayerExpBarSlider.maxValue;           //경험치가 넘치면 핸들 값을 0으로 만들고
                 Player.instance.getUser().exp -= Player.instance.getUser().max_exp;                   //
                 Player.instance.getUser().level += 1;                            //레벨 업
@@ -104,6 +105,9 @@ public class PlayerManager : MonoBehaviour {
                 GameObject.Find("PlayerManager").GetComponent<StatData>().playerStatCal();
                 GameObject.Find("PlayerManager").GetComponent<StatData>().mercenaryStatCal();
                 GameObject.Find("PlayerManager").GetComponent<StatData>().repreSetStatCal();
+                GameObject.Find("System").transform.Find("LevelupPopup/UIPanel/LevelText").gameObject.GetComponent<Text>().text = Player.instance.getUser().level.ToString();
+                GameObject.Find("System").transform.Find("LevelupPopup").gameObject.GetComponent<LevelupPopupManager>().appear();
+
             }
             yield return null;
         }

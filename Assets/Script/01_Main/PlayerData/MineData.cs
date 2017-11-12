@@ -85,7 +85,6 @@ public class MineData : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(mineInfoList[0].upgradeState);
         for (int i = 0; i < 10; i++)
         {
             //건설 진행 중

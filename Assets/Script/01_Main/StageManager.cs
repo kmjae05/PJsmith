@@ -413,8 +413,8 @@ public class StageManager : MonoBehaviour
                     if (GameObject.Find(stageName + "Button").activeInHierarchy)
                     {
                         GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
-                        GameObject.Find(stageName + "Button").transform.Find("State/LevelText").gameObject.GetComponent<Text>().text
-                            = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
+                        //GameObject.Find(stageName + "Button").transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text
+                        //    = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
                     }
                 }
                 //대기 상태
@@ -756,7 +756,7 @@ public class StageManager : MonoBehaviour
         GameObject.Find("System").transform.Find("MercenaryInfoPopup/UIPanel/OKButton").gameObject.GetComponent<Button>().onClick.AddListener(() => { worldCam1.depth = 5; });
         selectMerFlag = true;
         selectMerObj = obj;
-        mercenaryManager.setCurSelect(obj.transform.Find("NameImage/NameText").gameObject.GetComponent<Text>().text);
+        mercenaryManager.setCurSelect(obj.transform.Find("NameText").gameObject.GetComponent<Text>().text);
 
         //선택표시 이동
         selectFrame.transform.position = obj.transform.position;
