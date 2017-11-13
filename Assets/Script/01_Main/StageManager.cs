@@ -1307,10 +1307,6 @@ public class StageManager : MonoBehaviour
                 result.getItemNum[i] = 0;
             }
         }
-
-
-
-
     }
 
     IEnumerator closeWin()

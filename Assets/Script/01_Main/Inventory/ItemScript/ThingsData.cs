@@ -49,7 +49,7 @@ public class ThingsData : MonoBehaviour
             thingsList.Add(new Things(thingsData, i));
         }
         thingsList.Find(x => x.name == "돌").possession = 1300;
-        thingsList.Find(x => x.name == "티켓").possession = 3;
+        //thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
         thingsList.Find(x => x.name == "초보자의 단검").possession = 1;
         thingsList.Find(x => x.name == "날카로운 단검").possession = 1;
@@ -68,7 +68,7 @@ public class ThingsData : MonoBehaviour
         thingsList.Find(x => x.name == "영웅의 단검").possession = 1;
 
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
-        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
+        //invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
 
         
@@ -138,6 +138,10 @@ public class Things
 
     public bool illustrate;    //도감
 
+    public Things()
+    {
+
+    }
     public Things(JsonData thingsData, int index)
     {
         this.item_no = (int)thingsData["Things"][index]["item_no"];

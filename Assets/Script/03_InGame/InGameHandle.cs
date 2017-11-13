@@ -66,21 +66,48 @@ public class InGameHandle : MonoBehaviour {
         //UPBox.SetActive(false);
         //SkillButton.SetActive(false);
 
-        OreSelect.Ore TargetOre = OreSelect.SelectOre;
-        OreNameText.text = TargetOre.name;
-        OreImage.sprite = OreSelect.Icon[OreSelect.SelectOre.no].sprite;
-        HpSlider.maxValue = TargetOre.hp;
-        ore_hp = TargetOre.hp;
-        ore_gold = TargetOre.gold;
-        ore_exp = TargetOre.exp;
-        //FeverSlider.maxValue = 100;
-        fever = false;
+        if (Player.instance.getUser().isOre)
+        {
+            OreSelect.Ore TargetOre = OreSelect.SelectOre;
+            OreNameText.text = TargetOre.name;
+            OreImage.sprite = OreSelect.Icon[OreSelect.SelectOre.no].sprite;
+            HpSlider.maxValue = TargetOre.hp;
+            ore_hp = TargetOre.hp;
+            ore_gold = TargetOre.gold;
+            ore_exp = TargetOre.exp;
+            //FeverSlider.maxValue = 100;
+            fever = false;
 
-        //게임 시작 전 HP와 시간, 피버게이지를 초기화
-        HpSlider.value = ore_hp;
-        TimeText.text = ((int)leftTime).ToString();
-        feverGauge = 0;
-        //FeverSlider.value = feverGauge;
+            //게임 시작 전 HP와 시간, 피버게이지를 초기화
+            HpSlider.value = ore_hp;
+            TimeText.text = ((int)leftTime).ToString();
+            feverGauge = 0;
+            //FeverSlider.value = feverGauge;
+
+            //제련 상태
+            Player.instance.getUser().ingameState = true;
+            Player.instance.getUser().oreName = TargetOre.name;
+            Player.instance.getUser().TargetOre = OreSelect.SelectOre;
+            Player.instance.getUser().oreexp = OreSelect.SelectOre.exp;
+        }
+        else
+        {
+            OreNameText.text = Player.instance.getUser().equipName;
+            OreImage.sprite =Resources.Load<Sprite>( ThingsData.instance.getThingsList().Find(x=>x.name == Player.instance.getUser().equipName).icon);
+            HpSlider.maxValue = Player.instance.getUser().equipmaxhp;
+            ore_hp = Player.instance.getUser().equipmaxhp;
+            ore_gold = 0;
+            ore_exp = Player.instance.getUser().equipexp;
+            fever = false;
+
+            //게임 시작 전 HP와 시간, 피버게이지를 초기화
+            HpSlider.value = ore_hp;
+            TimeText.text = ((int)leftTime).ToString();
+
+            //제작 상태
+            Player.instance.getUser().equipState = true;
+        }
+
         StartCoroutine(GameStart());
 
         //무한모드가 아니라면 점수창 끔
@@ -92,8 +119,7 @@ public class InGameHandle : MonoBehaviour {
 
         GoldBox.transform.Find("GoldText").GetComponent<Text>().text = Player.instance.getUser().gold.ToString();
 
-        //제련 상태
-        Player.instance.getUser().ingameState = true;
+        
     }
     //#region UIAnimation
     //void UIAnimation_01()
@@ -148,6 +174,9 @@ public class InGameHandle : MonoBehaviour {
                 }
             }
 
+            Player.instance.getUser().orehp = ore_hp;
+            Player.instance.getUser().oretime = leftTime;
+
             //광석 hp 0
             if (ore_hp <= 0)
             {
@@ -163,6 +192,7 @@ public class InGameHandle : MonoBehaviour {
                 //UIAnimation_02_();
                 //UIAnimation_03_();
                 Player.instance.getUser().ingameState = false;
+                Player.instance.getUser().equipState = false;
                 break;
             }
             //타임오버
@@ -176,6 +206,7 @@ public class InGameHandle : MonoBehaviour {
                 if (systemPopup.activeInHierarchy) systemPopup.SetActive(false);
                 GameObject.Find("InGameUI").transform.Find("CloseButton").gameObject.SetActive(false);
                 Player.instance.getUser().ingameState = false;
+                Player.instance.getUser().equipState = false;
                 break;
             }
             yield return null;

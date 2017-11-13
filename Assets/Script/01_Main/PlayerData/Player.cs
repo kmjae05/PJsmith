@@ -22,19 +22,20 @@ public class Player : MonoBehaviour {
     }
     void Start()
     {
-        //Play.equipWeapon[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 단검");
-        //Play.equipWeapon[1] = equipmentData.getEquipmentList().Find(x => x.name == "날카로운 단검");
-        //Play.equipArmor[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
-        //Play.equipArmor[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천갑옷");
-        //Play.equipPants[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
-        //Play.equipPants[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천바지");
-        //Play.equipHelmet[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        //Play.equipHelmet[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천투구");
-        //Play.equipGloves[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
-        //Play.equipGloves[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천장갑");
-        //Play.equipBoots[0] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
-        //Play.equipBoots[1] = equipmentData.getEquipmentList().Find(x => x.name == "초보자의 천부츠");
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
 
+        //
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
         Play.equipWeapon[0] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
         ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
@@ -82,7 +83,11 @@ public class Player : MonoBehaviour {
         }
 
 
+    }
 
+    private void Update()
+    {
+        Debug.Log(Play.ingameState);
     }
 
 
@@ -189,13 +194,23 @@ public class User
 
     public string logoutTime;
 
+    public bool isOre;
 
     //제련
     public bool ingameState;
+    public OreSelect.Ore TargetOre;
     public string oreName;
-    public int hp;
-    public int time;
+    public int orehp;
+    public float oretime;
+    public int oreexp;
 
+    //제작
+    public bool equipState;
+    public string equipName;
+    public int equipmaxhp;
+    public int equiphp;
+    public float equiptime;
+    public int equipexp;
 
     public User()
     {
@@ -231,9 +246,19 @@ public class User
 
         this.logoutTime = "0";
 
+        isOre = true;
+
         ingameState = false;
         oreName = null;
-        hp = 0;
-        time = 0;
+        orehp = 0;
+        oretime = 0;
+        oreexp = 0;
+
+        equipState = false;
+        equipName = null;
+        equipmaxhp = 0;
+        equiphp = 0;
+        equiptime = 0;
+        equipexp = 0;
     }
 }

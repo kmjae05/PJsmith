@@ -14,9 +14,21 @@ public class StoreManager : MonoBehaviour {
         goldText = GameObject.Find("GoldText").GetComponent<Text>();
         cashText = GameObject.Find("CashText").GetComponent<Text>();
 
-        goldText.text = Player.instance.getUser().gold.ToString();
-        cashText.text = Player.instance.getUser().cash.ToString();
+
+        StartCoroutine(loop());
+
     }
 
+    IEnumerator loop()
+    {
+
+        while (true)
+        {
+            goldText.text = Player.instance.getUser().gold.ToString();
+            cashText.text = Player.instance.getUser().cash.ToString();
+
+            yield return null;
+        }
+    }
 
 }

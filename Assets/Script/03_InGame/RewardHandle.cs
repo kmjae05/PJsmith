@@ -21,20 +21,28 @@ public class RewardHandle : MonoBehaviour
 
     void Reward_Gold()
     {
-        iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.gold, "onUpdate", "GoldCount", "time", 1));
+        if (Player.instance.getUser().isOre)
+        {
+            iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.gold, "onUpdate", "GoldCount", "time", 1));
 
-        if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
-            gold = OreSelect.SelectOre.gold;
-        else gold = OreSelect.SelectOre.gold / 2;
+            if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
+                gold = OreSelect.SelectOre.gold;
+            else gold = OreSelect.SelectOre.gold / 2;
+        }
+        else gold = 0;
         GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", gold);
     }
     void Reward_Exp()
     {
-        iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.exp, "onUpdate", "ExpCount", "time", 1));
+        if (Player.instance.getUser().isOre)
+        {
+            iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", OreSelect.SelectOre.exp, "onUpdate", "ExpCount", "time", 1));
 
-        if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
-            exp = OreSelect.SelectOre.exp;
-        else exp = OreSelect.SelectOre.exp / 2;
+            if (GameObject.Find("Chr_001").GetComponent<CompleteGame>().getwin_lose())
+                exp = OreSelect.SelectOre.exp;
+            else exp = OreSelect.SelectOre.exp / 2;
+        }
+        else exp = Player.instance.getUser().equipexp;
         GameObject.Find("PlayerData").GetComponent<Player>().getExp(exp);
     }
     void GoldCount()

@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 
 //아이템 생성자, 중복아이템의 경우 카운트
 public class Inventory : MonoBehaviour
@@ -78,6 +80,14 @@ public class Inventory : MonoBehaviour
     GameObject NewItemIcon; //new아이콘
     int NewItemCount = 0; //새로운 아이템 카운트 new아이콘 활성화
 
+    private GameObject SystemPopup;
+    private Text Sys_TitleText;
+    private Text Sys_InfoText;
+    private Button Sys_YesButton;
+    private Button Sys_NoButton;
+    private Button Sys_OkButton;
+
+
     void Awake()
     {
         CollectionPopup = transform.Find("/02_UI/Main/Menu/InventoryPopup").gameObject;
@@ -117,21 +127,17 @@ public class Inventory : MonoBehaviour
         t_SlotTitleText = gameObject.transform.Find("/02_UI/Main/Menu/InventoryPopup/UIPanel/BoxBack/Text").gameObject.GetComponent<Text>();
         //InventorySlot.SetActive(true);
         CollectionPopup.SetActive(true);
+
+        SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
+        Sys_TitleText = SystemPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>();
+        Sys_InfoText = SystemPopup.transform.Find("UIPanel/InfoText").gameObject.GetComponent<Text>();
+        Sys_YesButton = SystemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        Sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
+        Sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
+
     }
     void Start()
     {
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
 
         //database = GetComponent<ItemDatabase>();
         thingsData = GameObject.Find("ThingsData").GetComponent<ThingsData>();
@@ -1048,6 +1054,7 @@ public class Inventory : MonoBehaviour
     //무기 정보 팝업
     public void EquipInfoPopup(InventoryThings things)
     {
+        GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ProductionButton").gameObject.SetActive(true);
         Equipment equip = equipmentData.getEquipmentList().Find(x => x.name == things.name);
         
         EquipItemInfoPopup.transform.Find("UIPanel/InfoBox/NameBox/ItemNameText").gameObject.GetComponent<Text>().text = equip.name;
@@ -1118,11 +1125,97 @@ public class Inventory : MonoBehaviour
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
             EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenEquipSellPopup(things));
         }
-        
+
+        EquipItemInfoPopup.transform.Find("UIPanel/ProductionButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        EquipItemInfoPopup.transform.Find("UIPanel/ProductionButton").gameObject.GetComponent<Button>().onClick.AddListener(()
+          =>{
+
+              bool flag = true;
+              for (int i = 0; i < equip.necessaryMaterials.Length; i++)
+              {
+                  if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[i]) != null)
+                  {
+                      if (equip.necessaryMaterialsNum[i] <= ThingsData.instance.getInventoryThingsList().Find(x=>x.name== equip.necessaryMaterials[i]).possession)
+                      {
+                          //조건 만족
+                          Debug.Log("y");
+                      }
+                      else
+                      {
+                          flag = false;
+                          //재료 수량 부족
+                          Debug.Log("no");
+                         
+                      }
+                  }
+                  else
+                  {
+                      flag = false;
+                      //재료 수량 부족
+                      Debug.Log("null");
+
+                  }
+              }
+              if (!flag)
+              {
+                  //팝업
+                  SystemPopup.SetActive(true);
+                  SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                  SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "제작 필요한 재료가 부족합니다.";
+                  Sys_YesButton.gameObject.SetActive(false);
+                  Sys_NoButton.gameObject.SetActive(false);
+                  Sys_OkButton.gameObject.SetActive(true);
+
+                  return;
+              }
+
+              SystemPopup.SetActive(true);
+
+              Sys_TitleText.GetComponent<Text>().text = things.name + " 제작";
+              Sys_InfoText.GetComponent<Text>().text = things.name + " 장비를 제작하시겠습니까 ?";
+
+              Sys_YesButton.gameObject.SetActive(true);     //예/아니오 버튼으로 수정
+              Sys_NoButton.gameObject.SetActive(true);
+              Sys_OkButton.gameObject.SetActive(false);
+
+
+              Sys_YesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+              Sys_YesButton.GetComponent<Button>().onClick.AddListener(()
+                  => {
+                      Player.instance.getUser().isOre = false;
+
+                      //재료 감소
+                      for (int i = 0; i < equip.necessaryMaterials.Length; i++)
+                      {
+                          ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[i]).possession
+                            -= equip.necessaryMaterialsNum[i];
+                      }
+
+                          Player.instance.getUser().equipName = things.name;
+                      Player.instance.getUser().equipmaxhp = 800;
+                      Player.instance.getUser().equiphp = 800;
+                      Player.instance.getUser().equiptime = 30;
+                      Player.instance.getUser().equipexp = 10;
+
+                      SystemPopup.SetActive(false);
+                      StartCoroutine(FadeOut());
+                  });    
+
+          });
 
     }
 
-
+    IEnumerator FadeOut()
+    {
+        Image FadeImage = GameObject.Find("FadeCanvas").transform.Find("FadeImage").GetComponent<Image>();
+        FadeImage.gameObject.SetActive(true);
+        for (float fade = 0; fade <= 1.0f; fade += 0.02f)
+        {
+            FadeImage.color = new Color(0, 0, 0, fade);
+            yield return null;
+        }
+        SceneManager.LoadScene("09_Loading_Normal");
+    }
 
     //기타 아이템 정보 팝업
     public void OthersItemInfoPopup(InventoryThings things)

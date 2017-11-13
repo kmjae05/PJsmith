@@ -598,6 +598,7 @@ public class OreSelect : MonoBehaviour
         }
         else        //정상 시작
         {
+            Player.instance.getUser().isOre = true;
             SelectOre.have -= consume_ores;
             ThingsData.instance.getInventoryThingsList().Find(x => x.name == SelectOre.name).possession -= consume_ores;
 
