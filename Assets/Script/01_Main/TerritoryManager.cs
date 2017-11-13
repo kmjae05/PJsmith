@@ -161,7 +161,7 @@ public class TerritoryManager : MonoBehaviour
                     //건설 완료 알림
                     if (mineFlag[i])
                     {
-                        StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 건설을 완료했습니다."));
+                        GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 건설을 완료했습니다.");
                         mineFlag[i] = false;
                     }
                     BottomMenuLock.SetActive(false);
@@ -237,7 +237,7 @@ public class TerritoryManager : MonoBehaviour
                 //채굴 완료 알림
                 if (mineFlag[i])
                 {
-                    StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 채굴이 끝났습니다."));
+                    GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 채굴이 끝났습니다.");
                     mineFlag[i] = false;
                 }
 

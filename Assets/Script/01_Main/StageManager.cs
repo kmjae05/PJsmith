@@ -138,7 +138,8 @@ public class StageManager : MonoBehaviour
         imd_yesButton = imdComPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
 
         GameObject.Find("Menu").transform.Find("WorldMap (1)/Stage/CloseButton").gameObject.GetComponent<Button>().onClick.AddListener(
-            () => {
+            () =>
+            {
                 GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.SetActive(true);
                 GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject.SetActive(false);
                 GameObject.Find("Menu").transform.Find("WorldMap (1)/Stage/PlunderButton").gameObject.SetActive(true);
@@ -239,7 +240,7 @@ public class StageManager : MonoBehaviour
 
         WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Lv" + Player.instance.getUser().level.ToString() + " 대장간";
 
-        if(GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
+        if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
             SetPositionHUD();
         if (GameObject.Find("System").transform.Find("StagePopup").gameObject.activeInHierarchy)
             SetPositionHUDPopup();
@@ -257,6 +258,8 @@ public class StageManager : MonoBehaviour
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
                 stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
+                
+                
             }
         }
 
@@ -267,6 +270,17 @@ public class StageManager : MonoBehaviour
             Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
             float time = stin.time;
             timeText.text = "남은 시간 : " + ((int)(time / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+            if(stin.complete&& curStageSelect == stin.getStageNum())
+                timeText.text = "사냥 완료";
+
+            bool nothing = false;
+            for (int i = 0; i < stin.getItem.Length; i++)
+            {
+                if (stin.getItem[i] != null)
+                { nothing = true; }
+            }
+            if (nothing) { stageStatePopup.transform.Find("StageStatePanel/NothingText").gameObject.SetActive(false); }
+            else { stageStatePopup.transform.Find("StageStatePanel/NothingText").gameObject.SetActive(true); }
 
             //새로 얻은 아이템
             if (stin.getRecentItemFlag)
@@ -275,12 +289,12 @@ public class StageManager : MonoBehaviour
                 Debug.Log("1111");
                 for (int i = 0; i < stin.getItem.Length; i++)
                 {
-                    if (stin.getItem[i] != null  && stin.getItem[i] == stin.getRecentItem)
+                    if (stin.getItem[i] != null && stin.getItem[i] == stin.getRecentItem)
                     {
                         Debug.Log("i : " + i);
                         Debug.Log(stin.getItemNum[i]);
                         //최근 획득한 아이템이 기존에 있을 경우
-                        if(stin.getItemNum[i]>1)/////
+                        if (stin.getItemNum[i] > 1)/////
                         {
                             Debug.Log("기존");
                             GameObject.Find("statePopupGetItem" + stin.getItem[i]).transform.Find("AmountText").gameObject.GetComponent<Text>().text = stin.getItemNum[i].ToString();
@@ -292,7 +306,7 @@ public class StageManager : MonoBehaviour
                             stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
                             stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == stin.getRecentItem).icon);
                             stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = stin.getItemNum[i].ToString();
-                            stateItemBox.transform.Find("NameImage/NameText").gameObject.GetComponent<Text>().text = stin.getRecentItem;
+                            stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = stin.getRecentItem;
 
                             GameObject boxobj = Instantiate(stateItemBox);
                             boxobj.transform.SetParent(stateItemList.transform, false);
@@ -333,12 +347,12 @@ public class StageManager : MonoBehaviour
                     float time = stageInfoListtmp[i].time;
                     GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(true);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfoListtmp[i].typeNum*60f;
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfoListtmp[i].typeNum * 60f;
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (stageInfoListtmp[i].typeNum * 60f - time);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text 
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text
                         = (int)(GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
-                   
-                    
+
+
                     //GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text
                     //    = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
 
@@ -346,8 +360,8 @@ public class StageManager : MonoBehaviour
                     if (stageInfoListtmp[i].getRecentItemFlag)
                     {
                         Image spr = GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemFrame/GetItemImage").gameObject.GetComponent<Image>();
-                        GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemFrame").gameObject.GetComponent<Image>().color 
-                            = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp[i].getRecentItem).grade); 
+                        GameObject.Find(stageName + "Button").transform.Find("GetItemEff/GetItemFrame").gameObject.GetComponent<Image>().color
+                            = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp[i].getRecentItem).grade);
                         ItemImageChange(stageInfoListtmp[i].getRecentItem, spr);
                         //획득 개수
                         GameObject.Find(stageName + "Button").transform.Find("GetItemEff/Text").gameObject.GetComponent<Text>().text = "+" + stageInfoListtmp[i].getRecentItemNum;
@@ -466,7 +480,7 @@ public class StageManager : MonoBehaviour
 
     //스테이지 팝업창 갱신. (정보창, 현황창)
     public void initStagePopup(GameObject obj)
-    { 
+    {
         selectMerFlag = false;
         curStageSelect = System.Convert.ToInt32(obj.transform.Find("StageText").GetComponent<Text>().text);
 
@@ -501,187 +515,6 @@ public class StageManager : MonoBehaviour
             }
             Button close = stagePopup.transform.Find("UIPanel/CloseButton").gameObject.GetComponent<Button>();
             close.onClick.RemoveAllListeners();
-            ////UI에 맞게 위치 고정
-            //if (result.type == "전갈")
-            //{
-            //    if (result.typeNum == 1)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-                    
-            //        close.onClick.AddListener(() => {
-            //                monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 2)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(0).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(1).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 3)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(0).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(0).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(0).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(1).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(1).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(1).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(2).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(2).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(2).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //}
-            //if (result.type == "오쿰")
-            //{
-            //    if (result.typeNum == 1)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 2)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(5).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 3)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(4).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(4).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(5).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(5).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(5).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(3).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(3).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(3).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //}
-            //if (result.type == "인큐버스")
-            //{
-            //    if (result.typeNum == 1)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 2)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(8).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //    if (result.typeNum == 3)
-            //    {
-            //        Vector3 position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position1").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(7).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(7).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position2").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(8).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(8).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(8).gameObject.SetActive(true);
-
-            //        position = uiCam1.ViewportToWorldPoint(stagePopup.transform.Find("UIPanel/MonsterBox/Position3").gameObject.transform.position);
-            //        monsterObj.transform.GetChild(6).gameObject.transform.position = worldCam1.WorldToViewportPoint(position);
-            //        position = monsterObj.transform.GetChild(6).gameObject.transform.localPosition;
-            //        position.z = 20.0f;
-            //        monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
-            //        monsterObj.transform.GetChild(6).gameObject.SetActive(true);
-            //        close.onClick.AddListener(() => {
-            //            monsterObj.SetActive(false);
-            //        });
-            //    }
-            //}
 
         }
         //용병 보낸 상태
@@ -718,7 +551,7 @@ public class StageManager : MonoBehaviour
                 }
             }
 
-           // stateItemList.GetComponent<RectTransform>().anchoredPosition = new Vector2(0 + stateItemList.GetComponent<RectTransform>().sizeDelta.x / 2, 0);
+            // stateItemList.GetComponent<RectTransform>().anchoredPosition = new Vector2(0 + stateItemList.GetComponent<RectTransform>().sizeDelta.x / 2, 0);
 
 
 
@@ -801,6 +634,9 @@ public class StageManager : MonoBehaviour
             Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
             float time = stageInfoList.Find(x => x.getStageNum() == curStageSelect).time;
             timeText.text = "남은 시간 : " + ((int)(time / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
+
+
+            GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mer.getName() + " 용병이 사냥을 시작했습니다.");
 
             //if(result.getStageNum() <= 15)
             //    GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(true);
@@ -897,7 +733,7 @@ public class StageManager : MonoBehaviour
         //남은 시간 계산해서 아이템 획득
         //Debug.Log(result.time);
         int num = ((int)result.time / 10) + 1;
-        while (num>0)
+        while (num > 0)
         {
             //Debug.Log(num);
             stageData.getItem(result);
@@ -988,7 +824,7 @@ public class StageManager : MonoBehaviour
     public void CompleteButton()
     {
         StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
-        StartCoroutine( GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle("사냥에 성공하여 아이템을 획득했습니다."));
+        GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle("사냥에 성공하여 아이템을 획득했습니다.");
         //보상
         //월드맵/스테이지에서 완료한 경우
         if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
@@ -1008,7 +844,7 @@ public class StageManager : MonoBehaviour
             StartCoroutine(createGetItem(result, stageItem, "StageItemImagePos", getItemListObj));
             GameObject.Find("InventoryScript").GetComponent<GetItemManager>().getItem(result.getItem, result.getItemNum);
         }
-        
+
         destroyItemBox(stateItemList);
 
         result.complete = false;
@@ -1074,14 +910,14 @@ public class StageManager : MonoBehaviour
 
         //3D 몬스터
         //Debug.Log(MonsterObjList[result.getStageNum()-1].gameObject);
-        Destroy(MonsterObjList[result.getStageNum()-1].gameObject);
+        Destroy(MonsterObjList[result.getStageNum() - 1].gameObject);
         int num = 0;
         if (result.type == "전갈")
             num = 0;
         else if (result.type == "오쿰") num = 1;
         else if (result.type == "인큐버스") num = 2;
-        MonsterObjList[result.getStageNum()-1] = Instantiate(MonsterObj[num].gameObject);
-        MonsterObjList[result.getStageNum()-1].transform.SetParent(GameObject.Find("01_3D").transform.Find("Monster").gameObject.transform);
+        MonsterObjList[result.getStageNum() - 1] = Instantiate(MonsterObj[num].gameObject);
+        MonsterObjList[result.getStageNum() - 1].transform.SetParent(GameObject.Find("01_3D").transform.Find("Monster").gameObject.transform);
 
 
         //스테이지 변경된 정보 저장
@@ -1124,7 +960,7 @@ public class StageManager : MonoBehaviour
             //장비 구분
             if (type == "Helmet" || type == "Armor" || type == "Gloves" || type == "Pants" || type == "Weapon" || type == "Boots")
             {
-                for(int j = 0; j < result.getItemNum[i]; j++)
+                for (int j = 0; j < result.getItemNum[i]; j++)
                 {
                     ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], 1));
                     //ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
@@ -1142,7 +978,7 @@ public class StageManager : MonoBehaviour
                 {
                     ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], result.getItemNum[i]));
                 }
-                
+
             }
 
             //yield return new WaitForSeconds(0.3f);
@@ -1164,7 +1000,7 @@ public class StageManager : MonoBehaviour
         FieldMonster monsterInfo = monsterdata.getMonsterList().Find(x => x.name == result.type);
         int num = monsterInfo.itemName.Length;
         string[] item = new string[num];
-        
+
         for (int i = 0; i < num; i++)
         {
             item[i] = monsterInfo.itemName[i];
@@ -1182,13 +1018,13 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        itemListObj.GetComponent<RectTransform>().anchoredPosition = new Vector2( 0, 0 - itemListObj.GetComponent<RectTransform>().sizeDelta.y / 2);
+        itemListObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0 - itemListObj.GetComponent<RectTransform>().sizeDelta.y / 2);
     }
 
     //이미지 변경
     public void ItemImageChange(string stageInfoListtmp, Image spr)
     {
-        spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp).icon); 
+        spr.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == stageInfoListtmp).icon);
     }
 
 
@@ -1308,9 +1144,9 @@ public class StageManager : MonoBehaviour
                     float disCul = Vector2.Distance(StageData.spotList[index].getPosition().transform.localPosition, spottemp.transform.localPosition);
                     if (disCul < stageData.getDist()) distanceBool = true;
                 }
-                if (distanceBool) continue; 
+                if (distanceBool) continue;
             }
-            if (StageData.spotList[index].plunderActive==false) Debug.Log("배치 완료");break;
+            if (StageData.spotList[index].plunderActive == false) Debug.Log("배치 완료"); break;
         }
         StageData.spotList[index].plunderActive = true;
 
@@ -1331,8 +1167,8 @@ public class StageManager : MonoBehaviour
             }
             else continue;
         }
-       
-        
+
+
         result.time = 1f;
 
         GameObject spotButton = WorldMapBackObj.transform.Find("Plunder/" + result.PlunderName + "Button").gameObject;
@@ -1359,7 +1195,7 @@ public class StageManager : MonoBehaviour
         //결과
         //획득 가능한 아이템->획득한 아이템
         plunderPopup.transform.Find("UIPanel/ItemBox/ItemTitleText").gameObject.GetComponent<Text>().text = "획득한 아이템";
-        
+
 
         //약탈 버튼->확인 버튼
         plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.SetActive(false);
@@ -1472,7 +1308,7 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        
+
 
 
     }
@@ -1602,7 +1438,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(0).gameObject.transform.localPosition = position;
 
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1621,7 +1458,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(1).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(1).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1647,7 +1485,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(2).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(2).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1662,7 +1501,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(4).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(4).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1681,7 +1521,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(5).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(5).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1707,7 +1548,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(3).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(3).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1722,7 +1564,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(7).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(7).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1741,7 +1584,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(8).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(8).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }
@@ -1767,7 +1611,8 @@ public class StageManager : MonoBehaviour
                 position.z = 20.0f;
                 monsterObj.transform.GetChild(6).gameObject.transform.localPosition = position;
                 monsterObj.transform.GetChild(6).gameObject.SetActive(true);
-                close.onClick.AddListener(() => {
+                close.onClick.AddListener(() =>
+                {
                     monsterObj.SetActive(false);
                 });
             }

@@ -112,7 +112,6 @@ public class NormalLoad : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene("02_Lobby");
-
     }
 
     public void ToCollection()
@@ -127,7 +126,18 @@ public class NormalLoad : MonoBehaviour
     }
     public void ToLoading_Normal()
     {
-        StartCoroutine(FadeOut());
+        StartCoroutine(Loading_NormalFadeOut());
+        //SceneManager.LoadScene("09_Loading_Normal");
+    }
+    IEnumerator Loading_NormalFadeOut()
+    {
+        FadeImageObject.SetActive(true);
+        for (float fade = 0.0f; fade < 1.0f; fade += 0.02f)
+        {
+            FadeImage.color = new Color(0, 0, 0, fade);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene("09_Loading_Normal");
     }
 

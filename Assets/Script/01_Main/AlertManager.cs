@@ -18,23 +18,18 @@ public class AlertManager : MonoBehaviour {
 
     }
 
-    public IEnumerator AcvBoxHandle(string text)   //업적 달성 시 알림 UI 애니메이션
+    public void AcvBoxHandle(string text)   //업적 달성 시 알림 UI 애니메이션
     {
-        Debug.Log("al");        
+        Debug.Log("al");     
+        
         AcvBox.SetActive(false);
-        GameObject AcvBoxPosition = AcvBox.transform.Find("UIPanel").gameObject;
-        iTween.MoveTo(AcvBox, iTween.Hash("y", 75, "time", 0.1, "isLocal", true));
-        iTween.MoveTo(AcvBox, iTween.Hash("y", -75, "time", 0.5, "delay", 0.5, "isLocal", true));
-
         AcvText.text = text;
-        AcvBox.SetActive(true);
 
-        yield return new WaitForSeconds(2.0f);
-        iTween.MoveTo(AcvBox, iTween.Hash("y", 75, "time", 0.5f, "isLocal", true, "oncomplete", "CloseAcvBox"));
-        AcvBox.SetActive(false);
+        StartCoroutine(alrImageActive());
     }
-    void CloseAcvBox()
+    IEnumerator alrImageActive()
     {
-        AcvBox.SetActive(false);
+        AcvBox.SetActive(true);
+        yield return new WaitForSeconds(3.0f);
     }
 }

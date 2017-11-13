@@ -68,7 +68,7 @@ public class StageMineManager : MonoBehaviour {
                 spotButton.transform.Find("Text").gameObject.SetActive(false);
                 spotButton.transform.Find("pickax").gameObject.SetActive(false);
                 spotButton.transform.Find("TypeName").gameObject.SetActive(true);
-                spotButton.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = mList[i].type + " 광산";
+                spotButton.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv"+ mList[i].level+" "+ mList[i].type + " 광산";
                 spotButton.transform.Find("BoostIcon").gameObject.SetActive(false);
                 int num = i;
                 spotButton.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(spotButton, num));
@@ -95,7 +95,7 @@ public class StageMineManager : MonoBehaviour {
                     //건설 완료 알림
                     if (mineFlag[i])
                     {
-                        StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 건설을 완료했습니다."));
+                        GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 건설을 완료했습니다.");
                         mineFlag[i] = false;
                     }
                     if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
@@ -173,7 +173,7 @@ public class StageMineManager : MonoBehaviour {
                 //채굴 완료 알림
                 if (mineFlag[i])
                 {
-                    StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 채굴이 끝났습니다."));
+                    GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 채굴이 끝났습니다.");
                     mineFlag[i] = false;
                 }
 
@@ -204,7 +204,7 @@ public class StageMineManager : MonoBehaviour {
         info.curMaterial = MineData.instance.getMineBuildList().Find(x => x.level == info.level).material;
 
         ExhaustionPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = info.type + " 광산";
-
+        ExhaustionPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == mineList[num].type).icon);
         ExhaustionPopup.transform.Find("UIPanel/CurInfoBox/LevelText").gameObject.GetComponent<Text>().text = info.level.ToString();
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
         ExhaustionPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = info.afterLevel.ToString();
@@ -310,6 +310,7 @@ public class StageMineManager : MonoBehaviour {
             mineList[num].level = info.afterLevel;
             mineList[num].buildState = "upgrade";
             info.upgradeFlag = false;
+            mineFlag[num] = true;
 
             mineList[num].buildTime = MineData.instance.getMineBuildList().Find(x => x.level == info.level).time;
             for (int i = 0; i < info.getThingName.Length; i++)
@@ -335,7 +336,7 @@ public class StageMineManager : MonoBehaviour {
             obj.transform.Find("pickax").gameObject.SetActive(false);
             obj.transform.Find("Dust").gameObject.SetActive(true);
             obj.transform.Find("TypeName").gameObject.SetActive(true);
-            obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
+            obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" + mineList[num].level + " " + mineList[num].type + " 광산";
 
             for (int i = 0; i < mineList[num].getThingNum.Length; i++)
                 Debug.Log(mineList[num].getThingNum[i]);
@@ -379,8 +380,6 @@ public class StageMineManager : MonoBehaviour {
 
         });
 
-
-
     }
 
     //건설 진행 중 버튼 (현황 창
@@ -389,7 +388,7 @@ public class StageMineManager : MonoBehaviour {
         string type = mineList[num].type;
 
         BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 업그레이드 중";
-
+        BeUnderPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == mineList[num].type).icon);
         BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text =
             "레벨 : " + (mineList[num].level).ToString();
         BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text
@@ -497,6 +496,7 @@ public class StageMineManager : MonoBehaviour {
     {
         Debug.Log("mining");
         MiningPopup.SetActive(true);
+        MiningPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == mineList[num].type).icon);
         MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = mineList[num].type + " 광산 채굴 중";
         MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + mineList[num].level.ToString();
 
@@ -725,7 +725,7 @@ public class StageMineManager : MonoBehaviour {
         obj.transform.Find("Text").gameObject.SetActive(false);
         obj.transform.Find("pickax").gameObject.SetActive(false);
         obj.transform.Find("TypeName").gameObject.SetActive(true);
-        obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = mineList[num].type + " 광산";
+        obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" + mineList[num].level + " " + mineList[num].type + " 광산";
         obj.transform.Find("BoostIcon").gameObject.SetActive(false);
         int num2 = num;
         obj.GetComponent<Button>().onClick.RemoveAllListeners();

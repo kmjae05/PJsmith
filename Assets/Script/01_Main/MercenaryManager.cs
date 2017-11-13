@@ -261,7 +261,7 @@ public class MercenaryManager : MonoBehaviour {
                             
                             //완료 알림
                             if (flag[i]) {
-                                StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mercenary[i].getName() + " 용병이 사냥을 마치고 돌아왔습니다."));
+                                GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mercenary[i].getName() + " 용병이 사냥을 마치고 돌아왔습니다.");
                                 flag[i] = false;
                             }
                         }
@@ -278,9 +278,9 @@ public class MercenaryManager : MonoBehaviour {
     }
 
     //로비에 있는 용병 버튼
-    public void LobbyMerButton(Text nameText)
+    public void LobbyMerButton(GameObject obj)
     {
-        Mercenary merTemp = mercenary.Find(x => x.getName() == nameText.text);
+        Mercenary merTemp = mercenary.Find(x => x.getName() == obj.transform.Find("NameText").GetComponent<Text>().text);
         curSelect = merTemp.getName();
         
         //용병이 탐험 상태일 때
@@ -291,7 +291,7 @@ public class MercenaryManager : MonoBehaviour {
             StageInfo stageInfo = stageManager.getStageInfoList().Find(x => x.mercenaryName == merTemp.getName());
             stageManager.SetCurStageSelect(stageInfo.getStageNum());
             GameObject.Find("StageStateText").GetComponent<Text>().text = stageInfo.type + " " + stageInfo.typeNum.ToString();
-            stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + nameText.text).gameObject.SetActive(true);
+            stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + obj.transform.Find("NameText").GetComponent<Text>().text).gameObject.SetActive(true);
 
             stageManager.destroyItemBox(stateItemList);
             //얻은 아이템
@@ -331,7 +331,15 @@ public class MercenaryManager : MonoBehaviour {
             }
 
         }
-
+        else
+        {//캐릭터 정보창
+            GameObject.Find("Menu").transform.Find("ProfilePopup").gameObject.SetActive(true);
+            GameObject merObj = obj;
+            profilePopupManager.setCurSelectChrObj(obj);
+            setMerInfo(merObj);
+            GameObject.Find("ChrSelect/ProfileOutline").transform.localPosition = 
+                GameObject.Find("Mercenary" + obj.transform.Find("NameText").GetComponent<Text>().text +"Select").transform.localPosition;
+        }
 
 
 

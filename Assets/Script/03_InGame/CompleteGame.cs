@@ -66,6 +66,9 @@ public class CompleteGame : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (win_lose)
         {
+            GameObject.Find("UIBack").transform.Find("Win").gameObject.SetActive(true);
+            GameObject.Find("UIBack").transform.Find("Lose").gameObject.SetActive(false);
+            GameObject.Find("UIBack").transform.Find("failText").gameObject.SetActive(false);
             for (int i = 0; i < RewardItems.Length; i++)
             {
                 Things things = ThingsData.instance.getThingsList().Find(x => x.name == (OreSelect.SelectOre.name + " 주괴"));
@@ -89,6 +92,12 @@ public class CompleteGame : MonoBehaviour
                 //yield return new WaitUntil(() => RewardItems[i].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
                 yield return new WaitForSeconds(0.1f);
             }
+        }
+        else
+        {
+            GameObject.Find("UIBack").transform.Find("Win").gameObject.SetActive(false);
+            GameObject.Find("UIBack").transform.Find("Lose").gameObject.SetActive(true);
+            GameObject.Find("UIBack").transform.Find("failText").gameObject.SetActive(true);
         }
         RewardPopup.GetComponent<Animator>().SetTrigger("moveNext");
     }

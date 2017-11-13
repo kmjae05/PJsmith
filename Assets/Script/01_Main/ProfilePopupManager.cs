@@ -301,6 +301,7 @@ public class ProfilePopupManager : MonoBehaviour {
 
     public int getCurSetNum() { return curSetNum; }
     public string getCurChr() { return curSelectChr; }
+    public void setCurSelectChrObj(GameObject obj) { curSelectChrObj = obj; }
 }
 
 

@@ -93,7 +93,7 @@ public class StageMineData : MonoBehaviour
                     mineList[i].curTime = 0f;
 
                     mineList[i].getAmount += mineList[i].getOnceAmount;
-                    Debug.Log(mineList[i].getAmount);
+
                     //확률에 따른 아이템 획득
                     for (int j = 1; j < mineList[i].getThingName.Length; j++)
                     {
