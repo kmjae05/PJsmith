@@ -95,6 +95,8 @@ public class CompleteGame : MonoBehaviour
                         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
                             x => x.name == things.name).type, things.name, 1));
                         ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+                    Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == things.name).grade);
+                    GameObject.Find("ItemBox").GetComponent<Image>().color = col;
                 }
 
 
