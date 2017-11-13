@@ -1,4 +1,4 @@
-﻿{
+{
     "Things": [
         {
             "item_no": 3,
@@ -76,7 +76,7 @@
             "item_no": 12,
             "type": "Material",
             "name": "돌주괴",
-            "explanation": "돌주괴입니다.",
+            "explanation": "돌 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_06"
@@ -85,7 +85,7 @@
             "item_no": 13,
             "type": "Material",
             "name": "구리주괴",
-            "explanation": "구리주괴입니다.",
+            "explanation": "구리 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_04"
@@ -94,7 +94,7 @@
             "item_no": 14,
             "type": "Material",
             "name": "은주괴",
-            "explanation": "은주괴입니다.",
+            "explanation": "은 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_02"
@@ -103,7 +103,7 @@
             "item_no": 15,
             "type": "Material",
             "name": "금주괴",
-            "explanation": "금주괴입니다.",
+            "explanation": "금 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_01"
@@ -112,7 +112,7 @@
             "item_no": 16,
             "type": "Material",
             "name": "철주괴",
-            "explanation": "철주괴입니다.",
+            "explanation": "철 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/ore_f_b_02"
@@ -121,7 +121,7 @@
             "item_no": 17,
             "type": "Material",
             "name": "미스릴주괴",
-            "explanation": "미스릴주괴입니다.",
+            "explanation": "미스릴 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_05"
@@ -130,7 +130,7 @@
             "item_no": 18,
             "type": "Material",
             "name": "검은무쇠주괴",
-            "explanation": "검은무쇠주괴입니다.",
+            "explanation": "검은무쇠 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_08"
@@ -139,7 +139,7 @@
             "item_no": 19,
             "type": "Material",
             "name": "아케나이트주괴",
-            "explanation": "아케나이트주괴입니다.",
+            "explanation": "아케나이트 주괴입니다.",
             "grade": 1,
             "sell": 1,
             "icon": "Things/in_b_07"
