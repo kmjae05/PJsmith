@@ -30,6 +30,8 @@ public class TerritoryManager : MonoBehaviour
     private List<GameObject> mineObj;           //광산 스팟
     private List<GameObject> bottonButtonList;  //하단 버튼
 
+    private bool[] mineFlag = new bool[10];
+
     private List<MineInfo> mineInfo;
 
     private string curType = null;          //현재 선택된 광산 종류
@@ -156,7 +158,12 @@ public class TerritoryManager : MonoBehaviour
                 if (MineData.instance.getMineList()[i].buildTime < 0.5f)
                 {
                     //mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
-
+                    //건설 완료 알림
+                    if (mineFlag[i])
+                    {
+                        StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 건설을 완료했습니다."));
+                        mineFlag[i] = false;
+                    }
                     BottomMenuLock.SetActive(false);
                     StartLock.SetActive(false);
                     if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
@@ -193,6 +200,7 @@ public class TerritoryManager : MonoBehaviour
             //건설 완료 & 채굴 상태
             if (MineData.instance.getMineList()[i].buildState == "complete" && MineData.instance.getMineList()[i].miningState)
             {
+                mineFlag[i] = true;
                 Color clr = mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
                 mineObj[i].transform.Find("Image").gameObject.SetActive(true);
@@ -225,6 +233,13 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
                 mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
                 if (curMineNum == i) { MiningPopup.SetActive(false); }
+
+                //채굴 완료 알림
+                if (mineFlag[i])
+                {
+                    StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(MineData.instance.getMineList()[i].type + " 광산 채굴이 끝났습니다."));
+                    mineFlag[i] = false;
+                }
 
                 mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -383,6 +398,7 @@ public class TerritoryManager : MonoBehaviour
                     mineObj[j].transform.Find("Dust").gameObject.SetActive(false);
                     mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
                     info.upgradeFlag = false;
+                    mineFlag[j] = false;
                 }
             }
         });
@@ -405,6 +421,8 @@ public class TerritoryManager : MonoBehaviour
             info.curMaterial = info.necessaryMaterialsNum[0];
         }
         info.afterTime = (int)info.buildTime;
+
+        mineFlag[num] = true;
 
         MineData.instance.getMineList()[num].buildTime = info.afterTime;
         Debug.Log(info.afterTime);

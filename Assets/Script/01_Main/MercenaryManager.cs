@@ -21,6 +21,8 @@ public class MercenaryManager : MonoBehaviour {
     private GameObject stateItemList;
     private GameObject stateItemBox;
 
+    private bool[] flag;
+
     private ProfilePopupManager profilePopupManager;
 
     private void Start()
@@ -35,6 +37,8 @@ public class MercenaryManager : MonoBehaviour {
 
         mercenary = new List<Mercenary>();
         mercenarytmp = new Mercenary();
+
+        flag = new bool[3];
     }
 
     private void Update()
@@ -239,6 +243,7 @@ public class MercenaryManager : MonoBehaviour {
                         //탐험 중
                         if (!stageInfo.complete)
                         {
+                            flag[i] = true;
                             float time = stageInfo.time;
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfo.typeNum *60f;
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (stageInfo.typeNum * 60f - time);
@@ -252,7 +257,13 @@ public class MercenaryManager : MonoBehaviour {
                         {
                             button.transform.Find("RedImage").gameObject.SetActive(false);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "완료";
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = 180f;
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue;
+                            
+                            //완료 알림
+                            if (flag[i]) {
+                                StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mercenary[i].getName() + " 용병이 사냥을 마치고 돌아왔습니다."));
+                                flag[i] = false;
+                            }
                         }
                     }
                 }

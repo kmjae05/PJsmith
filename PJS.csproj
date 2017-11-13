@@ -337,6 +337,7 @@
     <Compile Include="Assets\OneSignal\src\OneSignalIOS.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalPlatform.cs" />
     <Compile Include="Assets\OneSignal\src\OneSignalWPWNS.cs" />
+    <Compile Include="Assets\Script\01_Main\AlertManager.cs" />
     <Compile Include="Assets\Script\01_Main\BrazierManager.cs" />
     <Compile Include="Assets\Script\01_Main\ChangeDPSManager.cs" />
     <Compile Include="Assets\Script\01_Main\DestroyGetItemLogText.cs" />
@@ -358,6 +359,7 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\SellManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Slot.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ThingsData.cs" />
+    <Compile Include="Assets\Script\01_Main\LevelupPopupManager.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
     <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
     <Compile Include="Assets\Script\01_Main\PinchZoom.cs" />

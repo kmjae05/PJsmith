@@ -256,6 +256,7 @@ public class StageManager : MonoBehaviour
 
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
+                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
             }
         }
 
@@ -299,10 +300,6 @@ public class StageManager : MonoBehaviour
                             boxobj.SetActive(true);
                             break;
                         }
-
-
-
-
                     }
                 }
             }
@@ -730,11 +727,13 @@ public class StageManager : MonoBehaviour
             {
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
+                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
             }
             else
             {
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
+                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(false);
             }
 
         }
@@ -761,7 +760,7 @@ public class StageManager : MonoBehaviour
     public void send()
     {
         GameObject monsterObj = GameObject.Find("01_3D").transform.Find("Monster (1)").gameObject;
-
+        stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(false);
         if (selectMerFlag)
         {
             monsterObj.SetActive(false);
@@ -989,7 +988,7 @@ public class StageManager : MonoBehaviour
     public void CompleteButton()
     {
         StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
-
+        StartCoroutine( GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle("사냥에 성공하여 아이템을 획득했습니다."));
         //보상
         //월드맵/스테이지에서 완료한 경우
         if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)

@@ -10,6 +10,7 @@ public class StageMineManager : MonoBehaviour {
 
     //광산 정보
     private List<Mine> mineList;
+    private bool[] mineFlag;
 
     //광산 관련
     private GameObject MineButtonObj;
@@ -31,6 +32,7 @@ public class StageMineManager : MonoBehaviour {
         stageMineData = GameObject.Find("StageData").GetComponent<StageMineData>();
 
         mineList = stageMineData.getMineList();
+        mineFlag = new bool[mineList.Count];
 
         MineButtonObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/MineButton").gameObject;
         BeUnderPopup = GameObject.Find("System").transform.Find("BeUnderPopup").gameObject;
@@ -90,7 +92,12 @@ public class StageMineManager : MonoBehaviour {
                 if (mineList[i].buildTime < 0.5f)
                 {
                     //mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
-
+                    //건설 완료 알림
+                    if (mineFlag[i])
+                    {
+                        StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 건설을 완료했습니다."));
+                        mineFlag[i] = false;
+                    }
                     if (BeUnderPopup.activeInHierarchy) BeUnderPopup.SetActive(false);
                 }
                 //시간 빼기
@@ -125,7 +132,8 @@ public class StageMineManager : MonoBehaviour {
             //채굴 상태
             if (mineList[i].buildState == "complete" && mineList[i].miningState)
             {
-                 //Debug.Log("채굴상태");
+                mineFlag[i] = true;
+                //Debug.Log("채굴상태");
                 Color clr = mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color;
                 mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1f);
                 mineObj.transform.Find("Image").gameObject.SetActive(true);
@@ -161,6 +169,13 @@ public class StageMineManager : MonoBehaviour {
                 mineObj.transform.Find("pickax").gameObject.SetActive(false);
                 mineObj.transform.Find("Dust").gameObject.SetActive(false);
                 MiningPopup.SetActive(false);
+
+                //채굴 완료 알림
+                if (mineFlag[i])
+                {
+                    StartCoroutine(GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mineList[i].type + " 광산 채굴이 끝났습니다."));
+                    mineFlag[i] = false;
+                }
 
                 mineObj.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
