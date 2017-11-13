@@ -189,6 +189,14 @@ public class User
 
     public string logoutTime;
 
+
+    //제련
+    public bool ingameState;
+    public string oreName;
+    public int hp;
+    public int time;
+
+
     public User()
     {
         this.user_no = 0;
@@ -222,5 +230,10 @@ public class User
         this.equipBoots = new InventoryThings[2];
 
         this.logoutTime = "0";
+
+        ingameState = false;
+        oreName = null;
+        hp = 0;
+        time = 0;
     }
 }

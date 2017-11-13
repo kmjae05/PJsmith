@@ -25,12 +25,14 @@ public class InGameHandle : MonoBehaviour {
 
     private Image CoolTimeImage;
 
+    GameObject systemPopup;
+
     static public int ore_hp = 0;
     static public int feverGauge = 0;
     static public bool fever;
     private int ore_gold;
     private int ore_exp;
-    private float leftTime = 45.0f;
+    private float leftTime = 30.0f;
 
     void Awake()
     {
@@ -54,6 +56,8 @@ public class InGameHandle : MonoBehaviour {
         //CoolTimeImage = GameObject.Find("NormalSkill").transform.Find("SkillLock").GetComponent<Image>();
 
         //AutoRestart = GameObject.Find("AutoPlayStop").GetComponent<Button>();
+
+        systemPopup = GameObject.Find("Popup").transform.Find("SystemPopup").gameObject;
     }
 
 	void Start ()
@@ -87,7 +91,10 @@ public class InGameHandle : MonoBehaviour {
         //AutoRestart.gameObject.SetActive(false);
 
         GoldBox.transform.Find("GoldText").GetComponent<Text>().text = Player.instance.getUser().gold.ToString();
-	}
+
+        //제련 상태
+        Player.instance.getUser().ingameState = true;
+    }
     //#region UIAnimation
     //void UIAnimation_01()
     //{
@@ -149,9 +156,13 @@ public class InGameHandle : MonoBehaviour {
                 ore_hp = 0;
                 CharAni.SetBool("complete_win", true);
                 CharAni.SetBool("Atk_State", false);
+
+                if (systemPopup.activeInHierarchy) systemPopup.SetActive(false);
+                GameObject.Find("InGameUI").transform.Find("CloseButton").gameObject.SetActive(false);
                 //UIAnimation_01_();
                 //UIAnimation_02_();
                 //UIAnimation_03_();
+                Player.instance.getUser().ingameState = false;
                 break;
             }
             //타임오버
@@ -161,6 +172,10 @@ public class InGameHandle : MonoBehaviour {
                 CharAni.speed = 1.0f;
                 CharAni.SetBool("complete_lose", true);
                 CharAni.SetBool("Atk_State", false);
+
+                if (systemPopup.activeInHierarchy) systemPopup.SetActive(false);
+                GameObject.Find("InGameUI").transform.Find("CloseButton").gameObject.SetActive(false);
+                Player.instance.getUser().ingameState = false;
                 break;
             }
             yield return null;
