@@ -13,6 +13,7 @@ public class IngameManager : MonoBehaviour {
     Button ingameButton;
     Slider slider;
     Text oreText;
+    private Image frame;
     Image oreImage;
     Text timeText;
 
@@ -27,6 +28,7 @@ public class IngameManager : MonoBehaviour {
         ingameButton = ingameUI.transform.Find("HpBox").gameObject.GetComponent<Button>();
         slider = ingameUI.transform.Find("HpBox/HPBar").gameObject.GetComponent<Slider>();
         oreText = ingameUI.transform.Find("HpBox/HPBar/OreText").gameObject.GetComponent<Text>();
+        frame = ingameUI.transform.Find("HpBox/OreBox").gameObject.GetComponent<Image>();
         oreImage = ingameUI.transform.Find("HpBox/OreBox/OreIcon").gameObject.GetComponent<Image>();
         timeText = ingameUI.transform.Find("HpBox/TimeText").gameObject.GetComponent<Text>();
 
@@ -34,6 +36,8 @@ public class IngameManager : MonoBehaviour {
         {
             if (Player.instance.getUser().ingameState)
             {
+                Debug.Log("ingamestate");
+                frame.color = new Color(1, 1, 1);
                 oreImage.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.instance.getUser().oreName).icon);
                 oreText.text = Player.instance.getUser().oreName;
                 slider.maxValue = Player.instance.getUser().TargetOre.hp;
@@ -44,8 +48,14 @@ public class IngameManager : MonoBehaviour {
 
                 startButton.SetActive(false);
             }
+        }
+        else
+        {
             if (Player.instance.getUser().equipState)
             {
+                Debug.Log("equipstate");
+                Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.instance.getUser().equipName).grade);
+                frame.color = col;
                 oreImage.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == Player.instance.getUser().equipName).icon);
                 oreText.text = Player.instance.getUser().equipName;
                 slider.maxValue = Player.instance.getUser().equipmaxhp;

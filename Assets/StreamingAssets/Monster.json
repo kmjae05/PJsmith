@@ -96,7 +96,7 @@
 				"itemAmount" : 1,
 				"itemProb" : 66
 			},{
-				"itemName" : "돌 주괴",
+				"itemName" : "돌주괴",
 				"itemAmount" : 1,
 				"itemProb" : 10
 			}
@@ -200,7 +200,7 @@
 				"itemAmount" : 1,
 				"itemProb" : 66
 			},{
-				"itemName" : "돌 주괴",
+				"itemName" : "돌주괴",
 				"itemAmount" : 1,
 				"itemProb" : 10
 			}
@@ -304,7 +304,7 @@
 				"itemAmount" : 1,
 				"itemProb" : 66
 			},{
-				"itemName" : "돌 주괴",
+				"itemName" : "돌주괴",
 				"itemAmount" : 1,
 				"itemProb" : 10
 			}

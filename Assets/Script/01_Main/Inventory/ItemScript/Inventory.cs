@@ -1131,30 +1131,26 @@ public class Inventory : MonoBehaviour
           =>{
 
               bool flag = true;
-              for (int i = 0; i < equip.necessaryMaterials.Length; i++)
+              if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]) != null)
               {
-                  if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[i]) != null)
+                  if (equip.necessaryMaterialsNum[0] <= ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]).possession)
                   {
-                      if (equip.necessaryMaterialsNum[i] <= ThingsData.instance.getInventoryThingsList().Find(x=>x.name== equip.necessaryMaterials[i]).possession)
-                      {
-                          //조건 만족
-                          Debug.Log("y");
-                      }
-                      else
-                      {
-                          flag = false;
-                          //재료 수량 부족
-                          Debug.Log("no");
-                         
-                      }
+                      //조건 만족
+                      Debug.Log("y");
                   }
                   else
                   {
                       flag = false;
                       //재료 수량 부족
-                      Debug.Log("null");
+                      Debug.Log("no");
 
                   }
+              }
+              else
+              {
+                  flag = false;
+                  //재료 수량 부족
+                  Debug.Log("null");
               }
               if (!flag)
               {
@@ -1185,13 +1181,10 @@ public class Inventory : MonoBehaviour
                       Player.instance.getUser().isOre = false;
 
                       //재료 감소
-                      for (int i = 0; i < equip.necessaryMaterials.Length; i++)
-                      {
-                          ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[i]).possession
-                            -= equip.necessaryMaterialsNum[i];
-                      }
+                      ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]).possession
+                        -= equip.necessaryMaterialsNum[0];
 
-                          Player.instance.getUser().equipName = things.name;
+                      Player.instance.getUser().equipName = things.name;
                       Player.instance.getUser().equipmaxhp = 800;
                       Player.instance.getUser().equiphp = 800;
                       Player.instance.getUser().equiptime = 30;
@@ -1214,7 +1207,7 @@ public class Inventory : MonoBehaviour
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;
         }
-        SceneManager.LoadScene("09_Loading_Normal");
+        SceneManager.LoadScene("08_Loading_GameIn");
     }
 
     //기타 아이템 정보 팝업

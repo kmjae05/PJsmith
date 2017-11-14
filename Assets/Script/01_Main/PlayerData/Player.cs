@@ -85,10 +85,6 @@ public class Player : MonoBehaviour {
 
     }
 
-    private void Update()
-    {
-        Debug.Log(Play.ingameState);
-    }
 
 
     public void GetGameReward(int exp, int gold)        //제련 보상 획득

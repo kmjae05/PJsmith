@@ -10,6 +10,7 @@ public class InGameHandle : MonoBehaviour {
     private Slider HpSlider;
     private Slider FeverSlider;
     private Text OreNameText;
+    private Image frame;
     private Image OreImage;
     private Text TimeText;
 
@@ -43,6 +44,7 @@ public class InGameHandle : MonoBehaviour {
         HpSlider = GameObject.Find("HPBar").GetComponent<Slider>();
         //FeverSlider = GameObject.Find("FeverBar").GetComponent<Slider>();
         OreNameText = GameObject.Find("OreText").GetComponent<Text>();
+        frame = GameObject.Find("OreBox").GetComponent<Image>();
         OreImage = GameObject.Find("OreIcon").GetComponent<Image>();
         TimeText = GameObject.Find("TimeText").GetComponent<Text>();
         CharAni = GameObject.Find("Chr_001").GetComponent<Animator>();
@@ -93,7 +95,9 @@ public class InGameHandle : MonoBehaviour {
         else
         {
             OreNameText.text = Player.instance.getUser().equipName;
-            OreImage.sprite =Resources.Load<Sprite>( ThingsData.instance.getThingsList().Find(x=>x.name == Player.instance.getUser().equipName).icon);
+            Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == Player.instance.getUser().equipName).grade);
+            frame.color = col;
+            OreImage.sprite = Resources.Load<Sprite>( ThingsData.instance.getThingsList().Find(x=>x.name == Player.instance.getUser().equipName).icon);
             HpSlider.maxValue = Player.instance.getUser().equipmaxhp;
             ore_hp = Player.instance.getUser().equipmaxhp;
             ore_gold = 0;
@@ -175,7 +179,9 @@ public class InGameHandle : MonoBehaviour {
             }
 
             Player.instance.getUser().orehp = ore_hp;
+            Player.instance.getUser().equiphp = ore_hp;
             Player.instance.getUser().oretime = leftTime;
+            Player.instance.getUser().equiptime = leftTime;
 
             //광석 hp 0
             if (ore_hp <= 0)

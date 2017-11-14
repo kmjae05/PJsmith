@@ -88,6 +88,7 @@ public class NormalLoad : MonoBehaviour
 
             yield return StartCoroutine(LoadingTime()); //로딩시간
             yield return StartCoroutine(FadeOut());     //페이드아웃
+
             SceneManager.LoadScene("02_Lobby");
         }
 

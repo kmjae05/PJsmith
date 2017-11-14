@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -44,6 +45,14 @@ public class CollectionManager : MonoBehaviour
     GameObject EquipItemInfoPopup;
     EquipmentData equipmentData;
 
+
+    private GameObject SystemPopup;
+    private Text Sys_TitleText;
+    private Text Sys_InfoText;
+    private Button Sys_YesButton;
+    private Button Sys_NoButton;
+    private Button Sys_OkButton;
+
     void Start()
     {
         collectionPopup = GameObject.Find("System").transform.Find("Collection").gameObject;
@@ -76,6 +85,15 @@ public class CollectionManager : MonoBehaviour
         EquipItemInfoPopup = GameObject.Find("System").transform.Find("EquipItemInfoPopup").gameObject;
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
+
+        SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
+        Sys_TitleText = SystemPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>();
+        Sys_InfoText = SystemPopup.transform.Find("UIPanel/InfoText").gameObject.GetComponent<Text>();
+        Sys_YesButton = SystemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        Sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
+        Sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
+
+
         GameObject.Find("CollectButton").GetComponent<Button>().onClick.AddListener(() => {
             panel1.SetActive(true); SwitchScrollPanel();
         });
@@ -85,6 +103,23 @@ public class CollectionManager : MonoBehaviour
 
    public void CreateCollection()
     {
+        panel1.SetActive(true);
+        panel2.SetActive(false);
+        panel3.SetActive(false);
+        panel4.SetActive(false);
+        panel5.SetActive(false);
+        panel6.SetActive(false);
+        panel7.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab1_Click").gameObject.SetActive(true);
+        collectionPopup.transform.Find("UIBox/Tab/Tab2_Click").gameObject.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab3_Click").gameObject.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab4_Click").gameObject.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab5_Click").gameObject.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab6_Click").gameObject.SetActive(false);
+        collectionPopup.transform.Find("UIBox/Tab/Tab7_Click").gameObject.SetActive(false);
+        collectionList.GetComponent<ScrollRect>().content = panel1.GetComponent<RectTransform>();
+        panel1.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, panel1.GetComponent<RectTransform>().anchoredPosition.y);
+
         for (int i = 0; i < Tap1Slots.Count; i++) Destroy(Tap1Slots[i]);
         for (int i = 0; i < Tap2Slots.Count; i++) Destroy(Tap2Slots[i]);
         for (int i = 0; i < Tap3Slots.Count; i++) Destroy(Tap3Slots[i]);
@@ -434,6 +469,7 @@ public class CollectionManager : MonoBehaviour
     public void EquipInfoPopup(Things things)
     {
         EquipItemInfoPopup.SetActive(true);
+        GameObject.Find("System").transform.Find("EquipItemInfoPopup/UIPanel/ProductionButton").gameObject.SetActive(true);
 
         Equipment equip = equipmentData.getEquipmentList().Find(x => x.name == things.name);
 
@@ -471,9 +507,90 @@ public class CollectionManager : MonoBehaviour
         EquipItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.SetActive(false);
         EquipItemInfoPopup.transform.Find("UIPanel/ChangeButton").gameObject.SetActive(false);
         EquipItemInfoPopup.transform.Find("UIPanel/ReinforceButton").gameObject.SetActive(false);
+
+
+        EquipItemInfoPopup.transform.Find("UIPanel/ProductionButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        EquipItemInfoPopup.transform.Find("UIPanel/ProductionButton").gameObject.GetComponent<Button>().onClick.AddListener(()
+          => {
+
+              bool flag = true;
+              if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]) != null)
+              {
+                  if (equip.necessaryMaterialsNum[0] <= ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]).possession)
+                  {
+                      //조건 만족
+                      Debug.Log("y");
+                  }
+                  else
+                  {
+                      flag = false;
+                      //재료 수량 부족
+                      Debug.Log("no");
+
+                  }
+              }
+              else
+              {
+                  flag = false;
+                  //재료 수량 부족
+                  Debug.Log("null");
+              }
+              if (!flag)
+              {
+                  //팝업
+                  SystemPopup.SetActive(true);
+                  SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
+                  SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "제작 필요한 재료가 부족합니다.";
+                  Sys_YesButton.gameObject.SetActive(false);
+                  Sys_NoButton.gameObject.SetActive(false);
+                  Sys_OkButton.gameObject.SetActive(true);
+
+                  return;
+              }
+
+              SystemPopup.SetActive(true);
+
+              Sys_TitleText.GetComponent<Text>().text = things.name + " 제작";
+              Sys_InfoText.GetComponent<Text>().text = things.name + " 장비를 제작하시겠습니까 ?";
+
+              Sys_YesButton.gameObject.SetActive(true);     //예/아니오 버튼으로 수정
+              Sys_NoButton.gameObject.SetActive(true);
+              Sys_OkButton.gameObject.SetActive(false);
+
+
+              Sys_YesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+              Sys_YesButton.GetComponent<Button>().onClick.AddListener(()
+                  => {
+                      Player.instance.getUser().isOre = false;
+
+                      //재료 감소
+                      ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]).possession
+                        -= equip.necessaryMaterialsNum[0];
+
+                      Player.instance.getUser().equipName = things.name;
+                      Player.instance.getUser().equipmaxhp = 800;
+                      Player.instance.getUser().equiphp = 800;
+                      Player.instance.getUser().equiptime = 30;
+                      Player.instance.getUser().equipexp = 10;
+
+                      SystemPopup.SetActive(false);
+                      StartCoroutine(FadeOut());
+                  });
+
+          });
     }
 
-
+    IEnumerator FadeOut()
+    {
+        Image FadeImage = GameObject.Find("FadeCanvas").transform.Find("FadeImage").GetComponent<Image>();
+        FadeImage.gameObject.SetActive(true);
+        for (float fade = 0; fade <= 1.0f; fade += 0.02f)
+        {
+            FadeImage.color = new Color(0, 0, 0, fade);
+            yield return null;
+        }
+        SceneManager.LoadScene("08_Loading_GameIn");
+    }
 
 
 }
