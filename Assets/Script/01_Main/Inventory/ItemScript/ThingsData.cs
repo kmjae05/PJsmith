@@ -51,24 +51,14 @@ public class ThingsData : MonoBehaviour
         thingsList.Find(x => x.name == "돌").possession = 1300;
         //thingsList.Find(x => x.name == "티켓").possession = 3;
         thingsList.Find(x => x.name == "부스트").possession = 3;
-        thingsList.Find(x => x.name == "초보자의 단검").possession = 1;
-        thingsList.Find(x => x.name == "날카로운 단검").possession = 1;
-        thingsList.Find(x => x.name == "수련자의 단검").possession = 1;
-        thingsList.Find(x => x.name == "기사의 단검").possession = 1;
-        thingsList.Find(x => x.name == "초보자의 창").possession = 1;
-        thingsList.Find(x => x.name == "수련자의 창").possession = 1;
-        thingsList.Find(x => x.name == "여행자의 도끼").possession = 1;
-        thingsList.Find(x => x.name == "초보자의 도끼").possession = 1;
-        thingsList.Find(x => x.name == "초보자의 천갑옷").possession = 8;
-        thingsList.Find(x => x.name == "초보자의 천바지").possession = 8;
-        thingsList.Find(x => x.name == "초보자의 천투구").possession = 8;
-        thingsList.Find(x => x.name == "초보자의 천장갑").possession = 8;
-        thingsList.Find(x => x.name == "초보자의 천부츠").possession = 8;
-
-        thingsList.Find(x => x.name == "영웅의 단검").possession = 1;
 
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌주괴").type, "돌주괴", 2));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-일반").type, "무기제작서-일반", 5));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "방어제작서-일반").type, "방어제작서-일반", 5));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-고급").type, "무기제작서-고급", 5));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "방어제작서-고급").type, "방어제작서-고급", 5));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-영웅").type, "무기제작서-영웅", 5));
         //invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
 

@@ -155,6 +155,12 @@ public class Inventory : MonoBehaviour
         });
     }
 
+    void Update()
+    {
+        if (ItemInfoPopup.transform.Find("UIPanel/Get").gameObject.activeInHierarchy)
+            ItemInfoPopup.transform.Find("UIPanel/Get/LightImage").gameObject.transform.Rotate(new Vector3(0, 0, 1), 1 * 0.5f);
+    }
+
     IEnumerator StartRoutine() //초기 아이템 생성
     {
         yield return new WaitForSeconds(1.0f);
@@ -1095,7 +1101,11 @@ public class Inventory : MonoBehaviour
         string abstr = "";
         if (things.stat.dps > 0) abstr += "전투력 " + (int)things.stat.dps + "\n";
         if (things.stat.strPower > 0) abstr += "공격력 " + things.stat.strPower + "\n";
-        if (things.stat.attackSpeed > 0) abstr += "공격속도 " + things.stat.attackSpeed + "\n";
+
+        if (things.stat.attackSpeed > 0) { 
+            string result = string.Format("{0:#.##}", things.stat.attackSpeed);
+            abstr += "공격속도 " + result + "\n";
+        }
         if (things.stat.focus > 0) abstr += "명중률 " + things.stat.focus + "\n";
         if (things.stat.critical > 0) abstr += "크리티컬 " + things.stat.critical + "\n";
         if (things.stat.defPower > 0) abstr += "방어력 " + things.stat.defPower + "\n";
@@ -1157,7 +1167,13 @@ public class Inventory : MonoBehaviour
                   //팝업
                   SystemPopup.SetActive(true);
                   SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
-                  SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "제작 필요한 재료가 부족합니다.";
+                  SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "제작에 필요한 재료가 부족합니다.";
+                  int mate = 0;
+                  if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]) != null)
+                      mate = equip.necessaryMaterialsNum[0] - ThingsData.instance.getInventoryThingsList().Find(x => x.name == equip.necessaryMaterials[0]).possession;
+                  else
+                      mate = equip.necessaryMaterialsNum[0];
+                  SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text += "\n필요한 재료 : " + equip.necessaryMaterials[0] + " " + mate + "개";
                   Sys_YesButton.gameObject.SetActive(false);
                   Sys_NoButton.gameObject.SetActive(false);
                   Sys_OkButton.gameObject.SetActive(true);
@@ -1227,24 +1243,156 @@ public class Inventory : MonoBehaviour
         ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
         ItemInfoPopup.transform.Find("UIPanel/SellButton").gameObject.GetComponent<Button>().onClick.AddListener(() => sellManager.OpenSellPopup(things));
 
+        ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.SetActive(false);
+
         //제련북 버튼    //하나씩
-        if(things.type == "Book")
+        if (things.type == "Book")
         {
+            //사용하기 버튼
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.SetActive(true);
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+                
+                things.possession -= 1;
+                ItemInfoPopup.transform.Find("UIPanel/ItemBox/HaveText").gameObject.GetComponent<Text>().text = things.possession.ToString();
+                if (GameObject.Find("Menu").transform.Find("InventoryPopup").gameObject.activeInHierarchy)
+                {
+                    GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
+                }
+
+                Color colr = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == things.name).grade);
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup/ItemBox/GradeFrame").gameObject.GetComponent<Image>().color = colr;
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup/ItemBox/Icon").gameObject.GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == things.name).icon);
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup/AlrImage/Text").gameObject.GetComponent<Text>().text = things.name + " 읽는 중";
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup").gameObject.SetActive(true);
+
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup/Slider").gameObject.GetComponent<Slider>().value = 0;
+                StartCoroutine(usePopupSlider(things));
+            });
 
         }
 
         //제련북 조각 버튼     //여럿
         if (things.type == "Bookpiece")
         {
+            //ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.SetActive(true);
+            //ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+
             //slider.minValue = 0;
             //slider.maxValue = things.possession/10;
 
-            
+
         }
 
     }
 
+    IEnumerator usePopupSlider(InventoryThings things)
+    {
+        ItemInfoPopup.transform.Find("UIPanel/UsePopup/Slider").gameObject.GetComponent<Slider>().value = 0;
+        float time = 0;
+        while (true)
+        {
+            time += Time.deltaTime;
+            ItemInfoPopup.transform.Find("UIPanel/UsePopup/Slider").gameObject.GetComponent<Slider>().value = time*50;
+            if (ItemInfoPopup.transform.Find("UIPanel/UsePopup/Slider").gameObject.GetComponent<Slider>().value >=
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup/Slider").gameObject.GetComponent<Slider>().maxValue)
+            {
+                Debug.Log("dfs");
+                ItemInfoPopup.transform.Find("UIPanel/UsePopup").gameObject.SetActive(false);
 
+
+                //아이템 제작 방법 획득. (도감)
+                List<Things> equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 1 && x.type == "Weapon");
+                int random = Random.Range(0, equip.Count);
+                if (things.name == "무기제작서-일반")
+                {
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "무기제작서-고급")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 2 && x.type == "Weapon");
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "무기제작서-희귀")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 3 && x.type == "Weapon");
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "무기제작서-영웅")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 4 && x.type == "Weapon");
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "무기제작서-전설")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 5 && x.type == "Weapon");
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "방어제작서-일반")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 1 && (x.type == "Helmet" || x.type == "Armor" 
+                    || x.type == "Gloves" || x.type == "Pants" || x.type == "Boots"));
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "방어제작서-고급")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 2 && (x.type == "Helmet" || x.type == "Armor"
+                    || x.type == "Gloves" || x.type == "Pants" || x.type == "Boots"));
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "방어제작서-희귀")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 3 && (x.type == "Helmet" || x.type == "Armor"
+                    || x.type == "Gloves" || x.type == "Pants" || x.type == "Boots"));
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "방어제작서-영웅")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 4 && (x.type == "Helmet" || x.type == "Armor"
+                    || x.type == "Gloves" || x.type == "Pants" || x.type == "Boots"));
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+                else if (things.name == "방어제작서-전설")
+                {
+                    equip = ThingsData.instance.getThingsList().FindAll(x => x.grade == 5 && (x.type == "Helmet" || x.type == "Armor"
+                    || x.type == "Gloves" || x.type == "Pants" || x.type == "Boots"));
+                    random = Random.Range(0, equip.Count);
+                    ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).illustrate = true;
+                }
+
+
+                Color colr = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).grade);
+                ItemInfoPopup.transform.Find("UIPanel/Get/ItemBox/GradeFrame").gameObject.GetComponent<Image>().color = colr;
+                ItemInfoPopup.transform.Find("UIPanel/Get/ItemBox/Icon").gameObject.GetComponent<Image>().sprite =
+                    Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == equip[random].name).icon);
+                ItemInfoPopup.transform.Find("UIPanel/Get/AlrImage/Text").gameObject.GetComponent<Text>().text = "\""+equip[random].name + "\" 제작방법을 획득했습니다.";
+                ItemInfoPopup.transform.Find("UIPanel/Get").gameObject.SetActive(true);
+
+
+                if (things.possession <= 0)
+                {
+                    ItemInfoPopup.transform.Find("UIPanel/Get/YesButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                    ItemInfoPopup.transform.Find("UIPanel/Get/YesButton").gameObject.GetComponent<Button>().onClick.AddListener(()=> {
+                        ItemInfoPopup.SetActive(false);
+                    });
+                    
+                }
+
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
 
 
 

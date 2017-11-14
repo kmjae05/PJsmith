@@ -22,18 +22,6 @@ public class Player : MonoBehaviour {
     }
     void Start()
     {
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
-        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "영웅의 단검").type, "영웅의 단검", 1));
 
         //
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
@@ -81,6 +69,20 @@ public class Player : MonoBehaviour {
             ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equipSetNum = (i + 1);
 
         }
+
+
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
 
 
     }

@@ -206,9 +206,9 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
 
         Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
-        GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
+        GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
         GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString();
+        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString("N2");
         GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
         GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
         GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
@@ -359,7 +359,7 @@ public class MercenaryManager : MonoBehaviour {
 
         merInfoPopup.transform.Find("UIPanel/InfoPanel/DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString();
-        merInfoPopup.transform.Find("UIPanel/InfoPanel/AttackSpeed/Text").GetComponent<Text>().text = ((int)stat.attackSpeed).ToString();
+        merInfoPopup.transform.Find("UIPanel/InfoPanel/AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString("N2");
         merInfoPopup.transform.Find("UIPanel/InfoPanel/Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
         merInfoPopup.transform.Find("UIPanel/InfoPanel/DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();

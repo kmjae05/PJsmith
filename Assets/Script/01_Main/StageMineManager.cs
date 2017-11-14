@@ -282,6 +282,7 @@ public class StageMineManager : MonoBehaviour {
                     SystemPopup.SetActive(true);
                     SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
                     SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                    SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text += "\n필요한 재료 : " + thing.name + " " + (info.curMaterial - thing.possession) + "개";
                     sys_yesButton.gameObject.SetActive(false);
                     sys_NoButton.gameObject.SetActive(false);
                     sys_OkButton.gameObject.SetActive(true);
@@ -297,6 +298,7 @@ public class StageMineManager : MonoBehaviour {
                 SystemPopup.SetActive(true);
                 SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "재료 부족";
                 SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "광산 건설에 필요한 재료가 부족합니다.";
+                SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text += "\n필요한 재료 : " + info.necessaryMaterials[0] + " " + info.curMaterial + "개";
                 sys_yesButton.gameObject.SetActive(false);
                 sys_NoButton.gameObject.SetActive(false);
                 sys_OkButton.gameObject.SetActive(true);

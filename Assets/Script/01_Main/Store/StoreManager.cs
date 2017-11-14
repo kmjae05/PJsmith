@@ -11,8 +11,8 @@ public class StoreManager : MonoBehaviour {
 
     private void Start()
     {
-        goldText = GameObject.Find("GoldText").GetComponent<Text>();
-        cashText = GameObject.Find("CashText").GetComponent<Text>();
+        goldText = GameObject.Find("System").transform.Find("Shop/UIBox/Back/StoreBox/MoneyPanel/Panel/Gold/GoldText").gameObject.GetComponent<Text>();
+        cashText = GameObject.Find("System").transform.Find("Shop/UIBox/Back/StoreBox/MoneyPanel/Panel/Cash/CashText").gameObject.GetComponent<Text>();
 
 
         StartCoroutine(loop());

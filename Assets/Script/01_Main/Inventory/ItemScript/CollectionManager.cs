@@ -103,6 +103,8 @@ public class CollectionManager : MonoBehaviour
 
    public void CreateCollection()
     {
+        alrImage.SetActive(false);
+
         panel1.SetActive(true);
         panel2.SetActive(false);
         panel3.SetActive(false);

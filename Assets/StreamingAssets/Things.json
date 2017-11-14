@@ -927,7 +927,7 @@
             "item_no": 103,
             "type": "Book",
             "name": "무기제작서-일반",
-            "explanation": "",
+            "explanation": "일반 등급의 무기 제작법을 획득할 수 있습니다.",
             "grade": 1,
             "sell": 0,
             "icon": "Things/book_f_b_01"
@@ -936,7 +936,7 @@
             "item_no": 104,
             "type": "Bookpiece",
             "name": "무기제작서-일반조각",
-            "explanation": "조각 10개로 무기제작서-일반조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 무기제작서-일반을 획득할 수 있습니다.",
             "grade": 1,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -945,7 +945,7 @@
             "item_no": 105,
             "type": "Book",
             "name": "방어제작서-일반",
-            "explanation": "",
+            "explanation": "일반 등급의 방어구 제작법을 획득할 수 있습니다.",
             "grade": 1,
             "sell": 0,
             "icon": "Things/book_f_b_01"
@@ -954,7 +954,7 @@
             "item_no": 106,
             "type": "Bookpiece",
             "name": "방어제작서-일반조각",
-            "explanation": "조각 10개로 방어제작서-일반조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 방어제작서-일반을 획득할 수 있습니다.",
             "grade": 1,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -964,7 +964,7 @@
             "item_no": 107,
             "type": "Book",
             "name": "무기제작서-고급",
-            "explanation": "",
+            "explanation": "고급 등급의 무기 제작법을 획득할 수 있습니다.",
             "grade": 2,
             "sell": 0,
             "icon": "Things/book_05_b"
@@ -973,7 +973,7 @@
             "item_no": 108,
             "type": "Bookpiece",
             "name": "무기제작서-고급조각",
-            "explanation": "조각 10개로 무기제작서-고급조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 무기제작서-고급을 획득할 수 있습니다.",
             "grade": 2,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -982,7 +982,7 @@
             "item_no": 109,
             "type": "Book",
             "name": "방어제작서-고급",
-            "explanation": "",
+            "explanation": "고급 등급의 방어구 제작법을 획득할 수 있습니다.",
             "grade": 2,
             "sell": 0,
             "icon": "Things/book_05_b"
@@ -991,7 +991,7 @@
             "item_no": 110,
             "type": "Bookpiece",
             "name": "방어제작서-고급조각",
-            "explanation": "조각 10개로 방어제작서-고급조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 방어제작서-고급을 획득할 수 있습니다.",
             "grade": 2,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1001,7 +1001,7 @@
             "item_no": 111,
             "type": "Book",
             "name": "무기제작서-희귀",
-            "explanation": "",
+            "explanation": "희귀 등급의 무기 제작법을 획득할 수 있습니다.",
             "grade": 3,
             "sell": 0,
             "icon": "Things/book_f_b_02"
@@ -1010,7 +1010,7 @@
             "item_no": 112,
             "type": "Bookpiece",
             "name": "무기제작서-희귀조각",
-            "explanation": "조각 10개로 무기제작서-희귀조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 무기제작서-희귀를 획득할 수 있습니다.",
             "grade": 3,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1019,7 +1019,7 @@
             "item_no": 113,
             "type": "Book",
             "name": "방어제작서-희귀",
-            "explanation": "",
+            "explanation": "희귀 등급의 방어구 제작법을 획득할 수 있습니다.",
             "grade": 3,
             "sell": 0,
             "icon": "Things/book_f_b_02"
@@ -1028,7 +1028,7 @@
             "item_no": 114,
             "type": "Bookpiece",
             "name": "방어제작서-희귀조각",
-            "explanation": "조각 10개로 방어제작서-희귀조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 방어제작서-희귀를 획득할 수 있습니다.",
             "grade": 3,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1039,7 +1039,7 @@
             "item_no": 115,
             "type": "Book",
             "name": "무기제작서-영웅",
-            "explanation": "",
+            "explanation": "영웅 등급의 무기 제작법을 획득할 수 있습니다.",
             "grade": 4,
             "sell": 0,
             "icon": "Things/book_11_b"
@@ -1048,7 +1048,7 @@
             "item_no": 116,
             "type": "Bookpiece",
             "name": "무기제작서-영웅조각",
-            "explanation": "조각 10개로 무기제작서-영웅조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 무기제작서-영웅을 획득할 수 있습니다.",
             "grade": 4,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1057,7 +1057,7 @@
             "item_no": 117,
             "type": "Book",
             "name": "방어제작서-영웅",
-            "explanation": "",
+            "explanation": "영웅 등급의 방어구 제작법을 획득할 수 있습니다.",
             "grade": 4,
             "sell": 0,
             "icon": "Things/book_11_b"
@@ -1066,7 +1066,7 @@
             "item_no": 118,
             "type": "Bookpiece",
             "name": "방어제작서-영웅조각",
-            "explanation": "조각 10개로 방어제작서-영웅조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 방어제작서-영웅을 획득할 수 있습니다.",
             "grade": 4,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1076,7 +1076,7 @@
             "item_no": 119,
             "type": "Book",
             "name": "무기제작서-전설",
-            "explanation": "",
+            "explanation": "전설 등급의 무기 제작법을 획득할 수 있습니다.",
             "grade": 5,
             "sell": 0,
             "icon": "Things/book_b_03"
@@ -1085,7 +1085,7 @@
             "item_no": 120,
             "type": "Bookpiece",
             "name": "무기제작서-전설조각",
-            "explanation": "조각 10개로 무기제작서-전설조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 무기제작서-전설을 획득할 수 있습니다.",
             "grade": 5,
             "sell": 0,
             "icon": "Things/scroll_b_03"
@@ -1094,7 +1094,7 @@
             "item_no": 121,
             "type": "Book",
             "name": "방어제작서-전설",
-            "explanation": "",
+            "explanation": "전설 등급의 방어구 제작법을 획득할 수 있습니다.",
             "grade": 5,
             "sell": 0,
             "icon": "Things/book_b_03"
@@ -1103,7 +1103,7 @@
             "item_no": 122,
             "type": "Bookpiece",
             "name": "방어제작서-전설조각",
-            "explanation": "조각 10개로 방어제작서-전설조각을 획득할 수 있습니다.",
+            "explanation": "조각 10개로 방어제작서-전설을 획득할 수 있습니다.",
             "grade": 5,
             "sell": 0,
             "icon": "Things/scroll_b_03"

@@ -155,6 +155,7 @@ public class EquipReinforceManager : MonoBehaviour {
         changeInfoBoxExpSlider.transform.gameObject.SetActive(true);
         changeInfoBoxAbilityTextGroup.SetActive(true);
         changeInfoBoxAdditionGroup.SetActive(false);
+        //success.SetActive(false);
 
         curInventoryThings = equipThings;
 
@@ -176,7 +177,9 @@ public class EquipReinforceManager : MonoBehaviour {
 
         if (equipThings.stat.dps > 0) { abstr += "전투력"; statstr += (int)equipThings.stat.dps; }
         if (equipThings.stat.strPower > 0) { abstr += "\n공격력"; statstr +=  "\n"+(int)equipThings.stat.strPower; }
-        if (equipThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr +=  "\n"+equipThings.stat.attackSpeed ; }
+        if (equipThings.stat.attackSpeed > 0) { abstr += "\n공격속도";
+            string result = string.Format("{0:#.##}", equipThings.stat.attackSpeed);
+            statstr +=  "\n" + result; }
         if (equipThings.stat.focus > 0) { abstr += "명중률\n"; statstr += (int)equipThings.stat.focus + "\n"; }
         if (equipThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n"+(int)equipThings.stat.critical ; }
         if (equipThings.stat.defPower > 0) { abstr += "\n방어력"; statstr +="\n" + (int)equipThings.stat.defPower ; }
@@ -217,7 +220,8 @@ public class EquipReinforceManager : MonoBehaviour {
         {
             changeInfoBoxAbilityInfoTextGroup.transform.Find("AttackSpeedText").gameObject.SetActive(true);
             changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.SetActive(true);
-            changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = (equipThings.stat.attackSpeed).ToString();
+            string result = string.Format("{0:#.##}", equipThings.stat.attackSpeed);
+            changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = result;
         }
         if (equipThings.stat.critical > 0)
         {
@@ -858,7 +862,7 @@ public class EquipReinforceManager : MonoBehaviour {
         ReinforceButton.onClick.RemoveAllListeners();
         //수치 변화
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
-
+        Debug.Log(sliderexp);
         if (tmprein > 0)
         {
             if (curInventoryThings.stat.strPower > 0) curInventoryThings.stat.strPower = (int)(curInventoryThings.stat.strPower + tmprein * 1.5f);
@@ -878,11 +882,15 @@ public class EquipReinforceManager : MonoBehaviour {
             }
             curInventoryThings.reinforcement += tmprein;
 
-            success.transform.Find("LevelText").gameObject.GetComponent<Text>().text = "+" + curInventoryThings.reinforcement.ToString();
+            success.transform.Find("LevelText").gameObject.GetComponent<Text>().text = null;
+            success.transform.Find("ItemBox/ReinText").gameObject.GetComponent<Text>().text = "+" + curInventoryThings.reinforcement.ToString();
+            success.transform.Find("ItemBox/GradeFrame").gameObject.GetComponent<Image>().color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == curInventoryThings.name).grade);
+            success.transform.Find("ItemBox/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == curInventoryThings.name).icon);
+            success.transform.Find("AlrImage/Text").gameObject.GetComponent<Text>().text = curInventoryThings.name + " 강화에 성공했습니다.";
+
             appear();
         }
-        curInventoryThings.exp += tmpexp;
-        if (curInventoryThings.exp >= 100) curInventoryThings.exp %= curInventoryThings.exp;
+        curInventoryThings.exp = sliderexp;
 
         //재료 삭제
         for (int i = 0; i < selectInvenList.Count; i++)
@@ -941,7 +949,8 @@ public class EquipReinforceManager : MonoBehaviour {
                 Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
                 GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
                 GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
-                GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString();
+                string result = string.Format("{0:#.##}", stat.attackSpeed);
+                GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = result;
                 GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
                 GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
@@ -957,7 +966,8 @@ public class EquipReinforceManager : MonoBehaviour {
                 Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
                 GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
                 GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-                GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString();
+                string result = string.Format("{0:#.##}", stat.attackSpeed);
+                GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = result;
                 GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
                 GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
                 GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();

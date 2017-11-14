@@ -255,7 +255,7 @@ public class ProfilePopupManager : MonoBehaviour {
             Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[curSetNum - 1];
             GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
             GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString();
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString("N2");
             GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
             GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
             GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
