@@ -353,7 +353,6 @@
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipChangeManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipReinforceManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\EquipmentData.cs" />
-    <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\FabricationBookManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\GetItemManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\Inventory.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\ItemData.cs" />
