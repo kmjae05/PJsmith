@@ -1276,15 +1276,62 @@ public class Inventory : MonoBehaviour
         //제련북 조각 버튼     //여럿
         if (things.type == "Bookpiece")
         {
-            //ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.SetActive(true);
-            //ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.SetActive(true);
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+            ItemInfoPopup.transform.Find("UIPanel/UseButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
 
-            //slider.minValue = 0;
-            //slider.maxValue = things.possession/10;
+                //개수 체크
+                if (things.possession < 10)
+                {
+                    SystemPopup.SetActive(true);
+
+                    Sys_TitleText.GetComponent<Text>().text = "개수 부족";
+                    Sys_InfoText.GetComponent<Text>().text = "조각 개수가 부족합니다.\n(10개 이상 소지 시 사용 가능)";
+
+                    Sys_YesButton.gameObject.SetActive(false);    
+                    Sys_NoButton.gameObject.SetActive(false);
+                    Sys_OkButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    things.possession -= 10;
+
+                    //제작서 획득
+                    string str = things.name.Substring(0, 8);
+                    if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == str) != null)
+                    {
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == str).possession
+                            += 1;
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == str).recent = true;
+                    }
+                    else
+                    {
+                        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                            x => x.name == str).type, str, 1));
+                        ThingsData.instance.getInventoryThingsList().Find(x => x.name == str).recent = true;
+                    }
+                    //정리
+                    ItemInfoPopup.transform.Find("UIPanel/ItemBox/HaveText").gameObject.GetComponent<Text>().text = things.possession.ToString();
+                    if (GameObject.Find("Menu").transform.Find("InventoryPopup").gameObject.activeInHierarchy)
+                    {
+                        GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
+                    }
+
+
+                    GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(false);
+                    GameObject.Find("System").transform.Find("AlertImage/AlrImage/Text").gameObject.GetComponent<Text>().text = str + "조각을 제작서로 만들었습니다.";
+                    StartCoroutine(alrImageActive());
+                }
+            });
 
 
         }
 
+    }//문구 출력 애니메이션
+    IEnumerator alrImageActive()
+    {
+        GameObject.Find("System").transform.Find("AlertImage").gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
     }
 
     IEnumerator usePopupSlider(InventoryThings things)

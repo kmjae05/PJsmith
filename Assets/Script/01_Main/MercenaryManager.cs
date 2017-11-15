@@ -208,7 +208,7 @@ public class MercenaryManager : MonoBehaviour {
         Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
         GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
         GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString("N2");
+        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString("N1");
         GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
         GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
         GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();

@@ -55,6 +55,7 @@ public class ThingsData : MonoBehaviour
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌").type, "돌", thingsList.Find(x=>x.name=="돌").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "돌주괴").type, "돌주괴", 2));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-일반").type, "무기제작서-일반", 5));
+        invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-일반조각").type, "무기제작서-일반조각", 25));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "방어제작서-일반").type, "방어제작서-일반", 5));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "무기제작서-고급").type, "무기제작서-고급", 5));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "방어제작서-고급").type, "방어제작서-고급", 5));
@@ -66,19 +67,19 @@ public class ThingsData : MonoBehaviour
 
     }
 
-    public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록
-    {
-        List<Things> database = new List<Things>();
-        database = thingsList;
-        for (int i = 0; i < database.Count; i++)
-        {
-            if (database[i].item_no == id)
-            {
-                return database[i];
-            }
-        }
-        return null;
-    }
+    //public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록
+    //{
+    //    List<Things> database = new List<Things>();
+    //    database = thingsList;
+    //    for (int i = 0; i < database.Count; i++)
+    //    {
+    //        if (database[i].item_no == id)
+    //        {
+    //            return database[i];
+    //        }
+    //    }
+    //    return null;
+    //}
 
     public Color ChangeFrameColor(int grade)
     {

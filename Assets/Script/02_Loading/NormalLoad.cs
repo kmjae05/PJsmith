@@ -37,7 +37,7 @@ public class NormalLoad : MonoBehaviour
     IEnumerator FadeOut()
     {
         FadeImageObject.SetActive(true);
-        for (float fade = 0.0f; fade < 1.0f; fade += 0.05f)
+        for (float fade = 0.0f; fade < 1.0f; fade += 0.08f)
         {
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;
@@ -48,7 +48,6 @@ public class NormalLoad : MonoBehaviour
 
     IEnumerator EnterToMain()
     {
-
          //Logo 화면일 경우 일정 시간 후 Title 화면으로.
         if (SceneManager.GetActiveScene().name == "00_Logo")
         {

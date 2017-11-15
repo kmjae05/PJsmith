@@ -1,0 +1,62 @@
+{
+	"Quest": [
+		{
+			"no": 0,
+			"type": "login",
+			"amount": 1,
+			"alertText": "로그인",
+			"achv_reward_name": "gold",
+			"achv_reward_quantity": 500
+			
+		},
+		{
+			"no": 1,
+			"type": "hunting",
+			"amount": 5,
+			"alertText": "크리티컬 공격",
+			"achv_reward_name": "cash",
+			"achv_reward_quantity": 1000
+		},
+		{
+			"no": 2,
+			"type": "gold",
+			"amount": 3,
+			"alertText": "부자가 됐다",
+			"achv_reward_name": "돌",
+			"achv_reward_quantity": 2000
+		},
+		{
+			"no": 3,
+			"type": "cash",
+			"amount": 1,
+			"alertText": "보석보석보석",
+			"achv_reward_name": "cash",
+			"achv_reward_quantity": 20
+		},
+		{
+			"no": 4,
+			"type": "level",
+			"amount": 2,
+			"alertText": "레벨 업",
+			"achv_reward_name": "cash",
+			"achv_reward_quantity": 50
+		},
+		{
+			"no": 5,
+			"type": "ore",
+			"amount": 1,
+			"alertText": "광석 격파",
+			"achv_reward_name": "cash",
+			"achv_reward_quantity": 3
+		},
+		{
+			"no": 6
+			"type": "ore",
+			"amount": 1,
+			"alertText": "광석 격파",
+			"achv_reward_name": "cash",
+			"achv_reward_quantity": 3
+		}
+		
+	]
+}

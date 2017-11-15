@@ -130,9 +130,9 @@ public class Achievementhandle : MonoBehaviour {
                     case "Comments":
                         CommentsText[i] = objects[j].gameObject.GetComponent<Text>();
                         break;
-                    case "SpecialReward":
-                        SpecialReward[i] = objects[j].gameObject.GetComponent<Text>();
-                        break;
+                    //case "SpecialReward":
+                    //    SpecialReward[i] = objects[j].gameObject.GetComponent<Text>();
+                    //    break;
                     case "RewardBox_Cash":
                         if (string.Compare(AchvList[i].achv_reward_type, "cash") == 0)
                         {
@@ -188,9 +188,9 @@ public class Achievementhandle : MonoBehaviour {
                     case "_Comments":
                         CommentsText_Reward[i] = objects[j].gameObject.GetComponent<Text>();
                         break;
-                    case "_SpecialReward":
-                        SpecialReward_Reward[i] = objects[j].gameObject.GetComponent<Text>();
-                        break;
+                    //case "_SpecialReward":
+                    //    SpecialReward_Reward[i] = objects[j].gameObject.GetComponent<Text>();
+                    //    break;
                     case "_RewardBox_Cash":
                         if (string.Compare(AchvList[i].achv_reward_type, "cash") == 0)
                         {
@@ -220,14 +220,12 @@ public class Achievementhandle : MonoBehaviour {
                         break;
                     case "RewardButton":
                         RewardButton[i] = objects[j].gameObject.GetComponent<Button>();
-                        int index = i;
-                        RewardButton[i].onClick.AddListener(() => ReceiveAchv(index));  //보상 받기 대기
                         break;
                 }
             }
             TitleText[i].text = AchvList[i].alertText;
             StartCoroutine(UpdateData(G_AchvList[i], i));      //업적 내용 갱신
-            Check_Special_Reward(i);
+            //Check_Special_Reward(i);
             StartCoroutine(GetAchievement(AchvList[i].no, AchvList[i].type, AchvList[i].amount));   //업적 달성 대기 코루틴
         }
         #endregion
@@ -281,7 +279,7 @@ public class Achievementhandle : MonoBehaviour {
                     data = Player.instance.getUser().level;
                     break;
                 case "ore":
-                    commentsText = "광석 " + GetThousandCommaText(AchvList[index].amount) + "개 격파";
+                    commentsText = "광석 " + GetThousandCommaText(AchvList[index].amount) + "개 제련";
                     data = ore_crash_count;
                     break;
                 case "collection":
@@ -297,7 +295,7 @@ public class Achievementhandle : MonoBehaviour {
 
             TitleText_Reward[index].text = TitleText[index].text;
             CommentsText_Reward[index].text = CommentsText[index].text;
-            SpecialReward_Reward[index].text = SpecialReward[index].text;
+            //SpecialReward_Reward[index].text = SpecialReward[index].text;
             RewardAmount_Reward[index].text = Reward_Amount[index].text;
             ScoreText_Reward[index].text = ScoreText[index].text;
             yield return new WaitForSeconds(0.1f);
@@ -356,9 +354,11 @@ public class Achievementhandle : MonoBehaviour {
                 yield return new WaitUntil(() => get_collection_count >= amount);
                 break;
         }
+        Debug.Log(index);
         RewardPanel[index].SetActive(true);
         G_AchvList[index].transform.SetAsFirstSibling();
-        
+        RewardButton[index].onClick.AddListener(() => ReceiveAchv(index));
+        Debug.Log("달성");
         //yield return StartCoroutine(AcvBoxHandle(alertMessageHandle(type, amount)));
     }
 
@@ -409,39 +409,50 @@ public class Achievementhandle : MonoBehaviour {
     
     public void ReceiveAchv(int r_index) //업적 보상 받기 함수
     {
+        Debug.Log("받기");
         RewardButton[r_index].onClick.RemoveAllListeners();
         NewIcon.SetActive(false); //new 아이콘 비활성화
 
         string type = AchvList[r_index].achv_reward_type;
         int quantity = AchvList[r_index].achv_reward_quantity;
-        Player.instance.GetMoney("gold", quantity);
+        Player.instance.GetMoney(type, quantity);
         Player.instance.getUser().achvScore += AchvList[r_index].score;
         #region 업적갱신
-        AchvList[r_index].amount *= 5;  //목표 갱신
+        AchvList[r_index].amount *= 2;  //목표 갱신
+        //if (AchvList[r_index].type == "level")
+        //{
+        //    //만렙
+        //    if(AchvList[r_index].amount == 30)
+        //    {
+        //        //비활성화
+
+        //    }
+        //    else if (AchvList[r_index].amount > 30) AchvList[r_index].amount = 30;
+        //}
         AchvList[r_index].achv_reward_quantity *= 2; //보상 갱신
         AchvList[r_index].score *= 2;   //스코어 갱신
         StartCoroutine(GetAchievement(r_index, AchvList[r_index].type, AchvList[r_index].amount));   //갱신된 업적 완료대기
         #endregion
         RewardPanel[r_index].SetActive(false);
-        if (SpecialReward[r_index].enabled)     //획득할 칭호가 있다면
-        {
-            for (int i = 0; i < AchvList[r_index].special_reward.Length; i++){
-                string title = SpecialReward[r_index].text.Replace("특별보상 : ", "");
-                if (string.Compare(title, TitleHandler.titleList[AchvList[r_index].special_reward[i]].name) == 0)
-                {
-                    TitleHandler.titleList[AchvList[r_index].special_reward[i]].isGet = true;      //소유 여부 true값으로 변경
-                    TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].SetActive(true);
-                    StartCoroutine(AcvBoxHandle("새로운 칭호를 얻었습니다."));
-                    //New_Title_Icon.SetActive(true);    //ProfilePopup 안 new 아이콘 활성화(칭호)
-                    //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Image>()[3].enabled = true;
-                    //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Text>()[1].enabled = true;
-                    //RewardPanel[r_index].SetActive(false);
-                    GetComponent<TitleHandler>().ArrangeTitle();
-                    G_AchvList[r_index].transform.SetSiblingIndex(ArrangeAchv(r_index));
-                }
-            }
-        }
-        Check_Special_Reward(r_index);
+        //if (SpecialReward[r_index].enabled)     //획득할 칭호가 있다면
+        //{
+        //    for (int i = 0; i < AchvList[r_index].special_reward.Length; i++){
+        //        string title = SpecialReward[r_index].text.Replace("특별보상 : ", "");
+        //        if (string.Compare(title, TitleHandler.titleList[AchvList[r_index].special_reward[i]].name) == 0)
+        //        {
+        //            TitleHandler.titleList[AchvList[r_index].special_reward[i]].isGet = true;      //소유 여부 true값으로 변경
+        //            TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].SetActive(true);
+        //            StartCoroutine(AcvBoxHandle("새로운 칭호를 얻었습니다."));
+        //            //New_Title_Icon.SetActive(true);    //ProfilePopup 안 new 아이콘 활성화(칭호)
+        //            //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Image>()[3].enabled = true;
+        //            //TitleHandler.G_TitleList[AchvList[r_index].special_reward[i]].GetComponentsInChildren<Text>()[1].enabled = true;
+        //            //RewardPanel[r_index].SetActive(false);
+        //            GetComponent<TitleHandler>().ArrangeTitle();
+        //            G_AchvList[r_index].transform.SetSiblingIndex(ArrangeAchv(r_index));
+        //        }
+        //    }
+        //}
+        //Check_Special_Reward(r_index);
         
     }
     public int ArrangeAchv(int index)

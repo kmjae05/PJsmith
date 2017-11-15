@@ -81,7 +81,7 @@
 			"no": 5,
 			"type": "ore",
 			"amount": 3,
-			"alertText": "광석격파",
+			"alertText": "광석 격파",
 			"achv_reward_type": "cash",
 			"achv_reward_quantity": 3,
 			"special_reward": [
@@ -91,21 +91,22 @@
 				10
 			],
 			"Score" : 5
-		},
-		{
-			"no": 6,
-			"type": "collection",
-			"amount": 10,
-			"alertText": "수집가",
-			"achv_reward_type": "cash",
-			"achv_reward_quantity": 100,
-			"special_reward": [
-				1,2,3
-			],
-			"amount_for_SW": [
-				10,50,250
-			],
-			"Score" : 5
 		}
+		//,
+		//{
+		//	"no": 6,
+		//	"type": "collection",
+		//	"amount": 10,
+		//	"alertText": "수집가",
+		//	"achv_reward_type": "cash",
+		//	"achv_reward_quantity": 100,
+		//	"special_reward": [
+		//		1,2,3
+		//	],
+		//	"amount_for_SW": [
+		//		10,50,250
+		//	],
+		//	"Score" : 5
+		//}
 	]
 }

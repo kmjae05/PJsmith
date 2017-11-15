@@ -186,6 +186,7 @@ public class InGameHandle : MonoBehaviour {
             //광석 hp 0
             if (ore_hp <= 0)
             {
+                Achievementhandle.ore_crash_count++;
                 Time.timeScale = 1.0f;
 
                 ore_hp = 0;

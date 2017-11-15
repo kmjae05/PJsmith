@@ -126,6 +126,7 @@ public class Player : MonoBehaviour {
     {
         if (string.Compare(type, "gold") == 0)
         {
+            Achievementhandle.get_gold_count += amount;
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.gold, "to", Player.Play.gold + amount, "onUpdate", "GoldCount", "time", 1));
             Play.gold += amount;
             if (SceneManager.GetActiveScene().name == "02_Lobby")
@@ -133,6 +134,7 @@ public class Player : MonoBehaviour {
         }
         else if (string.Compare(type, "cash") == 0)
         {
+            Achievementhandle.get_cash_count += amount;
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.cash, "to", Player.Play.cash + amount, "onUpdate", "CashCount", "time", 1));
             Play.cash += amount;
             if (SceneManager.GetActiveScene().name == "02_Lobby")
@@ -144,11 +146,13 @@ public class Player : MonoBehaviour {
     {
         if(string.Compare(type, "gold")==0)
         {
+            Achievementhandle.get_gold_count -= amount;
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.gold, "to", Player.Play.gold - amount, "onUpdate", "GoldCount", "time", 1));
             Play.gold -= amount;
         }
         else if(string.Compare(type, "cash") == 0)
         {
+            Achievementhandle.get_cash_count -= amount;
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.cash, "to", Player.Play.cash - amount, "onUpdate", "CashCount", "time", 1));
             Play.cash -= amount;
         }

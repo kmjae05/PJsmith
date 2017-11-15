@@ -18,7 +18,7 @@ public class AlertManager : MonoBehaviour {
 
     }
 
-    public void AcvBoxHandle(string text)   //업적 달성 시 알림 UI 애니메이션
+    public void AcvBoxHandle(string text)  
     {
         Debug.Log("al");     
         

@@ -170,6 +170,7 @@ public class IngameManager : MonoBehaviour {
     //성공
     IEnumerator success()
     {
+        Achievementhandle.ore_crash_count++;
         GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(Player.instance.getUser().oreName + " 제련에 성공했습니다.");
 
         //아이템 추가
@@ -184,10 +185,13 @@ public class IngameManager : MonoBehaviour {
                 ThingsData.instance.getThingsList().Find(x => x.name == (Player.instance.getUser().oreName + "주괴")).type,
                 (Player.instance.getUser().oreName + "주괴"), 1));
         }
-        GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", Player.instance.getUser().oreexp);
+
+        //기타 보상
+        int gold = GameObject.Find("PlayerManager").GetComponent<OreSelect>().oreList.Find(x => x.name == Player.instance.getUser().oreName).gold;
+        GameObject.Find("PlayerData").GetComponent<Player>().GetMoney("gold", gold);
         GameObject.Find("PlayerData").GetComponent<Player>().getExp(Player.instance.getUser().oreexp);
-        Debug.Log(Player.instance.getUser().oreexp);
         Player.instance.getUser().ingameState = false;
+
         yield return new WaitForSeconds(3.0f);
         startButton.SetActive(true);
         if (GameObject.Find("Menu").transform.Find("TerritoryPopup").gameObject.activeInHierarchy
@@ -258,6 +262,8 @@ public class IngameManager : MonoBehaviour {
             if(Player.instance.getUser().isOre)
                 Player.instance.getUser().orehp -= random;
             else Player.instance.getUser().equiphp -= random;
+
+            Achievementhandle.normal_atk_count++;
         }
         else if (critical_rate <= 30)
         {
@@ -267,6 +273,7 @@ public class IngameManager : MonoBehaviour {
             if (Player.instance.getUser().isOre)
                 Player.instance.getUser().orehp -= random;
             else Player.instance.getUser().equiphp -= random;
+            Achievementhandle.critical_atk_count++;
         }
 
     }

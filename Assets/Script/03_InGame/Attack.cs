@@ -86,6 +86,7 @@ public class Attack : MonoBehaviour {
 
     void NormalHit()
     {
+        Achievementhandle.normal_atk_count++;
         int random = Random.Range(chrPower - 10, chrPower + 10);
         InGameHandle.ore_hp -= random;
         normalFx.SetBool("Click", true);
@@ -95,6 +96,7 @@ public class Attack : MonoBehaviour {
 
     void CriticalHit()
     {
+        Achievementhandle.critical_atk_count++;
         int random = (int)Random.Range((chrPower - 10) * 1.5f, (chrPower + 10) * 1.5f);
         InGameHandle.ore_hp -= random;
         cameraShake.EnableShake(0.1f);

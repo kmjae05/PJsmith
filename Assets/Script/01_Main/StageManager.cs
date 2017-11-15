@@ -1051,9 +1051,9 @@ public class StageManager : MonoBehaviour
             plunderPlayerBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = Player.instance.getUser().Name;
             plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = Player.instance.getUser().level.ToString();
 
-            plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().dps).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().dps)).ToString();
             plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().strPower).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().attackSpeed).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = statData.getRepreSetStat().attackSpeed.ToString("N1");
             plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().focus).ToString();
             plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().critical).ToString();
             plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().defPower).ToString();
@@ -1061,11 +1061,11 @@ public class StageManager : MonoBehaviour
 
             //상대방 데이터 가져와서 갱신
             plunderEnemyBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = plunder.getName();
-            //plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = plunder.level.ToString();
+            plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = plunder.level.ToString();
 
-            plunderEnemyBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.dps).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.dps)).ToString();
             plunderEnemyBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.strPower).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.attackSpeed).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = plunder.stat.attackSpeed.ToString("N1");
             plunderEnemyBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.focus).ToString();
             plunderEnemyBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.critical).ToString();
             plunderEnemyBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.defPower).ToString();
@@ -1134,7 +1134,7 @@ public class StageManager : MonoBehaviour
             index = StageData.spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
             //이미 위치한 스테이지 범위에 없게 배치
             List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.spotName != null);
-            Debug.Log(plif.Count);
+
             if (plif != null)
             {
                 bool distanceBool = false;
