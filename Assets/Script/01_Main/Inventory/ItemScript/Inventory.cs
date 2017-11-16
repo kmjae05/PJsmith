@@ -138,16 +138,12 @@ public class Inventory : MonoBehaviour
     }
     void Start()
     {
-
-        //database = GetComponent<ItemDatabase>();
         thingsData = GameObject.Find("ThingsData").GetComponent<ThingsData>();
         sellManager = GameObject.Find("InventoryScript").GetComponent<SellManager>();
 
         ItemSlotCreate();
         TapButtonSetup();
         CollectionPopup.SetActive(false);
-        //StartCoroutine(StartRoutine());
-        //InventorySlot.SetActive(false);
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
         GameObject.Find("InvenButton").GetComponent<Button>().onClick.AddListener(() => {
@@ -161,287 +157,40 @@ public class Inventory : MonoBehaviour
             ItemInfoPopup.transform.Find("UIPanel/Get/LightImage").gameObject.transform.Rotate(new Vector3(0, 0, 1), 1 * 0.5f);
     }
 
-    IEnumerator StartRoutine() //초기 아이템 생성
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        for (int i = 0; i < thingsData.getThingsList().Count; i++)
-        {
-            AddItem(0, i);
-        }
-        for (int i = 0; i < ItemDatabase.DatabaseListSize1; i++)
-        {
-            AddItem(1, i);
-        }
-        for (int i = 0; i < ItemDatabase.DatabaseListSize2; i++)
-        {
-            AddItem(2, i);
-        }
-        for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
-        {
-            AddItem(3, i);
-        }
-        for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
-        {
-            AddItem(3, i);
-        }
-        for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
-        {
-            AddItem(3, i);
-        }
-    }
-
-    //public void Itemparsing(int tapNo, int ItemNO) //아이템 획득시 이미지값 삽입 탭에 맞는 부분을 바꾸는부분 미완성
+    //IEnumerator StartRoutine() //초기 아이템 생성
     //{
-    //    List<Things> TempItem = new List<Things>();
-    //    List<GameObject> TempSlot = new List<GameObject>();
-    //    if (tapNo == 0)
-    //    {
-    //        TempItem = Tap1Items;
-    //        TempSlot = Tap1Slots;
-    //    }
-    //    else if (tapNo == 1)
-    //    {
-    //        TempItem = Tap2Items;
-    //        TempSlot = Tap2Slots;
-    //    }
-    //    else if (tapNo == 2)
-    //    {
-    //        TempItem = Tap3Items;
-    //        TempSlot = Tap3Slots;
-    //    }
-    //    else if (tapNo == 3)
-    //    {
-    //        TempItem = Tap4Items;
-    //        TempSlot = Tap4Slots;
-    //    }
-    //    else if (tapNo == 4)
-    //    {
-    //        TempItem = Tap5Items;
-    //        TempSlot = Tap5Slots;
-    //    }
-    //    //else if (tapNo == 5)
-    //    //{
-    //    //    TempItem = Tap6Items;
-    //    //    TempSlot = Tap6Slots;
-    //    //}
-    //    if (NewItemCount <= 0)
-    //    {
-    //        NewItemIcon.SetActive(false);
-    //    }
-    //    //for (int i = 0; i < TempItem.Count; i++)
-    //    //{
-    //    //    if (TempItem[i].ID == ItemNO && TempItem[i].Possession == false)
-    //    //    {
-    //    //        TempItem[i].Possession = true;
-    //    //        GameObject itemObj = TempSlot[i].transform.GetChild(0).gameObject;
-    //    //        itemObj.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+    //    yield return new WaitForSeconds(1.0f);
 
-    //    //        ItemSprite(TempItem[i].sprite);
-    //    //        ItemText.text = TempItem[i].Title;
-    //    //        itemObj = itemObj.transform.Find("NewIcon").gameObject;
-    //    //        itemObj.SetActive(true);
-
-    //    //        NewItemCount++;
-    //    //        if (NewItemCount > 0)
-    //    //        {
-    //    //            NewItemIcon.SetActive(true);
-    //    //        }
-    //    //        break;
-    //    //    }
-    //    //    else if (TempItem[i].ID == ItemNO && TempItem[i].Possession == true)
-    //    //    {
-    //    //        ItemSprite(TempItem[i].sprite);
-    //    //        ItemText.text = TempItem[i].Title;
-    //    //    }
-    //    //}
-
+    //    for (int i = 0; i < thingsData.getThingsList().Count; i++)
+    //    {
+    //        AddItem(0, i);
+    //    }
+    //    for (int i = 0; i < ItemDatabase.DatabaseListSize1; i++)
+    //    {
+    //        AddItem(1, i);
+    //    }
+    //    for (int i = 0; i < ItemDatabase.DatabaseListSize2; i++)
+    //    {
+    //        AddItem(2, i);
+    //    }
+    //    for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
+    //    {
+    //        AddItem(3, i);
+    //    }
+    //    for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
+    //    {
+    //        AddItem(3, i);
+    //    }
+    //    for (int i = 0; i < ItemDatabase.DatabaseListSize3; i++)
+    //    {
+    //        AddItem(3, i);
+    //    }
     //}
-    //bool CheckIfItemIsInInventory(int tatNo, Things item) //아이템이 db에 있는지 확인
-    //{
-    //    List<Things> items = new List<Things>();
-    //    if (tatNo == 0)
-    //    {
-    //        items = Tap1Items;
-    //    }
-    //    else if (tatNo == 1)
-    //    {
-    //        items = Tap2Items;
-    //    }
-    //    else if (tatNo == 2)
-    //    {
-    //        items = Tap3Items;
-    //    }
-    //    else if (tatNo == 3)
-    //    {
-    //        items = Tap4Items;
-    //    }
-    //    else if (tatNo == 4)
-    //    {
-    //        items = Tap5Items;
-    //    }
-    //    //else if (tatNo == 5)
-    //    //{
-    //    //    items = Tap6Items;
-    //    //}
-    //    for (int i = 0; i < items.Count; i++)
-    //    {
-    //        if (items[i].item_no == item.item_no)
-    //        {
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
+
     void ItemSprite(Sprite sprite) //아이템 생성 완료창 스프라이트 넣음
     {
         ItemImage.GetComponent<Image>().sprite = sprite;
     }
-
-    //public void RemoveItem(int tapNo, int id) //아이템 삭제전 삭제할 탭 지적
-    //{
-    //    List<Things> item = new List<Things>();
-    //    List<GameObject> slot = new List<GameObject>();
-
-    //    if (tapNo == 0)
-    //    {
-    //        item = Tap1Items;
-    //        slot = Tap1Slots;
-    //    }
-    //    else if (tapNo == 1)
-    //    {
-    //        item = Tap2Items;
-    //        slot = Tap2Slots;
-    //    }
-    //    else if (tapNo == 2)
-    //    {
-    //        item = Tap3Items;
-    //        slot = Tap3Slots;
-    //    }
-    //    else if (tapNo == 3)
-    //    {
-    //        item = Tap4Items;
-    //        slot = Tap4Slots;
-    //    }
-    //    else if (tapNo == 4)
-    //    {
-    //        item = Tap5Items;
-    //        slot = Tap5Slots;
-    //    }
-        //else if (tapNo == 5)
-        //{
-        //    item = Tap6Items;
-        //    slot = Tap6Slots;
-        //}
-        //RemoveItem(item, slot, tapNo, id);
-    //}
-    //void RemoveItem(List<Things> Items, List<GameObject> Slots, int tapNo, int id) //삭제할 아이템을 지움
-    //{
-    //    Things itemToRemove = database.FetchItemByID(tapNo, id);
-    //    if (itemToRemove.Stackable && CheckIfItemIsInInventory(tapNo, itemToRemove))
-    //    {
-    //        for (int j = 0; j < Items.Count; j++)
-    //        {
-    //            if (Items[j].ID == id)
-    //            {
-    //                ItemData data = Slots[j].transform.GetChild(0).GetComponent<ItemData>();
-    //                data.amount--;
-    //                data.transform.GetChild(3).GetComponent<Text>().text = data.amount.ToString();
-    //                if (data.amount <= 0)
-    //                {
-    //                    Destroy(Slots[j].transform.GetChild(3).gameObject);
-    //                    Items[j] = new Item();
-    //                    break;
-    //                }
-    //                if (data.amount == 1)
-    //                {
-    //                    Slots[j].transform.GetChild(3).transform.GetChild(0).GetComponent<Text>().text = "";
-    //                    break;
-    //                }
-    //                break;
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < Items.Count; i++)
-    //            if (Items[i].ID != -1 && Items[i].ID == id)
-    //            {
-    //                Destroy(Slots[i].transform.GetChild(0).gameObject);
-    //                Items[i] = new Item();
-    //                break;
-    //            }
-    //    }
-    //}
-
-    //public void Activate(int DatabaseNo, int id) //클릭시 아이템의 값들을 받아와서 아이템 타입을 설정
-    //{
-    //    List<Things> TempItems = new List<Things>();
-    //    List<GameObject> TempISlot = new List<GameObject>();
-    //    if (DatabaseNo == 0)
-    //    {
-    //        TempItems = Tap1Items;
-    //        TempISlot = Tap1Slots;
-    //    }
-    //    else if (DatabaseNo == 1)
-    //    {
-    //        TempItems = Tap2Items;
-    //        TempISlot = Tap2Slots;
-    //    }
-    //    else if (DatabaseNo == 2)
-    //    {
-    //        TempItems = Tap3Items;
-    //        TempISlot = Tap3Slots;
-    //    }
-    //    else if (DatabaseNo == 3)
-    //    {
-    //        TempItems = Tap4Items;
-    //        TempISlot = Tap4Slots;
-    //    }
-    //    else if (DatabaseNo == 4)
-    //    {
-    //        TempItems = Tap5Items;
-    //        TempISlot = Tap5Slots;
-    //    }
-    //    //else if (DatabaseNo == 5)
-    //    //{
-    //    //    TempItems = Tap6Items;
-    //    //    TempISlot = Tap6Slots;
-    //    //}
-
-    //    //ConstructDataString(TempItems, TempISlot, id);
-    //}
-    //void ConstructDataString(List<Things> TempItems, List<GameObject> TempISlot, int id)//설정한 아이템 타입의 값들을 툴팁에 대입
-    //{
-    //    // GameObject itemObj = TempISlot[id].transform.GetChild(0).gameObject;
-
-    //    // itemObj = itemObj.transform.FindChild("NewIcon").gameObject;
-    //    // if (itemObj.activeSelf == true)
-    //    // {
-    //    //     NewItemCount--;
-    //    //     itemObj.SetActive(false);
-    //    // }
-    //    // if (NewItemCount <= 0)
-    //    // {
-    //    //     NewItemIcon.SetActive(false);
-    //    // }
-
-    //    //data = "<color=#0473f0><b>" + TempItems[id].Title + "</b></color>\n\n" + TempItems[id].Decription + "\nPower : " + TempItems[id].Power;
-    //    ////tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
-    //    //t_Tooltip.text = data;
-    //    //ItemInfoPopup.SetActive(true);
-    //    //if (TempItems[id].Possession == true)
-    //    //{
-    //    //    TooltipImage.GetComponent<Image>().sprite = TempItems[id].sprite;
-    //    //    TooltipImage.GetComponent<Image>().color = new Color(255, 255, 255, 255);
-    //    //}
-    //    //else
-    //    //{
-    //    //    TooltipImage.GetComponent<Image>().sprite = TempItems[id].sprite;
-    //    //    TooltipImage.GetComponent<Image>().color = new Color(0, 0, 0, 255);
-    //    //}
-    //}
-
 
     public void ItemSlotCreate()
     {
@@ -712,47 +461,7 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        //재료, 기타 아이템
-        //List<Things> tempItemList6 = new List<Things>();
-        //tempItemList6 = thingsData.getThingsList().FindAll(x => (x.type == "Ore" || x.type == "Others") );
-        //for (int i = 0; i < tempItemList6.Count; i++)
-        //{
-        //    if (tempItemList6[i].possession > 0)
-        //    {
-        //        Tap6Items.Add(tempItemList6[i]);
-        //        Tap6Slots.Add(Instantiate(InventorySlot)); //인벤토리 슬롯 생성
-        //        Tap6Slots[Tap6Slots.Count - 1].SetActive(true);
-        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<Slot>().id = Tap6Slots.Count - 1;
-        //        Tap6Slots[Tap6Slots.Count - 1].transform.SetParent(Tap6Panel.transform);
-        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localScale = Vector3.one;
-        //        Tap6Slots[Tap6Slots.Count - 1].GetComponent<RectTransform>().localPosition = Vector3.one;
-        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(tempItemList6[i].icon);
-        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item/AmountText").gameObject.GetComponent<Text>().text = tempItemList6[i].possession.ToString();
-        //        Tap6Slots[Tap6Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList6[i].recent);
 
-        //        //광석 팝업
-        //        if (tempItemList6[i].type == "Ore")
-        //        {
-        //            int index = i;
-        //            Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
-        //            {
-        //                GameObject.Find("PlayerManager").GetComponent<OreSelect>().ClickInventory(tempItemList6[index]);
-        //                GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
-        //            });
-        //        }
-        //        //기타 아이템 팝업
-        //        if (tempItemList6[i].type == "Others")
-        //        {
-        //            int index = i;
-        //            Tap6Slots[Tap6Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
-        //            {
-        //                OthersItemInfoPopup(tempItemList6[index]);
-        //                ItemInfoPopup.SetActive(true);
-        //            });
-        //        }
-
-        //    }
-        //}
         SlotSize(Tap1Items);
         //new icon 감추기
         for (int i=0;i< thingsData.getInventoryThingsList().Count; i++)
@@ -806,64 +515,6 @@ public class Inventory : MonoBehaviour
         //}
         //AddItem(item, slot, tapNo, id);
     }
-
-    //void AddItem(List<InventoryThings> TempItems, List<GameObject> TempSlots, int tapNo, int id) //탭 넘버와 아이디 값을 가져와서 특정 탭에 아이템을 생성
-    //{
-    //    Things itemToAdd = thingsData.FetchItemByID(id);
-    //    if (CheckIfItemIsInInventory(tapNo, itemToAdd))
-    //    {
-    //        for (int i = 0; i < TempItems.Count; i++)
-    //        {
-    //            if (TempItems[i].item_no == id)
-    //            {
-
-    //                ItemData data = TempSlots[i].transform.GetChild(3).GetComponent<ItemData>();
-    //                data.amount++;
-    //                data.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = data.amount.ToString();
-    //                //  ItemSprite(TempItems[i].sprite);
-    //                break;
-    //            }
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        for (int i = 0; i < TempItems.Count; i++)
-    //        {
-    //            if (TempItems[i].item_no == -1)
-    //            {
-    //                TempItems[i] = itemToAdd;
-    //                GameObject itemObj = Instantiate(InventoryItem);
-    //                itemObj.SetActive(true);
-    //                //itemObj.GetComponent<ThingsData>().item = itemToAdd;
-    //                //itemObj.GetComponent<ThingsData>().amount = 1;
-    //                //itemObj.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = itemObj.GetComponent<ThingsData>().amount.ToString();
-    //                //itemObj.GetComponent<ThingsData>().slot = i;
-    //                //itemObj.transform.SetParent(TempSlots[i].transform);
-    //                //itemObj.transform.position = Vector2.zero;
-    //                //itemObj.GetComponent<Image>().sprite = itemToAdd.sprite;
-    //                //GameObject image = itemObj.transform.FindChild("Image").gameObject;
-    //                // image.SetActive(false);
-    //                // image.GetComponent<Image>().sprite = itemToAdd.sprite;
-
-    //                //if (itemObj.GetComponent<ItemData>().item.Possession == true)
-    //                //{
-    //                //    itemObj.GetComponent<Image>().color = new Color(255, 255, 255, 255);
-    //                //}
-    //                //else
-    //                //{
-    //                //    itemObj.GetComponent<Image>().color = new Color(0, 0, 0, 255);
-    //                //}
-    //                itemObj.name = itemToAdd.name;
-    //                itemObj.GetComponent<RectTransform>().transform.localScale = Vector3.one;
-    //                itemObj.GetComponent<Button>().onClick.AddListener(() => Activate(tapNo, i));
-    //                //    ItemSprite(items[i].sprite);
-    //                itemObj.transform.localPosition = Vector3.one;
-    //                break;
-    //            }
-    //        }
-    //    }
-    //} //아이템 생성 -> 아이템을 특정탭에 생성
 
     //스크롤 패널 변경
     public void SwitchScrollPanel()//GameObject obj)
@@ -954,22 +605,6 @@ public class Inventory : MonoBehaviour
             BackSlot.GetComponent<ScrollRect>().content = Tap5Panel.GetComponent<RectTransform>();
 
         }
-        //else if (Tap6Panel.activeSelf == true)
-        //{
-        //    Tap1Push.SetActive(false);
-        //    Tap2Push.SetActive(false);
-        //    Tap3Push.SetActive(false);
-        //    Tap4Push.SetActive(false);
-        //    Tap5Push.SetActive(false);
-        //    Tap6Push.SetActive(true);
-
-        //    //SlotSize(Tap6Items);
-        //    t_SlotTitleText.text = "재료, 기타 아이템";
-
-        //    //Tap6Panel.transform.localPosition = Vector3.one;
-        //    BackSlot.GetComponent<ScrollRect>().content = Tap6Panel.GetComponent<RectTransform>();
-
-        //}
     } //아이템 탭을 선택할경우 스크롤 변경
 
 
@@ -1153,7 +788,6 @@ public class Inventory : MonoBehaviour
                       flag = false;
                       //재료 수량 부족
                       Debug.Log("no");
-
                   }
               }
               else

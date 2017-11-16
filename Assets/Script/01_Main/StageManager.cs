@@ -1185,9 +1185,7 @@ public class StageManager : MonoBehaviour
         spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
         //spotButton.GetComponent<Image>().sprite = result.sprite;
 
-
-
-        //애니메이션 효과 투닥투닥 15프레임 정도
+        QuestData.questPlunder += 1;
 
         //계산
         bool dpsResult = dpsCal(plunder);

@@ -102,7 +102,7 @@ public class IngameManager : MonoBehaviour {
                         Player.instance.getUser().orehp = 0;
                         CharAni.SetBool("complete_win", true);
                         CharAni.SetBool("Atk_State", false);
-
+                        QuestData.questRefine += 1;
                         StartCoroutine(success());
                     }
                     //타임오버
@@ -140,7 +140,7 @@ public class IngameManager : MonoBehaviour {
                         Player.instance.getUser().equiphp = 0;
                         CharAni.SetBool("complete_win", true);
                         CharAni.SetBool("Atk_State", false);
-
+                        QuestData.questProduction += 1;
                         StartCoroutine(equipsuccess());
                     }
                     //타임오버

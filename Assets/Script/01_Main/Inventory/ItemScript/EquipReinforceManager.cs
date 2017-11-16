@@ -903,6 +903,9 @@ public class EquipReinforceManager : MonoBehaviour {
         if (profileManager.getCurChr() != Player.instance.getUser().Name)
             merTemp = MercenaryData.instance.getMercenary().Find(x => x.getName() == profileManager.getCurChr());
 
+
+        QuestData.questReinforcement += 1;
+
         ////이전 전투력
         //Stat preStat = new Stat();
         //if (profileManager.getCurChr() == Player.instance.getUser().Name)

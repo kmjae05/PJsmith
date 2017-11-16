@@ -14,6 +14,15 @@ public class QuestData : MonoBehaviour {
     private WWW reader;
     private static List<Quest> QuestList;
 
+    //퀘스트 카운트
+    static public int questLogin = 1;
+    static public int questHunting = 0;
+    static public int questRefine = 0;
+    static public int questReinforcement = 0;
+    static public int questProduction = 0;
+    static public int questPlunder = 0;
+
+
     void Awake()
     {
         if (instance == null)
@@ -73,19 +82,27 @@ public class Quest
 {
     public int no;
     public string type;
+    public string target;
     public int amount;
     public string alertText;
     public string reward_name;
     public int reward_quantity;
 
+    public bool completeFlag;   //완료했는지
+    public bool rewardFlag;     //보상 받았는지
+
     public Quest(int no, string type, int amount, string alertText, string reward_name, int reward_quantity)
     {
         this.no = no;
         this.type = type;
+        target = null;
         this.amount = amount;
         this.alertText = alertText;
         this.reward_name = reward_name;
         this.reward_quantity = reward_quantity;
+
+        completeFlag = false;
+        rewardFlag = false;
     }
 
 

@@ -200,6 +200,10 @@ public class InGameHandle : MonoBehaviour {
                 //UIAnimation_03_();
                 Player.instance.getUser().ingameState = false;
                 Player.instance.getUser().equipState = false;
+                if (Player.instance.getUser().isOre)
+                    QuestData.questRefine += 1;
+                else
+                    QuestData.questProduction += 1;
                 break;
             }
             //타임오버
