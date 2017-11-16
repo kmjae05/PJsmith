@@ -5,57 +5,49 @@
 			"type": "login",
 			"amount": 1,
 			"alertText": "로그인",
-			"achv_reward_name": "gold",
-			"achv_reward_quantity": 500
+			"reward_name": "gold",
+			"reward_quantity": 500
 			
 		},
 		{
 			"no": 1,
 			"type": "hunting",
 			"amount": 5,
-			"alertText": "크리티컬 공격",
-			"achv_reward_name": "cash",
-			"achv_reward_quantity": 1000
+			"alertText": "사냥",
+			"reward_name": "cash",
+			"reward_quantity": 1000
 		},
 		{
 			"no": 2,
-			"type": "gold",
+			"type": "refine",
 			"amount": 3,
-			"alertText": "부자가 됐다",
-			"achv_reward_name": "돌",
-			"achv_reward_quantity": 2000
+			"alertText": "제련",
+			"reward_name": "돌",
+			"reward_quantity": 2000
 		},
 		{
 			"no": 3,
-			"type": "cash",
+			"type": "reinforcement",
 			"amount": 1,
-			"alertText": "보석보석보석",
-			"achv_reward_name": "cash",
-			"achv_reward_quantity": 20
+			"alertText": "강화",
+			"reward_name": "cash",
+			"reward_quantity": 20
 		},
 		{
 			"no": 4,
-			"type": "level",
+			"type": "production",
 			"amount": 2,
-			"alertText": "레벨 업",
-			"achv_reward_name": "cash",
-			"achv_reward_quantity": 50
+			"alertText": "제작",
+			"reward_name": "cash",
+			"reward_quantity": 50
 		},
 		{
 			"no": 5,
-			"type": "ore",
+			"type": "plunder",
 			"amount": 1,
-			"alertText": "광석 격파",
-			"achv_reward_name": "cash",
-			"achv_reward_quantity": 3
-		},
-		{
-			"no": 6
-			"type": "ore",
-			"amount": 1,
-			"alertText": "광석 격파",
-			"achv_reward_name": "cash",
-			"achv_reward_quantity": 3
+			"alertText": "약탈",
+			"reward_name": "cash",
+			"reward_quantity": 30
 		}
 		
 	]

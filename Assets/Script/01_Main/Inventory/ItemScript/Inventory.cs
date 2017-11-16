@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 //아이템 생성자, 중복아이템의 경우 카운트
 public class Inventory : MonoBehaviour
 {
-    public GameObject InventorySlot;
+    public GameObject InventorySlot;        //복사할 아이템 객체
     private GameObject InventoryItem;
     private SellManager sellManager;
 
