@@ -71,10 +71,10 @@ public class QuestData : MonoBehaviour {
             WeeklyQuestList.Add(new Quest(
                             (int)AchvData["Quest"][i]["no"],
                             AchvData["Quest"][i]["type"].ToString(),
-                            (int)AchvData["Quest"][i]["amount"]*10,
+                            (int)AchvData["Quest"][i]["amount"]*5,
                             AchvData["Quest"][i]["alertText"].ToString(),
                             AchvData["Quest"][i]["reward_name"].ToString(),
-                            (int)AchvData["Quest"][i]["reward_quantity"]*10
+                            (int)AchvData["Quest"][i]["reward_quantity"]*5
                             ));
         }
         #endregion

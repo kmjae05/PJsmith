@@ -321,6 +321,7 @@ public class MercenaryManager : MonoBehaviour {
             {
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
+                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(false);
             }
             //완료된 상태 stage state = false, stage complete =  true
             if (!stageInfo.state && stageInfo.complete)
@@ -328,6 +329,7 @@ public class MercenaryManager : MonoBehaviour {
                 //Debug.Log("용병 선택 " + merTemp.getContName() + " " + merTemp.getStageNum());
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
+                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
             }
 
         }

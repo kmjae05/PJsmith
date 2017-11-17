@@ -162,14 +162,16 @@ public class QuestManager : MonoBehaviour {
             //완료했을 경우
             if (amount >= questList[i].amount && !questList[i].rewardFlag && !questList[i].completeFlag)
             {
-                Debug.Log(i);
                 questList[i].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(questList[i].alertText + " 퀘스트를 완료했습니다.");
-
+            }
+            if (questList[i].completeFlag)
+            {
                 questObj[i].transform.Find("RewardButtonImage").gameObject.SetActive(true);
                 questObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
-                questObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+                questObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+                {
                     getReward(num);
                 });
             }
@@ -251,10 +253,11 @@ public class QuestManager : MonoBehaviour {
             //완료했을 경우
             if (amount >= weeklyQuestList[i].amount && !weeklyQuestList[i].rewardFlag && !weeklyQuestList[i].completeFlag)
             {
-                Debug.Log(i);
                 weeklyQuestList[i].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(weeklyQuestList[i].alertText + " 주간 퀘스트를 완료했습니다.");
-
+            }
+            if (weeklyQuestList[i].completeFlag)
+            {
                 questWeeklyObj[i].transform.Find("RewardButtonImage").gameObject.SetActive(true);
                 questWeeklyObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = i;
@@ -334,8 +337,8 @@ public class QuestManager : MonoBehaviour {
             //느낌표
             if (questList[index].completeFlag && !questList[index].rewardFlag)
             {
-                GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
-                GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(true);
+                GameObject.Find("MenuButton").transform.Find("BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("MenuButton").transform.Find("BrazierButton/NewIcon").gameObject.SetActive(true);
             }
                 
 
@@ -410,8 +413,8 @@ public class QuestManager : MonoBehaviour {
             //느낌표
             if (weeklyQuestList[index].completeFlag && !weeklyQuestList[index].rewardFlag)
             {
-                GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
-                GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(true);
+                GameObject.Find("MenuButton").transform.Find("BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("MenuButton").transform.Find("BrazierButton/NewIcon").gameObject.SetActive(true);
             }
             yield return null;
         }
@@ -441,8 +444,8 @@ public class QuestManager : MonoBehaviour {
                 ThingsData.instance.getInventoryThingsList().Find(x => x.name == questList[num].reward_name).recent = true;
             }
         }
-        GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
-        GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(false);
+        GameObject.Find("MenuButton").transform.Find("BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
+        GameObject.Find("MenuButton").transform.Find("BrazierButton/NewIcon").gameObject.SetActive(false);
 
         questObj[num].transform.Find("CompleteImage").gameObject.SetActive(true);
         questObj[num].transform.SetAsLastSibling(); //마지막 순서로 보내기
@@ -471,8 +474,8 @@ public class QuestManager : MonoBehaviour {
             }
         }
 
-        GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
-        GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(false);
+        GameObject.Find("MenuButton").transform.Find("BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
+        GameObject.Find("MenuButton").transform.Find("BrazierButton/NewIcon").gameObject.SetActive(false);
 
         questWeeklyObj[num].transform.Find("CompleteImage").gameObject.SetActive(true);
         questWeeklyObj[num].transform.SetAsLastSibling(); //마지막 순서로 보내기

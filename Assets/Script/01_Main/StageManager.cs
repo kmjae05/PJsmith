@@ -228,6 +228,17 @@ public class StageManager : MonoBehaviour
             }
         }
 
+        //사냥 중인 용병 비활성화 처리
+        for (int i = 0; i < stageInfoList.Count; i++)
+        {
+            if (stageInfoList[i].mercenaryName != null)
+            {
+                GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + stageInfoList[i].mercenaryName + "Selection").GetComponent<Button>().interactable = false;
+                Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + stageInfoList[i].mercenaryName + "Selection/Image").GetComponent<Image>().color;
+                GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + stageInfoList[i].mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.5f);
+            }
+        }
+
     }
 
 
@@ -352,10 +363,6 @@ public class StageManager : MonoBehaviour
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text
                         = (int)(GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
 
-
-                    //GameObject.Find(stageName + "Button").transform.Find("State/Text").gameObject.GetComponent<Text>().text
-                    //    = ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
-
                     //획득 효과
                     if (stageInfoListtmp[i].getRecentItemFlag)
                     {
@@ -381,6 +388,8 @@ public class StageManager : MonoBehaviour
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(false);
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
                     GameObject.Find(stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
+                    if(stageStatePopup.activeInHierarchy)
+                        imdComPopup.SetActive(false);
                 }
                 //리젠
                 stageInfoListtmp = stageInfoList.FindAll(x => x.regen == true);
@@ -561,6 +570,7 @@ public class StageManager : MonoBehaviour
                 GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
                 GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
                 stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
+                imdComPopup.SetActive(false);
             }
             else
             {
@@ -925,6 +935,7 @@ public class StageManager : MonoBehaviour
         MonsterObjList[result.getStageNum() - 1] = Instantiate(MonsterObj[num].gameObject);
         MonsterObjList[result.getStageNum() - 1].transform.SetParent(GameObject.Find("01_3D").transform.Find("Monster").gameObject.transform);
 
+        spotButton.transform.Find("NameImage/NameText").GetComponent<Text>().text = result.type + " " + result.typeNum.ToString();
 
         //스테이지 변경된 정보 저장
         stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
