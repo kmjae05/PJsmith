@@ -202,10 +202,11 @@ public class EquipChangeManager : MonoBehaviour
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == invenThings.name);
         Equipment curequip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
 
+        for (int i = 0; i < changeInfoBoxAbilityTextGroup.transform.childCount; i++)
+            changeInfoBoxAbilityTextGroup.transform.GetChild(i).gameObject.SetActive(false);
+
         for (int i = 0; i < changeInfoBoxAdditionGroup.transform.childCount; i++)
-        {
             changeInfoBoxAdditionGroup.transform.GetChild(i).gameObject.SetActive(false);
-        }
 
         if (invenThings.stat.dps > 0)
         {
@@ -399,8 +400,11 @@ public class EquipChangeManager : MonoBehaviour
 
         //선택한 장비 착용상태, 세트번호, 용병 이름 부여.
         curInventoryThings = invenThings;
+
+        Debug.Log(curInventoryThings.name);
+
         //무기
-        if(curInventoryThings.type == "Weapon")
+        if (curInventoryThings.type == "Weapon")
         {
             if(profileManager.getCurChr() == Player.instance.getUser().Name)
             {
@@ -435,7 +439,7 @@ public class EquipChangeManager : MonoBehaviour
         //갑옷
         if (curInventoryThings.type == "Armor")
         {
-            if (profileManager.getCurChr() == "SmithSelect")
+            if (profileManager.getCurChr() == Player.instance.getUser().Name)
             {
                 Player.instance.getUser().equipArmor[beforeThings.equipSetNum - 1] = curInventoryThings;
                 curInventoryThings.equipChrName = Player.instance.getUser().Name;
@@ -467,7 +471,7 @@ public class EquipChangeManager : MonoBehaviour
         //바지
         if (curInventoryThings.type == "Pants")
         {
-            if (profileManager.getCurChr() == "SmithSelect")
+            if (profileManager.getCurChr() == Player.instance.getUser().Name)
             {
                 Player.instance.getUser().equipPants[beforeThings.equipSetNum - 1] = curInventoryThings;
                 curInventoryThings.equipChrName = Player.instance.getUser().Name;
@@ -499,8 +503,9 @@ public class EquipChangeManager : MonoBehaviour
         //헬멧
         if (curInventoryThings.type == "Helmet")
         {
-             if (profileManager.getCurChr() == "SmithSelect")
-                {
+             if (profileManager.getCurChr() == Player.instance.getUser().Name)
+             {
+                Debug.Log(curInventoryThings.name);
                 Player.instance.getUser().equipHelmet[beforeThings.equipSetNum - 1] = curInventoryThings;
                 curInventoryThings.equipChrName = Player.instance.getUser().Name;
             }
@@ -531,9 +536,9 @@ public class EquipChangeManager : MonoBehaviour
         //장갑
         if (curInventoryThings.type == "Gloves")
         {
-            if (profileManager.getCurChr() == "SmithSelect")
+            if (profileManager.getCurChr() == Player.instance.getUser().Name)
             {
-                Player.instance.getUser().equipGloves[beforeThings.equipSetNum - 1] =curInventoryThings;
+                Player.instance.getUser().equipGloves[beforeThings.equipSetNum - 1] = curInventoryThings;
                 curInventoryThings.equipChrName = Player.instance.getUser().Name;
             }
             else
@@ -563,7 +568,7 @@ public class EquipChangeManager : MonoBehaviour
         //부츠
         if (curInventoryThings.type == "Boots")
         {
-            if (profileManager.getCurChr() == "SmithSelect")
+            if (profileManager.getCurChr() == Player.instance.getUser().Name)
             {
                 Player.instance.getUser().equipBoots[beforeThings.equipSetNum - 1] =curInventoryThings;
                 curInventoryThings.equipChrName = Player.instance.getUser().Name;
@@ -593,11 +598,13 @@ public class EquipChangeManager : MonoBehaviour
             });
         }
 
-
+        Debug.Log(beforeThings.name);
+        Debug.Log(beforeThings.equipChrName);
+        Debug.Log(curInventoryThings.name);
         //기존 장비 세트 번호, 착용 유무, 용병 이름 저장. 바꿔줌.
         beforeThings.equip = false;
         beforeThings.equipChrName = null;
-        beforeThings.equipSetNum = 0;
+        beforeThings.equipSetNum = -1;
 
         curItemBoxGradeFrame.color = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == curInventoryThings.name).grade);
         curItemBoxIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == curInventoryThings.name).icon);

@@ -84,7 +84,7 @@ public class Player : MonoBehaviour {
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
 
-
+        ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "여신의 투구").type, "여신의 투구", 1));
     }
 
 

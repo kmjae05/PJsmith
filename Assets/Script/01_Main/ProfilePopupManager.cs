@@ -91,7 +91,6 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("ChrImage").GetComponent<Image>().sprite = Resources.Load<Sprite>("Chr/smith");
             //장비 찾기
             setEquipment(Player.instance.getUser().Name, curSetNum);
-
             //장비 이미지, 텍스트 변경
             GameObject.Find("EquipHelmet/Image").GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == equipHelmet.name).icon);
             GameObject.Find("EquipHelmet/Text").GetComponent<Text>().text = Player.instance.getUser().equipHelmet[curSetNum - 1].name;
@@ -282,6 +281,9 @@ public class ProfilePopupManager : MonoBehaviour {
         equipGloves = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Gloves");
         equipPants = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Pants");
         equipBoots = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Boots");
+
+        Debug.Log(ThingsData.instance.getInventoryThingsList().FindAll(x => x.equipChrName == chrName).Count);
+        
     }
 
 
