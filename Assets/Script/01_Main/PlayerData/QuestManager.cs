@@ -7,6 +7,8 @@ public class QuestManager : MonoBehaviour {
 
     private GameObject QuestPopup;
 
+    private Text stateText;
+
     private GameObject scroll;
 
     private GameObject panel1;
@@ -30,11 +32,15 @@ public class QuestManager : MonoBehaviour {
     private GameObject questBoxCompleteImage;       //완료 이미지
 
     private List<GameObject> questObj;
+    private List<GameObject> questWeeklyObj;
     private List<Quest> questList;
-    
+    private List<Quest> weeklyQuestList;
+
     private void Start()
     {
         QuestPopup = GameObject.Find("Menu").transform.Find("QuestPopup").gameObject;
+
+        stateText = QuestPopup.transform.Find("UIPanel/StateBox/StateText").gameObject.GetComponent<Text>();
 
         scroll = QuestPopup.transform.Find("UIPanel/Scroll").gameObject;
         panel1 = scroll.transform.Find("Panel_1").gameObject;
@@ -58,7 +64,9 @@ public class QuestManager : MonoBehaviour {
         questBoxCompleteImage = questBox.transform.Find("CompleteImage").gameObject;
 
         questObj = new List<GameObject>();
+        questWeeklyObj = new List<GameObject>();
         questList = QuestData.instance.getQuestList();
+        weeklyQuestList = QuestData.instance.getWeeklyQuestList();
 
         scroll.GetComponent<ScrollRect>().content = panel1.GetComponent<RectTransform>();
 
@@ -67,7 +75,7 @@ public class QuestManager : MonoBehaviour {
         });
 
         
-
+        //일일 퀘스트 목록
         for(int i = 0; i < questList.Count; i++)
         {
             if (questList[i].reward_name == "gold" || questList[i].reward_name == "cash")
@@ -165,22 +173,102 @@ public class QuestManager : MonoBehaviour {
                     getReward(num);
                 });
             }
-
-
-
-            StartCoroutine(UpdateData(i));      //퀘스트 내용 갱신
+            StartCoroutine(UpdateData(i));      //일일 퀘스트 내용 갱신
         }
 
-       
+
+        //주간 퀘스트 목록
+        for (int i = 0; i < weeklyQuestList.Count; i++)
+        {
+            if (weeklyQuestList[i].reward_name == "gold" || weeklyQuestList[i].reward_name == "cash")
+            {
+                questBoxFrame.color = new Color(1, 1, 1);
+                questBoxRewardFrame.color = new Color(1, 1, 1);
+                questBoxRewardIcon.sprite = Resources.Load<Sprite>("Icon/" + weeklyQuestList[i].reward_name);
+                questBoxRewardButtonFrame.color = new Color(1, 1, 1);
+                questBoxRewardButtonIcon.sprite = Resources.Load<Sprite>("Icon/" + weeklyQuestList[i].reward_name);
+            }
+            else
+            {
+                questBoxFrame.color = new Color(1, 1, 1);
+                Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == weeklyQuestList[i].reward_name).grade);
+                questBoxRewardFrame.color = col;
+                questBoxRewardIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == weeklyQuestList[i].reward_name).icon);
+                questBoxRewardButtonFrame.color = col;
+                questBoxRewardButtonIcon.sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == weeklyQuestList[i].reward_name).icon);
+            }
+            //questBoxIcon
+            questBoxTitle.text = weeklyQuestList[i].alertText;
+
+            int amount = 0;
+            switch (weeklyQuestList[i].type)
+            {
+                case "hunting":
+                    questBoxComments.text = "몬스터 " + weeklyQuestList[i].amount + "마리 처치하기";
+                    amount = QuestData.questWeeklyHunting;
+                    questBoxIcon.sprite = Resources.Load<Sprite>("Icon/hunting_icon");
+                    break;
+                case "refine":
+                    questBoxComments.text = "제련 " + weeklyQuestList[i].amount + "회 하기";
+                    amount = QuestData.questRefine;
+                    questBoxIcon.sprite = Resources.Load<Sprite>("Hammer/hm_t_06");
+                    break;
+                case "reinforcement":
+                    questBoxComments.text = "강화 " + weeklyQuestList[i].amount + "회 하기";
+                    amount = QuestData.questReinforcement;
+                    break;
+                case "production":
+                    questBoxComments.text = "제작 " + weeklyQuestList[i].amount + "회 하기";
+                    amount = QuestData.questProduction;
+                    break;
+                case "plunder":
+                    questBoxComments.text = "약탈 " + weeklyQuestList[i].amount + "회 하기";
+                    amount = QuestData.questPlunder;
+                    questBoxIcon.sprite = Resources.Load<Sprite>("Icon/plunder_icon");
+                    break;
+            }
+            questBoxSlider.maxValue = weeklyQuestList[i].amount;
+            questBoxSlider.value = amount;
+            questBoxSliderText.text = amount + "/" + weeklyQuestList[i].amount;
+            if (amount > weeklyQuestList[i].amount) questBoxSliderText.text = weeklyQuestList[i].amount + "/" + weeklyQuestList[i].amount;
+            questBoxRewardText.text = "x" + weeklyQuestList[i].reward_quantity;
+            questBoxRewardButtonText.text = "x" + weeklyQuestList[i].reward_quantity;
 
 
+            questWeeklyObj.Add(Instantiate(questBox));
+            questWeeklyObj[i].SetActive(true);
+            questWeeklyObj[i].transform.SetParent(panel2.transform, false);
 
-    }
 
+            //보상을 받은 경우
+            if (weeklyQuestList[i].rewardFlag)
+            {
+                questWeeklyObj[i].transform.Find("CompleteImage").gameObject.SetActive(true);
+                questWeeklyObj[i].transform.SetAsLastSibling();
+            }
+            else questWeeklyObj[i].transform.Find("CompleteImage").gameObject.SetActive(false);
 
+            //완료했을 경우
+            if (amount >= weeklyQuestList[i].amount && !weeklyQuestList[i].rewardFlag && !weeklyQuestList[i].completeFlag)
+            {
+                Debug.Log(i);
+                weeklyQuestList[i].completeFlag = true;
+                GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(weeklyQuestList[i].alertText + " 주간 퀘스트를 완료했습니다.");
+
+                questWeeklyObj[i].transform.Find("RewardButtonImage").gameObject.SetActive(true);
+                questWeeklyObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                int num = i;
+                questWeeklyObj[i].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+                    getReward(num);
+                });
+            }
+            StartCoroutine(UpdateWeeklyData(i));      //일일 퀘스트 내용 갱신
+        }
+    }//주간
+
+    //일일 퀘스트
     private IEnumerator UpdateData(int index)
     {
-
         while (true)
         {
             int amount = 0;
@@ -235,26 +323,164 @@ public class QuestManager : MonoBehaviour {
                     getReward(num);
                 });
             }
+
+            //state 완료 현황
+            if (panel1.activeInHierarchy)
+            {
+                int compl = questList.FindAll(x => x.rewardFlag == true).Count;
+                stateText.text = compl + " / " + questList.Count;
+            }
+
+            //느낌표
+            if (questList[index].completeFlag && !questList[index].rewardFlag)
+            {
+                GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(true);
+            }
+                
+
             yield return null;
         }
     }
 
 
-    private void getReward(int num)
+    //주간 퀘스트
+    private IEnumerator UpdateWeeklyData(int index)
     {
-        questList[num].rewardFlag = true;
-        questObj[num].transform.Find("CompleteImage").gameObject.SetActive(true);
+        while (true)
+        {
+            int amount = 0;
+            switch (weeklyQuestList[index].type)
+            {
+                case "login":
+                    amount = QuestData.questLogin;
+                    break;
+                case "hunting":
+                    amount = QuestData.questWeeklyHunting;
+                    break;
+                case "refine":
+                    amount = QuestData.questRefine;
+                    break;
+                case "reinforcement":
+                    amount = QuestData.questReinforcement;
+                    break;
+                case "production":
+                    amount = QuestData.questProduction;
+                    break;
+                case "plunder":
+                    amount = QuestData.questPlunder;
+                    break;
+            }
+            questWeeklyObj[index].transform.Find("Slider").gameObject.GetComponent<Slider>().maxValue = weeklyQuestList[index].amount;
+            questWeeklyObj[index].transform.Find("Slider").gameObject.GetComponent<Slider>().value = amount;
+            questWeeklyObj[index].transform.Find("Slider/SliderText").gameObject.GetComponent<Text>().text = amount + "/" + weeklyQuestList[index].amount;
+            if (amount > weeklyQuestList[index].amount)
+                questWeeklyObj[index].transform.Find("Slider/SliderText").gameObject.GetComponent<Text>().text
+                    = weeklyQuestList[index].amount + "/" + weeklyQuestList[index].amount;
 
-        questObj[num].transform.SetAsLastSibling(); //마지막 순서로 보내기
+            //보상을 받은 경우
+            if (weeklyQuestList[index].rewardFlag)
+            {
+                questWeeklyObj[index].transform.Find("CompleteImage").gameObject.SetActive(true);
+                questWeeklyObj[index].transform.SetAsLastSibling();
+            }
+            else questWeeklyObj[index].transform.Find("CompleteImage").gameObject.SetActive(false);
 
+            //완료했을 경우
+            if (amount >= weeklyQuestList[index].amount && !weeklyQuestList[index].rewardFlag && !weeklyQuestList[index].completeFlag)
+            {
+                Debug.Log(index);
+                //알림
+                weeklyQuestList[index].completeFlag = true;
+                GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(weeklyQuestList[index].alertText + " 주간 퀘스트를 완료했습니다.");
+
+                questWeeklyObj[index].transform.Find("RewardButtonImage").gameObject.SetActive(true);
+                questWeeklyObj[index].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                int num = index;
+                questWeeklyObj[index].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+                    getWeeklyReward(num);
+                });
+            }
+            if (panel2.activeInHierarchy)
+            {
+                int compl = weeklyQuestList.FindAll(x => x.rewardFlag == true).Count;
+                stateText.text = compl + " / " + weeklyQuestList.Count;
+            }
+
+            //느낌표
+            if (weeklyQuestList[index].completeFlag && !weeklyQuestList[index].rewardFlag)
+            {
+                GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(true);
+            }
+            yield return null;
+        }
     }
 
 
 
+    private void getReward(int num)
+    {
+        questList[num].rewardFlag = true;
+        if(questList[num].reward_name == "gold" || questList[num].reward_name == "cash")
+        {
+            Player.instance.GetMoney(questList[num].reward_name, questList[num].reward_quantity);
+        }
+        else
+        {
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == questList[num].reward_name) != null)
+            {
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == questList[num].reward_name).possession
+                    += questList[num].reward_quantity;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == questList[num].reward_name).recent = true;
+            }
+            else
+            {
+                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                    x => x.name == questList[num].reward_name).type, questList[num].reward_name, questList[num].reward_quantity));
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == questList[num].reward_name).recent = true;
+            }
+        }
+        GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
+        GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(false);
+
+        questObj[num].transform.Find("CompleteImage").gameObject.SetActive(true);
+        questObj[num].transform.SetAsLastSibling(); //마지막 순서로 보내기
+    }
+
+    private void getWeeklyReward(int num)
+    {
+        weeklyQuestList[num].rewardFlag = true;
+        if (weeklyQuestList[num].reward_name == "gold" || weeklyQuestList[num].reward_name == "cash")
+        {
+            Player.instance.GetMoney(weeklyQuestList[num].reward_name, weeklyQuestList[num].reward_quantity);
+        }
+        else
+        {
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == weeklyQuestList[num].reward_name) != null)
+            {
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == weeklyQuestList[num].reward_name).possession
+                    += weeklyQuestList[num].reward_quantity;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == weeklyQuestList[num].reward_name).recent = true;
+            }
+            else
+            {
+                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(
+                    x => x.name == weeklyQuestList[num].reward_name).type, weeklyQuestList[num].reward_name, weeklyQuestList[num].reward_quantity));
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == weeklyQuestList[num].reward_name).recent = true;
+            }
+        }
+
+        GameObject.Find("BrazierButton").transform.Find("BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(false);
+        GameObject.Find("BrazierButton").transform.Find("NewIcon").gameObject.SetActive(false);
+
+        questWeeklyObj[num].transform.Find("CompleteImage").gameObject.SetActive(true);
+        questWeeklyObj[num].transform.SetAsLastSibling(); //마지막 순서로 보내기
+    }
+
 
     public void SwitchScrollPanel(int i)
     {
-
         if (i == 1)
         {
             scroll.GetComponent<ScrollRect>().content = panel1.GetComponent<RectTransform>();

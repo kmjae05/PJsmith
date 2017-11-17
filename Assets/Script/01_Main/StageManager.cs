@@ -730,12 +730,18 @@ public class StageManager : MonoBehaviour
         StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
         result.state = false;
 
+        //퀘스트 카운트
+        if(result.type == QuestData.instance.getQuestList().Find(x=>x.type == "hunting").target)
+            QuestData.questHunting += result.typeNum;
+        else if(QuestData.instance.getQuestList().Find(x => x.type == "hunting").target == "몬스터 아무거나")
+            QuestData.questHunting += result.typeNum;
+
+        QuestData.questWeeklyHunting += result.typeNum;
+
         //남은 시간 계산해서 아이템 획득
-        //Debug.Log(result.time);
         int num = ((int)result.time / 10) + 1;
         while (num > 0)
         {
-            //Debug.Log(num);
             stageData.getItem(result);
             num--;
         }

@@ -13,10 +13,12 @@ public class QuestData : MonoBehaviour {
     private JsonData AchvData;
     private WWW reader;
     private static List<Quest> QuestList;
+    private static List<Quest> WeeklyQuestList;
 
     //퀘스트 카운트
     static public int questLogin = 1;
     static public int questHunting = 0;
+    static public int questWeeklyHunting = 0;
     static public int questRefine = 0;
     static public int questReinforcement = 0;
     static public int questProduction = 0;
@@ -37,6 +39,7 @@ public class QuestData : MonoBehaviour {
     void Start()
     {
         QuestList = new List<Quest>();
+        WeeklyQuestList = new List<Quest>();
 
         #region 업적관련 Json데이터 읽어온 후 List 저장
         if (Application.platform == RuntimePlatform.Android)
@@ -63,6 +66,17 @@ public class QuestData : MonoBehaviour {
                             (int)AchvData["Quest"][i]["reward_quantity"]
                             ));
         }
+        for (int i = 1; i < AchvData["Quest"].Count; i++)
+        {
+            WeeklyQuestList.Add(new Quest(
+                            (int)AchvData["Quest"][i]["no"],
+                            AchvData["Quest"][i]["type"].ToString(),
+                            (int)AchvData["Quest"][i]["amount"]*10,
+                            AchvData["Quest"][i]["alertText"].ToString(),
+                            AchvData["Quest"][i]["reward_name"].ToString(),
+                            (int)AchvData["Quest"][i]["reward_quantity"]*10
+                            ));
+        }
         #endregion
 
 
@@ -71,7 +85,7 @@ public class QuestData : MonoBehaviour {
     }
 
     public List<Quest> getQuestList() { return QuestList; }
-
+    public List<Quest> getWeeklyQuestList() { return WeeklyQuestList; }
 
 }
 

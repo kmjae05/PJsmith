@@ -214,7 +214,6 @@ public class StageData : MonoBehaviour
             {
                 if (stageInfoListtmp[i].time <= stageInfoListtmp[i].getItemTime)
                 {
-                    //Debug.Log(stageInfoListtmp[i].time);
                     stageInfoListtmp[i].getItemTimeFlag = false;
 
                     //아이템 획득
@@ -225,10 +224,7 @@ public class StageData : MonoBehaviour
                     if (stageInfoListtmp[i].time <= 0)
                     {
                         stageInfoListtmp[i].getItemTimeFlag = false;
-                        //stageInfoListtmp[i].getRecentItemFlag = false;
                     }
-                    //for (int k=0;k<4;k++)
-                    //    Debug.Log(stageInfoListtmp[i].getItem[k]);
                 }
             }
             else
@@ -247,9 +243,17 @@ public class StageData : MonoBehaviour
             stageInfoListtmp[i].time = stageInfoListtmp[i].time - Time.deltaTime;
             if (stageInfoListtmp[i].time <= 0 && !stageInfoListtmp[i].getItemTimeFlag)
             {
+                Debug.Log("t");
                 stageInfoListtmp[i].time = 0;
                 stageInfoListtmp[i].state = false;
                 stageInfoListtmp[i].complete = true;
+                //퀘스트 카운트
+                if (stageInfoListtmp[i].type == QuestData.instance.getQuestList().Find(x => x.type == "hunting").target)
+                    QuestData.questHunting += stageInfoListtmp[i].typeNum;
+                else if (QuestData.instance.getQuestList().Find(x => x.type == "hunting").target == "몬스터 아무거나")
+                    QuestData.questHunting += stageInfoListtmp[i].typeNum;
+
+                QuestData.questWeeklyHunting += stageInfoListtmp[i].typeNum;
             }
         }
         //리젠 시간
