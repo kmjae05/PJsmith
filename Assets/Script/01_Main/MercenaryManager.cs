@@ -206,13 +206,13 @@ public class MercenaryManager : MonoBehaviour {
         GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
 
         Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[profilePopupManager.getCurSetNum() - 1];
-        GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
-        GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString("N1");
-        GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
-        GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
-        GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
-        GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
+        GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.dps)).ToString();
+        GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.strPower).ToString();
+        GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.attackSpeed.ToString("N1"));
+        GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.focus).ToString();
+        GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.critical).ToString();
+        GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.defPower).ToString();
+        GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.evaRate).ToString();
         GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
         //GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = stat.collectSpeed.ToString();
         //GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = stat.collectAmount.ToString();

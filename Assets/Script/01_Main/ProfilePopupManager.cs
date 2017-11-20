@@ -252,13 +252,13 @@ public class ProfilePopupManager : MonoBehaviour {
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.instance.getUser().Name;
 
             Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[curSetNum - 1];
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString("N1");
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.dps)).ToString();
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.strPower)).ToString(); //equi[setnum].strPower
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (stat.attackSpeed).ToString("N1"));
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.focus)).ToString();
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.critical)).ToString();
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.defPower)).ToString();
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", ((int)stat.evaRate)).ToString();
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
             //GameObject.Find("CollectSpeed/Text").GetComponent<Text>().text = ((int)stat.collectSpeed).ToString();
             //GameObject.Find("CollectAmount/Text").GetComponent<Text>().text = ((int)stat.collectAmount).ToString();
@@ -280,10 +280,7 @@ public class ProfilePopupManager : MonoBehaviour {
         equipArmor = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Armor");
         equipGloves = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Gloves");
         equipPants = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Pants");
-        equipBoots = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Boots");
-
-        Debug.Log(ThingsData.instance.getInventoryThingsList().FindAll(x => x.equipChrName == chrName).Count);
-        
+        equipBoots = ThingsData.instance.getInventoryThingsList().Find(x => x.equipChrName == chrName && x.equipSetNum == setNum && x.type == "Boots");        
     }
 
 

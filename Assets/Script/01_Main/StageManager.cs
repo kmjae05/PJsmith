@@ -1069,24 +1069,24 @@ public class StageManager : MonoBehaviour
             plunderPlayerBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = Player.instance.getUser().level.ToString();
 
             plunderPlayerBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().dps)).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().strPower).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = statData.getRepreSetStat().attackSpeed.ToString("N1");
-            plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().focus).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().critical).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().defPower).ToString();
-            plunderPlayerBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = ((int)statData.getRepreSetStat().evaRate).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().strPower)).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", statData.getRepreSetStat().attackSpeed.ToString("N1"));
+            plunderPlayerBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().focus)).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().critical)).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().defPower)).ToString();
+            plunderPlayerBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)statData.getRepreSetStat().evaRate)).ToString();
 
             //상대방 데이터 가져와서 갱신
             plunderEnemyBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = plunder.getName();
             plunderEnemyBox.transform.Find("TextGroup/LevelText").gameObject.GetComponent<Text>().text = plunder.level.ToString();
 
             plunderEnemyBox.transform.Find("TextGroup/DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.dps)).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.strPower).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = plunder.stat.attackSpeed.ToString("N1");
-            plunderEnemyBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.focus).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.critical).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.defPower).ToString();
-            plunderEnemyBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = ((int)plunder.stat.evaRate).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/StrPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.strPower)).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/AttackSpeedText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", plunder.stat.attackSpeed.ToString("N1"));
+            plunderEnemyBox.transform.Find("TextGroup/FocusText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.focus)).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/CriticalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.critical)).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/DefPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.defPower)).ToString();
+            plunderEnemyBox.transform.Find("TextGroup/EvaRateText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", ((int)plunder.stat.evaRate)).ToString();
 
             plunderPopup.transform.Find("UIPanel/ItemBox/ItemTitleText").gameObject.GetComponent<Text>().text = "획득 가능한 아이템";
             plunderPopup.transform.Find("UIPanel/PlunderButton").gameObject.SetActive(true);

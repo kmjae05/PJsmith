@@ -267,7 +267,13 @@ public class QuestManager : MonoBehaviour {
             }
             StartCoroutine(UpdateWeeklyData(i));      //일일 퀘스트 내용 갱신
         }
-    }//주간
+
+
+
+        StartCoroutine(TimeRemaining());
+
+
+    }
 
     //일일 퀘스트
     private IEnumerator UpdateData(int index)
@@ -495,5 +501,53 @@ public class QuestManager : MonoBehaviour {
             panel2.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -10);
         }
     }
+
+
+    IEnumerator TimeRemaining()
+    {
+        while (true)
+        {
+            System.DateTime nowTime = System.DateTime.Now;
+
+            if (panel1.activeInHierarchy)
+            {
+                QuestPopup.transform.Find("UIPanel/TimeBox/TimeText").gameObject.GetComponent<Text>().text
+                    = "남은 시간 : " + (23 - nowTime.Hour) + "시간 " + (59 - nowTime.Minute) + "분 " + (60 - nowTime.Second) + "초";
+            }
+            else if (panel2.activeInHierarchy)
+            {
+                int day = 0;
+                switch(nowTime.DayOfWeek)
+                {
+                    case System.DayOfWeek.Monday:
+                        day = 6;
+                        break;
+                    case System.DayOfWeek.Tuesday:
+                        day = 5;
+                        break;
+                    case System.DayOfWeek.Wednesday:
+                        day = 4;
+                        break;
+                    case System.DayOfWeek.Thursday:
+                        day = 3;
+                        break;
+                    case System.DayOfWeek.Friday:
+                        day = 2;
+                        break;
+                    case System.DayOfWeek.Saturday:
+                        day = 1;
+                        break;
+                    case System.DayOfWeek.Sunday:
+                        day = 0;
+                        break;
+                }
+
+                QuestPopup.transform.Find("UIPanel/TimeBox/TimeText").gameObject.GetComponent<Text>().text
+                    = "남은 시간 : " +day+"일 " + (23 - nowTime.Hour) + "시간 " + (59 - nowTime.Minute) + "분 " + (60 - nowTime.Second) + "초";
+            }
+            yield return null;
+        }
+    }
+
 
 }
