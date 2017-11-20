@@ -197,11 +197,11 @@ public class Inventory : MonoBehaviour
         //스크롤 위치 초기화
         Tap1Panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(Tap1Panel.GetComponent<RectTransform>().anchoredPosition.x, 0);
 
-        for (int i = 0; i < Tap1Slots.Count; i++)             Destroy(Tap1Slots[i]);
-        for (int i = 0; i < Tap2Slots.Count; i++)            Destroy(Tap2Slots[i]);
-        for (int i = 0; i < Tap3Slots.Count; i++)            Destroy(Tap3Slots[i]);
-        for (int i = 0; i < Tap4Slots.Count; i++)            Destroy(Tap4Slots[i]);
-        for (int i = 0; i < Tap5Slots.Count; i++)            Destroy(Tap5Slots[i]);
+        for (int i = 0; i < Tap1Slots.Count; i++) Destroy(Tap1Slots[i]);
+        for (int i = 0; i < Tap2Slots.Count; i++) Destroy(Tap2Slots[i]);
+        for (int i = 0; i < Tap3Slots.Count; i++) Destroy(Tap3Slots[i]);
+        for (int i = 0; i < Tap4Slots.Count; i++) Destroy(Tap4Slots[i]);
+        for (int i = 0; i < Tap5Slots.Count; i++) Destroy(Tap5Slots[i]);
         //for (int i = 0; i < Tap6Slots.Count; i++)            Destroy(Tap6Slots[i]);
 
         Tap1Items.Clear();
@@ -266,37 +266,53 @@ public class Inventory : MonoBehaviour
                 Tap1Slots[Tap1Slots.Count - 1].transform.Find("NewIcon").gameObject.SetActive(tempItemList1[i].recent);
 
 
-                //광석 팝업 
-                if (tempItemList1[i].type == "Ore")
+                //판매 아이템 창 열려있을 때
+                if (GameObject.Find("System").transform.Find("FestivalItem").gameObject.activeInHierarchy)
                 {
-                    int index = i;
+                    InventoryThings inven = tempItemList1[i];
+                    Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.RemoveAllListeners();
                     Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
                     {
-                        GameObject.Find("PlayerManager").GetComponent<OreSelect>().ClickInventory(tempItemList1[index]);
-                        GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
+                        GameObject.Find("InventoryScript").GetComponent<FestivalManager>().selectItem(inven);
                     });
+
+
                 }
-                //장비 팝업
-                else if (tempItemList1[i].type == "Helmet" || tempItemList1[i].type == "Armor" || tempItemList1[i].type == "Gloves" || tempItemList1[i].type == "Pants"
-                    || tempItemList1[i].type == "Weapon" || tempItemList1[i].type == "Boots")
+                else
                 {
-                    int index = i;
-                    Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+                    //기본 인벤토리 창 모드
+                    //광석 팝업 
+                    if (tempItemList1[i].type == "Ore")
                     {
-                        EquipInfoPopup(tempItemList1[index]);
-                        EquipItemInfoPopup.SetActive(true);
-                    });
-                }
-                //기타 아이템 팝업
-                else if (tempItemList1[i].type == "Others" || tempItemList1[i].type == "Material" || tempItemList1[i].type == "Book"
-                    || tempItemList1[i].type == "Bookpiece")
-                {
-                    int index = i;
-                    Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+                        int index = i;
+                        Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            GameObject.Find("PlayerManager").GetComponent<OreSelect>().ClickInventory(tempItemList1[index]);
+                            GameObject.Find("System").transform.Find("OreInfoPopup").gameObject.SetActive(true);
+                        });
+                    }
+                    //장비 팝업
+                    else if (tempItemList1[i].type == "Helmet" || tempItemList1[i].type == "Armor" || tempItemList1[i].type == "Gloves" || tempItemList1[i].type == "Pants"
+                        || tempItemList1[i].type == "Weapon" || tempItemList1[i].type == "Boots")
                     {
-                        OthersItemInfoPopup(tempItemList1[index]);
-                        ItemInfoPopup.SetActive(true);
-                    });
+                        int index = i;
+                        Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            EquipInfoPopup(tempItemList1[index]);
+                            EquipItemInfoPopup.SetActive(true);
+                        });
+                    }
+                    //기타 아이템 팝업
+                    else if (tempItemList1[i].type == "Others" || tempItemList1[i].type == "Material" || tempItemList1[i].type == "Book"
+                        || tempItemList1[i].type == "Bookpiece")
+                    {
+                        int index = i;
+                        Tap1Slots[Tap1Slots.Count - 1].transform.Find("Item").GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            OthersItemInfoPopup(tempItemList1[index]);
+                            ItemInfoPopup.SetActive(true);
+                        });
+                    }
                 }
             }
         }
