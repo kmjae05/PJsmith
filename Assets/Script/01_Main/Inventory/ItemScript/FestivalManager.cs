@@ -15,6 +15,14 @@ public class FestivalManager : MonoBehaviour {
 
     private GameObject festivalItemPopup;
 
+    private GameObject SystemPopup;
+    private Text Sys_TitleText;
+    private Text Sys_InfoText;
+    private Button Sys_YesButton;
+    private Button Sys_NoButton;
+    private Button Sys_OkButton;
+
+
     private List<ForSale> saleList;
     private List<GameObject> saleObj1;
 
@@ -35,16 +43,23 @@ public class FestivalManager : MonoBehaviour {
 
         festivalItemPopup = GameObject.Find("System").transform.Find("FestivalItem").gameObject;
 
+        SystemPopup = GameObject.Find("System").transform.Find("SystemPopup").gameObject;
+        Sys_TitleText = SystemPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>();
+        Sys_InfoText = SystemPopup.transform.Find("UIPanel/InfoText").gameObject.GetComponent<Text>();
+        Sys_YesButton = SystemPopup.transform.Find("UIPanel/YesButton").gameObject.GetComponent<Button>();
+        Sys_NoButton = SystemPopup.transform.Find("UIPanel/NoButton").gameObject.GetComponent<Button>();
+        Sys_OkButton = SystemPopup.transform.Find("UIPanel/OKButton").gameObject.GetComponent<Button>();
+
+
         saleObj1 = new List<GameObject>();
 
         for (int i = 0; i < saleList.Count; i++)
             saleObj1.Add(panel1.transform.Find("ItemBox (" + i + ")").gameObject);
 
-
         //상태 갱신
         updateState();
 
-
+        
         StartCoroutine(sliderUpdate());
 
 
@@ -67,7 +82,35 @@ public class FestivalManager : MonoBehaviour {
 
                 festivalItemPopup.transform.Find("UIBox/Inbox/Setting/Total/TotalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", amount * price);
             }
-            yield return null;
+            for (int i = 0; i < saleList.Count; i++)
+            {
+                if (saleList[i].state == "sellout")
+                {
+                    if (saleList[i].alrFlag)
+                    {
+                        saleList[i].alrFlag = false;
+                        GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(saleList[i].saleThings.name + " x" + saleList[i].possession + " 판매 완료");
+                        SystemPopup.SetActive(false);
+                        itemInfo.SetActive(false);
+                        saleObj1[i].transform.Find("Button/SelloutImage").gameObject.SetActive(true);
+
+                        //button 판매금액 회수
+                        int num = i;
+                        saleObj1[i].transform.Find("Button").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                        saleObj1[i].transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            saleObj1[num].transform.Find("Button/SelloutImage").gameObject.SetActive(false);
+
+                            Player.instance.GetMoney("gold", saleList[num].possession * saleList[num].unitPrice);
+
+                            saleList[num].state = "empty";
+                            updateState();
+                            
+                        });
+                    }
+                }
+            }
+                yield return null;
         }
     }
 
@@ -106,11 +149,9 @@ public class FestivalManager : MonoBehaviour {
                     festivalItemPopup.transform.Find("UIBox/Inbox/SelectText").gameObject.SetActive(true);
                     festivalItemPopup.SetActive(true);
                     //인벤토리 불러오기. blackback 없애기.
-                    GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
                     GameObject.Find("Menu").transform.Find("InventoryPopup").gameObject.SetActive(true);
+                    GameObject.Find("InventoryScript").GetComponent<Inventory>().ItemSlotCreate();
                     GameObject.Find("Menu").transform.Find("InventoryPopup/BlackBack").gameObject.SetActive(false);
-
-                    Debug.Log(curSelectNum);
                 });
             }
             //아이템 등록
@@ -134,22 +175,30 @@ public class FestivalManager : MonoBehaviour {
 
                     itemInfo.SetActive(true);
                     itemInfo.transform.Find("InfoBox/ItemNameText").gameObject.GetComponent<Text>().text = saleList[num].saleThings.name;
-                    itemInfo.transform.Find("InfoBox/AmountText").gameObject.GetComponent<Text>().text = string.Format("{0:#.##}", saleList[num].possession);
-                    itemInfo.transform.Find("InfoBox/PriceText").gameObject.GetComponent<Text>().text = string.Format("{0:#.##}", saleList[num].unitPrice);
-                    itemInfo.transform.Find("InfoBox/TotalText").gameObject.GetComponent<Text>().text = string.Format("{0:#.##}", saleList[num].possession * saleList[num].unitPrice);
+                    itemInfo.transform.Find("InfoBox/AmountText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", saleList[num].possession);
+                    itemInfo.transform.Find("InfoBox/PriceText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", saleList[num].unitPrice);
+                    itemInfo.transform.Find("InfoBox/TotalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", saleList[num].possession * saleList[num].unitPrice);
 
-                    
+                    int poss = 0;
                     //장비일 때.
                     if (saleList[num].saleThings.type == "Weapon" || saleList[num].saleThings.type == "Helmet" || saleList[num].saleThings.type == "Armor"
                         || saleList[num].saleThings.type == "Gloves" || saleList[num].saleThings.type == "Pants" || saleList[num].saleThings.type == "Boots")
                     {
-                        int poss = 0;
+                        
                         poss = ThingsData.instance.getInventoryThingsList().FindAll(x => x.name == saleList[num].saleThings.name).Count;
-                        itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = string.Format("{0:#.##}", poss);
+                        if (poss <= 0) itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = 0.ToString();
+                        else itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", poss);
                     }
                     else
-                    itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = string.Format("{0:#.##}", 
-                        ThingsData.instance.getInventoryThingsList().Find(x=>x.name == saleList[num].saleThings.name).possession);
+                    {
+                        if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name) == null)
+                            itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = 0.ToString();
+                        else
+                        {
+                            poss = ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name).possession;
+                            itemInfo.transform.Find("InfoBox/PossessionText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", poss);
+                        }
+                    }
                     
 
                     col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == saleList[num].saleThings.name).grade);
@@ -163,8 +212,44 @@ public class FestivalManager : MonoBehaviour {
                     //회수하기 버튼. system
                     itemInfo.transform.Find("CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(
                         () => {
+                            SystemPopup.SetActive(true);
+                            Sys_TitleText.GetComponent<Text>().text = "아이템 회수";
+                            Sys_InfoText.GetComponent<Text>().text = "판매를 중지하고 아이템을 회수하겠습니까?";
+                            Sys_YesButton.gameObject.SetActive(true);    
+                            Sys_NoButton.gameObject.SetActive(true);
+                            Sys_OkButton.gameObject.SetActive(false);
+                            Sys_YesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
+                            Sys_YesButton.GetComponent<Button>().onClick.AddListener(
+                               () => {
 
+                                   string type = ThingsData.instance.getThingsList().Find(x => x.name == saleList[num].saleThings.name).type;
+                                   //장비 구분
+                                   if (type == "Helmet" || type == "Armor" || type == "Gloves" || type == "Pants" || type == "Weapon" || type == "Boots")
+                                   {
+                                           ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x 
+                                               => x.name == saleList[num].saleThings.name).type, saleList[num].saleThings.name, 1));
+                                   }
+                                   //장비 외 아이템
+                                   else
+                                   {
+                                       if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name) != null)
+                                       {
+                                           ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name).possession += saleList[num].possession;
+                                           ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name).recent = true;
+                                       }
+                                       else
+                                       {
+                                           ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x 
+                                               => x.name == saleList[num].saleThings.name).type, saleList[num].saleThings.name, saleList[num].possession));
+                                       }
+                                   }
 
+                                   //
+                                   saleList[num].state = "empty";
+                                   saleList[num].alrFlag = false;
+                                   updateState();
+                                   itemInfo.SetActive(false);
+                               });
                         });
 
                 });
@@ -172,14 +257,19 @@ public class FestivalManager : MonoBehaviour {
             //아이템 팔림
             else if(saleList[i].state == "sellout")
             {
-
-
+                saleObj1[i].transform.Find("Button/SelloutImage").gameObject.SetActive(true);
 
                 //button 판매금액 회수
+                int num = i;
                 saleObj1[i].transform.Find("Button").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 saleObj1[i].transform.Find("Button").gameObject.GetComponent<Button>().onClick.AddListener(() =>
                 {
+                    saleObj1[num].transform.Find("Button/SelloutImage").gameObject.SetActive(false);
 
+                    Player.instance.GetMoney("gold", saleList[num].possession * saleList[num].unitPrice);
+
+                    saleList[num].state = "empty";
+                    updateState();
                 });
             }
 
@@ -257,7 +347,7 @@ public class FestivalManager : MonoBehaviour {
         saleList[curSelectNum].possession = amount;
         saleList[curSelectNum].unitPrice = price;
         saleList[curSelectNum].state = "sale";
-
+        saleList[curSelectNum].alrFlag = true;
         updateState();
 
         curInven = null;

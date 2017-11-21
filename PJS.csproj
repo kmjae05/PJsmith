@@ -234,7 +234,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\PlayerManager.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\PlayerStats.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\Quest.cs" />
-    <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\QuestManager.cs" />
+    <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\QuestManager1.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\QuestMilestone.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeEventListenerHelper.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\Cwrapper\RealTimeMultiplayerManager.cs" />
@@ -314,7 +314,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\PlatformConfiguration.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\PlayerManager.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\PlayerSelectUIResponse.cs" />
-    <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\QuestManager.cs" />
+    <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\QuestManager2.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\RealTimeEventListenerHelper.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\RealtimeManager.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Native\PInvoke\RealtimeRoomConfig.cs" />

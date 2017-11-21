@@ -164,6 +164,7 @@ public class QuestManager : MonoBehaviour {
             {
                 questList[i].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(questList[i].alertText + " 퀘스트를 완료했습니다.");
+                
             }
             if (questList[i].completeFlag)
             {
@@ -255,6 +256,7 @@ public class QuestManager : MonoBehaviour {
             {
                 weeklyQuestList[i].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(weeklyQuestList[i].alertText + " 주간 퀘스트를 완료했습니다.");
+                
             }
             if (weeklyQuestList[i].completeFlag)
             {
@@ -321,10 +323,11 @@ public class QuestManager : MonoBehaviour {
             if (amount >= questList[index].amount && !questList[index].rewardFlag && !questList[index].completeFlag)
             {
                 Debug.Log(index);
+
                 //알림
                 questList[index].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(questList[index].alertText + " 퀘스트를 완료했습니다.");
-
+                questObj[index].transform.SetAsFirstSibling();
                 questObj[index].transform.Find("RewardButtonImage").gameObject.SetActive(true);
                 questObj[index].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = index;
@@ -402,7 +405,7 @@ public class QuestManager : MonoBehaviour {
                 //알림
                 weeklyQuestList[index].completeFlag = true;
                 GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(weeklyQuestList[index].alertText + " 주간 퀘스트를 완료했습니다.");
-
+                questWeeklyObj[index].transform.SetAsFirstSibling();
                 questWeeklyObj[index].transform.Find("RewardButtonImage").gameObject.SetActive(true);
                 questWeeklyObj[index].transform.Find("RewardButtonImage/RewardButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 int num = index;
