@@ -47,6 +47,8 @@ public class ForSale
     public InventoryThings saleThings;
     public string state;            // empty, sale, sellout
 
+    public int possession;      //개수
+    public int unitPrice;       //개당 가격
 
     public ForSale()
     {

@@ -67,6 +67,11 @@ public class ThingsData : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        invenThings.Remove(invenThings.Find(x => x.possession == 0));
+    }
+
     //public Things FetchItemByID(int id)//, List<Item> ItamDatabase) //잘못된 id가 있는지 확인 -> 아이템 database 부분 수정 무기 탭에 따라 바뀌도록
     //{
     //    List<Things> database = new List<Things>();
