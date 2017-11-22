@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -49,11 +49,7 @@ public class StageData : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
-        if(Application.platform == RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android)
         {
             string mypath = Path.Combine(Application.streamingAssetsPath, "Plunder.json");
             reader = new WWW(mypath);
@@ -65,7 +61,7 @@ public class StageData : MonoBehaviour
             string tmp = File.ReadAllText(Application.dataPath + "/StreamingAssets/Plunder.json");
             PlunderData = JsonMapper.ToObject(tmp);
         }
-        for(int i = 0; i < PlunderData["Plunder"].Count; i++)
+        for (int i = 0; i < PlunderData["Plunder"].Count; i++)
         {
             plunderList.Add(new Plunder(PlunderData, i));
         }
@@ -102,7 +98,7 @@ public class StageData : MonoBehaviour
             int index = 0;
             while (true)
             {
-                random = Random.Range(1, 100 + 1);
+                random = UnityEngine.Random.Range(1, 100 + 1);
                 index = spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
                 //이미 위치한 스테이지 범위에 없게 배치
                 List<StageInfo> stif = stageInfoList.FindAll(x => x.spotName != null);
@@ -129,9 +125,9 @@ public class StageData : MonoBehaviour
             stin.spotName = spotList[index].getPosition().name;
 
             //몬스터 종류
-            random = Random.Range(1, 3 + 1);
+            random = UnityEngine.Random.Range(1, 3 + 1);
             stin.type = typeNumToString(random);
-            random = Random.Range(1, 4);
+            random = UnityEngine.Random.Range(1, 4);
             stin.typeNum = random;
             stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
 
@@ -142,7 +138,7 @@ public class StageData : MonoBehaviour
             //랜덤 위치에 약탈 버튼 생성
             while (true)
             {
-                random = Random.Range(1, 100 + 1);
+                random = UnityEngine.Random.Range(1, 100 + 1);
                 index = spotList.FindIndex(x => x.getPosition().name == "spot" + random.ToString());
                 //이미 위치한 스테이지 범위에 없게 배치
                 List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.spotName != null);
@@ -173,7 +169,7 @@ public class StageData : MonoBehaviour
             //랜덤으로 리스트에 ai 정보 넣기
             while (true)
             {
-                random = Random.Range(0, 40);
+                random = UnityEngine.Random.Range(0, 40);
                 //중복 방지
                 List<PlunderInfo> plif = plunderInfoList.FindAll(x => x.opponentName != null);  //이미 할당 된
                 if (plif != null)
@@ -196,6 +192,11 @@ public class StageData : MonoBehaviour
 
 
         }
+    }
+
+    private void Start()
+    {
+
 
         stageManager.setStageInfoList(stageInfoList);
         
@@ -331,7 +332,7 @@ public class StageData : MonoBehaviour
             {
                 //확률 체크
                 int prob = 0;
-                rand = Random.Range(1, 101);
+                rand = UnityEngine.Random.Range(1, 101);
                 for (int j = 0; j < monsterData.getMonsterList()[i].itemName.Length; j++)
                 {
                     if (rand <= prob + monsterData.getMonsterList()[i].itemProb[j] && rand > prob)
@@ -390,8 +391,9 @@ public class StageData : MonoBehaviour
 }
 
 
-//나중에 DB로.
+
 //사냥 스팟
+[Serializable]
 public class StageInfo
 {
     //바뀌지 않는 data
@@ -433,6 +435,7 @@ public class StageInfo
 }
 
 //스팟 고정 위치
+[Serializable]
 public class Spot
 {
     private string spotName;
@@ -452,6 +455,7 @@ public class Spot
 
 
 //약탈 스팟
+[Serializable]
 public class PlunderInfo
 {
     //바뀌지 않는 data
@@ -491,6 +495,7 @@ public class PlunderInfo
 
 
 //AI 상대 40명
+[Serializable]
 public class Plunder
 {
     private string user_id;
@@ -525,7 +530,7 @@ public class Plunder
         this.getItem = new string[5];
         for(int i = 0; i < 5; i++)
         {
-            int rand = Random.Range(0, ThingsData.instance.getThingsList().Count);
+            int rand = UnityEngine.Random.Range(0, ThingsData.instance.getThingsList().Count);
             getItem[i] = ThingsData.instance.getThingsList()[rand].name;
         }
         this.getItemWinProb = new int[5];

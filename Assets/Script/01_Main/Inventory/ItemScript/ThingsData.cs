@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
 using System.IO;
+using System;
 
 
 public class ThingsData : MonoBehaviour
@@ -26,10 +27,7 @@ public class ThingsData : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         GameObject.Find("InventoryScript").GetComponent<Inventory>().enabled = true;
-    }
 
-    private void Start()
-    {
         if (Application.platform == RuntimePlatform.Android)
         {
             string mypath = Path.Combine(Application.streamingAssetsPath, "Things.json");
@@ -63,6 +61,11 @@ public class ThingsData : MonoBehaviour
         //invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "티켓").type, "티켓", thingsList.Find(x => x.name == "티켓").possession));
         invenThings.Add(new InventoryThings(thingsList.Find(x => x.name == "부스트").type, "부스트", thingsList.Find(x => x.name == "부스트").possession));
 
+
+    }
+
+    private void Start()
+    {
         
 
     }
@@ -115,11 +118,14 @@ public class ThingsData : MonoBehaviour
 
     public List<Things> getThingsList() { return thingsList; }
     public void setThingsList(Things things, int index) { thingsList[index] = things; }
+    public void setThingsList(List<Things> things) { thingsList = things; }
     public List<InventoryThings> getInventoryThingsList() { return invenThings; }
     public void setInventoryThingsList(InventoryThings things, int index) { invenThings[index] = things; }
+    public void setInventoryThingsList(List<InventoryThings> things) { invenThings = things; }
 }
 
 //아이템 기본 정보
+[Serializable]
 public class Things
 {
     public int item_no;
@@ -158,6 +164,7 @@ public class Things
 }
 
 //인벤토리 등에서 보여지는 아이템
+[Serializable]
 public class InventoryThings
 {
     public string type;

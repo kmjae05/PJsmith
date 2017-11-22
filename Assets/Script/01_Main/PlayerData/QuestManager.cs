@@ -346,8 +346,8 @@ public class QuestManager : MonoBehaviour {
             //느낌표
             if (questList[index].completeFlag && !questList[index].rewardFlag)
             {
-                GameObject.Find("MenuButton").transform.Find("BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
-                GameObject.Find("MenuButton").transform.Find("BrazierButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("Lobby").transform.Find("MenuButton/BrazierButton/BrazierMiniButton/QuestButton/NewIcon").gameObject.SetActive(true);
+                GameObject.Find("Lobby").transform.Find("MenuButton/BrazierButton/NewIcon").gameObject.SetActive(true);
             }
                 
 

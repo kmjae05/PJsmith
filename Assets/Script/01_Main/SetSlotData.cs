@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,14 +18,16 @@ public class SetSlotData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
         setSlot = new List<SetSlot>();
         //생성
         setSlot.Add(new SetSlot(1));
         setSlot.Add(new SetSlot(2));
+    }
+
+    private void Start()
+    {
+       
 
     }
 
@@ -36,7 +38,7 @@ public class SetSlotData : MonoBehaviour {
     public int getRepreSet() { return repreSet; }
 }
 
-
+[Serializable]
 public class SetSlot
 {
     private int setNum;

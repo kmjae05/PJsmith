@@ -7,17 +7,25 @@ using UnityEngine.SocialPlatforms;
 
 public class GPGSScript : MonoBehaviour {
 
-    
+    //게스트 로그인 확인
+
+
 
     private void Start()
     {
         //초기화
         //recommended for debugging:
-        //PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.DebugLogEnabled = true;
         //Activate the Google Play gaems platform
-        //PlayGamesPlatform.Activate();
-        //
+        PlayGamesPlatform.Activate();
 
+
+        //구글 로그인 확인
+        if (Social.localUser.authenticated)
+        {
+            GameObject.Find("AlertManager").GetComponent<AlertManager>().AcvBoxHandle("구글 계정 연동");
+        }
+        else GameObject.Find("AlertManager").GetComponent<AlertManager>().AcvBoxHandle("구글 계정 연동 실패");
 
     }
 
@@ -26,6 +34,8 @@ public class GPGSScript : MonoBehaviour {
     public void googleLoginButton()
     {
         Social.localUser.Authenticate(  (bool success) => {
+            if(success)
+                GameObject.Find("AlertManager").GetComponent<AlertManager>().AcvBoxHandle("구글 계정 연동");
             //handle success or failure
         });
     }

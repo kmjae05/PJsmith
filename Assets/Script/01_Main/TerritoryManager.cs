@@ -427,7 +427,7 @@ public class TerritoryManager : MonoBehaviour
         mineFlag[num] = true;
 
         MineData.instance.getMineList()[num].buildTime = info.afterTime;
-        Debug.Log(info.afterTime);
+        //Debug.Log(info.afterTime);
         for (int i = 0; i < info.getThingName.Length; i++)
         {
             MineData.instance.getMineList()[num].getThingName[i] = info.getThingName[i];
@@ -664,7 +664,7 @@ public class TerritoryManager : MonoBehaviour
         {
             BeUnderPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 광산 건설 중";
 
-            BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineInfoList().Find(x => x.type == type).level;
+            BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level;
             BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineList()[num].deposit.ToString();
         }
         //팝업 올리기
@@ -798,8 +798,8 @@ public class TerritoryManager : MonoBehaviour
         MiningPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == type).icon);
 
         MiningPopup.SetActive(true);
-        MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = MineData.instance.getMineList()[num].type + " 채굴 중";
-        MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineInfoList().Find(x => x.type == type).level;
+        MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 채굴 중";
+        MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level;
 
         //즉시 완료
         MiningPopup.transform.Find("UIPanel/ImdButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();

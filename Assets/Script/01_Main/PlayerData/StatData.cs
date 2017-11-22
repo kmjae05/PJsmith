@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class StatData : MonoBehaviour {
     //능력치 계산
@@ -207,7 +208,7 @@ public class StatData : MonoBehaviour {
     }
 }
 
-
+[Serializable]
 public class Stat
 {
     public float dps;

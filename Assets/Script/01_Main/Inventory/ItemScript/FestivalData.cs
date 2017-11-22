@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class FestivalData : MonoBehaviour {
 
@@ -21,15 +22,17 @@ public class FestivalData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+
+        saleList = new List<ForSale>();
+        for (int i = 0; i < 8; i++)
+        {
+            saleList.Add(new ForSale());
+        }
     }
 
     public void Start()
     {
-        saleList = new List<ForSale>();
-        for(int i = 0; i < 8; i++)
-        {
-            saleList.Add(new ForSale());
-        }
+        
 
         StartCoroutine(buyAI());
     }
@@ -59,7 +62,7 @@ public class FestivalData : MonoBehaviour {
                     if (!tmpFlag)
                     {
                         tmpFlag = true;
-                        tmpTime = Random.Range(10, 20);
+                        tmpTime = UnityEngine.Random.Range(10, 20);
                         timecheck = 0;
                     }
 
@@ -84,11 +87,12 @@ public class FestivalData : MonoBehaviour {
 
 
     public List<ForSale> getSaleList() { return saleList; }
+    public void setSaleList(List<ForSale> sale) { saleList = sale; }
 }
 
 
 
-
+[Serializable]
 public class ForSale
 {
     public InventoryThings saleThings;

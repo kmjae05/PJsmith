@@ -25,11 +25,7 @@ public class AchievementData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-
-    void Start()
-    {
-        AchvList = new List<CAchievement>();
+            AchvList = new List<CAchievement>();
 
         #region 업적관련 Json데이터 읽어온 후 List 저장
         if (Application.platform == RuntimePlatform.Android)
@@ -68,6 +64,10 @@ public class AchievementData : MonoBehaviour {
                             amount_for_SW));
         }
         #endregion
+    }
+
+    void Start()
+    {
 
 
 
@@ -77,12 +77,12 @@ public class AchievementData : MonoBehaviour {
 
 
     public List<CAchievement> getAchvList() { return AchvList; }
-
+    public void setAchvList(List<CAchievement> achv) { AchvList = achv; }
 }
 
 
 
-
+[Serializable]
 public class CAchievement   //업적 클래스
 {
     public int no;

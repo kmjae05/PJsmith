@@ -15,7 +15,7 @@ public class EquipmentData : MonoBehaviour
     static private List<Equipment> equipList = new List<Equipment>();
 
 
-    void Start ()
+    void Awake ()
     {
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -42,6 +42,7 @@ public class EquipmentData : MonoBehaviour
 
 
 }
+
 
 public class Equipment
 {

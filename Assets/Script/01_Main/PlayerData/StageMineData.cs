@@ -18,10 +18,6 @@ public class StageMineData : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-    }
-
-    void Start()
-    {
 
         stageData = GameObject.Find("StageData").GetComponent<StageData>();
         mineBuildList = MineData.instance.getMineBuildList();
@@ -55,6 +51,12 @@ public class StageMineData : MonoBehaviour
             mineList[i].level = MineData.instance.getMineInfoList().Find(x => x.type == mineList[i].type).level;
             mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
         }
+    }
+
+    void Start()
+    {
+
+
     }
 
     void Update()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System.IO;
+using System;
 
 
 public class QuestData : MonoBehaviour {
@@ -33,11 +34,6 @@ public class QuestData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-
-
-    void Start()
-    {
         QuestList = new List<Quest>();
         WeeklyQuestList = new List<Quest>();
 
@@ -71,13 +67,19 @@ public class QuestData : MonoBehaviour {
             WeeklyQuestList.Add(new Quest(
                             (int)AchvData["Quest"][i]["no"],
                             AchvData["Quest"][i]["type"].ToString(),
-                            (int)AchvData["Quest"][i]["amount"]*5,
+                            (int)AchvData["Quest"][i]["amount"] * 5,
                             AchvData["Quest"][i]["alertText"].ToString(),
                             AchvData["Quest"][i]["reward_name"].ToString(),
-                            (int)AchvData["Quest"][i]["reward_quantity"]*5
+                            (int)AchvData["Quest"][i]["reward_quantity"] * 5
                             ));
         }
         #endregion
+
+    }
+
+
+    void Start()
+    {
 
 
 
@@ -86,12 +88,14 @@ public class QuestData : MonoBehaviour {
 
     public List<Quest> getQuestList() { return QuestList; }
     public List<Quest> getWeeklyQuestList() { return WeeklyQuestList; }
+    public void setQuestList(List<Quest> quest) { QuestList = quest; }
+    public void setWeeklyQuestList(List<Quest> quest) { WeeklyQuestList = quest; }
 
 }
 
 
 
-
+[Serializable]
 public class Quest
 {
     public int no;

@@ -29,10 +29,9 @@ public class MineData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
+        Debug.Log("MineDataAwake");
 
-    void Start ()
-    {
+
         if (Application.platform == RuntimePlatform.Android)
         {
             string mypath = Path.Combine(Application.streamingAssetsPath, "MineInfo.json");
@@ -80,6 +79,12 @@ public class MineData : MonoBehaviour {
         {
             mineInfoList[i].buildTime = mineBuildList.Find(x => x.level == mineInfoList[i].level).time;
         }
+
+    }
+
+    void Start ()
+    {
+        Debug.Log("MineDataStart");
 
 	}
 
@@ -152,6 +157,7 @@ public class MineData : MonoBehaviour {
 
     public void setMineList(List<Mine> mine) { mineList = mine; }
     public void setMineList(Mine mine, int i) { mineList[i] = mine; }
+    public void setMineInfoList(List<MineInfo> mine) { mineInfoList = mine; }
     public List<Mine> getMineList() { return mineList; }
     public List<MineInfo> getMineInfoList() { return mineInfoList; }
     public List<MineBuild> getMineBuildList() { return mineBuildList; }
@@ -167,7 +173,7 @@ public class MineData : MonoBehaviour {
 
 }
 
-
+[Serializable]
 public class Mine
 {
     private int mineNum;    //고유 번호
@@ -210,12 +216,13 @@ public class Mine
 
         spotName = null;
     }
-
+    public Mine() { }
 
     public void setMineNum(int num) { mineNum = num; }
     public int getMineNum() { return mineNum; }
 }
 
+[Serializable]
 public class MineInfo
 {
     public string type;         //종류
@@ -273,6 +280,13 @@ public class MineInfo
             else necessaryMaterialsNum[i / 2] = Convert.ToInt32(words2[i]);
         }
 
+        level = 1;
+        afterLevel = level;
+        isLock = true;
+    }
+
+    public MineInfo()
+    {
         level = 1;
         afterLevel = level;
         isLock = true;

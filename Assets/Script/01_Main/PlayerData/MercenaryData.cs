@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,10 +22,8 @@ public class MercenaryData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
+
         mercenaryManager = GameObject.Find("StageManager").GetComponent<MercenaryManager>();
         equipmentData = GameObject.Find("ThingsData").GetComponent<EquipmentData>();
 
@@ -260,6 +258,12 @@ public class MercenaryData : MonoBehaviour {
             mercenary.Add(mercenaryCreate);
         }
         
+        
+
+    }
+
+    private void Start()
+    {
         mercenaryManager.setMercenary(mercenary);
     }
 
@@ -270,7 +274,7 @@ public class MercenaryData : MonoBehaviour {
 
 }
 
-
+[Serializable]
 public class Mercenary
 {
     private int mer_no;                  //용병 고유 번호

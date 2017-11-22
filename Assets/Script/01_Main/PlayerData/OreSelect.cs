@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using LitJson;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System;
 
 public class OreSelect : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class OreSelect : MonoBehaviour
     [HideInInspector]
     public bool can_Restart = true;
 
+    [Serializable]
     public class Ore
     {
         public int no;

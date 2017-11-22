@@ -347,6 +347,7 @@
     <Compile Include="Assets\Script\01_Main\DimensionScript.cs" />
     <Compile Include="Assets\Script\01_Main\ExitScript.cs" />
     <Compile Include="Assets\Script\01_Main\FadeHandle.cs" />
+    <Compile Include="Assets\Script\01_Main\GameManager.cs" />
     <Compile Include="Assets\Script\01_Main\IngameManager.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\InventoryHandle.cs" />
     <Compile Include="Assets\Script\01_Main\Inventory\ItemScript\CollectionManager.cs" />

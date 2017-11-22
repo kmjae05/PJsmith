@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 
 public class Player : MonoBehaviour {
@@ -19,11 +20,10 @@ public class Player : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-    void Start()
-    {
+        Debug.Log("PlayerAwake");
 
-        //
+
+
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
         Play.equipWeapon[0] = ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1];
         ThingsData.instance.getInventoryThingsList()[ThingsData.instance.getInventoryThingsList().Count - 1].equip = true;
@@ -85,6 +85,12 @@ public class Player : MonoBehaviour {
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "초보자의 단검").type, "초보자의 단검", 1));
 
         ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == "여신의 투구").type, "여신의 투구", 1));
+
+    }
+    void Start()
+    {
+        Debug.Log("PlayerStart");
+        //
     }
 
 
@@ -164,11 +170,15 @@ public class Player : MonoBehaviour {
     {
         return Play;
     }
+    public void setUser(User user)
+    {
+        Play = user;
+    }
 
 }
 
 
-
+[Serializable]
 public class User
 {
     public int user_no;
