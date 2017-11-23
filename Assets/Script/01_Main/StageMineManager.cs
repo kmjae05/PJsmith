@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StageMineManager : MonoBehaviour {
+public class StageMineManager : MonoBehaviour
+{
 
     //스테이지 정보
     private StageMineData stageMineData;
@@ -27,7 +28,7 @@ public class StageMineManager : MonoBehaviour {
     private Button sys_OkButton;
 
 
-    void Start ()
+    void Start()
     {
         stageMineData = GameObject.Find("StageData").GetComponent<StageMineData>();
 
@@ -68,16 +69,39 @@ public class StageMineManager : MonoBehaviour {
                 spotButton.transform.Find("Text").gameObject.SetActive(false);
                 spotButton.transform.Find("pickax").gameObject.SetActive(false);
                 spotButton.transform.Find("TypeName").gameObject.SetActive(true);
-                spotButton.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv"+ mList[i].level+" "+ mList[i].type + " 광산";
+                spotButton.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" + mList[i].level + " " + mList[i].type + " 광산";
                 spotButton.transform.Find("BoostIcon").gameObject.SetActive(false);
+
                 int num = i;
-                spotButton.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(spotButton, num));
-            }
+                //처음 상태
+                if (mineList[i].buildState == "nothing" )
+                {
+                    spotButton.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(spotButton, num));
+                }
+                //업글 중
+                if (mineList[i].buildState == "upgrade")
+                {
+                    spotButton.GetComponent<Button>().onClick.AddListener(() => BuildCondition(spotButton, num));
+                }
+                //채굴 상태
+                if (mineList[i].buildState == "complete" && mineList[i].miningState)
+                {
+                    spotButton.GetComponent<Button>().onClick.AddListener(() => Mining(spotButton, num));
+                }
+                //채굴 완료
+                if (mineList[i].buildState == "complete" && !mineList[i].miningState)
+                {
+                    spotButton.GetComponent<Button>().onClick.AddListener(() => getOre(spotButton, num));
+                }
+                
+             }
         }
+
+        StateUpdate();
 
     }
 
-    void Update ()
+    void Update()
     {
         //광산
         for (int i = 0; i < mineList.Count; i++)
@@ -91,7 +115,7 @@ public class StageMineManager : MonoBehaviour {
                 //시간 0이면 건설완료 상태로
                 if (mineList[i].buildTime < 0.5f)
                 {
-                    //mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
+                    //mineObj.transform.Find("Text").gameObject.GetComponent<Text>().text = "건설 완료";
                     //건설 완료 알림
                     if (mineFlag[i])
                     {
@@ -263,7 +287,8 @@ public class StageMineManager : MonoBehaviour {
 
         //레벨업
         ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        ExhaustionPopup.transform.Find("UIPanel/UpgradeButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
 
             //재료 모자람
             InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
@@ -354,7 +379,8 @@ public class StageMineManager : MonoBehaviour {
 
         //채굴
         ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        ExhaustionPopup.transform.Find("UIPanel/MiningButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             for (int i = 0; i < info.getThingName.Length; i++)
             {
                 mineList[num].getThingName[i] = info.getThingName[i];
@@ -400,7 +426,8 @@ public class StageMineManager : MonoBehaviour {
 
         //즉시 완료 버튼
         BeUnderPopup.transform.Find("UIPanel/ImdBuildButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        BeUnderPopup.transform.Find("UIPanel/ImdBuildButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        BeUnderPopup.transform.Find("UIPanel/ImdBuildButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
@@ -410,7 +437,8 @@ public class StageMineManager : MonoBehaviour {
             sys_OkButton.gameObject.SetActive(false);
 
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
 
                 if (Player.instance.getUser().cash < 20)
                 {
@@ -464,7 +492,8 @@ public class StageMineManager : MonoBehaviour {
 
         //건설 취소 버튼->SystemPopup
         BeUnderPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        BeUnderPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        BeUnderPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "건설 취소";
@@ -473,7 +502,8 @@ public class StageMineManager : MonoBehaviour {
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
                 SystemPopup.SetActive(false);
                 mineList[num].buildTime = 0f;
                 mineList[num].buildState = "nothing";
@@ -504,7 +534,8 @@ public class StageMineManager : MonoBehaviour {
 
         //즉시 완료
         MiningPopup.transform.Find("UIPanel/ImdButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        MiningPopup.transform.Find("UIPanel/ImdButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        MiningPopup.transform.Find("UIPanel/ImdButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "즉시 완료";
@@ -513,7 +544,8 @@ public class StageMineManager : MonoBehaviour {
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
 
                 if (Player.instance.getUser().cash < 5)
                 {
@@ -521,7 +553,8 @@ public class StageMineManager : MonoBehaviour {
                     SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "보석이 부족합니다.";
                     SystemPopup.transform.Find("UIPanel/InfoText").GetComponent<Text>().text = "보석 구매 페이지로 이동하시겠습니까?";
                     sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-                    sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+                    sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+                    {
                         GameObject.Find("System").transform.Find("Shop").gameObject.SetActive(true);
                         MiningPopup.SetActive(false);
                     });
@@ -562,7 +595,8 @@ public class StageMineManager : MonoBehaviour {
         });
         //부스트
         MiningPopup.transform.Find("UIPanel/BoostButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        MiningPopup.transform.Find("UIPanel/BoostButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        MiningPopup.transform.Find("UIPanel/BoostButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "부스트 아이템 사용";
@@ -581,7 +615,8 @@ public class StageMineManager : MonoBehaviour {
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
                 if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == "부스트") == null)
                 {
                     SystemPopup.SetActive(true);
@@ -607,7 +642,8 @@ public class StageMineManager : MonoBehaviour {
         //폐광
         MiningPopup.transform.Find("UIPanel/CancleButton/Text").gameObject.GetComponent<Text>().text = "중지";
         MiningPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        MiningPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() => {
+        MiningPopup.transform.Find("UIPanel/CancleButton").gameObject.GetComponent<Button>().onClick.AddListener(() =>
+        {
             SystemPopup.SetActive(true);
 
             SystemPopup.transform.Find("UIPanel/BackBox/TitleText").GetComponent<Text>().text = "채굴 중지";
@@ -616,7 +652,8 @@ public class StageMineManager : MonoBehaviour {
             sys_NoButton.gameObject.SetActive(true);
             sys_OkButton.gameObject.SetActive(false);
             sys_yesButton.GetComponent<Button>().onClick.RemoveAllListeners();      //버튼 리스너 모두 삭제
-            sys_yesButton.GetComponent<Button>().onClick.AddListener(() => {
+            sys_yesButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
                 SystemPopup.SetActive(false);
                 MiningPopup.SetActive(false);
 
@@ -734,6 +771,77 @@ public class StageMineManager : MonoBehaviour {
         obj.GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(obj, num2));
 
     }
+
+
+
+    //광산 상태 갱신
+    private void StateUpdate()
+    {
+        for (int i = 0; i < mineList.Count; i++)
+        {
+            GameObject mineObj = StageObj.transform.Find(mineList[i].stageName + "Button").gameObject;
+
+            //건설 상태
+            //미건설
+            if (mineList[i].buildState == "nothing")
+            {
+                mineObj.transform.Find("Image").gameObject.SetActive(true);
+                mineObj.transform.Find("Text").gameObject.SetActive(false);
+                mineObj.transform.Find("pickax").gameObject.SetActive(false);
+                mineObj.transform.Find("Dust").gameObject.SetActive(false);
+                mineObj.transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj.transform.Find("BoostIcon").gameObject.SetActive(false);
+            }
+            //건설중
+            if (mineList[i].buildState == "beunder" || mineList[i].buildState == "upgrade")
+            {
+                mineObj.transform.Find("Image").gameObject.SetActive(true);
+                Color clr = mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color;
+                mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 0.5f);
+                mineObj.transform.Find("Text").gameObject.SetActive(true);               //시간은 update에서
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1, 1, 1);
+                mineObj.transform.Find("pickax").gameObject.SetActive(false);
+                mineObj.transform.Find("Dust").gameObject.SetActive(true);
+                mineObj.transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" +
+                    mineList[i].level + " " + mineList[i].type + " 광산";
+
+                mineObj.transform.Find("BoostIcon").gameObject.SetActive(false);
+            }
+            //건설 완료
+            if( mineList[i].buildState == "complete")
+            {
+                mineObj.transform.Find("Image").gameObject.SetActive(true);
+                Color clr = mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color;
+                mineObj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(clr.r, clr.g, clr.b, 1);
+                mineObj.transform.Find("Text").gameObject.SetActive(true);               //획득량은 update에서
+                mineObj.transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
+                mineObj.transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" +
+                    mineList[i].level + " " + mineList[i].type + " 광산";
+                mineObj.transform.Find("Dust").gameObject.SetActive(false);
+
+                //채굴 상태
+                if (MineData.instance.getMineList()[i].miningState)
+                    mineObj.transform.Find("pickax").gameObject.SetActive(true);
+                else mineObj.transform.Find("pickax").gameObject.SetActive(false);
+
+                //부스트 상태
+                if (MineData.instance.getMineList()[i].boostState)
+                    mineObj.transform.Find("BoostIcon").gameObject.SetActive(true);
+                else mineObj.transform.Find("BoostIcon").gameObject.SetActive(false);
+            }
+            
+
+
+
+        }
+    }
+
+
+
+
+
 
     public void MineClick(GameObject obj) { curMineNum = mineList.FindIndex(x => x.stageName + "Button" == obj.name); Debug.Log(curMineNum); }
 

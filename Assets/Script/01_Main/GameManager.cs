@@ -44,14 +44,14 @@ public class GameManager : MonoBehaviour {
     {
         while (true)
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             Save();
         }
     }
 
     public void Save()
     {
-        //Debug.Log("save");
+        Debug.Log("save");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 

@@ -28,6 +28,7 @@ public class InGameHandle : MonoBehaviour {
 
     GameObject systemPopup;
 
+    int startHP = 0;
     static public int ore_hp = 0;
     static public int feverGauge = 0;
     static public bool fever;
@@ -74,6 +75,7 @@ public class InGameHandle : MonoBehaviour {
             OreNameText.text = TargetOre.name;
             OreImage.sprite = OreSelect.Icon[OreSelect.SelectOre.no].sprite;
             HpSlider.maxValue = TargetOre.hp;
+            startHP = TargetOre.hp;
             ore_hp = TargetOre.hp;
             ore_gold = TargetOre.gold;
             ore_exp = TargetOre.exp;
@@ -99,6 +101,7 @@ public class InGameHandle : MonoBehaviour {
             frame.color = col;
             OreImage.sprite = Resources.Load<Sprite>( ThingsData.instance.getThingsList().Find(x=>x.name == Player.instance.getUser().equipName).icon);
             HpSlider.maxValue = Player.instance.getUser().equipmaxhp;
+            startHP = Player.instance.getUser().equipmaxhp;
             ore_hp = Player.instance.getUser().equipmaxhp;
             ore_gold = 0;
             ore_exp = Player.instance.getUser().equipexp;
@@ -219,6 +222,13 @@ public class InGameHandle : MonoBehaviour {
                 Player.instance.getUser().ingameState = false;
                 Player.instance.getUser().equipState = false;
                 break;
+            }
+
+            //시간이 5초 남았을 경우 or 광석의 hp가 20% 남았을 경우 로비로 돌아가지 못함
+            if (leftTime <= 5 || ore_hp< startHP*0.2)
+            {
+                if (systemPopup.activeInHierarchy) systemPopup.SetActive(false);
+                GameObject.Find("InGameUI").transform.Find("CloseButton").gameObject.SetActive(false);
             }
             yield return null;
         }

@@ -134,7 +134,7 @@ public class TerritoryManager : MonoBehaviour
                     mineObj[num].GetComponent<Button>().onClick.AddListener(() => BuildCondition(mineObj[num], num));
 
                 }
-                //건설 완료
+                //건설 완료. 채굴
                 if (MineData.instance.getMineList()[num].buildState == "complete")
                 {
                     mineObj[num].GetComponent<Button>().onClick.RemoveAllListeners();

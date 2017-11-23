@@ -613,24 +613,24 @@ public class EquipReinforceManager : MonoBehaviour {
         {
             //기본 스탯
             dps = curInventoryThings.stat.dps;
-            if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += (int)dps; }
-            if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + (int)(curInventoryThings.stat.strPower) ; }
-            if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + (curInventoryThings.stat.attackSpeed); }
-            if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + (int)(curInventoryThings.stat.focus) ; }
-            if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + (int)(curInventoryThings.stat.critical); }
-            if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + (int)(curInventoryThings.stat.defPower) ; }
-            if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + (int)(curInventoryThings.stat.evaRate) ; }
+            if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += string.Format("{0:#,###}", (int)dps); }
+            if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.strPower) ; }
+            if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + string.Format("{0:#,###}", (curInventoryThings.stat.attackSpeed).ToString("N1")); }
+            if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.focus) ; }
+            if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.critical); }
+            if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.defPower) ; }
+            if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.evaRate) ; }
             //if (curInventoryThings.attribute != null) { abstr += "속성"; statstr += curInventoryThings.attribute.ToString(); }
         }
         else
         {
-            if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += (int)dps ; }
-            if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + (int)(curInventoryThings.stat.strPower + tmprein * 1.5f); }
-            if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + (curInventoryThings.stat.attackSpeed + tmprein * 1.5f); }
-            if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + (int)(curInventoryThings.stat.focus + tmprein * 1.5f); }
-            if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + (int)(curInventoryThings.stat.critical + tmprein * 1.5f); }
-            if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + (int)(curInventoryThings.stat.critical + tmprein * 1.5f); }
-            if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + (int)(curInventoryThings.stat.critical + tmprein * 1.5f); }
+            if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += string.Format("{0:#,###}", (int)dps) ; }
+            if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + string.Format("{0:#,###}", (int)(curInventoryThings.stat.strPower + tmprein * 1.5f)); }
+            if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + string.Format("{0:#,###}", (curInventoryThings.stat.attackSpeed + tmprein * 1.5f).ToString("N1")); }
+            if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + string.Format("{0:#,###}", (int)(curInventoryThings.stat.focus + tmprein * 1.5f)); }
+            if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + string.Format("{0:#,###}", (int)(curInventoryThings.stat.critical + tmprein * 1.5f)); }
+            if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + string.Format("{0:#,###}", (int)(curInventoryThings.stat.critical + tmprein * 1.5f)); }
+            if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + string.Format("{0:#,###}", (int)(curInventoryThings.stat.critical + tmprein * 1.5f)); }
             //if (curInventoryThings.attribute != null) { abstr += "속성"; statstr += curInventoryThings.attribute.ToString(); }
         }
 
@@ -653,69 +653,75 @@ public class EquipReinforceManager : MonoBehaviour {
             {
                 changeInfoBoxAbilityInfoTextGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = "전투력";
                 changeInfoBoxAbilityTextGroup.transform.Find("DpsText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = ((int)dps).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)dps);
 
                 changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.SetActive(true);
                 //
                 if ((int)(dps - curInventoryThings.stat.dps) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = "+" + ((int)(dps - curInventoryThings.stat.dps)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = "+" + string.Format("{0:#,###}", (int)(dps - curInventoryThings.stat.dps));
                     changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)(dps - curInventoryThings.stat.dps) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = ((int)(dps - curInventoryThings.stat.dps)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(dps - curInventoryThings.stat.dps));
                     changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)(dps - curInventoryThings.stat.dps) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = ((int)(dps - curInventoryThings.stat.dps)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(dps - curInventoryThings.stat.dps));
                     changeInfoBoxAdditionGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             if (invenThings.stat.strPower > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("StrPowerText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.strPower + tmprein * 1.5f)).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.strPower + tmprein * 1.5f));
 
                 changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.SetActive(true);
                 //
                 if ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = "+" + ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower));
                     changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower));
                     changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text =
+                       string.Format("{0:#,###}", (int)((curInventoryThings.stat.strPower + tmprein * 1.5f) - curInventoryThings.stat.strPower));
                     changeInfoBoxAdditionGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             if (invenThings.stat.attackSpeed > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = (curInventoryThings.stat.attackSpeed + tmprein * 1.5f).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (curInventoryThings.stat.attackSpeed + tmprein * 1.5f).ToString("N1"));
 
                 changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.SetActive(true);
                 //
                 if ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed> 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = "+" + ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString("N1"));
                     changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed== 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString("N1"));
                     changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed< 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", ((curInventoryThings.stat.attackSpeed + tmprein * 1.5f) - curInventoryThings.stat.attackSpeed).ToString("N1"));
                     changeInfoBoxAdditionGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().color = red;
                 }
             }
@@ -723,105 +729,117 @@ public class EquipReinforceManager : MonoBehaviour {
             if (invenThings.stat.critical > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("CriticalText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.critical + tmprein * 1.5f)).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.critical + tmprein * 1.5f));
 
                 changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.SetActive(true);
                 //
                 if ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = "+" + ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical));
                     changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical));
                     changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.critical + tmprein * 1.5f) - curInventoryThings.stat.critical));
                     changeInfoBoxAdditionGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             if (invenThings.stat.focus > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("FocusText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.focus + tmprein * 1.5f)).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.focus + tmprein * 1.5f));
 
                 changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.SetActive(true);
                 //
                 if ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = "+" + ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus));
                     changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus));
                     changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.focus + tmprein * 1.5f) - curInventoryThings.stat.focus));
                     changeInfoBoxAdditionGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             if (invenThings.stat.defPower > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("DefPowerText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.defPower + tmprein * 1.5f)).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.defPower + tmprein * 1.5f));
 
                 changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.SetActive(true);
                 //
                 if ((int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = "+" + ((int)((invenThings.stat.defPower + tmprein * 1.5f )- curInventoryThings.stat.defPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", (int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower));
                     changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = ((int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower));
                     changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = ((int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((invenThings.stat.defPower + tmprein * 1.5f) - curInventoryThings.stat.defPower));
                     changeInfoBoxAdditionGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             if (invenThings.stat.evaRate > 0)
             {
                 changeInfoBoxAbilityTextGroup.transform.Find("EvaRateText").gameObject.SetActive(true);
-                changeInfoBoxAbilityTextGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.evaRate + tmprein * 1.5f)).ToString();
+                changeInfoBoxAbilityTextGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.evaRate + tmprein * 1.5f));
 
                 changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.SetActive(true);
                 //
                 if ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate) > 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = "+" + ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = "+" +
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate));
                     changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().color = green;
                 }
                 else if ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate) == 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate));
                     changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().color = defaultColor;
                 }
                 else if ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate) < 0)
                 {
-                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = ((int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate)).ToString();
+                    changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text =
+                        string.Format("{0:#,###}", (int)((curInventoryThings.stat.evaRate + tmprein * 1.5f) - curInventoryThings.stat.evaRate));
                     changeInfoBoxAdditionGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().color = red;
                 }
             }
             changeInfoBoxAdditionGroup.transform.gameObject.SetActive(true);
         }
         else {
-            changeInfoBoxAbilityTextGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = ((int)dps).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.strPower + tmprein * 1.5f)).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = (curInventoryThings.stat.attackSpeed + tmprein * 1.5f).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.critical + tmprein * 1.5f)).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.focus + tmprein * 1.5f)).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.defPower + tmprein * 1.5f)).ToString();
-            changeInfoBoxAbilityTextGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = ((int)(curInventoryThings.stat.evaRate + tmprein * 1.5f)).ToString();
+            changeInfoBoxAbilityTextGroup.transform.Find("DpsText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)dps);
+            changeInfoBoxAbilityTextGroup.transform.Find("StrPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.strPower + tmprein * 1.5f));
+            changeInfoBoxAbilityTextGroup.transform.Find("AttackSpeedText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (curInventoryThings.stat.attackSpeed + tmprein * 1.5f).ToString("N1"));
+            changeInfoBoxAbilityTextGroup.transform.Find("CriticalText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.critical + tmprein * 1.5f));
+            changeInfoBoxAbilityTextGroup.transform.Find("FocusText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.focus + tmprein * 1.5f));
+            changeInfoBoxAbilityTextGroup.transform.Find("DefPowerText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.defPower + tmprein * 1.5f));
+            changeInfoBoxAbilityTextGroup.transform.Find("EvaRateText").gameObject.GetComponent<Text>().text = string.Format("{0:#,###}", (int)(curInventoryThings.stat.evaRate + tmprein * 1.5f));
 
 
 
@@ -952,14 +970,14 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("LevelText").GetComponent<Text>().text = Player.instance.getUser().level.ToString();
                 GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.instance.getUser().Name;
                 Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
-                GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
-                GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
-                string result = string.Format("{0:#.##}", stat.attackSpeed);
+                GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.dps);
+                GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.strPower);
+                string result = string.Format("{0:#.##}", stat.attackSpeed.ToString("N1"));
                 GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = result;
-                GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
-                GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
-                GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
-                GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
+                GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.focus);
+                GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.critical);
+                GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.defPower);
+                GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.evaRate);
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
                 //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }
@@ -969,14 +987,14 @@ public class EquipReinforceManager : MonoBehaviour {
                 GameObject.Find("LevelText").GetComponent<Text>().text = merTemp.level.ToString();
                 GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
                 Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
-                GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
-                GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-                string result = string.Format("{0:#.##}", stat.attackSpeed);
+                GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.dps);
+                GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.strPower);
+                string result = string.Format("{0:#.##}", stat.attackSpeed.ToString("N1"));
                 GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = result;
-                GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
-                GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
-                GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
-                GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
+                GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.focus);
+                GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.critical);
+                GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.defPower);
+                GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.evaRate);
                 GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
                 //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
             }

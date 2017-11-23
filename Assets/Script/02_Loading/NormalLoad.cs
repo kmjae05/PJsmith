@@ -52,7 +52,7 @@ public class NormalLoad : MonoBehaviour
 
     IEnumerator EnterToMain()
     {
-         //Logo 화면일 경우 일정 시간 후 Title 화면으로.
+        //Logo 화면일 경우 일정 시간 후 Title 화면으로.
         if (SceneManager.GetActiveScene().name == "00_Logo")
         {
             yield return StartCoroutine(FadeIn());        //페이드인
@@ -114,6 +114,8 @@ public class NormalLoad : MonoBehaviour
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;
         }
+        if (GameObject.Find("GameManager") != null)
+            GameManager.gameManager.Save();
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene("02_Lobby");
     }
@@ -141,6 +143,8 @@ public class NormalLoad : MonoBehaviour
             FadeImage.color = new Color(0, 0, 0, fade);
             yield return null;
         }
+        if (GameObject.Find("GameManager") != null)
+            GameManager.gameManager.Save();
         yield return new WaitForSeconds(0.1f);
         SceneManager.LoadScene("09_Loading_Normal");
     }
