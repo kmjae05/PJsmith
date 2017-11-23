@@ -34,19 +34,24 @@ public class GameManager : MonoBehaviour {
         achvData = GameObject.Find("AchievementData").GetComponent<AchievementData>();
         questData = GameObject.Find("QuestData").GetComponent<QuestData>();
 
-        //1번만 실행. 장면 전환할 때도 불러와야.
+        //1번만 실행.
         Load();
 
+        StartCoroutine(loop());
     }
 
-    private void Update()
+    IEnumerator loop()
     {
-        Invoke("Save", 5f);
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            Save();
+        }
     }
 
     public void Save()
     {
-        Debug.Log("save");
+        //Debug.Log("save");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 
@@ -82,6 +87,24 @@ public class GameManager : MonoBehaviour {
         data.repreSet = SetSlotData.instance.getRepreSet();
         data.mercenary = new List<Mercenary>();
         data.mercenary = MercenaryData.instance.getMercenary();
+
+        data.stageNum = new int[StageData.instance.getSpotList().Count];
+        data.plunderNum = new int[StageData.instance.getSpotList().Count];
+        data.stageActive = new bool[StageData.instance.getSpotList().Count];
+        data.plunderActive = new bool[StageData.instance.getSpotList().Count];
+        for (int i = 0; i < StageData.instance.getSpotList().Count; i++) {            
+            data.stageNum[i] = StageData.instance.getSpotList()[i].stageNum;            
+            data.plunderNum[i] = StageData.instance.getSpotList()[i].plunderNum;            
+            data.stageActive[i] = StageData.instance.getSpotList()[i].stageActive;           
+            data.plunderActive[i] = StageData.instance.getSpotList()[i].plunderActive;
+        }
+
+        data.stageInfo = new List<StageInfo>();
+        data.stageInfo = StageData.instance.getStageInfoList();
+        data.plunderinfo = new List<PlunderInfo>();
+        data.plunderinfo = StageData.instance.getPlunderInfoList();
+        data.plunder = new List<Plunder>();
+        data.plunder = StageData.instance.getPlunderList();
 
         data.stageMine = new List<Mine>();
         data.stageMine = StageMineData.instance.getMineList();
@@ -122,6 +145,18 @@ public class GameManager : MonoBehaviour {
             SetSlotData.instance.setRepreSet(data.repreSet);
             MercenaryData.instance.setMercenary(data.mercenary);
 
+            
+            for (int i = 0; i < StageData.instance.getSpotList().Count; i++)
+            {
+                StageData.instance.getSpotList()[i].stageNum = data.stageNum[i];
+                StageData.instance.getSpotList()[i].plunderNum = data.plunderNum[i];
+                StageData.instance.getSpotList()[i].stageActive = data.stageActive[i];
+                StageData.instance.getSpotList()[i].plunderActive = data.plunderActive[i];
+            }
+            StageData.instance.setStageInfoList(data.stageInfo);
+            StageData.instance.setPlunderInfoList(data.plunderinfo);
+            StageData.instance.setPlunderList(data.plunder);
+
             StageMineData.instance.setMineList(data.stageMine);
         }
     }
@@ -155,8 +190,16 @@ class PlayerData
     public int repreSet;
 
     public List<Mercenary> mercenary;
-    // public List<StageInfo> stageInfo;
+
     //public List<Spot> spot;
+    public int[] stageNum;
+    public int[] plunderNum;
+    public bool[] stageActive;
+    public bool[] plunderActive;
+
+    public List<StageInfo> stageInfo;
+    public List<PlunderInfo> plunderinfo;
+    public List<Plunder> plunder;
 
     public List<Mine> stageMine;
 }

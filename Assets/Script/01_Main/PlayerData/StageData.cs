@@ -199,7 +199,7 @@ public class StageData : MonoBehaviour
 
 
         stageManager.setStageInfoList(stageInfoList);
-        
+
     }
 
     private void Update()
@@ -293,7 +293,7 @@ public class StageData : MonoBehaviour
 
 
         //기상
-        if(!rainFlag)
+        if (!rainFlag)
             delayDeltaTime += Time.deltaTime;
         if (delayDeltaTime > delayTime)
         {
@@ -379,11 +379,14 @@ public class StageData : MonoBehaviour
     }
 
 
+    public List<Spot> getSpotList() { return spotList; }
+    public void setSpotList(List<Spot> list) { spotList = list; }
     public List<StageInfo> getStageInfoList() { return stageInfoList; }
     public void setStageInfoList(List<StageInfo> list) { stageInfoList = list; }
     public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }
     public void setPlunderInfoList(List<PlunderInfo> list) { plunderInfoList = list; }
-    public List<Plunder> getPlundeList() { return plunderList; }
+    public List<Plunder> getPlunderList() { return plunderList; }
+    public void setPlunderList(List<Plunder> list) { plunderList = list; }
 
     public int getDist() { return dist; }
 
@@ -404,7 +407,6 @@ public class StageInfo
     public string type;            //몬스터 종류
     public int typeNum;            //1-소, 2-중, 3-대
     public string stageName;       //오브젝트 이름
-    public Sprite sprite;          //스프라이트
 
     public bool state;             //진행 상태
     public bool complete;          //완료
@@ -423,10 +425,10 @@ public class StageInfo
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public StageInfo() { wait = true; spotName = null; sprite = new Sprite(); getItem = new string[30]; getItemNum = new int[30]; }
+    public StageInfo() { wait = true; spotName = null;  getItem = new string[30]; getItemNum = new int[30]; }
     public StageInfo(int stageNum)
     {
-        this.stageNum = stageNum; this.wait = true; spotName = null; sprite = new Sprite();
+        this.stageNum = stageNum; this.wait = true; spotName = null;
         getItem = new string[30]; getItemNum = new int[30];
     }
 
@@ -466,7 +468,6 @@ public class PlunderInfo
     public string spotName;        //위치한 스팟 이름
     public string PlunderName;     //오브젝트 이름
     public string opponentName;     //상대 이름
-    public Sprite sprite;          //스프라이트 (집
 
     public bool state;             //진행 상태
     public bool regen;              //리젠 중
@@ -481,11 +482,10 @@ public class PlunderInfo
     public bool getRecentItemFlag;  //아이템 획득 타이밍
 
     //생성자
-    public PlunderInfo() { spotName = null; sprite = new Sprite(); getItem = new string[5]; getItemNum = new int[5]; }
+    public PlunderInfo() { spotName = null; getItem = new string[5]; getItemNum = new int[5]; }
     public PlunderInfo(int PlunderNum)
     {
         this.PlunderNum = PlunderNum; spotName = null; opponentName = null;
-        sprite = new Sprite();
         getItem = new string[5]; getItemNum = new int[5];
     }
 

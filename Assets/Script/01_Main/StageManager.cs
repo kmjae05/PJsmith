@@ -452,7 +452,7 @@ public class StageManager : MonoBehaviour
                         spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 1.0f);
                         if (GameObject.Find(stageName + "Button").activeInHierarchy)
                             GameObject.Find(stageName + "Button").transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" +
-                                StageData.instance.getPlundeList().Find(x => x.getName() == plunderInfotmp[i].opponentName).level.ToString() + " " + plunderInfotmp[i].opponentName;
+                                StageData.instance.getPlunderList().Find(x => x.getName() == plunderInfotmp[i].opponentName).level.ToString() + " " + plunderInfotmp[i].opponentName;
                     }
                 }
             }
@@ -1055,7 +1055,7 @@ public class StageManager : MonoBehaviour
         curPlunderSelect = obj.transform.Find("StageText").GetComponent<Text>().text;
 
         PlunderInfo result = plunderInfoList.Find(x => x.opponentName == curPlunderSelect);
-        Plunder plunder = StageData.instance.getPlundeList().Find(x => x.getName() == curPlunderSelect);
+        Plunder plunder = StageData.instance.getPlunderList().Find(x => x.getName() == curPlunderSelect);
         //리젠 상태
         if (result.regen)
         {
@@ -1174,7 +1174,7 @@ public class StageManager : MonoBehaviour
         while (true)
         {
             random = Random.Range(0, 40);
-            Plunder plunderTmp = StageData.instance.getPlundeList()[random];
+            Plunder plunderTmp = StageData.instance.getPlunderList()[random];
 
             if (plunderTmp.assignment == false)
             {
@@ -1369,7 +1369,7 @@ public class StageManager : MonoBehaviour
         {
             if (plunderInfoList[i].regen) continue;
 
-            StageData.instance.getPlundeList().Find(x => x.getName() == plunderInfoList[i].opponentName).assignment = false;
+            StageData.instance.getPlunderList().Find(x => x.getName() == plunderInfoList[i].opponentName).assignment = false;
             plunderInfoList[i].opponentName = null;
 
             //랜덤으로 리스트에 ai 정보 넣기
@@ -1383,7 +1383,7 @@ public class StageManager : MonoBehaviour
                     bool flag = false;
                     for (int k = 0; k < plif.Count; k++)
                     {
-                        if (plif[k].opponentName == StageData.instance.getPlundeList()[random].getName())
+                        if (plif[k].opponentName == StageData.instance.getPlunderList()[random].getName())
                         {
                             flag = true;
                         }
@@ -1392,12 +1392,13 @@ public class StageManager : MonoBehaviour
                 }
                 else break;
             }
-            plunderInfoList[i].opponentName = StageData.instance.getPlundeList()[random].getName();
-            StageData.instance.getPlundeList()[random].assignment = true;
+            plunderInfoList[i].opponentName = StageData.instance.getPlunderList()[random].getName();
+            StageData.instance.getPlunderList()[random].assignment = true;
             GameObject obj = GameObject.Find("plunder" + (i + 1).ToString() + "Button");
-            obj.transform.Find("StageText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].getName();
-            obj.transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" + StageData.instance.getPlundeList()[random].level + " " + StageData.instance.getPlundeList()[random].getName();
-            //obj.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = StageData.instance.getPlundeList()[random].level.ToString();
+            obj.transform.Find("StageText").gameObject.GetComponent<Text>().text = StageData.instance.getPlunderList()[random].getName();
+            obj.transform.Find("State/NameImage/NameText").gameObject.GetComponent<Text>().text = "Lv" + 
+                StageData.instance.getPlunderList()[random].level + " " + StageData.instance.getPlunderList()[random].getName();
+            //obj.transform.Find("State/LevelText").gameObject.GetComponent<Text>().text = StageData.instance.getPlunderList()[random].level.ToString();
         }
 
     }

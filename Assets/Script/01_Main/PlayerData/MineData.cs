@@ -102,7 +102,6 @@ public class MineData : MonoBehaviour {
                     if (mineList[i].buildState == "upgrade")
                     {
                         Debug.Log(mineList[i].level);
-                        mineList[i].level++;
                         mineList[i].deposit = mineBuildList.Find(x => x.level == mineList[i].level).deposit;
                         mineInfoList.Find(x => x.type == mineList[i].type).level++;
                         mineInfoList.Find(x => x.type == mineList[i].type).buildTime = mineBuildList.Find(x=>x.level == mineInfoList.Find(y => y.type == mineList[i].type).level).time;

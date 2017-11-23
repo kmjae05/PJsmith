@@ -79,49 +79,76 @@ public class TerritoryManager : MonoBehaviour
             //광산 스팟 버튼 설정.
             mineObj[i].GetComponent<Button>().onClick.RemoveAllListeners();
             int num = i;
-            mineObj[i].GetComponent<Button>().onClick.AddListener(() => 
+            mineObj[i].GetComponent<Button>().onClick.AddListener(() =>
             {
-                BottomMenu.SetActive(true);
-                BlackBack.SetActive(true);
-                GameObject.Find("Lobby").transform.Find("ProfilePanel").gameObject.SetActive(false);
-                GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
-                GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
-                GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButton").gameObject.SetActive(false);
-                GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButtonText").gameObject.SetActive(false);
-                for (int j = 0; j < MineData.instance.getMineList().Count; j++)
+                //미건설 상태 버튼
+                if (MineData.instance.getMineList()[num].buildState == "nothing")
                 {
-                    if (MineData.instance.getMineList()[j].buildState == "nothing")
-                    {
-                        mineObj[j].transform.Find("Image").gameObject.SetActive(false);
-                        mineObj[j].transform.Find("Text").gameObject.SetActive(false);
-                        mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
-                        mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
-                        //info.upgradeFlag = false;
-                    }
-                }
-                mineObj[num].transform.Find("DottedCircle").gameObject.SetActive(true);
-                //건설 취소 버튼
-                CancleButton.onClick.AddListener(() =>
-                {
-                    BottomMenu.SetActive(false);
-                    BlackBack.SetActive(false);
-                    GameObject.Find("Lobby").transform.Find("ProfilePanel").gameObject.SetActive(true);
-                    GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
-                    GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
-                    GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButton").gameObject.SetActive(true);
-                    GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButtonText").gameObject.SetActive(true);
+                    BottomMenu.SetActive(true);
+                    BlackBack.SetActive(true);
+                    GameObject.Find("Lobby").transform.Find("ProfilePanel").gameObject.SetActive(false);
+                    GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(false);
+                    GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(false);
+                    GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButton").gameObject.SetActive(false);
+                    GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButtonText").gameObject.SetActive(false);
                     for (int j = 0; j < MineData.instance.getMineList().Count; j++)
                     {
                         if (MineData.instance.getMineList()[j].buildState == "nothing")
                         {
                             mineObj[j].transform.Find("Image").gameObject.SetActive(false);
                             mineObj[j].transform.Find("Text").gameObject.SetActive(false);
-                            mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
+                            mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
                             mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
                             //info.upgradeFlag = false;
                         }
                     }
-                });
+                    mineObj[num].transform.Find("DottedCircle").gameObject.SetActive(true);
+                    //건설 취소 버튼
+                    CancleButton.onClick.AddListener(() =>
+                    {
+                        BottomMenu.SetActive(false);
+                        BlackBack.SetActive(false);
+                        GameObject.Find("Lobby").transform.Find("ProfilePanel").gameObject.SetActive(true);
+                        GameObject.Find("Lobby").transform.Find("MoneyPanel").gameObject.SetActive(true);
+                        GameObject.Find("Lobby").transform.Find("MenuButton").gameObject.SetActive(true);
+                        GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButton").gameObject.SetActive(true);
+                        GameObject.Find("Menu").transform.Find("TerritoryPopup (1)/UIPanel/WorldMapButtonText").gameObject.SetActive(true);
+                        for (int j = 0; j < MineData.instance.getMineList().Count; j++)
+                        {
+                            if (MineData.instance.getMineList()[j].buildState == "nothing")
+                            {
+                                mineObj[j].transform.Find("Image").gameObject.SetActive(false);
+                                mineObj[j].transform.Find("Text").gameObject.SetActive(false);
+                                mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(true);
+                                mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
+                            //info.upgradeFlag = false;
+                            }
+                        }
+                    });
+                }
+
+                //건설중 상태 버튼
+                if (MineData.instance.getMineList()[num].buildState == "beunder" || MineData.instance.getMineList()[num].buildState == "upgrade")
+                {
+                    mineObj[num].GetComponent<Button>().onClick.RemoveAllListeners();
+                    mineObj[num].GetComponent<Button>().onClick.AddListener(() => BuildCondition(mineObj[num], num));
+
+                }
+                //건설 완료
+                if (MineData.instance.getMineList()[num].buildState == "complete")
+                {
+                    mineObj[num].GetComponent<Button>().onClick.RemoveAllListeners();
+                    mineObj[num].GetComponent<Button>().onClick.AddListener(() => Mining(mineObj[num], num));
+                }
+                //고갈
+                if (MineData.instance.getMineList()[num].buildState == "exhaustion")
+                {
+                    mineObj[num].GetComponent<Button>().onClick.RemoveAllListeners();
+                    mineObj[num].GetComponent<Button>().onClick.AddListener(() => ExhaustionCondition(mineObj[num], num));
+                }
+
+
+
             });
         }
         for (int i = 0; i < 6; i++)
@@ -332,6 +359,11 @@ public class TerritoryManager : MonoBehaviour
     {
         MineInfo info = mineInfo.Find(x => x.type == curType);
 
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().color = buildInfoPopup.transform.Find("UIPanel/CurInfoBox/LevelText").gameObject.GetComponent<Text>().color;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/TimeText").gameObject.GetComponent<Text>().color = buildInfoPopup.transform.Find("UIPanel/CurInfoBox/TimeText").gameObject.GetComponent<Text>().color;
+        buildInfoPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().color = buildInfoPopup.transform.Find("UIPanel/CurInfoBox/DepositText").gameObject.GetComponent<Text>().color;
+
+
         //재료랑 갖고 있는 아이템 체크
         InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
         if (thing != null)
@@ -406,9 +438,7 @@ public class TerritoryManager : MonoBehaviour
         });
 
         int num = curMineNum;// MineData.instance.getMineList().FindIndex(x => x.type == curType)-1;
-        //광산에 정보 저장
-        MineData.instance.getMineList()[num].type = info.type;
-        MineData.instance.getMineList()[num].level = info.afterLevel;
+        
         if (info.upgradeFlag)
         {
             MineData.instance.getMineList()[num].buildState = "upgrade";
@@ -418,10 +448,14 @@ public class TerritoryManager : MonoBehaviour
         else
         {
             MineData.instance.getMineList()[num].buildState = "beunder";
-            info.afterLevel = info.level;
+            info.afterLevel = info.level; 
             info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit;
             info.curMaterial = info.necessaryMaterialsNum[0];
         }
+        //광산에 정보 저장
+        MineData.instance.getMineList()[num].type = info.type;
+        MineData.instance.getMineList()[num].level = info.afterLevel;
+
         info.afterTime = (int)info.buildTime;
 
         mineFlag[num] = true;
@@ -466,10 +500,6 @@ public class TerritoryManager : MonoBehaviour
             }
         }
         BlackBack.SetActive(false);
-        //하단메뉴 잠금
-        //BottomMenuLock.SetActive(true);
-        //대장장이 행동 제한
-        //StartLock.SetActive(true);
     }
     //업그레이드 버튼
     public void UpgradeButton()
@@ -571,79 +601,6 @@ public class TerritoryManager : MonoBehaviour
 
     }
 
-    ////건설 스팟을 선택했을 때 동작
-    //public void BuildSpotClick(GameObject obj, int num)
-    //{
-    //    MineInfo info = mineInfo.Find(x => x.type == curType);
-
-    //    //광산에 정보 저장
-    //    MineData.instance.getMineList()[num].type = info.type;
-    //    MineData.instance.getMineList()[num].level = info.afterLevel;
-    //    if (info.upgradeFlag)
-    //    {
-    //        MineData.instance.getMineList()[num].buildState = "upgrade";
-    //        info.upgradeFlag = false;
-    //    }
-    //    else
-    //    {
-    //        MineData.instance.getMineList()[num].buildState = "beunder";
-    //        info.afterLevel = info.level;
-    //        info.afterTime = (int)info.buildTime;
-    //        info.afterDeposit = MineData.instance.getMineBuildList().Find(x => x.level == info.level).deposit;
-    //        info.curMaterial = info.necessaryMaterialsNum[0];
-    //    }
-
-    //    MineData.instance.getMineList()[num].buildTime = info.afterTime;
-    //    Debug.Log(info.afterTime);
-    //    for (int i = 0; i < info.getThingName.Length; i++)
-    //    {
-    //        MineData.instance.getMineList()[num].getThingName[i] = info.getThingName[i];
-    //    }
-    //    MineData.instance.getMineList()[num].getOnceAmount = 1;
-    //    MineData.instance.getMineList()[num].deposit = MineData.instance.getMineBuildList().Find(x => x.level == info.afterLevel).deposit;
-    //    MineData.instance.getMineList()[num].miningTime = 1f;
-
-    //    //재료 소모
-    //    //for (int i = 0; i < info.necessaryMaterials.Length; i++)
-    //    //{
-    //    InventoryThings thing = ThingsData.instance.getInventoryThingsList().Find(x => x.name == info.necessaryMaterials[0]);
-    //        thing.possession -= info.curMaterial;
-    //    //}
-
-    //    obj.GetComponent<Button>().onClick.RemoveAllListeners();
-    //    obj.GetComponent<Button>().onClick.AddListener(() => BuildCondition(obj, num));
-
-    //    obj.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
-    //    obj.transform.Find("Image").gameObject.SetActive(true);
-    //    obj.transform.Find("Text").gameObject.SetActive(true);
-    //    obj.transform.Find("DottedCircle").gameObject.SetActive(false);
-    //    obj.transform.Find("pickax").gameObject.SetActive(false);
-    //    obj.transform.Find("TypeName").gameObject.SetActive(true);
-    //    obj.transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = info.type + " 광산";
-
-
-    //    //나머지 nothing없애고 건설선택 블랙백 없애기
-    //    for (int j = 0; j < MineData.instance.getMineList().Count; j++)
-    //    {
-    //        if (MineData.instance.getMineList()[j].buildState == "nothing")
-    //        {
-    //            mineObj[j].transform.Find("Image").gameObject.SetActive(false);
-    //            mineObj[j].transform.Find("Text").gameObject.SetActive(false);
-    //            mineObj[j].transform.Find("DottedCircle").gameObject.SetActive(false);
-    //            mineObj[j].transform.Find("pickax").gameObject.SetActive(false);
-    //        }
-    //    }
-    //    BlackBack.SetActive(false);
-    //    //하단메뉴 잠금
-    //    BottomMenuLock.SetActive(true);
-    //    //대장장이 행동 제한
-    //    //StartLock.SetActive(true);
-
-    //}
-
-
-
-
     //건설 진행 중 버튼 (현황 창
     public void BuildCondition(GameObject obj, int num)
     {
@@ -667,6 +624,7 @@ public class TerritoryManager : MonoBehaviour
             BeUnderPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level;
             BeUnderPopup.transform.Find("UIPanel/InfoBox/DepositText").gameObject.GetComponent<Text>().text = "매장량 : " + MineData.instance.getMineList()[num].deposit.ToString();
         }
+        Debug.Log(num + " : " + MineData.instance.getMineList()[num].level);
         //팝업 올리기
         BeUnderPopup.SetActive(true);
 
@@ -796,7 +754,7 @@ public class TerritoryManager : MonoBehaviour
     {
         string type = MineData.instance.getMineList()[num].type;
         MiningPopup.transform.Find("UIPanel/Frame/Ore").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == type).icon);
-
+        Debug.Log(num + " : " + MineData.instance.getMineList()[num].level);
         MiningPopup.SetActive(true);
         MiningPopup.transform.Find("UIPanel/BackBox/TitleText").gameObject.GetComponent<Text>().text = type + " 채굴 중";
         MiningPopup.transform.Find("UIPanel/InfoBox/LevelText").gameObject.GetComponent<Text>().text = "레벨 : " + MineData.instance.getMineList()[num].level;
@@ -1309,6 +1267,10 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
                 mineObj[i].transform.Find("Dust").gameObject.SetActive(true);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj[i].transform.Find("TypeName").gameObject.GetComponent<Image>().color = nameColor(MineData.instance.getMineList()[i].type);
+                mineObj[i].transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" + 
+                    MineData.instance.getMineList()[i].level + " " + MineData.instance.getMineList()[i].type + " 광산";
+
                 mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }
             //건설 완료
@@ -1321,6 +1283,9 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(0.41f, 0.85f, 0.4f);
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj[i].transform.Find("TypeName").gameObject.GetComponent<Image>().color = nameColor(MineData.instance.getMineList()[i].type);
+                mineObj[i].transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" +
+                    MineData.instance.getMineList()[i].level + " " + MineData.instance.getMineList()[i].type + " 광산";
                 mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
 
                 //채굴 상태
@@ -1340,10 +1305,14 @@ public class TerritoryManager : MonoBehaviour
                 mineObj[i].transform.Find("Image").gameObject.GetComponent<Image>().color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
                 mineObj[i].transform.Find("Text").gameObject.SetActive(true);               //시간은 update에서
                 mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().color = new Color(1f, 0.2f, 0.21f);
+                mineObj[i].transform.Find("Text").gameObject.GetComponent<Text>().text = MineData.instance.getMineList()[i].deposit + "개 채굴 완료";
                 mineObj[i].transform.Find("DottedCircle").gameObject.SetActive(false);
                 mineObj[i].transform.Find("pickax").gameObject.SetActive(false);
                 mineObj[i].transform.Find("Dust").gameObject.SetActive(false);
                 mineObj[i].transform.Find("TypeName").gameObject.SetActive(true);
+                mineObj[i].transform.Find("TypeName").gameObject.GetComponent<Image>().color = nameColor(MineData.instance.getMineList()[i].type);
+                mineObj[i].transform.Find("TypeName/TypeNameText").gameObject.GetComponent<Text>().text = "Lv" +
+                    MineData.instance.getMineList()[i].level + " " + MineData.instance.getMineList()[i].type + " 광산";
                 mineObj[i].transform.Find("BoostIcon").gameObject.SetActive(false);
             }
 

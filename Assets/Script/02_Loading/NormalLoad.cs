@@ -21,8 +21,12 @@ public class NormalLoad : MonoBehaviour
     }
     void Start () 
     {
+        if(GameObject.Find("GameManager") !=null)
+            GameManager.gameManager.Load();
         StartCoroutine(EnterToMain());
         Time.timeScale = 1.0f;
+
+
 	}
     IEnumerator FadeIn()
     {

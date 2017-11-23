@@ -618,13 +618,13 @@ public class EquipChangeManager : MonoBehaviour
         Equipment equip = GameObject.Find("ThingsData").GetComponent<EquipmentData>().getEquipmentList().Find(x => x.name == curInventoryThings.name);
         //강화 수치에 따라 스탯 계산 다시 해줘야 함.
 
-        if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += (int)curInventoryThings.stat.dps; } 
-        if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + curInventoryThings.stat.strPower ; }
-        if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + curInventoryThings.stat.attackSpeed ; }
-        if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + curInventoryThings.stat.focus; }
-        if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + curInventoryThings.stat.critical; }
-        if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + curInventoryThings.stat.defPower; }
-        if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + curInventoryThings.stat.evaRate; }
+        if (curInventoryThings.stat.dps > 0) { abstr += "전투력"; statstr += string.Format("{0:#,###}", (int)curInventoryThings.stat.dps); } 
+        if (curInventoryThings.stat.strPower > 0) { abstr += "\n공격력"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.strPower) ; }
+        if (curInventoryThings.stat.attackSpeed > 0) { abstr += "\n공격속도"; statstr += "\n" + string.Format("{0:#,###}", (curInventoryThings.stat.attackSpeed).ToString("N1")) ; }
+        if (curInventoryThings.stat.focus > 0) { abstr += "명중률\n"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.focus); }
+        if (curInventoryThings.stat.critical > 0) { abstr += "\n크리티컬"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.critical); }
+        if (curInventoryThings.stat.defPower > 0) { abstr += "\n방어력"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.defPower); }
+        if (curInventoryThings.stat.evaRate > 0) { abstr += "\n회피율"; statstr += "\n" + string.Format("{0:#,###}", (int)curInventoryThings.stat.evaRate); }
         //if (curInventoryThings.attribute != null) { abstr += "속성"; statstr += curInventoryThings.attribute.ToString(); }
         curInfoBoxAbilityInfoText.text = abstr;
         curInfoBoxAbilityText.text = statstr;
@@ -665,13 +665,13 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("LevelText").GetComponent<Text>().text = Player.instance.getUser().level.ToString();
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = Player.instance.getUser().Name;
             Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getPlayerStat()[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = ((int)stat.dps).ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = ((int)stat.strPower).ToString(); //equi[setnum].strPower
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = (stat.attackSpeed).ToString();
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = ((int)stat.focus).ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = ((int)stat.critical).ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = ((int)stat.defPower).ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = ((int)stat.evaRate).ToString();
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.dps);
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.strPower); //equi[setnum].strPower
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (stat.attackSpeed).ToString("N1"));
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.focus);
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.critical);
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.defPower);
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.evaRate);
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = Player.instance.getUser().attribute;
             
             //GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
@@ -681,13 +681,13 @@ public class EquipChangeManager : MonoBehaviour
             GameObject.Find("LevelText").GetComponent<Text>().text = merTemp.level.ToString();
             GameObject.Find("PlayerNameText").GetComponent<Text>().text = merTemp.getName();
             Stat stat = GameObject.Find("PlayerManager").GetComponent<StatData>().getMercenaryStat(merTemp.getMer_no())[GameObject.Find("PlayerManager").GetComponent<ProfilePopupManager>().getCurSetNum() - 1];
-            GameObject.Find("DPS/Text").GetComponent<Text>().text = stat.dps.ToString();
-            GameObject.Find("StrPower/Text").GetComponent<Text>().text = stat.strPower.ToString();
-            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = stat.attackSpeed.ToString();
-            GameObject.Find("Focus/Text").GetComponent<Text>().text = stat.focus.ToString();
-            GameObject.Find("Critical/Text").GetComponent<Text>().text = stat.critical.ToString();
-            GameObject.Find("DefPower/Text").GetComponent<Text>().text = stat.defPower.ToString();
-            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = stat.evaRate.ToString();
+            GameObject.Find("DPS/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.dps);
+            GameObject.Find("StrPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.strPower);
+            GameObject.Find("AttackSpeed/Text").GetComponent<Text>().text = string.Format("{0:#,###}", stat.attackSpeed.ToString("N1"));
+            GameObject.Find("Focus/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.focus);
+            GameObject.Find("Critical/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.critical);
+            GameObject.Find("DefPower/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.defPower);
+            GameObject.Find("EvaRate/Text").GetComponent<Text>().text = string.Format("{0:#,###}", (int)stat.evaRate);
             GameObject.Find("Attribute/Text").GetComponent<Text>().text = merTemp.attribute;
            // GameObject.Find("System").transform.Find("DPSEff").gameObject.GetComponent<ChangeDPSManager>().changeDPS((int)preStat.dps, (int)stat.dps);
         }
