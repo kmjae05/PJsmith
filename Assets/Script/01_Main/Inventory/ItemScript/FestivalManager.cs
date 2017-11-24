@@ -222,27 +222,7 @@ public class FestivalManager : MonoBehaviour {
                             Sys_YesButton.GetComponent<Button>().onClick.AddListener(
                                () => {
 
-                                   string type = ThingsData.instance.getThingsList().Find(x => x.name == saleList[num].saleThings.name).type;
-                                   //장비 구분
-                                   if (type == "Helmet" || type == "Armor" || type == "Gloves" || type == "Pants" || type == "Weapon" || type == "Boots")
-                                   {
-                                           ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x 
-                                               => x.name == saleList[num].saleThings.name).type, saleList[num].saleThings.name, 1));
-                                   }
-                                   //장비 외 아이템
-                                   else
-                                   {
-                                       if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name) != null)
-                                       {
-                                           ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name).possession += saleList[num].possession;
-                                           ThingsData.instance.getInventoryThingsList().Find(x => x.name == saleList[num].saleThings.name).recent = true;
-                                       }
-                                       else
-                                       {
-                                           ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x 
-                                               => x.name == saleList[num].saleThings.name).type, saleList[num].saleThings.name, saleList[num].possession));
-                                       }
-                                   }
+                                   ThingsData.instance.getItem(saleList[num].saleThings);
 
                                    //
                                    saleList[num].state = "empty";

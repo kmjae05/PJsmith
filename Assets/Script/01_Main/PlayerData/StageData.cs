@@ -310,17 +310,6 @@ public class StageData : MonoBehaviour
 
     }
 
-
-
-
-
-    //스테이지 이미지 변경.
-    //public void stageImageChange(StageInfo stin)
-    //{
-    //    if (stin.type == "사냥")
-    //        stin.sprite = Resources.Load<Sprite>("Gather/minimonster");
-    //}
-
     //아이템 획득
     public void getItem(StageInfo stin)
     {
@@ -350,26 +339,6 @@ public class StageData : MonoBehaviour
 
     }
 
-
-
-    ////대륙 번호->string
-    //public string contNumToString(int i)
-    //{
-    //    if (i == 1) return "아케도니아";
-    //    else if (i == 2) return "플루오네";
-    //    else if (i == 3) return "일사바드";
-    //    else if (i == 4) return "원무제국";
-    //    else if (i == 5) return "드래곤로드"; else return null;
-    //}
-    ////대륙 string->번호
-    //public int contStringToInt(string i)
-    //{
-    //    if (i == "아케도니아") return 1;
-    //    else if (i == "플루오네") return 2;
-    //    else if (i == "일사바드") return 3;
-    //    else if (i == "원무제국") return 4;
-    //    else if (i == "드래곤로드") return 5; else return 0;
-    //}
 
     //type int -> string
     public string typeNumToString(int i)
@@ -530,8 +499,10 @@ public class Plunder
         this.getItem = new string[5];
         for(int i = 0; i < 5; i++)
         {
-            int rand = UnityEngine.Random.Range(0, ThingsData.instance.getThingsList().Count);
-            getItem[i] = ThingsData.instance.getThingsList()[rand].name;
+            List<Things> things = ThingsData.instance.getThingsList().FindAll(x => x.grade <= 3);
+            int rand = UnityEngine.Random.Range(0, things.Count);
+
+            getItem[i] = things[rand].name;
         }
         this.getItemWinProb = new int[5];
         this.getItemWinProb[0] = 100; this.getItemWinProb[1] = 50; this.getItemWinProb[2] = 50;
@@ -539,10 +510,6 @@ public class Plunder
         this.getItemLoseProb = new int[5];
         this.getItemLoseProb[0] = 10; this.getItemLoseProb[1] = 10; this.getItemLoseProb[2] = 10;
         this.getItemLoseProb[3] = 0; this.getItemLoseProb[4] = 0;
-
-        //획득 가능한 아이템 랜덤으로 넣기
-
-
 
 
         this.assignment = false;

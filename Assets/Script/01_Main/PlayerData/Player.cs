@@ -150,7 +150,7 @@ public class Player : MonoBehaviour {
     }
     public void LostMoney(string type, int amount)
     {
-        if(string.Compare(type, "gold")==0)
+        if(string.Compare(type, "gold") == 0)
         {
             Achievementhandle.get_gold_count -= amount;
             iTween.ValueTo(gameObject, iTween.Hash("from", Player.Play.gold, "to", Player.Play.gold - amount, "onUpdate", "GoldCount", "time", 1));

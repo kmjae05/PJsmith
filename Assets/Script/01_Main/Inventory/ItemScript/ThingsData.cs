@@ -114,6 +114,53 @@ public class ThingsData : MonoBehaviour
         return col;
     }
     
+    public void getItem(Things things)
+    {
+        //장비 구분
+        if (things.type == "Helmet" || things.type == "Armor" || things.type == "Gloves" || things.type == "Pants" || things.type == "Weapon" || things.type == "Boots")
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x
+                => x.name == things.name).type, things.name, 1));
+        }
+        //장비 외 아이템
+        else
+        {
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name) != null)
+            {
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).possession += things.possession;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+            }
+            else
+            {
+                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x
+                    => x.name == things.name).type, things.name, things.possession));
+            }
+        }
+    }
+    public void getItem(InventoryThings things)
+    {
+        //장비 구분
+        if (things.type == "Helmet" || things.type == "Armor" || things.type == "Gloves" || things.type == "Pants" || things.type == "Weapon" || things.type == "Boots")
+        {
+            ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x
+                => x.name == things.name).type, things.name, 1));
+        }
+        //장비 외 아이템
+        else
+        {
+            if (ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name) != null)
+            {
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).possession += things.possession;
+                ThingsData.instance.getInventoryThingsList().Find(x => x.name == things.name).recent = true;
+            }
+            else
+            {
+                ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x
+                    => x.name == things.name).type, things.name, things.possession));
+            }
+        }
+    }
+
 
 
     public List<Things> getThingsList() { return thingsList; }

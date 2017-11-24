@@ -213,7 +213,7 @@
             "type": "Material",
             "name": "다이아몬드",
             "explanation": "다이아몬드입니다.",
-            "grade": 1,
+            "grade": 4,
             "sell": 1,
             "icon": "Things/gm_b_08"
         },
@@ -222,7 +222,7 @@
             "type": "Material",
             "name": "자수정",
             "explanation": "자수정입니다.",
-            "grade": 1,
+            "grade": 5,
             "sell": 1,
             "icon": "Things/gm_b_02"
         },
@@ -231,7 +231,7 @@
             "type": "Material",
             "name": "사파이어",
             "explanation": "사파이어입니다.",
-            "grade": 1,
+            "grade": 5,
             "sell": 1,
             "icon": "Things/06_royal_gem_b"
         },

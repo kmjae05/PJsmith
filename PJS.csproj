@@ -366,6 +366,7 @@
     <Compile Include="Assets\Script\01_Main\LevelupPopupManager.cs" />
     <Compile Include="Assets\Script\01_Main\MercenaryManager.cs" />
     <Compile Include="Assets\Script\01_Main\MonsterData.cs" />
+    <Compile Include="Assets\Script\01_Main\MonsterHunting.cs" />
     <Compile Include="Assets\Script\01_Main\PinchZoom.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\AchievementData.cs" />
     <Compile Include="Assets\Script\01_Main\PlayerData\Achievementhandle.cs" />
@@ -399,6 +400,7 @@
     <Compile Include="Assets\Script\01_Main\StageItem.cs" />
     <Compile Include="Assets\Script\01_Main\StageManager.cs" />
     <Compile Include="Assets\Script\01_Main\StageMineManager.cs" />
+    <Compile Include="Assets\Script\01_Main\Store\SpecialShopManager.cs" />
     <Compile Include="Assets\Script\01_Main\Store\Store.cs" />
     <Compile Include="Assets\Script\01_Main\Store\StoreManager.cs" />
     <Compile Include="Assets\Script\01_Main\TerritoryManager.cs" />
