@@ -244,12 +244,12 @@ public class MercenaryManager : MonoBehaviour {
                         if (!stageInfo.complete)
                         {
                             flag[i] = true;
-                            float time = stageInfo.time;
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = stageInfo.typeNum *60f;
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (stageInfo.typeNum * 60f - time);
+                            System.TimeSpan leadTime = new System.TimeSpan(0, stageInfo.typeNum, 0);
+                            System.TimeSpan time = System.DateTime.Now - stageInfo.time;
+
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)leadTime.TotalSeconds;
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (float)(time.TotalSeconds);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text =  (int)(button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
-                            //button.transform.Find("State/Text").gameObject.GetComponent<Text>().text =
-                            //    ((int)(time / 60)).ToString() + " : " + ((int)(time % 60)).ToString();
                             button.transform.Find("RedImage").gameObject.SetActive(true);
                         }
                         //완료

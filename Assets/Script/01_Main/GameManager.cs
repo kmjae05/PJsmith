@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour {
         data.stageMine = new List<Mine>();
         data.stageMine = StageMineData.instance.getMineList();
 
+        data.time = new DateTime();
+        data.time = DateTime.Now;
+
+
         bf.Serialize(file, data);
         file.Close();
     }
@@ -202,6 +206,8 @@ class PlayerData
     public List<Plunder> plunder;
 
     public List<Mine> stageMine;
+
+    public System.DateTime time;
 }
 
 

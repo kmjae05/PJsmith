@@ -210,42 +210,41 @@ public class StageData : MonoBehaviour
         //탐험
         for (int i = 0; i < stageInfoListtmp.Count; i++)
         {
-            //아이템 획득
-            if (stageInfoListtmp[i].getItemTimeFlag)
+            ////아이템 획득
+            //if (stageInfoListtmp[i].getItemTimeFlag)
+            //{
+            //    if (stageInfoListtmp[i].time <= stageInfoListtmp[i].getItemTime)
+            //    {
+            //        stageInfoListtmp[i].getItemTimeFlag = false;
+
+            //        //아이템 획득
+            //        getItem(stageInfoListtmp[i]);
+
+            //        //flag
+            //        stageInfoListtmp[i].getRecentItemFlag = true;
+            //        if (stageInfoListtmp[i].time <= 0)
+            //        {
+            //            stageInfoListtmp[i].getItemTimeFlag = false;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    stageInfoListtmp[i].getRecentItemFlag = false;
+            //    //아이템 획득 시간 정하기
+            //    stageInfoListtmp[i].getItemTimeFlag = true;
+            //    float time = 10f;
+            //    stageInfoListtmp[i].getItemTime = stageInfoListtmp[i].time - time;
+
+            //}
+
+
+
+            //사냥 완료
+            TimeSpan leadTime = new TimeSpan(0, stageInfoListtmp[i].typeNum, 0);
+            if (stageInfoListtmp[i].time + leadTime <= DateTime.Now )// && !stageInfoListtmp[i].getItemTimeFlag)
             {
-                if (stageInfoListtmp[i].time <= stageInfoListtmp[i].getItemTime)
-                {
-                    stageInfoListtmp[i].getItemTimeFlag = false;
-
-                    //아이템 획득
-                    getItem(stageInfoListtmp[i]);
-
-                    //flag
-                    stageInfoListtmp[i].getRecentItemFlag = true;
-                    if (stageInfoListtmp[i].time <= 0)
-                    {
-                        stageInfoListtmp[i].getItemTimeFlag = false;
-                    }
-                }
-            }
-            else
-            {
-                stageInfoListtmp[i].getRecentItemFlag = false;
-                //아이템 획득 시간 정하기
-                stageInfoListtmp[i].getItemTimeFlag = true;
-                float time = 10f;
-                stageInfoListtmp[i].getItemTime = stageInfoListtmp[i].time - time;
-
-            }
-
-
-
-            //시간
-            stageInfoListtmp[i].time = stageInfoListtmp[i].time - Time.deltaTime;
-            if (stageInfoListtmp[i].time <= 0 && !stageInfoListtmp[i].getItemTimeFlag)
-            {
-                Debug.Log("t");
-                stageInfoListtmp[i].time = 0;
+                //stageInfoListtmp[i].time = 0;
                 stageInfoListtmp[i].state = false;
                 stageInfoListtmp[i].complete = true;
                 //퀘스트 카운트
@@ -261,10 +260,11 @@ public class StageData : MonoBehaviour
         stageInfoListtmp = stageInfoList.FindAll(x => x.regen == true);
         for (int i = 0; i < stageInfoListtmp.Count; i++)
         {
-            stageInfoListtmp[i].time = stageInfoListtmp[i].time - Time.deltaTime;
-            if (stageInfoListtmp[i].time <= 0)
+            TimeSpan leadTime = new TimeSpan(0, 1, 0);
+            //stageInfoListtmp[i].time = stageInfoListtmp[i].time - Time.deltaTime;
+            if (stageInfoListtmp[i].time + leadTime <= DateTime.Now)
             {
-                stageInfoListtmp[i].time = 0;
+                //stageInfoListtmp[i].time = 0;
                 stageInfoListtmp[i].regen = false;
                 stageInfoListtmp[i].wait = true;
             }
@@ -377,18 +377,18 @@ public class StageInfo
     public int typeNum;            //1-소, 2-중, 3-대
     public string stageName;       //오브젝트 이름
 
-    public bool state;             //진행 상태
+    public bool state;             //사냥 활성 상태
     public bool complete;          //완료
     public bool wait;              //탐험 대기
     public bool regen;              //리젠 중
 
     public string mercenaryName;   //용병 이름
-    public float time;             //남은 시간
+    public System.DateTime time;   //기준 시간
 
     public string[] getItem;       //전체 획득한 아이템
     public int[] getItemNum;       //전체 획득한 아이템 수량
-    public float getItemTime;       //아이템 획득 가능한 시간
-    public bool getItemTimeFlag;    //아이템 획득 시간 기록
+    //public float getItemTime;       //아이템 획득 가능한 시간
+    //public bool getItemTimeFlag;    //아이템 획득 시간 기록
     public string getRecentItem;   //최근 획득한 아이템
     public int getRecentItemNum;    //최근 획득한 아이템 수
     public bool getRecentItemFlag;  //아이템 획득 타이밍

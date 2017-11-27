@@ -36,13 +36,6 @@ public class MonsterData : MonoBehaviour {
             MonsterList.Add(new FieldMonster(monsterData, i));
         }
 
-
-        //for(int i = 0; i < MonsterList[0].itemName.Length; i++)
-        //{
-        //    Debug.Log(MonsterList[0].itemName[i]);
-        //}
-
-
     }
 	
     public List<FieldMonster> getMonsterList() { return MonsterList; }
@@ -59,6 +52,8 @@ public class FieldMonster
     public string[] itemName;
     public int[] itemAmount;
     public int[] itemProb;
+
+
 
     public FieldMonster(JsonData data, int index)
     {

@@ -293,7 +293,10 @@ public class Mercenary
     public InventoryThings[] equipGloves;
     public InventoryThings[] equipBoots;
 
-    public bool state = false;         //용병 상태
+    public bool state = false;         //용병 활성화 상태
+    public string active;           //용병 활동 상태
+    //ready, go, back, hunt, recovery 
+
     public int stageNum;            //위치한 스테이지
 
     //대표 캐릭터
