@@ -241,23 +241,22 @@ public class StageManager : MonoBehaviour
                 GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + stageInfoList[i].mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.5f);
             }
         }
-
-        nowTime = new System.DateTime();
-        startTime = new System.DateTime();
     }
 
 
 
     private void Update()
     {
-        nowTime = System.DateTime.Now;
-        Debug.Log("now : " + nowTime + ", startTime : " + startTime + " / " + (nowTime - startTime));
-
         stageInfoList = stageData.getStageInfoList();
         plunderInfoList = stageData.getPlunderInfoList();
         stageInfoListtmp.Clear();
 
-        WorldMapBackObj.transform.Find("Smithy/Level/LevelText").gameObject.GetComponent<Text>().text = "Lv" + Player.instance.getUser().level.ToString() + " 대장간";
+        GameObject.Find("Menu").transform.Find("WorldMapBack/Stage/UIPanel/Back/Smithy/Level/LevelText").gameObject.GetComponent<Text>().text 
+            = "Lv" + Player.instance.getUser().level.ToString() + " 대장간";
+
+        GameObject.Find("Menu").transform.Find("WorldMapBack/Stage/UIPanel/Back").gameObject.transform.position
+            = WorldMapBackObj.transform.position;
+
 
         if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
             SetPositionHUD();
@@ -355,12 +354,11 @@ public class StageManager : MonoBehaviour
                 for (int i = 0; i < stageInfoListtmp.Count; i++)
                 {
                     string stageName = stageInfoListtmp[i].stageName;
-                    System.TimeSpan leadTime = new System.TimeSpan(0, stageInfoListtmp[i].typeNum, 0);
                     System.TimeSpan time = System.DateTime.Now - stageInfoListtmp[i].time;
 
                     GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(true);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)leadTime.TotalSeconds;
+                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)stageInfoListtmp[i].leadTime.TotalSeconds;
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (float)(time.TotalSeconds);
                     GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text
                         = (int)(GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
@@ -624,6 +622,7 @@ public class StageManager : MonoBehaviour
                 result.getItemNum[i] = 0;
             }
             result.time = System.DateTime.Now;  //result.typeNum * 60f;
+            result.leadTime = new System.TimeSpan(0, result.typeNum, 0);
             result.mercenaryName = mercenaryManager.getCurSelect();
 
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(true);
@@ -923,8 +922,7 @@ public class StageManager : MonoBehaviour
         spotButton.transform.Find("StageText").GetComponent<Text>().text = result.getStageNum().ToString();  //
         spotButton.name = result.stageName + "Button"; //오브젝트 이름 변경
                                                        //stageData.stageImageChange(result);
-        System.TimeSpan leadTime = new System.TimeSpan(0, 1, 0);
-        result.time = System.DateTime.Now + leadTime ;  // typeNumToRegenTime();             //리젠 시간 설정
+        result.time = System.DateTime.Now;  // typeNumToRegenTime();             //리젠 시간 설정
         //spotButton.GetComponent<Image>().color = new Color(spotButton.GetComponent<Image>().color.r, spotButton.GetComponent<Image>().color.g, spotButton.GetComponent<Image>().color.b, 0.5f);
         //spotButton.GetComponent<Image>().sprite = result.sprite;
 
@@ -984,7 +982,6 @@ public class StageManager : MonoBehaviour
                 for (int j = 0; j < result.getItemNum[i]; j++)
                 {
                     ThingsData.instance.getInventoryThingsList().Add(new InventoryThings(ThingsData.instance.getThingsList().Find(x => x.name == result.getItem[i]).type, result.getItem[i], 1));
-                    //ThingsData.instance.getInventoryThingsList().Find(x => x.name == result.getItem[i]).recent = true;
                 }
             }
             //장비 외 아이템
@@ -1001,8 +998,6 @@ public class StageManager : MonoBehaviour
                 }
 
             }
-
-            //yield return new WaitForSeconds(0.3f);
             yield return null;
         }
     }

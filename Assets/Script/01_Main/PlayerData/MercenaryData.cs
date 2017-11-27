@@ -326,6 +326,7 @@ public class Mercenary
         this.equipGloves = new InventoryThings[2];
         this.equipBoots = new InventoryThings[2];
         this.state = false;
+        this.active = "ready";
         this.stageNum = 0;
     }
     //public Mercenary(string merName)

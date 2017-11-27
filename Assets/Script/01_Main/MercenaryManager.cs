@@ -244,10 +244,9 @@ public class MercenaryManager : MonoBehaviour {
                         if (!stageInfo.complete)
                         {
                             flag[i] = true;
-                            System.TimeSpan leadTime = new System.TimeSpan(0, stageInfo.typeNum, 0);
                             System.TimeSpan time = System.DateTime.Now - stageInfo.time;
 
-                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)leadTime.TotalSeconds;
+                            button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)stageInfo.leadTime.TotalSeconds;
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (float)(time.TotalSeconds);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text =  (int)(button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
                             button.transform.Find("RedImage").gameObject.SetActive(true);

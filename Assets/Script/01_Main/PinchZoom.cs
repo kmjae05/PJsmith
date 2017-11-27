@@ -10,6 +10,9 @@ public class PinchZoom : MonoBehaviour
     private RectTransform uiPanel;
     private GameObject monster;
 
+    private GameObject worldMapBack;
+    private RectTransform uiPanelBack;
+
     private GameObject territory;
     private RectTransform terUIPanel;
     
@@ -19,6 +22,9 @@ public class PinchZoom : MonoBehaviour
         worldMap = GameObject.Find("Menu").transform.Find("WorldMap").gameObject;
         uiPanel = worldMap.transform.Find("Stage/UIPanel").gameObject.GetComponent<RectTransform>();
         monster = GameObject.Find("Monster");
+
+        worldMapBack = GameObject.Find("Menu").transform.Find("WorldMapBack").gameObject;
+        uiPanelBack = worldMapBack.transform.Find("Stage/UIPanel").gameObject.GetComponent<RectTransform>();
 
         territory = GameObject.Find("Menu").transform.Find("TerritoryPopup").gameObject;
         terUIPanel = territory.transform.Find("UIPanel").gameObject.GetComponent<RectTransform>();
@@ -30,7 +36,7 @@ public class PinchZoom : MonoBehaviour
         if (GameObject.Find("Menu").transform.Find("WorldMap").gameObject.activeInHierarchy)
         {
             worldMap.transform.Find("Stage/UIPanel").gameObject.GetComponent<ScrollRect>().enabled = true;
-            // If there are two touches on the device...
+
             if (Input.touchCount == 2)
             {
                 worldMap.transform.Find("Stage/UIPanel").gameObject.GetComponent<ScrollRect>().enabled = false;
@@ -128,6 +134,48 @@ public class PinchZoom : MonoBehaviour
                 uiPanel.localPosition = new Vector3(0, 0, 0);
             }
         }
+
+
+        if (GameObject.Find("Menu").transform.Find("WorldMapBack").gameObject.activeInHierarchy)
+        {
+            worldMapBack.transform.Find("Stage/UIPanel").gameObject.GetComponent<ScrollRect>().enabled = true;
+
+            if (Input.touchCount == 2)
+            {
+                worldMapBack.transform.Find("Stage/UIPanel").gameObject.GetComponent<ScrollRect>().enabled = false;
+
+                Touch touchZero = Input.GetTouch(0);
+                Touch touchOne = Input.GetTouch(1);
+                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+                float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+
+                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                if (deltaMagnitudeDiff > 2)
+                {
+                    uiPanelBack.localScale = new Vector2(
+                        uiPanelBack.localScale.x - 0.02f, uiPanelBack.localScale.y - 0.02f);
+                    uiPanelBack.localScale = new Vector2(
+                        Mathf.Clamp(uiPanelBack.localScale.x, 0.4f, 1f), Mathf.Clamp(uiPanelBack.localScale.y, 0.4f, 1f));
+                }
+                if (deltaMagnitudeDiff < -2)
+                {
+                    uiPanelBack.localScale = new Vector2(
+                        uiPanelBack.localScale.x + 0.02f, uiPanelBack.localScale.y + 0.02f);
+                    uiPanelBack.localScale = new Vector2(
+                        Mathf.Clamp(uiPanelBack.localScale.x, 0.4f, 1f), Mathf.Clamp(uiPanelBack.localScale.y, 0.4f, 1f));
+                }
+                uiPanelBack.localPosition = new Vector3(0, 0, 0);
+            }
+        }
+
+
+
+
+
 
 
         //영지 줌인아웃

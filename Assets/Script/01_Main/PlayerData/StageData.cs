@@ -329,7 +329,6 @@ public class StageData : MonoBehaviour
                         stin.getItem[j] = monsterData.getMonsterList()[i].itemName[j];
                         stin.getItemNum[j] += monsterData.getMonsterList()[i].itemAmount[j];
                         stin.getRecentItem = stin.getItem[j]; stin.getRecentItemNum = 1;
-                        //Debug.Log(stin.getRecentItem);
                         return;
                     }
                     else { prob += monsterData.getMonsterList()[i].itemProb[j]; }
@@ -369,7 +368,7 @@ public class StageData : MonoBehaviour
 public class StageInfo
 {
     //바뀌지 않는 data
-    private int stageNum;           //본인 번호
+    private int stageNum;          //본인 번호
 
     //바뀌는 data
     public string spotName;        //위치한 스팟 이름
@@ -377,21 +376,23 @@ public class StageInfo
     public int typeNum;            //1-소, 2-중, 3-대
     public string stageName;       //오브젝트 이름
 
+    public bool wait;              //탐험 대기
+    public bool mermove;           //용병 이동중
     public bool state;             //사냥 활성 상태
     public bool complete;          //완료
-    public bool wait;              //탐험 대기
-    public bool regen;              //리젠 중
+    public bool regen;             //리젠 중
 
     public string mercenaryName;   //용병 이름
-    public System.DateTime time;   //기준 시간
+    public DateTime time;   //기준 시간
+    public TimeSpan leadTime;      //걸리는 시간
 
     public string[] getItem;       //전체 획득한 아이템
     public int[] getItemNum;       //전체 획득한 아이템 수량
-    //public float getItemTime;       //아이템 획득 가능한 시간
-    //public bool getItemTimeFlag;    //아이템 획득 시간 기록
+    //public float getItemTime;    //아이템 획득 가능한 시간
+    //public bool getItemTimeFlag; //아이템 획득 시간 기록
     public string getRecentItem;   //최근 획득한 아이템
-    public int getRecentItemNum;    //최근 획득한 아이템 수
-    public bool getRecentItemFlag;  //아이템 획득 타이밍
+    public int getRecentItemNum;   //최근 획득한 아이템 수
+    public bool getRecentItemFlag; //아이템 획득 타이밍
 
     //생성자
     public StageInfo() { wait = true; spotName = null;  getItem = new string[30]; getItemNum = new int[30]; }

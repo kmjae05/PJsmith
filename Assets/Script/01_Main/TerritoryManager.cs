@@ -1369,8 +1369,10 @@ public class TerritoryManager : MonoBehaviour
     public void worldMapPosition()
     {
         GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
+        GameObject.Find("Menu").transform.Find("WorldMapBack/Stage/UIPanel/Back").gameObject.transform.localPosition = new Vector3(0, 0, 0);
         //크기 조정
         GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel").gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        GameObject.Find("Menu").transform.Find("WorldMapBack/Stage/UIPanel").gameObject.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         GameObject monster = GameObject.Find("01_3D").transform.Find("Monster").gameObject;
         if (monster.transform.childCount > 2)
         {
