@@ -249,12 +249,10 @@ public class MercenaryManager : MonoBehaviour {
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)stageInfo.leadTime.TotalSeconds;
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (float)(time.TotalSeconds);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text =  (int)(button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
-                            button.transform.Find("RedImage").gameObject.SetActive(true);
                         }
                         //완료
                         else
                         {
-                            button.transform.Find("RedImage").gameObject.SetActive(false);
                             button.transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "완료";
                             button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = button.transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue;
                             
@@ -264,6 +262,13 @@ public class MercenaryManager : MonoBehaviour {
                                 flag[i] = false;
                             }
                         }
+                        if (mercenary[i].active == "hunt")
+                        {
+                            button.transform.Find("RedImage").gameObject.SetActive(true);
+                        }
+                        else button.transform.Find("RedImage").gameObject.SetActive(false);
+
+
                     }
                 }
                 //대기 중

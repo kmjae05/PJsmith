@@ -53,6 +53,7 @@ public class FieldMonster
     public int[] itemAmount;
     public int[] itemProb;
 
+    public int HP = 1000;
 
 
     public FieldMonster(JsonData data, int index)

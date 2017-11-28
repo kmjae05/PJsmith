@@ -383,8 +383,10 @@ public class StageInfo
     public bool regen;             //리젠 중
 
     public string mercenaryName;   //용병 이름
-    public DateTime time;   //기준 시간
+    public DateTime time;           //기준 시간
     public TimeSpan leadTime;      //걸리는 시간
+
+    public int monsterHP;           //몬스터 체력
 
     public string[] getItem;       //전체 획득한 아이템
     public int[] getItemNum;       //전체 획득한 아이템 수량

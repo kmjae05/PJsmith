@@ -28,7 +28,8 @@ public class StageManager : MonoBehaviour
     private List<PlunderInfo> plunderInfoList;
 
     //private string curContSelect;              //현재 선택된 대륙
-    private int curStageSelect;               //현재 선택된 스테이지
+    private int curStageSelect;               //현재 선택된 스테이지 번호
+    private GameObject curSelectObj;            //현재 선택된 스테이지 오브젝트
     private string curPlunderSelect;          //현재 선택된 상대 플레이어
     private float stageTime = 1800f;
 
@@ -114,6 +115,7 @@ public class StageManager : MonoBehaviour
 
         MonsterObjList = new List<GameObject>();
         light = Monster.transform.Find("Spotlight").gameObject;
+        curSelectObj = new GameObject();
 
         StageObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject;
         PlunderObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Plunder").gameObject;
@@ -286,7 +288,7 @@ public class StageManager : MonoBehaviour
         {
             StageInfo stin = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
             Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
-            System.TimeSpan leadTime = new System.TimeSpan(0, stin.typeNum, 0);
+            System.TimeSpan leadTime = stin.leadTime;
             float min = (stin.time + leadTime - System.DateTime.Now).Minutes;
             float sec = (stin.time + leadTime - System.DateTime.Now).Seconds;
             timeText.text = "남은 시간 : " + ((int)min).ToString() + "분 " + ((int)sec).ToString() + "초";
@@ -357,11 +359,6 @@ public class StageManager : MonoBehaviour
                     System.TimeSpan time = System.DateTime.Now - stageInfoListtmp[i].time;
 
                     GameObject.Find(stageName + "Button").transform.Find("State").gameObject.SetActive(true);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(true);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = (float)stageInfoListtmp[i].leadTime.TotalSeconds;
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = (float)(time.TotalSeconds);
-                    GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text
-                        = (int)(GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
 
                     //획득 효과
                     if (stageInfoListtmp[i].getRecentItemFlag)
@@ -490,6 +487,8 @@ public class StageManager : MonoBehaviour
     //스테이지 팝업창 갱신. (정보창, 현황창)
     public void initStagePopup(GameObject obj)
     {
+        Debug.Log(Vector3.Distance(obj.transform.localPosition, Vector3.zero));
+        curSelectObj = obj;
         selectMerFlag = false;
         curStageSelect = System.Convert.ToInt32(obj.transform.Find("StageText").GetComponent<Text>().text);
 
@@ -501,7 +500,7 @@ public class StageManager : MonoBehaviour
             return;
         }
         //용병 안 보낸 상태
-        else if (!result.state && !result.complete)
+        else if (!result.state && !result.complete && !result.mermove)
         {
             //스테이지 정보 창
             stagePopup.SetActive(true);
@@ -509,8 +508,10 @@ public class StageManager : MonoBehaviour
             selectFrame = stagePopup.transform.Find("UIPanel/MercenaryBox/selectFrame").gameObject;
             selectFrame.SetActive(false);
             nameText.text = result.type + " " + result.typeNum.ToString();
+            float dist = Vector3.Distance(curSelectObj.transform.localPosition, GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition);
+            int time = (int)(dist / 10);
             GameObject.Find("StageTimeText").GetComponent<Text>().text =
-                "소요 시간 " + (result.typeNum).ToString() + "분 ";
+                "이동 시간 " + (time/60).ToString() + "분 " + (time%60).ToString() + "초";
             //stage에 따라 획득 가능한 아이템
             setGetItemInfo(result);
 
@@ -527,7 +528,7 @@ public class StageManager : MonoBehaviour
 
         }
         //용병 보낸 상태
-        else
+        else if(result.mermove)
         {
             //스테이지 현황 팝업창
             stageStatePopup.SetActive(true);
@@ -607,14 +608,12 @@ public class StageManager : MonoBehaviour
         if (selectMerFlag)
         {
             monsterObj.SetActive(false);
-
             stagePopup.SetActive(false);
-            stageStatePopup.SetActive(true);
 
             //보낸 상태로 변경
             StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
-            GameObject.Find("StageStateText").GetComponent<Text>().text = result.type + " " + result.typeNum.ToString();
-            result.state = true;
+            //GameObject.Find("StageStateText").GetComponent<Text>().text = result.type + " " + result.typeNum.ToString();
+            result.mermove = true;
             result.wait = false;
             for (int i = 0; i < result.getItem.Length; i++)
             {
@@ -622,8 +621,12 @@ public class StageManager : MonoBehaviour
                 result.getItemNum[i] = 0;
             }
             result.time = System.DateTime.Now;  //result.typeNum * 60f;
-            result.leadTime = new System.TimeSpan(0, result.typeNum, 0);
+            //걸리는 시간. 거리 계산
+            float dist = Vector3.Distance(curSelectObj.transform.localPosition, GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition);
+            int time = (int)(dist / 10);
+            result.leadTime = new System.TimeSpan(0, time/60, time%60);
             result.mercenaryName = mercenaryManager.getCurSelect();
+            result.monsterHP = 1000;
 
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(true);
             stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
@@ -631,38 +634,30 @@ public class StageManager : MonoBehaviour
             Mercenary mer = mercenaryManager.getMercenary().Find(x => x.getName() == mercenaryManager.getCurSelect());
             mer.setStageNum(result.getStageNum());
             mer.setState(true);
+            mer.active = "go";
+            mer.posX = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition.x;
+            mer.posY = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition.y;
             mercenaryManager.setMercenaryIndex(mercenaryManager.getMercenary().FindIndex(x => x.getName() == mer.getName()), mer);
 
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection").GetComponent<Button>().interactable = false;
             Color col = GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color;
             GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + result.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(col.r, col.g, col.b, 0.5f);
 
-            GameObject mercImage = GameObject.Find(result.stageName + "Button").transform.Find("MercImage").gameObject;
-            mercImage.SetActive(true);
-            string merImageName = result.mercenaryName;
-            mercImage.transform.Find("Image").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Mercenary/" + merImageName);
-
-            Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
+            //Text timeText = GameObject.Find("TimeBox").transform.Find("Text").gameObject.GetComponent<Text>();
             //float time = stageInfoList.Find(x => x.getStageNum() == curStageSelect).time;
             //timeText.text = "남은 시간 : " + ((int)(time / 60)).ToString() + "분 " + ((int)(time % 60)).ToString() + "초";
 
 
-            GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mer.getName() + " 용병이 사냥을 시작했습니다.");
+            GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle(mer.getName() + " 용병이 출발했습니다.");
 
-            //if(result.getStageNum() <= 15)
-            //    GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/pickax").gameObject.SetActive(true);
-            //else 
             GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(true);
             GameObject.Find("stage" + result.getStageNum().ToString() + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(true);
 
             //획득 가능 아이템 삭제
             destroyItemBox(itemListObj);
 
-            GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
-            GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
-
-            startTime = System.DateTime.Now;
-
+            //GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
+            //GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
         }
         //용병 선택 안 하고 보내기 버튼 선택
         else
@@ -876,7 +871,7 @@ public class StageManager : MonoBehaviour
         //용병 초기화
         Mercenary mer = mercenaryManager.getMercenary().Find(x => x.getName() == result.mercenaryName);
         mer.setStageNum(0);
-        mer.setState(false);
+        //mer.setState(false);
         mercenaryManager.setMercenaryIndex(mercenaryManager.getMercenary().FindIndex(x => x.getName() == mer.getName()), mer);
         stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(false);
         result.mercenaryName = null;

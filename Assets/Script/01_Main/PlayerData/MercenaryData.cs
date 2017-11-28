@@ -295,7 +295,9 @@ public class Mercenary
 
     public bool state = false;         //용병 활성화 상태
     public string active;           //용병 활동 상태
-    //ready, go, back, hunt, recovery 
+    //ready, go, back, hunt, recovery
+    public float posX;
+    public float posY;
 
     public int stageNum;            //위치한 스테이지
 
