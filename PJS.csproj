@@ -404,6 +404,7 @@
     <Compile Include="Assets\Script\01_Main\Store\Store.cs" />
     <Compile Include="Assets\Script\01_Main\Store\StoreManager.cs" />
     <Compile Include="Assets\Script\01_Main\TerritoryManager.cs" />
+    <Compile Include="Assets\Script\01_Main\WorldMapDamageManager.cs" />
     <Compile Include="Assets\Script\01_Main\WorldMapManager.cs" />
     <Compile Include="Assets\Script\02_Loading\InGameLoad.cs" />
     <Compile Include="Assets\Script\02_Loading\LoadData.cs" />
