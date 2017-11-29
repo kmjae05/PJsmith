@@ -129,6 +129,7 @@ public class StageData : MonoBehaviour
             stin.type = typeNumToString(random);
             random = UnityEngine.Random.Range(1, 4);
             stin.typeNum = random;
+            stin.monsterHP = 1000f * stin.typeNum;
             stin.stageName = "stage" + stin.getStageNum().ToString();   // ex) stage1
 
             //스테이지 아이콘 변경
@@ -241,20 +242,20 @@ public class StageData : MonoBehaviour
 
 
             //사냥 완료
-            TimeSpan leadTime = new TimeSpan(0, stageInfoListtmp[i].typeNum, 0);
-            if (stageInfoListtmp[i].time + leadTime <= DateTime.Now )// && !stageInfoListtmp[i].getItemTimeFlag)
-            {
-                //stageInfoListtmp[i].time = 0;
-                stageInfoListtmp[i].state = false;
-                stageInfoListtmp[i].complete = true;
-                //퀘스트 카운트
-                if (stageInfoListtmp[i].type == QuestData.instance.getQuestList().Find(x => x.type == "hunting").target)
-                    QuestData.questHunting += stageInfoListtmp[i].typeNum;
-                else if (QuestData.instance.getQuestList().Find(x => x.type == "hunting").target == "몬스터 아무거나")
-                    QuestData.questHunting += stageInfoListtmp[i].typeNum;
+            //TimeSpan leadTime = new TimeSpan(0, stageInfoListtmp[i].typeNum, 0);
+            //if (stageInfoListtmp[i].time + leadTime <= DateTime.Now )// && !stageInfoListtmp[i].getItemTimeFlag)
+            //{
+            //    //stageInfoListtmp[i].time = 0;
+            //    stageInfoListtmp[i].state = false;
+            //    stageInfoListtmp[i].complete = true;
+            //    //퀘스트 카운트
+            //    if (stageInfoListtmp[i].type == QuestData.instance.getQuestList().Find(x => x.type == "hunting").target)
+            //        QuestData.questHunting += stageInfoListtmp[i].typeNum;
+            //    else if (QuestData.instance.getQuestList().Find(x => x.type == "hunting").target == "몬스터 아무거나")
+            //        QuestData.questHunting += stageInfoListtmp[i].typeNum;
 
-                QuestData.questWeeklyHunting += stageInfoListtmp[i].typeNum;
-            }
+            //    QuestData.questWeeklyHunting += stageInfoListtmp[i].typeNum;
+            //}
         }
         //리젠 시간
         stageInfoListtmp = stageInfoList.FindAll(x => x.regen == true);
@@ -379,14 +380,16 @@ public class StageInfo
     public bool wait;              //탐험 대기
     public bool mermove;           //용병 이동중
     public bool state;             //사냥 활성 상태
-    public bool complete;          //완료
+    public bool complete;          //사냥 완료
     public bool regen;             //리젠 중
 
     public string mercenaryName;   //용병 이름
     public DateTime time;           //기준 시간
     public TimeSpan leadTime;      //걸리는 시간
 
-    public int monsterHP;           //몬스터 체력
+    public float monsterHP;           //몬스터 체력
+    public float monsterAttackSpeed;//몬스터 공격 주기 기준
+    public float monsterAttackTime; //몬스터 공격 쿨타임. 흐르는 시간
 
     public string[] getItem;       //전체 획득한 아이템
     public int[] getItemNum;       //전체 획득한 아이템 수량
@@ -397,11 +400,12 @@ public class StageInfo
     public bool getRecentItemFlag; //아이템 획득 타이밍
 
     //생성자
-    public StageInfo() { wait = true; spotName = null;  getItem = new string[30]; getItemNum = new int[30]; }
+    public StageInfo() { wait = true; spotName = null;  getItem = new string[30]; getItemNum = new int[30]; monsterAttackSpeed = 2.0f; }
     public StageInfo(int stageNum)
     {
         this.stageNum = stageNum; this.wait = true; spotName = null;
         getItem = new string[30]; getItemNum = new int[30];
+        monsterAttackSpeed = 2.0f;
     }
 
     public int getStageNum() { return stageNum; }

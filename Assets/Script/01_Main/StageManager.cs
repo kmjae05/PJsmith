@@ -182,9 +182,6 @@ public class StageManager : MonoBehaviour
                 //spotButton.GetComponent<Image>().sprite = sList[i].sprite;
                 if (sList[i].state)
                 {
-                    //if (sList[i].getStageNum() <= 15)
-                    //    spotButton.transform.Find("State/Progress/pickax").gameObject.SetActive(true);
-                    //else
                     spotButton.transform.Find("State/Progress/sword").gameObject.SetActive(true);
                     spotButton.transform.Find("State/Progress/Dust").gameObject.SetActive(true);
                     spotButton.transform.Find("MercImage").gameObject.SetActive(true);
@@ -626,7 +623,7 @@ public class StageManager : MonoBehaviour
             int time = (int)(dist / 10);
             result.leadTime = new System.TimeSpan(0, time/60, time%60);
             result.mercenaryName = mercenaryManager.getCurSelect();
-            result.monsterHP = 1000;
+            result.monsterHP = 10000f*result.typeNum;
 
             stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + result.mercenaryName).gameObject.SetActive(true);
             stageInfoList[stageInfoList.FindIndex(x => x.getStageNum() == curStageSelect)] = result;
@@ -1649,6 +1646,7 @@ public class StageManager : MonoBehaviour
     public List<PlunderInfo> getPlunderInfoList() { return plunderInfoList; }
     public void setPlunderInfoList(List<PlunderInfo> list) { plunderInfoList = list; }
 
+    public List<GameObject> getMonsterObjList() { return MonsterObjList; }
 
     public int getCurStageSelect() { return curStageSelect; }
     public void SetCurStageSelect(int cur) { curStageSelect = cur; }

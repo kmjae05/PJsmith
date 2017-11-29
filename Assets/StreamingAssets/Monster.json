@@ -3,7 +3,7 @@
         {
             "name" : "전갈",
             "grade" : 1,
-            "dps" : 0,
+            "dps" : 50,
             "strPower" : 0,
             "attackSpeed" : 0,
             "focus" : 0,
@@ -107,7 +107,7 @@
 		{
             "name" : "오쿰",
             "grade" : 1,
-            "dps" : 0,
+            "dps" : 40,
             "strPower" : 0,
             "attackSpeed" : 0,
             "focus" : 0,
@@ -211,7 +211,7 @@
 		{
             "name" : "인큐버스",
             "grade" : 1,
-            "dps" : 0,
+            "dps" : 70,
             "strPower" : 0,
             "attackSpeed" : 0,
             "focus" : 0,

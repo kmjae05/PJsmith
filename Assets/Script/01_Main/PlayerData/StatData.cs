@@ -211,7 +211,7 @@ public class StatData : MonoBehaviour {
 [Serializable]
 public class Stat
 {
-    public int HP;
+    public float HP;
     public float dps;
     public float strPower;
     public double attackSpeed;
@@ -226,7 +226,7 @@ public class Stat
 
     public void statClear()
     {
-        HP = 1000;
+        HP = 1000f;
         dps = 0;
         strPower = 0;
         attackSpeed = 0;

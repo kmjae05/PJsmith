@@ -299,6 +299,10 @@ public class Mercenary
     public float posX;
     public float posY;
 
+    public float AttackSpeed;//공격 주기 기준
+    public float AttackTime; //공격 쿨타임. 흐르는 시간
+
+
     public int stageNum;            //위치한 스테이지
 
     //대표 캐릭터
@@ -311,6 +315,7 @@ public class Mercenary
         this.exp = 0;
         this.max_exp = this.level * 55;
         this.stat = new Stat();
+        this.stat.HP = 1000f;
         this.stat.strPower = 1;
         this.stat.attackSpeed = 1.0f;
         this.stat.focus = 50;
@@ -330,6 +335,8 @@ public class Mercenary
         this.state = false;
         this.active = "ready";
         this.stageNum = 0;
+
+        AttackSpeed = 1.5f;
     }
     //public Mercenary(string merName)
     //{ this.merName = merName; }

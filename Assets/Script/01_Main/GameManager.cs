@@ -24,12 +24,10 @@ public class GameManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-        Debug.Log("GameManagerAwake");
     }
 
     void Start ()
     {
-        Debug.Log("GameManagerStart");
         mineData = GameObject.Find("MineData").GetComponent<MineData>();
         achvData = GameObject.Find("AchievementData").GetComponent<AchievementData>();
         questData = GameObject.Find("QuestData").GetComponent<QuestData>();
@@ -51,7 +49,6 @@ public class GameManager : MonoBehaviour {
 
     public void Save()
     {
-        Debug.Log("save");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 

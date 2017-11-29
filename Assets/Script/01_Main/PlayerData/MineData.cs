@@ -29,7 +29,6 @@ public class MineData : MonoBehaviour {
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-        Debug.Log("MineDataAwake");
 
 
         if (Application.platform == RuntimePlatform.Android)
@@ -82,11 +81,6 @@ public class MineData : MonoBehaviour {
 
     }
 
-    void Start ()
-    {
-        Debug.Log("MineDataStart");
-
-	}
 
     void Update()
     {

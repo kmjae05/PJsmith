@@ -15,6 +15,9 @@ public class MonsterHunting : MonoBehaviour {
     private List<Mercenary> mercenary;
     private GameObject merObj;
 
+    private StageManager stageManager;
+    private MonsterData monsterData;
+
     private void Start()
     {
         WorldMapBackObj = GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back").gameObject;
@@ -22,7 +25,12 @@ public class MonsterHunting : MonoBehaviour {
         mercenary = MercenaryData.instance.getMercenary();
         merObj = new GameObject();
 
+        stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+        monsterData = GameObject.Find("StageManager").GetComponent<MonsterData>();
+
         StartCoroutine(loop());
+        StartCoroutine(MonsterAttack());
+        StartCoroutine(MercenaryAttack());
     }
 
 
@@ -83,6 +91,8 @@ public class MonsterHunting : MonoBehaviour {
                     //마지막 위치에서 영지 방향으로.
 
 
+
+
                 }
 
                 //사냥
@@ -92,7 +102,7 @@ public class MonsterHunting : MonoBehaviour {
 
                     //몬스터 체력
                     GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(true);
-                    GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = 1000 * info.typeNum;
+                    GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue = 10000 * info.typeNum;
                     GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value = info.monsterHP;
                     GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider/TimeText").gameObject.GetComponent<Text>().text
                         = (int)(GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().value / GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.GetComponent<Slider>().maxValue * 100) + "%";
@@ -120,28 +130,116 @@ public class MonsterHunting : MonoBehaviour {
 
 
     //몬스터 공격 주기
-    IEnumerator MonsterAttack(float attackSpeed)
+    IEnumerator MonsterAttack()
     {
         while (true)
         {
+            for (int i = 0; i < mercenary.Count; i++)
+            {
+                StageInfo info = StageData.instance.getStageInfoList().Find(y => y.getStageNum() == mercenary[i].stageNum);
+                if (info != null && info.state)
+                {
+                    int index = StageData.instance.getStageInfoList().FindIndex(x => x.getStageNum() == mercenary[i].stageNum);
+
+                    //공격 주기 시간 체크
+                    info.monsterAttackTime += Time.deltaTime;
+                    if (info.monsterAttackSpeed < info.monsterAttackTime)
+                    {
+                        info.monsterAttackTime = 0;
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().Play("attack");
+                        mercenary[i].stat.HP -= monsterData.getMonsterList().Find(z => z.name == info.type).stat.dps * info.typeNum;
+                        Debug.Log(mercenary[i].stat.HP);
+                    }
+                    if (!stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("attack")
+                        && !stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("damage"))
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().CrossFade("stand");
+
+                    //용병 패배
+                    if (mercenary[i].stat.HP < 0)
+                    {
+                        info.state = false;
+                        mercenary[i].active = "recovery";
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().CrossFade("stand");
+                        Debug.Log("패배");
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("MercImage").gameObject.SetActive(false);
+                    }
+                }
 
 
 
-            yield return new WaitForSeconds(attackSpeed);
+            }
+
+
+            yield return null;
         }
     }
 
     //용병 공격 주기
-    IEnumerator MercenaryAttack(float attackSpeed)
+    IEnumerator MercenaryAttack()
     {
         while (true)
         {
+            for (int i = 0; i < mercenary.Count; i++)
+            {
+                StageInfo info = StageData.instance.getStageInfoList().Find(y => y.getStageNum() == mercenary[i].stageNum);
+                if (info != null && info.state)
+                {
+                    int index = StageData.instance.getStageInfoList().FindIndex(x => x.getStageNum() == mercenary[i].stageNum);
+
+                    //공격 주기 시간 체크
+                    mercenary[i].AttackTime += Time.deltaTime;
+                    if (mercenary[i].AttackSpeed < mercenary[i].AttackTime)
+                    {
+                        mercenary[i].AttackTime = 0;
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().Play("damage");
+                        info.monsterHP -= mercenary[i].stat.dps;
+                        Debug.Log(info.monsterHP);
+                    }
+                    if (!stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("attack")
+                        && !stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("damage"))
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().CrossFade("stand");
+
+                    //몬스터 토벌
+                    if (info.monsterHP < 0)
+                    {
+                        info.state = false;
+                        info.regen = true;
+                        info.complete = true;
+                        mercenary[i].active = "back";
+                        stageManager.getMonsterObjList()[index].GetComponent<Animation>().CrossFade("die");
+                        Debug.Log("승리");
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/TimeSlider").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
+                        GameObject.Find(info.stageName + "Button").transform.Find("MercImage").gameObject.SetActive(false);
+
+                        destroyMonster(stageManager.getMonsterObjList()[index]);
+                    }
+                }
 
 
-            yield return new WaitForSeconds(attackSpeed);
+
+            }
+
+
+
+
+            yield return null;
+
             
             
         }
+    }
+
+
+    IEnumerator destroyMonster(GameObject monObj)
+    {
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("삭제");
+        Destroy(monObj);
     }
 
 
