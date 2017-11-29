@@ -484,7 +484,6 @@ public class StageManager : MonoBehaviour
     //스테이지 팝업창 갱신. (정보창, 현황창)
     public void initStagePopup(GameObject obj)
     {
-        Debug.Log(Vector3.Distance(obj.transform.localPosition, Vector3.zero));
         curSelectObj = obj;
         selectMerFlag = false;
         curStageSelect = System.Convert.ToInt32(obj.transform.Find("StageText").GetComponent<Text>().text);
@@ -1401,7 +1400,7 @@ public class StageManager : MonoBehaviour
         List<StageInfo> sList = stageInfoList;
         for (int i = 0; i < sList.Count; i++)
         {
-            if (sList[i].spotName != null)
+            if (sList[i].spotName != null && MonsterObjList[i] !=null)
             {
                 string spotName = sList[i].spotName;
                 //스팟 인덱스

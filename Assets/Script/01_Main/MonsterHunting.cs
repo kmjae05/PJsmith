@@ -58,8 +58,9 @@ public class MonsterHunting : MonoBehaviour {
                     }
 
                     merObj.SetActive(true);
-                    merObj.transform.Find("TimeSlider").gameObject.SetActive(false);
-                    //merObj.transform.localPosition.Set(mercenary[i].posX, mercenary[i].posY, 0);
+                    merObj.transform.Find("TimeSlider").gameObject.SetActive(true);
+                    merObj.transform.Find("TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "이동중";
+                    
                     //남은 시간 계산
                     System.TimeSpan leadTime = System.DateTime.Now - info.time;
                     //방향
@@ -103,14 +104,15 @@ public class MonsterHunting : MonoBehaviour {
                     }
 
                     merObj.SetActive(true);
-                    merObj.transform.Find("TimeSlider").gameObject.SetActive(false);
+                    merObj.transform.Find("TimeSlider").gameObject.SetActive(true);
+                    merObj.transform.Find("TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "귀환중";
+
                     //남은 시간 계산
                     System.TimeSpan leadTime = System.DateTime.Now - info.time;
                     //방향
                     Vector3 dir = (GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition - spot).normalized;
                     //간 거리
                     Vector3 dist = new Vector3(dir.x * (float)leadTime.TotalSeconds * speed, dir.y * (float)leadTime.TotalSeconds * speed, 0);
-                    Debug.Log(dist.x + " " + dist.y);
                     merObj.transform.localPosition = spot + dist;
                     mercenary[i].posX = merObj.transform.localPosition.x;
                     mercenary[i].posY = merObj.transform.localPosition.y;
@@ -123,6 +125,8 @@ public class MonsterHunting : MonoBehaviour {
                         info.mermove = false;
                         merObj.SetActive(false);
                         GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + info.mercenaryName + "Selection").GetComponent<Button>().interactable = true;
+                        GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + info.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(1,1, 1, 1f);
+
                         Debug.Log("도착");
                     }
 
@@ -170,14 +174,15 @@ public class MonsterHunting : MonoBehaviour {
                     }
 
                     merObj.SetActive(true);
-                    merObj.transform.Find("TimeSlider").gameObject.SetActive(false);
+                    merObj.transform.Find("TimeSlider").gameObject.SetActive(true);
+                    merObj.transform.Find("TimeSlider/TimeText").gameObject.GetComponent<Text>().text = "회복중";
+                    
                     //남은 시간 계산
                     System.TimeSpan leadTime = System.DateTime.Now - info.time;
                     //방향
                     Vector3 dir = (GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition - spot).normalized;
                     //간 거리
                     Vector3 dist = new Vector3(dir.x * (float)leadTime.TotalSeconds * speed, dir.y * (float)leadTime.TotalSeconds * speed, 0);
-                    Debug.Log(dist.x + " " + dist.y);
                     merObj.transform.localPosition = spot + dist;
                     mercenary[i].posX = merObj.transform.localPosition.x;
                     mercenary[i].posY = merObj.transform.localPosition.y;
@@ -190,6 +195,8 @@ public class MonsterHunting : MonoBehaviour {
                         info.mermove = false;
                         merObj.SetActive(false);
                         GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + info.mercenaryName + "Selection").GetComponent<Button>().interactable = true;
+                        GameObject.Find("System").transform.Find("StagePopup/UIPanel/MercenaryBox/Mercenary" + info.mercenaryName + "Selection/Image").GetComponent<Image>().color = new Color(1, 1, 1, 1f);
+
                         Debug.Log("도착");
                     }
                 }
@@ -226,7 +233,6 @@ public class MonsterHunting : MonoBehaviour {
                         info.monsterAttackTime = 0;
                         stageManager.getMonsterObjList()[index].GetComponent<Animation>().Play("attack");
                         mercenary[i].stat.HP -= monsterData.getMonsterList().Find(z => z.name == info.type).stat.dps * info.typeNum;
-                        Debug.Log(mercenary[i].stat.HP);
                     }
                     if (!stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("attack")
                         && !stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("damage"))
@@ -243,6 +249,24 @@ public class MonsterHunting : MonoBehaviour {
                         GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/sword").gameObject.SetActive(false);
                         GameObject.Find(info.stageName + "Button").transform.Find("State/Progress/Dust").gameObject.SetActive(false);
                         GameObject.Find(info.stageName + "Button").transform.Find("MercImage").gameObject.SetActive(false);
+
+                        for (int k = 0; i < MercenaryData.instance.getMercenary().Count; k++)
+                        {
+                            if (mercenaryObj.transform.GetChild(k).Find("NameText").gameObject.GetComponent<Text>().text
+                                == mercenary[i].getName())
+                            {
+                                merObj = mercenaryObj.transform.GetChild(k).gameObject;
+                                break;
+                            }
+                        }
+                        info.time = System.DateTime.Now;
+                        //걸리는 시간. 거리 계산
+                        float dist = Vector3.Distance(merObj.transform.localPosition, GameObject.Find("Menu").transform.Find("WorldMap/Stage/UIPanel/Back/Stage").gameObject.transform.localPosition);
+                        int time = (int)(dist / 10);
+                        info.leadTime = new System.TimeSpan(0, time / 60, time % 60);
+                        mercenary[i].posX = merObj.transform.localPosition.x;
+                        mercenary[i].posY = merObj.transform.localPosition.y;
+
                     }
                 }
 
@@ -274,7 +298,6 @@ public class MonsterHunting : MonoBehaviour {
                         mercenary[i].AttackTime = 0;
                         stageManager.getMonsterObjList()[index].GetComponent<Animation>().Play("damage");
                         info.monsterHP -= mercenary[i].stat.dps;
-                        Debug.Log(info.monsterHP);
                     }
                     if (!stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("attack")
                         && !stageManager.getMonsterObjList()[index].GetComponent<Animation>().IsPlaying("damage"))
@@ -312,9 +335,8 @@ public class MonsterHunting : MonoBehaviour {
                         info.leadTime = new System.TimeSpan(0, time / 60, time % 60);
                         mercenary[i].posX = merObj.transform.localPosition.x;
                         mercenary[i].posY = merObj.transform.localPosition.y;
-                        Debug.Log(info.leadTime);
 
-                        destroyMonster(stageManager.getMonsterObjList()[index]);
+                        StartCoroutine( destroyMonster(index));
                     }
                 }
 
@@ -333,11 +355,11 @@ public class MonsterHunting : MonoBehaviour {
     }
 
 
-    IEnumerator destroyMonster(GameObject monObj)
+    IEnumerator destroyMonster(int index)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         Debug.Log("삭제");
-        Destroy(monObj);
+        Destroy(stageManager.getMonsterObjList()[index]);
     }
 
 

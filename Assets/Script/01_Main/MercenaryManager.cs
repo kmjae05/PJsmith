@@ -290,51 +290,51 @@ public class MercenaryManager : MonoBehaviour {
         //용병이 탐험 상태일 때
         if (merTemp.getState())
         {
-            stageStatePopup.SetActive(true);
+            //stageStatePopup.SetActive(true);
 
-            StageInfo stageInfo = stageManager.getStageInfoList().Find(x => x.mercenaryName == merTemp.getName());
-            stageManager.SetCurStageSelect(stageInfo.getStageNum());
-            GameObject.Find("StageStateText").GetComponent<Text>().text = stageInfo.type + " " + stageInfo.typeNum.ToString();
-            stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + obj.transform.Find("NameText").GetComponent<Text>().text).gameObject.SetActive(true);
+            //StageInfo stageInfo = stageManager.getStageInfoList().Find(x => x.mercenaryName == merTemp.getName());
+            //stageManager.SetCurStageSelect(stageInfo.getStageNum());
+            //GameObject.Find("StageStateText").GetComponent<Text>().text = stageInfo.type + " " + stageInfo.typeNum.ToString();
+            //stageStatePopup.transform.Find("StageStatePanel/MercenaryBox/Mercenary" + obj.transform.Find("NameText").GetComponent<Text>().text).gameObject.SetActive(true);
 
-            stageManager.destroyItemBox(stateItemList);
-            //얻은 아이템
-            int num = stageInfo.getItem.Length;
-            string[] item = new string[num];
+            //stageManager.destroyItemBox(stateItemList);
+            ////얻은 아이템
+            //int num = stageInfo.getItem.Length;
+            //string[] item = new string[num];
 
-            for (int i = 0; i < num; i++)
-            {
-                item[i] = stageInfo.getItem[i];
-                if (item[i] != null)
-                {
-                    Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
-                    stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
-                    stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
-                    stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = stageInfo.getItemNum[i].ToString();
-                    stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
+            //for (int i = 0; i < num; i++)
+            //{
+            //    item[i] = stageInfo.getItem[i];
+            //    if (item[i] != null)
+            //    {
+            //        Color col = ThingsData.instance.ChangeFrameColor(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).grade);
+            //        stateItemBox.transform.Find("GradeFrame").gameObject.GetComponent<Image>().color = col;
+            //        stateItemBox.transform.Find("Icon").gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ThingsData.instance.getThingsList().Find(x => x.name == item[i]).icon);
+            //        stateItemBox.transform.Find("AmountText").gameObject.GetComponent<Text>().text = stageInfo.getItemNum[i].ToString();
+            //        stateItemBox.transform.Find("NameText").gameObject.GetComponent<Text>().text = item[i];
 
-                    GameObject boxobj = Instantiate(stateItemBox);
-                    boxobj.transform.SetParent(stateItemList.transform, false);
-                    boxobj.name = "statePopupGetItem" + item[i];
-                    boxobj.SetActive(true);
-                }
-            }
+            //        GameObject boxobj = Instantiate(stateItemBox);
+            //        boxobj.transform.SetParent(stateItemList.transform, false);
+            //        boxobj.name = "statePopupGetItem" + item[i];
+            //        boxobj.SetActive(true);
+            //    }
+            //}
 
-            //완료 안 된 상태 stage state = true, stage complete =  false
-            if (stageInfo.state && !stageInfo.complete)
-            {
-                GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
-                GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
-                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(false);
-            }
-            //완료된 상태 stage state = false, stage complete =  true
-            if (!stageInfo.state && stageInfo.complete)
-            {
-                //Debug.Log("용병 선택 " + merTemp.getContName() + " " + merTemp.getStageNum());
-                GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
-                GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
-                stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
-            }
+            ////완료 안 된 상태 stage state = true, stage complete =  false
+            //if (stageInfo.state && !stageInfo.complete)
+            //{
+            //    GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(true);
+            //    GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(false);
+            //    stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(false);
+            //}
+            ////완료된 상태 stage state = false, stage complete =  true
+            //if (!stageInfo.state && stageInfo.complete)
+            //{
+            //    //Debug.Log("용병 선택 " + merTemp.getContName() + " " + merTemp.getStageNum());
+            //    GameObject.Find("StageStatePanel").transform.Find("ImdCompleteButton").gameObject.SetActive(false);
+            //    GameObject.Find("StageStatePanel").transform.Find("CompleteButton").gameObject.SetActive(true);
+            //    stageStatePopup.transform.Find("StageStatePanel/success").gameObject.SetActive(true);
+            //}
 
         }
         else
