@@ -336,7 +336,7 @@ public class MonsterHunting : MonoBehaviour {
                         mercenary[i].posX = merObj.transform.localPosition.x;
                         mercenary[i].posY = merObj.transform.localPosition.y;
 
-                        StartCoroutine( destroyMonster(index));
+                        StartCoroutine(regen(info, index));
                     }
                 }
 
@@ -355,13 +355,16 @@ public class MonsterHunting : MonoBehaviour {
     }
 
 
-    IEnumerator destroyMonster(int index)
+    IEnumerator regen(StageInfo info, int index)
     {
         yield return new WaitForSeconds(3.0f);
         Debug.Log("삭제");
         Destroy(stageManager.getMonsterObjList()[index]);
-    }
 
+        //StageInfo result = stageInfoList.Find(x => x.getStageNum() == curStageSelect);
+        //GameObject.Find("PlayerManager").GetComponent<AlertManager>().AcvBoxHandle("사냥에 성공하여 아이템을 획득했습니다.");
+
+    }
 
 
 }

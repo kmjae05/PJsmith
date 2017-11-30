@@ -338,7 +338,8 @@ public class MercenaryManager : MonoBehaviour {
 
         }
         else
-        {//캐릭터 정보창
+        {
+            //캐릭터 정보창
             GameObject.Find("Menu").transform.Find("ProfilePopup").gameObject.SetActive(true);
             GameObject merObj = obj;
             profilePopupManager.setCurSelectChrObj(obj);

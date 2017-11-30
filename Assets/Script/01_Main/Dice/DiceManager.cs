@@ -89,7 +89,6 @@ public class DiceManager : MonoBehaviour {
         else
         {
             ticket = 0;
-            ThingsData.instance.getInventoryThingsList().Find(x => x.name == "티켓").possession = ticket;
         }
         
 
